@@ -155,6 +155,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now load a whole bunch of packages:
 
+\RequirePackage{subfigure} % Just in case...
+
 % Een aantal packages uit de cls van Bart
 %\RequirePackage{xcolor}
 \RequirePackage{framed} % voor shaded environment
