@@ -1,0 +1,10 @@
+./adsphd.cls
+./image/ASSO_ZEGEL_ZW.pdf
+./image/sedes.eps
+./image/kullogo2.eps
+./image/ASSO_ZEGEL_ZW.ps
+./README.txt
+./chapters/Makefile.chapters
+./chapters/makeemptychapter.sh
+./Makefile
+./Makefile.settings
