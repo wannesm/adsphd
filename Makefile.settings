@@ -16,7 +16,7 @@ PS2PDF = ps2pdf
 BIBTEX = bibtex
 MAKEINDEX = makeindex
 
-CLEANEXTENSIONS = toc aux log bbl blg log lof lot ilg out glo gls nlo nls brf
+CLEANEXTENSIONS = toc aux log bbl blg log lof lot ilg out glo gls nlo nls brf ist glg
 REALCLEANEXTENSIONS = $(CLEANEXTENSIONS) dvi pdf ps
 
 FORCE_REBUILD = .force_rebuild

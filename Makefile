@@ -28,6 +28,7 @@ PSFILE = $(MAINTEX:.tex=.ps)
 PDFFILE = $(MAINTEX:.tex=.pdf)
 BBLFILE = $(MAINTEX:.tex=.bbl)
 NOMENCLFILE = $(MAINTEX:.tex=.nls)
+GLOSSFILE = $(MAINTEX:.tex=.gls)
 
 TOREMOVE = $(wildcard *.toc) \
 		   $(wildcard *.aux) \
@@ -48,7 +49,7 @@ TOREMOVE_RC = $(wildcard *.pdf) \
 			  $(wildcard *.nlo) \
 			  $(wildcard *.nls)
 
-IGNOREINCHAPTERMODE = \(makefrontcover\|makebackcover\|maketitle\|includepreface\|includeabstract\|listoffigures\|listoftables\|printnomenclature\|includecv\|includepublications\|includeonly\|instructionschapters\)
+IGNOREINCHAPTERMODE = \(makefrontcover\|makebackcover\|maketitle\|includepreface\|includeabstract\|listoffigures\|listoftables\|printnomenclature\|printglossary\|includecv\|includepublications\|includeonly\|instructionschapters\)
 
 IGNOREINCHAPTERMODEBARE = $(subst makefrontcover,makefrontcover\|tableofcontents,$(IGNOREINCHAPTERMODE))
 
@@ -69,9 +70,9 @@ test:
 default: $(PSFILE) $(PDFFILE)
 
 ##############################################################################
-### BUILD PDF/PS (with relaxed dependencies on bibtex and nomenclature)  #####
+### BUILD PDF/PS (with relaxed dependencies on bibtex, nomenclature, glossary)
 
-$(DVIFILE): $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE)
+$(DVIFILE): $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE) $(GLOSSFILE)
 
 # Other standard rules are included in Makefile.settings:
 #
@@ -206,6 +207,20 @@ nomenclature:
 	$(TEX) $<
 	@echo "Creating nomenclature..."
 	$(MAKEINDEX) $(<:.tex=.nlo) -s nomencl.ist -o $(<:.tex=.nls)
+	$(RM) $(DVIFILE)
+
+##############################################################################
+### GLOSSARY: LIST OF ABBREVIATIONS  #########################################
+
+.PHONY: glossary
+glossary: 
+	@make $(GLOSSFILE)
+	
+%.gls: %.tex
+	@echo "Running latex..."
+	$(TEX) $<
+	@echo "Creating nomenclature..."
+	$(MAKEINDEX) $(<:.tex=.glo) -s $(<:.tex=.ist) -t $(<:.tex=.glg) -o $(<:.tex=.gls)
 	$(RM) $(DVIFILE)
 
 ##############################################################################
