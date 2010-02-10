@@ -22,10 +22,16 @@ mkdir -p $CHAPTERNAME
 echo "Creating $CHAPTERNAME/$CHAPTERNAME.tex..."
 f=$CHAPTERNAME/$CHAPTERNAME.tex
 echo "\\chapter{This is $CHAPTERNAME}\\label{ch:$CHAPTERNAME}" > $f
-
-echo "% Keep the following \cleardoublepage, otherwise \includeonly includes" >> $f
-echo "% empty pages" >> $f
-echo "\cleardoublepage" >> $f
+echo "" >> $f
+echo "\\ldots" >> $f
+echo "" >> $f
+echo "" >> $f
+echo "" >> $f
+echo "" >> $f
+echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" >> $f
+echo "% Keep the following \cleardoublepage at the end of this file, " >> $f
+echo "% otherwise \includeonly includes empty pages." >> $f
+echo "\\cleardoublepage" >> $f
 echo "" >> $f
 echo "% vim: tw=70 nocindent expandtab foldmethod=marker foldmarker={{{}{,}{}}}" >> $f
 
