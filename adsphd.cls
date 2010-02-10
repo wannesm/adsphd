@@ -322,6 +322,10 @@
 
 % <-- end ADS
 
+% Setup babel
+\usepackage[dutch,english]{babel} % order of passed options seems to be
+                                  % important!
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The document consists of 
 %  \frontmatter -> Preface, Summary, etc
@@ -348,7 +352,6 @@
 
 \newcommand{\includepreface}[1]{%
   \cleardoublepage
-  \selectlanguage{dutch}
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \include{\chaptersdir/#1/#1}
   }{
@@ -360,7 +363,7 @@
 }
 
 \newcommand{\includeabstract}[1]{%
-  \selectlanguage{english}
+%  \selectlanguage{english}
   \cleardoublepage
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \include{\chaptersdir/#1/#1}
