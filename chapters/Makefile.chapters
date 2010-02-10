@@ -1,0 +1,73 @@
+# Makefile for chapters. Created Fri Feb 05 09:56:37 2010.
+
+# Define default target before including other Makefile settings
+all: default
+
+testje:
+	echo $(MAINDIR)
+
+# Now continue...
+include $(MAINDIR)/Makefile.settings
+
+CHAPTERNAME = $(shell basename $$PWD)
+CHAPTERTEX = $(CHAPTERNAME).tex
+
+DVIFILE = $(CHAPTERTEX:.tex=.dvi)
+PSFILE = $(CHAPTERTEX:.tex=.ps)
+PDFFILE = $(CHAPTERTEX:.tex=.pdf)
+
+# Default build target
+default: image $(PSFILE) $(PDFFILE)
+
+# The ps file only depends on the tex file (and maybe on the images dir).
+$(PSFILE): $(CHAPTERTEX)
+	(cd $(MAINDIR) && make $(CHAPTERNAME))
+	$(RM) $(MAINDIR)/my$(DVIFILE)
+	mv $(MAINDIR)/my$(PSFILE) $(PSFILE)
+
+$(PDFFILE): $(PSFILE)
+	mv $(MAINDIR)/my$(PDFFILE) $(PDFFILE)
+
+thesisfinal:
+	(cd $(MAINDIR) && make $@)
+
+##############################################################################
+### FIGURES ##################################################################
+
+.PHONY: image
+image: 
+	if [ -f $(strip $(IMAGEDIR))/Makefile ]; then (cd $(IMAGEDIR) && make); \
+		else echo "No Makefile found for $(PWD)/$(IMAGEDIR)..."; fi;
+
+figurelist:
+	@fgrep includegraphic $(CHAPTERTEX) | sed 's/^[ \t]*//' | grep -v "^%" | \
+		sed -n -e 's/.*includegraphics[^{]*{\([^}]*\)}.*/\1/p' $(FIGPIPE)
+
+figurelist.txt: FIGPIPE := > figurelist.txt
+figurelist.txt: figurelist
+
+##############################################################################
+### CLEAN etc ################################################################
+
+.PHONY: clean
+clean:
+	$(RM) $(DVIFILE) $(PSFILE) $(PDFFILE)
+
+.PHONY: realclean
+realclean: clean
+	make realcleanpar TARGET=my$(CHAPTERNAME)
+
+.PHONY: allrealclean
+allrealclean: realclean
+	(cd $(MAINDIR) && make realclean)
+
+##############################################################################
+
+.PHONY: s
+s:
+	echo gvim $(CHAPTERTEX) $(wildcard $(DEFS)) $(MAINBIBTEXFILE) $$DEFS > $@
+	chmod +x $@
+
+##############################################################################
+
+# vim: tw=78
