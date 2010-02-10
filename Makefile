@@ -185,7 +185,7 @@ figurelist.txt: figurelist
 
 .PHONY: clean
 clean:
-	$(RM) $(TOREMOVE)
+	make cleanpar TARGET=$(basename $(MAINTEX))
 
 .PHONY: realclean
 realclean: clean

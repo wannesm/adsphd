@@ -16,8 +16,8 @@ PS2PDF = ps2pdf
 BIBTEX = bibtex
 MAKEINDEX = makeindex
 
-CLEANEXTENSIONS = toc aux log bbl blg log lof lot ilg out glo gls nlo nls
-REALCLEANEXTENSIONS = $(CLEANEXTENSIONS) pdf ps glo gls nlo nls
+CLEANEXTENSIONS = toc aux log bbl blg log lof lot ilg out glo gls nlo nls brf
+REALCLEANEXTENSIONS = $(CLEANEXTENSIONS) dvi pdf ps
 
 FORCE_REBUILD = .force_rebuild
 
@@ -67,7 +67,7 @@ cleanpar:
 	
 realcleanpar:
 	echo "Removing temporary files belonging to '$(TARGET)'...";
-	@if [ "$(TARGET)" = "" ];\
+	@if [ "$(TARGET)" != "" ];\
 	then \
 		for i in $(REALCLEANEXTENSIONS);\
 		do \
