@@ -31,8 +31,10 @@
 \PassOptionsToPackage{ps2pdf,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
 % --> end ADS 
 
-% Nice colored links in the pdf
-\PassOptionsToPackage{colorlinks=true}{hyperref}
+\DeclareOption{colorlinks}{%
+  % Nice colored links in the pdf
+  \PassOptionsToPackage{colorlinks=true}{hyperref}
+}
 
 % Control backward referencing of in bibliography
 \DeclareOption{backref}{%
@@ -71,6 +73,7 @@
 \DeclareOption{cropmarks}{%
   \PassOptionsToPackage{cam}{crop}
 }
+
 
 % Font size
 \DeclareOption{10pt}{%
