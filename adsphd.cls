@@ -480,6 +480,10 @@
   \fi
 }
 
+% 'Roman' references (the reference in 'Proposition 1.1' should be roman, not italics)
+\def\@Rref#1{\hbox{\rm \ref{#1}}}
+\def\Rref#1{\@Rref{#1}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Redefinitions van Bart:
