@@ -9,6 +9,7 @@ include Makefile.settings
 # Other tex files that might be included in $(MAINTEX)
 CHAPTERS = $(wildcard $(CHAPTERSDIR)/*/*.tex)
 CHAPTERNAMES = $(subst ./,,$(shell (cd $(CHAPTERSDIR); find -mindepth 1 -maxdepth 1 -type d)))
+#INCLUDEDCHAPTERNAMES = $(shell grep -e "^[^%]*\include" thesis.tex | sed -n -e 's|.*{\(.*\)}.*|\1|p')
 CHAPTERDEFS = $(wildcard $(CHAPTERSDIR)/*/$(DEFS))
 CHAPTERMAKEFILES = $(addsuffix /Makefile,$(shell find $(CHAPTERSDIR) -mindepth 1 -maxdepth 1 -type d))
 CHAPTERAUX = $(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername).aux)
