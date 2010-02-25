@@ -94,7 +94,11 @@ thesisfinal: $(MAINTEX) $(DEFS) $(FORCE_REBUILD)
 	@echo "Done."
 
 $(DEFS): $(DEFS_THESIS) $(CHAPTERDEFS)
-	cat $^ > $@
+	cat $(DEFS_THESIS) > $@
+	for i in $(CHAPTERDEFS);\
+	do \
+	  [ -f $$i ] && ! [ -L $$i ] && (cat $$i >> $@);\
+	done
 
 %: $(CHAPTERAUX) $(CHAPTERSDIR)/%  
 	@echo "Creating chapter 'my$@'..."
