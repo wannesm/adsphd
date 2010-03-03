@@ -55,6 +55,11 @@
   \PassOptionsToPackage{frame}{crop}
 }
 
+\DeclareOption{final}{%
+  \typeout{Creating true page size pdf !!!}
+  \PassOptionsToPackage{off,noinfo}{crop}
+}
+
 % Final document should be a pdf on true size
 \DeclareOption{croppedpdf}{%
   \typeout{Cropped pdf selected!!!}
