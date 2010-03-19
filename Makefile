@@ -9,6 +9,13 @@ include Makefile.settings
 # Other tex files that might be included in $(MAINTEX)
 CHAPTERTEXS = $(wildcard $(CHAPTERSDIR)/*/*.tex)
 CHAPTERNAMES = $(subst ./,,$(shell (cd $(CHAPTERSDIR); find -mindepth 1 -maxdepth 1 -type d)))
+
+# Check if we passed the environment variable CHAPTERS. If so, redefine
+# $(CHAPTERNAMES).
+ifeq ($(origin CHAPTERS),environment) 
+	CHAPTERNAMES = $(CHAPTERS) 
+endif
+
 #INCLUDEDCHAPTERNAMES = $(shell grep -e "^[^%]*\include" thesis.tex | sed -n -e 's|.*{\(.*\)}.*|\1|p')
 CHAPTERDEFS = $(wildcard $(CHAPTERSDIR)/*/$(DEFS))
 CHAPTERMAKEFILES = $(addsuffix /Makefile,$(shell find $(CHAPTERSDIR) -mindepth 1 -maxdepth 1 -type d))
@@ -96,14 +103,13 @@ thesisfinal: $(MAINTEX) $(DEFS) $(FORCE_REBUILD)
 thesis_bare.pdf: empty:=
 thesis_bare.pdf: space:= $(empty) $(empty)
 thesis_bare.pdf: comma:= ,
-thesis_bare.pdf: CHAPTERNAMES = $(CHAPTERS)
 thesis_bare.pdf: CHAPTERTEXS = $(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername).tex)
 thesis_bare.pdf: CHAPTERAUX = $(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername).aux)
 thesis_bare.pdf: CHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
 thesis_bare.pdf: $(CHAPTERAUX) $(CHAPTERTEXS)
 	@echo $(CHAPTERNAMES)
 	@echo $(CHAPTERTEXS)
-	@echo "Creating pdf'$@' only containing chapters:"
+	@echo "Creating pdf '$@' only containing chapters:"
 	@for i in $(CHAPTERNAMES); do echo "  + $$i"; done
 	grep -v '$(IGNOREINCHAPTERMODE)' $(MAINTEX) \
 		| sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERINCLUDEONLYSTRING)}\\begin{document}|' > my${@:.pdf=.tex}
