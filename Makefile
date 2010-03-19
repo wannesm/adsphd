@@ -93,6 +93,28 @@ thesisfinal: $(MAINTEX) $(DEFS) $(FORCE_REBUILD)
 	make $(PDFFILE)
 	@echo "Done."
 
+thesis_bare.pdf: empty:=
+thesis_bare.pdf: space:= $(empty) $(empty)
+thesis_bare.pdf: comma:= ,
+thesis_bare.pdf: CHAPTERNAMES = $(CHAPTERS)
+thesis_bare.pdf: CHAPTERTEXS = $(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername).tex)
+thesis_bare.pdf: CHAPTERAUX = $(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername).aux)
+thesis_bare.pdf: CHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
+thesis_bare.pdf: $(CHAPTERAUX) $(CHAPTERTEXS)
+	@echo $(CHAPTERNAMES)
+	@echo $(CHAPTERTEXS)
+	@echo "Creating pdf'$@' only containing chapters:"
+	@for i in $(CHAPTERNAMES); do echo "  + $$i"; done
+	grep -v '$(IGNOREINCHAPTERMODE)' $(MAINTEX) \
+		| sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERINCLUDEONLYSTRING)}\\begin{document}|' > my${@:.pdf=.tex}
+	make my${@:.pdf=.bbl}
+	$(TEX) my${@:.pdf=.tex}
+	$(TEX) my${@:.pdf=.tex}
+	make my$@
+	make cleanpar TARGET=my${@:.pdf=}
+	mv my$@ $@
+	$(RM) my${@:.pdf=.tex}
+
 $(DEFS): $(DEFS_THESIS) $(CHAPTERDEFS)
 	cat $(DEFS_THESIS) > $@
 	for i in $(CHAPTERDEFS);\
