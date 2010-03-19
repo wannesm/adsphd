@@ -7,7 +7,7 @@ all: default
 include Makefile.settings
 
 # Other tex files that might be included in $(MAINTEX)
-CHAPTERS = $(wildcard $(CHAPTERSDIR)/*/*.tex)
+CHAPTERTEXS = $(wildcard $(CHAPTERSDIR)/*/*.tex)
 CHAPTERNAMES = $(subst ./,,$(shell (cd $(CHAPTERSDIR); find -mindepth 1 -maxdepth 1 -type d)))
 #INCLUDEDCHAPTERNAMES = $(shell grep -e "^[^%]*\include" thesis.tex | sed -n -e 's|.*{\(.*\)}.*|\1|p')
 CHAPTERDEFS = $(wildcard $(CHAPTERSDIR)/*/$(DEFS))
@@ -111,7 +111,7 @@ $(DEFS): $(DEFS_THESIS) $(CHAPTERDEFS)
 	make cleanpar TARGET=my$@
 	$(RM) my$@.tex
 
-$(CHAPTERAUX): $(DEFS) $(CHAPTERS)
+$(CHAPTERAUX): $(DEFS) $(CHAPTERTEXS)
 	@echo "Creating $@ ..."
 	$(TEX) $(MAINTEX)
 
