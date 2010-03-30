@@ -26,7 +26,19 @@ $(PSFILE): $(CHAPTERTEX)
 	mv $(MAINDIR)/my$(PSFILE) $(PSFILE)
 
 $(PDFFILE): $(PSFILE)
-	mv $(MAINDIR)/my$(PDFFILE) $(PDFFILE)
+	@if [ -f $(MAINDIR)/my$(PDFFILE) ];\
+	then \
+		echo "Getting $(PDFFILE) from $(MAINDIR)/my$(PDFFILE)...";\
+		mv $(MAINDIR)/my$(PDFFILE) $(PDFFILE);\
+	elif [ -f $(MAINDIR)/my$(PDFFILE:.pdf=_bare.pdf) ];\
+	then \
+		echo "Getting $(PDFFILE) from $(MAINDIR)/my$(PDFFILE:.pdf=_bare.pdf)...";\
+		mv $(MAINDIR)/my$(PDFFILE:.pdf=_bare.pdf) $(PDFFILE);\
+	else \
+		echo "Creating $(PDFFILE) using ps2pdf..."; \
+		$(PS2PDF) -dMaxSubsetPct=100 -dSubsetFonts=true -dEmbedAllFonts=true \
+			-dPDFSETTINGS=/printer -dCompatibilityLevel=1.3 $<; \
+	fi;
 
 thesisfinal:
 	(cd $(MAINDIR) && make $@)
