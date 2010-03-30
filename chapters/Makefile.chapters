@@ -44,7 +44,7 @@ bare: $(CHAPTERTEX)
 	(cd $(MAINDIR) && make $(CHAPTERNAME)_bare)
 	$(RM) $(MAINDIR)/my$(DVIFILE:.ps=_bare.ps)
 	mv $(MAINDIR)/my$(PSFILE:.ps=_bare.ps) $(PSFILE)
-	$(MAKE) $(PDFFILE) BARE=1
+	$(MAKE) $(PDFFILE)
 
 thesisfinal:
 	(cd $(MAINDIR) && make $@)
