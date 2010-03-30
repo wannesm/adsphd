@@ -124,7 +124,7 @@ thesis_bare.pdf: $(CHAPTERAUX) $(CHAPTERTEXS)
 	make my$@
 	make cleanpar TARGET=my${@:.pdf=}
 	mv my$@ $@
-	$(RM) my${@:.pdf=.tex}
+	$(RM) my${@:.pdf=.tex} my${@:.pdf=.dvi}
 
 $(DEFS): $(DEFS_THESIS) $(CHAPTERDEFS)
 	cat $(DEFS_THESIS) > $@
