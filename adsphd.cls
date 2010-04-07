@@ -139,6 +139,9 @@
 \def\address#1{\gdef\@address{#1}}
 \def\degree#1{\gdef\@degree{#1}} % It will say "Doctor in \degree"
 
+% Bibtex style
+\def\bibstyle#1{\gdef\@bibstyle{#1}}
+
 % Default values
 \author{Guust}{Flater}
 \promotor{Prof.~Promotor}
@@ -159,6 +162,8 @@
 \degree{... Computer Science ...}
 \date{Month Year}
 
+% Bibtex style
+\bibstyle{plain}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now load a whole bunch of packages:
@@ -400,7 +405,7 @@
   %%\markboth{\uppercase{Bibliography}}{\uppercase{Bibliography}}
   \markboth{{Bibliography}}{{Bibliography}}
   \addcontentsline{toc}{chapter}{Bibliography}
-  \bibliographystyle{plain}
+  \bibliographystyle{\@bibstyle}
   \bibliography{#1}
 }
 
