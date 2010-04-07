@@ -7,7 +7,9 @@ all: default
 include Makefile.settings
 
 # Other tex files that might be included in $(MAINTEX)
+INCLUDEDCHAPTERNAMES = $(shell grep -e "^[^%]*\include" thesis.tex | sed -n -e 's|.*{\(.*\)}.*|\1|p')
 CHAPTERTEXS = $(wildcard $(CHAPTERSDIR)/*/*.tex)
+CHAPTERTEXS = $(foreach chaptername,$(CHAPTERNAMES),$(shell test -f $(CHAPTERSDIR)/$(chaptername)/.ignore || echo $(CHAPTERSDIR)/$(chaptername)/$(chaptername).tex) )
 CHAPTERNAMES = $(subst ./,,$(shell (cd $(CHAPTERSDIR); find -mindepth 1 -maxdepth 1 -type d)))
 
 # Check if we passed the environment variable CHAPTERS. If so, redefine
@@ -17,7 +19,6 @@ ifeq ($(origin CHAPTERS),environment)
 endif
 
 # TODO: onderstaande wildcard dinges kunnen nog verbeterd worden!
-INCLUDEDCHAPTERNAMES = $(shell grep -e "^[^%]*\include" thesis.tex | sed -n -e 's|.*{\(.*\)}.*|\1|p')
 CHAPTERDEFS = $(wildcard $(CHAPTERSDIR)/*/$(DEFS))
 CHAPTERMAKEFILES = $(addsuffix /Makefile,$(shell find $(CHAPTERSDIR) -mindepth 1 -maxdepth 1 -type d))
 CHAPTERAUX = $(foreach chaptername,$(CHAPTERNAMES),$(shell test -f $(CHAPTERSDIR)/$(chaptername)/.ignore || echo $(CHAPTERSDIR)/$(chaptername)/$(chaptername).aux) )
