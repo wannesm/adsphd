@@ -40,11 +40,14 @@ $(PDFFILE): $(PSFILE)
 			-dPDFSETTINGS=/printer -dCompatibilityLevel=1.3 $<; \
 	fi;
 
-bare: $(CHAPTERTEX)
+$(PSFILE:.ps=_bare.ps): $(CHAPTERTEX)
 	(cd $(MAINDIR) && make $(CHAPTERNAME)_bare)
 	$(RM) $(MAINDIR)/my$(DVIFILE:.ps=_bare.ps)
-	mv $(MAINDIR)/my$(PSFILE:.ps=_bare.ps) $(PSFILE)
-	$(MAKE) $(PDFFILE)
+	mv $(MAINDIR)/my$(PSFILE:.ps=_bare.ps) $@
+	#$(MAKE) $(PDFFILE)
+
+.PHONY: bare
+bare: $(PDFFILE:.pdf=_bare.pdf)
 
 thesisfinal:
 	(cd $(MAINDIR) && make $@)
