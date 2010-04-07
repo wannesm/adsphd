@@ -233,6 +233,20 @@ figurelist.txt: FIGPIPE := > figurelist.txt
 figurelist.txt: figurelist
 
 ##############################################################################
+### Sanity check #############################################################
+
+sanitycheck:
+	# Check some basic things in the tex source
+	##############################
+	# 1. look for todo or toremove or tofix
+	@for f in $(MAINTEX) $(CHAPTERTEXS); \
+	do \
+		echo "\nProcessing $$f...\n";\
+		GREP_COLOR="41;50" grep -n -i --color '\(todo\|toremove\|tofix\)' $$f;\
+		echo "";\
+	done;
+
+##############################################################################
 ### CLEAN etc ################################################################
 
 .PHONY: clean
