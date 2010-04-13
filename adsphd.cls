@@ -38,11 +38,13 @@
 
 % Control backward referencing of in bibliography
 \DeclareOption{backref}{%
-  \PassOptionsToClass{backref}{hyperref}
+%  \PassOptionsToClass{backref}{hyperref}
+  \PassOptionsToClass{ref}{backref}
 }
 
 \DeclareOption{pagebackref}{%
-  \PassOptionsToClass{pagebackref}{hyperref}
+%  \PassOptionsToClass{pagebackref}{hyperref}
+  \PassOptionsToClass{pageref}{backref}
 }
 
 % Draft
@@ -180,6 +182,7 @@
 %\RequirePackage{makeidx}
 
 % Taken from ADS <--
+\RequirePackage{backref}
 \RequirePackage{hyperref}
 \RequirePackage[usenames]{color}
 % <-- end ADS
