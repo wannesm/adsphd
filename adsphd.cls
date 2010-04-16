@@ -470,12 +470,12 @@
 
 \newcommand{\includepublications}[1]{%
   {
-    \addcontentsline{toc}{chapter}{}
+    \addcontentsline{toc}{chapter}{List of publications}
     \IfFileExists{\chaptersdir/#1/#1.tex}{
       \includechapter{\chaptersdir/#1/#1}
     }{
       \cleardoublepage
-      \chapter{List of publications}
+      \chapter*{List of publications}
       {\textcolor{Red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
       sure it starts with "\textbackslash{}chapter*\{List of publications\}"\ldots}}
       \instructionslistofpublications
