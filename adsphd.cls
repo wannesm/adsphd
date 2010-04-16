@@ -488,7 +488,7 @@
 \newcommand{\todo}[1]{%
   \ifshowtodo
     \definecolor{shadecolor}{rgb}{1,1,.65}
-    \begin{shaded}{\color{red}TODO: #1}\end{shaded}
+    \begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}
   \else
   \fi
 }
