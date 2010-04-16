@@ -150,9 +150,11 @@ $(DEFS): $(DEFS_THESIS) $(CHAPTERDEFS)
 	@echo "Creating chapter 'my$(BARECHAPNAME)'..."
 	grep -v '$(IGNOREINCHAPTERMODEBARE)' $(MAINTEX) \
 		| sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERSDIR)/$(BARECHAPNAME)/$(BARECHAPNAME)}\\begin{document}|' > my$@.tex
-	make my$@.bbl 
-	sed -i.bak -e 's/^.*bibliography.*$$//' my$@.tex 
 	$(TEX) my$@.tex
+	make my$@.bbl
+	$(TEX) my$@.tex
+	$(TEX) my$@.tex
+	sed -i.bak -e 's/^.*bibliography.*$$//' my$@.tex 
 	$(TEX) my$@.tex
 	make my$@.ps my$@.pdf
 	make cleanpar TARGET=my$@
