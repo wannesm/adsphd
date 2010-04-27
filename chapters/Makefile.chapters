@@ -73,6 +73,8 @@ figurelist.txt: figurelist
 .PHONY: clean
 clean:
 	$(RM) $(DVIFILE) $(PSFILE) $(PDFFILE)
+	$(RM) $(DVIFILE:.dvi=_bare.dvi) $(PSFILE:.ps=_bare.ps) \
+	$(PDFFILE:.pdf=_bare.pdf)
 
 .PHONY: realclean
 realclean: clean
