@@ -72,5 +72,6 @@ realcleanpar:
 		for i in $(REALCLEANEXTENSIONS);\
 		do \
 			$(RM) $(TARGET).$$i;\
+			$(RM) $(TARGET)_bare.$$i;\
 		done;\
 	fi
