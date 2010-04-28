@@ -485,13 +485,26 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Various utility commands
-\newcommand{\todo}[1]{%
+\newcommand{\todoinline}[1]{%
   \ifshowtodo
     \definecolor{shadecolor}{rgb}{1,1,.65}
     \begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}
   \else
   \fi
 }
+
+\setlength{\marginparwidth}{3.5cm}
+\newcommand\todomarginpar[1]{\-\marginpar[\raggedright\footnotesize #1]%
+{\raggedright\footnotesize #1}}
+\newcommand{\todomargin}[1]{%
+  \ifshowtodo%
+    \definecolor{shadecolor}{rgb}{1,1,.65}%
+    \todomarginpar{\begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}}%
+  \else
+  \fi
+}
+
+\let\todo\todomargin
 
 % 'Roman' references (the reference in 'Proposition 1.1' should be roman, not italics)
 \def\@Rref#1{\hbox{\rm \ref{#1}}}
