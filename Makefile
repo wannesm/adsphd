@@ -49,10 +49,14 @@ TOREMOVE_RC = $(wildcard *.pdf) \
 
 IGNOREINCHAPTERMODE = \(makefrontcover\|makebackcover\|maketitle\|includepreface\|includeabstract\|listoffigures\|listoftables\|printnomenclature\|includecv\|includepublications\|includeonly\|instructionschapters\)
 
+IGNOREINCHAPTERMODEBARE = $(subst makefrontcover,makefrontcover\|tableofcontents,$(IGNOREINCHAPTERMODE))
+
 PDFNUP = $(shell which pdfnup)
 
 test:
-	@echo $(PDFNUP)
+	@echo $(CHAPTERNAMES)
+	#@echo $(IGNOREINCHAPTERMODEBARE)
+	#@echo $(PDFNUP)
 	#@echo $(CHAPTERAUX)
 	#echo 'lkasdjf'
 	#echo $(CHAPTERNAMES)
