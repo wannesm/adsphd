@@ -18,6 +18,7 @@
     [2010/02/02 v0.1 Standard K.U.Leuven Arenberg Doctoral School PhD class]
 
 \newif\ifshowtodo
+\newif\ifshowtodopriv
 \newif\ifshowinstructions
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -107,6 +108,11 @@
 \DeclareOption{showtodo}{%
   \showtodotrue
 }
+
+\DeclareOption{showtodopriv}{%
+  \showtodoprivtrue
+}
+
 
 \DeclareOption{showinstructions}{%
   \showinstructionstrue
@@ -505,6 +511,16 @@
 }
 
 \let\todo\todomargin
+
+\setlength{\marginparwidth}{3.5cm}
+\newcommand{\todomarginpriv}[1]{%
+  \ifshowtodopriv%
+    \definecolor{shadecolor}{rgb}{.7,1,.53}%
+    \todomarginpar{\begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}}%
+  \else
+  \fi
+}
+\let\todopriv\todomarginpriv
 
 % 'Roman' references (the reference in 'Proposition 1.1' should be roman, not italics)
 \def\@Rref#1{\hbox{\rm \ref{#1}}}
