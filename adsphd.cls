@@ -500,6 +500,7 @@
 }
 
 \setlength{\marginparwidth}{3.5cm}
+
 \newcommand\todomarginpar[1]{\-\marginpar[\raggedright\footnotesize #1]%
 {\raggedright\footnotesize #1}}
 \newcommand{\todomargin}[1]{%
@@ -512,7 +513,13 @@
 
 \let\todo\todomargin
 
-\setlength{\marginparwidth}{3.5cm}
+\newcommand{\todoinlinepriv}[1]{%
+  \ifshowtodopriv%
+    \definecolor{shadecolor}{rgb}{.7,1,.53}%
+    \begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}
+  \else
+  \fi
+}
 \newcommand{\todomarginpriv}[1]{%
   \ifshowtodopriv%
     \definecolor{shadecolor}{rgb}{.7,1,.53}%
