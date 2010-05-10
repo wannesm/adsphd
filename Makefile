@@ -137,7 +137,11 @@ $(DEFS): $(DEFS_THESIS) $(CHAPTERDEFS)
 
 %: $(CHAPTERAUX) $(CHAPTERSDIR)/%  
 	@echo "Creating chapter 'my$@'..."
-	grep -v '$(IGNOREINCHAPTERMODE)' $(MAINTEX) \
+	IGNOREINCHAPTERMODE='$(IGNOREINCHAPTERMODE)' ; \
+		[ "$$(sed -n -s 's/.*includeabstract{\(.*\)}/\1/p' $(MAINTEX))" = "$@" ] \
+		&& IGNOREINCHAPTERMODE=$$(echo '$(IGNOREINCHAPTERMODE)' | sed -e 's/\\|includeabstract//') \
+		&& echo "$$IGNOREINCHAPTERMODE"; \
+		grep -v "$$IGNOREINCHAPTERMODE" $(MAINTEX) \
 		| sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERSDIR)/$@/$@}\\begin{document}|' > my$@.tex
 	make my$@.bbl 
 	$(TEX) my$@.tex
@@ -149,6 +153,8 @@ $(DEFS): $(DEFS_THESIS) $(CHAPTERDEFS)
 %_bare: BARECHAPNAME = $(@:_bare=)
 %_bare: $(CHAPTERAUX) $(CHAPTERSDIR)/%  
 	@echo "Creating chapter 'my$(BARECHAPNAME)'..."
+	#IGNOREINCHAPTERMODEBARE=$$(echo '$(IGNOREINCHAPTERMODEBARE)' | sed -e 's/\\|includeabstract//')
+	#@echo "$$IGNOREINCHAPTERMODEBARE"
 	grep -v '$(IGNOREINCHAPTERMODEBARE)' $(MAINTEX) \
 		| sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERSDIR)/$(BARECHAPNAME)/$(BARECHAPNAME)}\\begin{document}|' > my$@.tex
 	$(TEX) my$@.tex
