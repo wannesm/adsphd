@@ -13,7 +13,7 @@
 %% 
 %% This file is based on engphd.cls created by Bart Vandewoestyne.
 
-\NeedsTeXFormat{LaTeX2e}
+\NeedsTeXFormat{LaTeX2e}[2009/09/24]
 \ProvidesClass{adsphd}
     [2010/02/02 v0.1 Standard K.U.Leuven Arenberg Doctoral School PhD class]
 
@@ -194,7 +194,8 @@
 % <-- end ADS
 
 % Page layout
-\RequirePackage[dvips=false,pdftex=false,vtex=false]{geometry}
+%\RequirePackage[dvips=false,pdftex=false,vtex=false]{geometry} # Use this for older versions of geometry (e.g. on Karmic)
+\RequirePackage[driver=none]{geometry}
 \geometry{
   paperwidth=160mm,
   paperheight=240mm,
