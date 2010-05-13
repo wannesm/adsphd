@@ -173,6 +173,9 @@
 % Bibtex style
 \bibstyle{plain}
 
+% Title of chapter with publications
+\newcommand{\pubnametoc}{List of publications}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now load a whole bunch of packages:
 
@@ -477,14 +480,14 @@
 
 \newcommand{\includepublications}[1]{%
   {
-    \addcontentsline{toc}{chapter}{List of publications}
+    \addcontentsline{toc}{chapter}{\pubnametoc}
     \IfFileExists{\chaptersdir/#1/#1.tex}{
-      \includechapter{\chaptersdir/#1/#1}
+      \include{\chaptersdir/#1/#1}
     }{
       \cleardoublepage
-      \chapter*{List of publications}
+      \chapter*{\pubnametoc}
       {\textcolor{Red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-      sure it starts with "\textbackslash{}chapter*\{List of publications\}"\ldots}}
+      sure it starts with "\textbackslash{}chapter*\{\pubnametoc\}"\ldots}}
       \instructionslistofpublications
     }
   }%
