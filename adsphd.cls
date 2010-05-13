@@ -849,7 +849,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 %\begin{textblock}{100}(42.5,-12.5)
 \begin{textblock}{100}(60,20)
 \vspace{-\parskip}
-\colorbox{gray}{\parbox[c][18mm]{98mm}{
+\colorbox{gray}{\parbox[c][18mm]{97.92mm}{
 {\bf \footnotesize \textcolor{white} {Arenberg Doctoral School of Science, Engineering \& Technology}}\\
 {\footnotesize \textcolor{white} {\@faculty}}\\
 {\footnotesize \textcolor{white} {\@department}}
@@ -933,11 +933,11 @@ in \@degree
 \end{textblock}
 %
 %\begin{textblock}{120}(0,125)
-\begin{textblock}{120}(17.5,157.5)
+\begin{textblock}{160}(17.5,157.5)
 \textblockcolour{}
 \vspace{-\parskip}
 \begin{minipage}[t]{7.32cm}
-  \begin{tabular}[t]{p{7cm}}
+%  \begin{tabular}[t]{p{6.9cm}}
     Jury:\\
     \@president, president\\
     \@promotor, promotor\\
@@ -946,15 +946,15 @@ in \@degree
     \rule{0.25cm}{0pt}(\@externalaffiliation)\\
     \\
     U.D.C. \@udc
-  \end{tabular}
+%  \end{tabular}
 \end{minipage}
 \begin{minipage}[t]{7cm}
-  \begin{tabular}[t]{l}
+%  \begin{tabular}[t]{l}
     Dissertation presented in partial\\
     fulfillment of the requirements for\\
     the degree of Doctor \\
     in \@degree
-  \end{tabular}
+%  \end{tabular}
 \end{minipage}
 
 %\begin{tabular}{p{7cm}l}
