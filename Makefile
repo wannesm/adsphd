@@ -208,6 +208,7 @@ reflist.bib: reflist
 nomenclature: 
 	@make $(NOMENCLFILE)
 	
+$(MAINTEX:.tex=).nls: $(MAINTEX) $(DEFS)
 %.nls: %.tex
 	@echo "Running latex..."
 	$(TEX) $<
