@@ -72,7 +72,7 @@ default: $(PSFILE) $(PDFFILE)
 ##############################################################################
 ### BUILD PDF/PS (with relaxed dependencies on bibtex, nomenclature, glossary)
 
-$(DVIFILE): $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE) $(GLOSSFILE)
+$(DVIFILE): $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERTEXS) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE) $(GLOSSFILE)
 
 # Other standard rules are included in Makefile.settings:
 #
