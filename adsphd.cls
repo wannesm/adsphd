@@ -48,32 +48,7 @@
   \PassOptionsToClass{pageref}{backref}
 }
 
-% Draft
-\DeclareOption{draft}{%
-  \PassOptionsToClass{draft}{report}
-  \PassOptionsToPackage{frame}{crop}
-}
-
-\DeclareOption{prelim}{%
-  \PassOptionsToPackage{frame}{crop}
-}
-
-\DeclareOption{final}{%
-  \typeout{Creating true page size pdf !!!}
-  \PassOptionsToPackage{off,noinfo}{crop}
-}
-
-% Final document should be a pdf on true size
-\DeclareOption{croppedpdf}{%
-  \typeout{Cropped pdf selected!!!}
-  \PassOptionsToPackage{off,noinfo}{crop}
-  % From ADS <--
-%  \PassOptionsToPackage{pdfpagescrop={92 75 546 750}}{hyperref} % original version
-  % --> end ADS
-  % Adapted to reflect the centering by the crop package
-  \PassOptionsToPackage{pdfpagescrop={71 81 524 761}}{hyperref}
-}
-
+% Options for crop package
 \DeclareOption{noinfo}{%
   \PassOptionsToPackage{off,noinfo}{crop}
 }
@@ -81,7 +56,6 @@
 \DeclareOption{cropmarks}{%
   \PassOptionsToPackage{cam}{crop}
 }
-
 
 % Font size
 \DeclareOption{10pt}{%
@@ -117,6 +91,48 @@
 \DeclareOption{showinstructions}{%
   \showinstructionstrue
 }
+
+\DeclareOption{showlabels}{%
+  % on by default
+}
+
+\DeclareOption{noshowlabels}{%
+  \PassOptionsToPackage{final}{showlabels}
+}
+
+% Various output options
+
+\DeclareOption{draft}{%
+  \PassOptionsToClass{draft}{report}
+  \PassOptionsToPackage{frame}{crop}
+}
+
+\DeclareOption{tothejury}{%
+  \typeout{Creating output for the version to send to the jury!!!}
+  \PassOptionsToPackage{off,noinfo}{crop}
+  \showtodoprivfalse
+  \showtodofalse
+  \showinstructionsfalse
+  \PassOptionsToPackage{final}{showlabels}
+}
+
+\DeclareOption{final}{%
+  \typeout{Creating true page size pdf !!!}
+  \PassOptionsToPackage{off,noinfo}{crop}
+}
+
+% Final document should be a pdf on true size
+\DeclareOption{croppedpdf}{%
+  \typeout{Cropped pdf selected!!!}
+  \PassOptionsToPackage{off,noinfo}{crop}
+  % From ADS <--
+%  \PassOptionsToPackage{pdfpagescrop={92 75 546 750}}{hyperref} % original version
+  % --> end ADS
+  % Adapted to reflect the centering by the crop package
+  \PassOptionsToPackage{pdfpagescrop={71 81 524 761}}{hyperref}
+}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now process the options passed to the packages
@@ -178,6 +194,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now load a whole bunch of packages:
+
+\RequirePackage{showlabels}
 
 \RequirePackage{subfigure} % Just in case...
 
