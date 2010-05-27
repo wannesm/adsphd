@@ -7,7 +7,7 @@ all: default
 include Makefile.settings
 
 # Other tex files that might be included in $(MAINTEX)
-INCLUDEDCHAPTERNAMES = $(shell grep -e "^[^%]*\include" thesis.tex | sed -n -e 's|.*{\(.*\)}.*|\1|p')
+INCLUDEDCHAPTERNAMES = $(shell grep -e "^[^%]*\include" $(MAINTEX) | sed -n -e 's|.*{\(.*\)}.*|\1|p')
 CHAPTERTEXS = $(wildcard $(CHAPTERSDIR)/*/*.tex)
 CHAPTERTEXS = $(foreach chaptername,$(CHAPTERNAMES),$(shell test -f $(CHAPTERSDIR)/$(chaptername)/.ignore || echo $(CHAPTERSDIR)/$(chaptername)/$(chaptername).tex) )
 CHAPTERNAMES = $(subst ./,,$(shell (cd $(CHAPTERSDIR); find -mindepth 1 -maxdepth 1 -type d)))
