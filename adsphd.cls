@@ -586,6 +586,7 @@ Expects chapter* for CV, changed chapter to chapter*}%
 
 \newcommand{\includepublications}[1]{%
   {
+    % assumes that \chapter* is used
     \addcontentsline{toc}{chapter}{\pubnametoc}
     \IfFileExists{\chaptersdir/#1/#1.tex}{
       \let\orig@chapter=\chapter
@@ -1166,3 +1167,4 @@ ISBN \@isbn
 \endinput
 %%
 %% End of file `adsphd.cls'.
+%% vim: tw=70 expandtab
