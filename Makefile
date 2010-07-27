@@ -68,25 +68,6 @@ BBLFILE = $(MAINTEX:.tex=.bbl)
 NOMENCLFILE = $(MAINTEX:.tex=.nls)
 GLOSSFILE = $(MAINTEX:.tex=.gls)
 
-TOREMOVE = $(wildcard *.toc) \
-		   $(wildcard *.aux) \
-		   $(wildcard *.log) \
-		   $(wildcard *.dvi) \
-		   $(wildcard *.bbl) \
-		   $(wildcard *.blg) \
-		   $(wildcard *.log) \
-		   $(wildcard *.lof) \
-		   $(wildcard *.lot) \
-		   $(wildcard *.ilg) \
-		   $(wildcard *.out)
-
-TOREMOVE_RC = $(wildcard *.pdf) \
-		      $(wildcard *.ps) \
-			  $(wildcard *.glo) \
-			  $(wildcard *.gls) \
-			  $(wildcard *.nlo) \
-			  $(wildcard *.nls)
-
 IGNOREINCHAPTERMODE = \(makefrontcover\|makebackcover\|maketitle\|includepreface\|includeabstract\|listoffigures\|listoftables\|printnomenclature\|printglossary\|includecv\|includepublications\|includeonly\|instructionschapters\)
 
 IGNOREINCHAPTERMODEBARE = $(subst makefrontcover,makefrontcover\|tableofcontents,$(IGNOREINCHAPTERMODE))
