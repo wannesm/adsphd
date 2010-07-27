@@ -12,6 +12,13 @@
 %% LaTeX version 1999/12/01 or later.
 %% 
 %% This file is based on engphd.cls created by Bart Vandewoestyne.
+%% 
+%%  2010-07-27: Large cleanup and addition of some functionality.
+%%             Some of it shamelessly copied from or inspired by
+%%             refactoring work by Wannes Meert. 
+%%             This includes the [showgit] option, parts of the work
+%%             to enable compilation with pdflatex, the redefinition
+%%             of \chapter when used in abstract/preface/cv/publications.
 
 \NeedsTeXFormat{LaTeX2e}[2009/09/24]
 \ProvidesClass{adsphd}
