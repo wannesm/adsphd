@@ -415,7 +415,18 @@
 \newcommand{\includepreface}[1]{%
   \cleardoublepage
   \IfFileExists{\chaptersdir/#1/#1.tex}{
+    \let\orig@chapter=\chapter
+    \renewcommand{\chapter}{%
+      \@ifstar{%
+        \orig@chapter*
+      }{%
+        \message{adsphd.cls Warning: %
+Expects chapter* for abstract, changed chapter to chapter*}%
+        \orig@chapter*%
+      }%
+  }
     \include{\chaptersdir/#1/#1}
+    \let\chapter=\orig@chapter
   }{
     \chapter*{Preface}
     {\textcolor{Red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
@@ -428,7 +439,18 @@
 %  \selectlanguage{english}
   \cleardoublepage
   \IfFileExists{\chaptersdir/#1/#1.tex}{
+    \let\orig@chapter=\chapter
+    \renewcommand{\chapter}{%
+      \@ifstar{%
+        \orig@chapter*
+      }{%
+        \message{adsphd.cls Warning: %
+Expects chapter* for abstract, changed chapter to chapter*}%
+        \orig@chapter*%
+      }%
+  }
     \include{\chaptersdir/#1/#1}
+    \let\chapter=\orig@chapter
   }{
     \chapter*{Abstract}
     {\textcolor{Red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
@@ -501,10 +523,22 @@
   {
   \def\rightmark{CURRICULUM VITAE}
   \def\leftmark{CURRICULUM VITAE}
-  \addcontentsline{toc}{chapter}{Curriculum vitae}
   \cleardoublepage
+  % assumes that \chapter* is used
+  \addcontentsline{toc}{chapter}{Curriculum vitae}
   \IfFileExists{\chaptersdir/#1/#1.tex}{
+    \let\orig@chapter=\chapter
+    \renewcommand{\chapter}{%
+      \@ifstar{%
+        \orig@chapter*
+      }{%
+        \message{adsphd.cls Warning: %
+Expects chapter* for CV, changed chapter to chapter*}%
+        \orig@chapter*%
+      }%
+    }
     \include{\chaptersdir/#1/#1}
+  \let\chapter=\orig@chapter
   }{
     \chapter*{Curriculum vitae}
     {\textcolor{Red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
@@ -518,7 +552,18 @@
   {
     \addcontentsline{toc}{chapter}{\pubnametoc}
     \IfFileExists{\chaptersdir/#1/#1.tex}{
+      \let\orig@chapter=\chapter
+      \renewcommand{\chapter}{%
+      \@ifstar{%
+        \orig@chapter*%
+      }{%
+        \message{adsphd.cls Warning: %
+Expects chapter* for CV, changed chapter to chapter*}%
+        \orig@chapter*%
+      }%
+    }
       \include{\chaptersdir/#1/#1}
+      \let\chapter=\orig@chapter
     }{
       \cleardoublepage
       \chapter*{\pubnametoc}
