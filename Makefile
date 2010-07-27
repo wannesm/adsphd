@@ -13,9 +13,7 @@
 # 
 #    Cleaning:
 #    $ make clean
-#    $ make cleanall
 #    $ make realclean
-#    $ make realcleanall
 #
 #    Checks:
 #    $ make sanitycheck
