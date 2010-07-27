@@ -1,4 +1,44 @@
-# Makefile for phd. Created Thu Feb 04 11:21:04 2010,
+# Makefile for phd. 
+#
+# Created    Thu Feb 04 11:21:04 2010 by Yves Frederix,
+# Refactored Mon Jul 26 10:27:00 2010 by Wannes Meert,
+#
+# Usage:
+#    Create full thesis:
+#    $ make
+# 
+#    To run for a specific set of chapters, run with CHAPTERS variable:
+#    $ make CHAPTERS=introduction
+#    $ make CHAPTERS="introduction conclusion"
+# 
+#    Cleaning:
+#    $ make clean
+#    $ make cleanall
+#    $ make realclean
+#    $ make realcleanall
+#
+#    Checks:
+#    $ make sanitycheck
+#    $ make spelling
+#    $ make grammar
+# 
+#    Create final thesis
+#    $ make thesisfinal
+#
+# Chapter specific tricks:
+#
+#    Create new chapters 'MYCHAPTER' as follows:
+#    $ make newchapter
+#
+#    From inside a chapter directory, run 'make' to build that chapter only,
+#    e.g.:
+#    $ cd chapter/introduction
+#    $ make
+#
+# Options:
+#    The default settings in this makefile can be overridden by a
+#    Makefile.settings file.
+#
 
 # Define default target before importing other Makefile settings
 all: default
