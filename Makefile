@@ -3,6 +3,9 @@
 # Define default target before importing other Makefile settings
 all: default
 
+# Use bash as default shell
+SHELL = bash
+
 ##############################################################################
 ### DEFAULT SETTINGS (can be overridden by Makefile.settings) ################
 
@@ -117,7 +120,7 @@ psnup: $(PDFFILE)
 	fi;
 
 ##############################################################################
-### BUILD THESIS AND CHAPTERS ################################################
+### BUILD THESIS #############################################################
 .PHONY: thesisfinal
 thesisfinal: $(MAINTEX) $(DEFS) $(FORCE_REBUILD)
 	@make nomenclature
@@ -159,6 +162,17 @@ $(DEFS): $(DEFS_THESIS) $(CHAPTERDEFS)
 	  [ -f $$i ] && ! [ -L $$i ] && (cat $$i >> $@);\
 	done
 
+##############################################################################
+### CREATE AND BUILD CHAPTERS ################################################
+.PHONY: newchapter
+newchapter:
+	@echo -n "Input name for the new chapter: " && \
+	read NEWCHAPNAME && \
+	NEWCHAPNAME=$${NEWCHAPNAME// /-} && \
+	echo -e "\n *** Creating $$NEWCHAPNAME *** \n" && \
+	cd $(CHAPTERSDIR) && ./makeemptychapter.sh $$NEWCHAPNAME && \
+	echo -e "\n==> Succesfully created new chapter '$$NEWCHAPNAME'"
+	
 %: $(CHAPTERAUX) $(CHAPTERSDIR)/%  
 	@echo "Creating chapter 'my$@'..."
 	IGNOREINCHAPTERMODE='$(IGNOREINCHAPTERMODE)' ; \
