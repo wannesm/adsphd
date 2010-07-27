@@ -272,7 +272,7 @@ ref:
 	$(TEX) $<
 	@echo "Running bibtex..."
 	$(BIBTEX) $(<:.tex=)
-	$(RM) $(<:.tex=.dvi)
+	@[ -f $(<:.tex=.dvi) ] && $(RM) $(<:.tex=.dvi)
 
 reflist:
 	fgrep "\cite" $(MAINTEX) | grep -v "^%.*" | \
@@ -397,7 +397,7 @@ realclean: clean
 ##############################################################################
 
 s:
-	echo gvim $(MAINTEX) $(MAINBIBTEXFILE) > $@
+	echo $(EDITOR) $(MAINTEX) $(MAINBIBTEXFILE) > $@
 	chmod +x $@
 
 ##############################################################################
