@@ -91,13 +91,18 @@ default: $(PSFILE) $(PDFFILE)
 ##############################################################################
 ### BUILD PDF/PS (with relaxed dependencies on bibtex, nomenclature, glossary)
 
-$(DVIFILE): $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERTEXS) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE) $(GLOSSFILE)
+$(DVIFILE): %.dvi : $(FORCE_REBUILD)
+	$(TEX) $(@:.dvi=.tex)
+	$(TEX) $(@:.dvi=.tex)
 
-# Other standard rules are included in Makefile.settings:
-#
-#   $(DVIFILE): %.dvi : $(FORCE_REBUILD)
-#   %.ps: %.dvi
-#   %.pdf: %.ps
+%.ps: %.dvi
+	$(DVIPS) -P pdf -o $@ $<
+
+%.pdf: %.ps
+	$(PS2PDF) -dMaxSubsetPct=100 -dSubsetFonts=true -dEmbedAllFonts=true \
+		-dPDFSETTINGS=/printer -dCompatibilityLevel=1.3 $<
+
+$(DVIFILE): $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERTEXS) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE) $(GLOSSFILE)
 
 ##############################################################################
 ### PUT 2 LOGICAL PAGES ON SINGLE PHYSICAL PAGE  #############################
