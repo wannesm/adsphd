@@ -84,35 +84,39 @@ include Makefile.settings
  
 ##############################################################################
 ### DERIVED SETTINGS #########################################################
+ 
 
 # Other tex files that might be included in $(MAINTEX)
-INCLUDEDCHAPTERNAMES = $(shell grep -e "^[^%]*\include" $(MAINTEX) | sed -n -e 's|.*{\(.*\)}.*|\1|p')
-CHAPTERTEXS = $(wildcard $(CHAPTERSDIR)/*/*.tex)
-CHAPTERTEXS = $(foreach chaptername,$(CHAPTERNAMES),$(shell test -f $(CHAPTERSDIR)/$(chaptername)/.ignore || echo $(CHAPTERSDIR)/$(chaptername)/$(chaptername).tex) )
-CHAPTERNAMES = $(subst ./,,$(shell (cd $(CHAPTERSDIR); find -mindepth 1 -maxdepth 1 -type d)))
+INCLUDEDCHAPTERNAMES = $(shell grep -e "^[^%]*\include" $(MAINTEX) | \
+					   sed -n -e 's|.*{\(.*\)}.*|\1|p')
 
 # Check if we passed the environment variable CHAPTERS. If so, redefine
 # $(CHAPTERNAMES).
-ifeq ($(origin CHAPTERS),environment) 
+ifneq ($(origin CHAPTERS), undefined) 
 	CHAPTERNAMES = $(CHAPTERS) 
+else
+	CHAPTERNAMES = $(subst ./,,$(shell (cd $(CHAPTERSDIR); find -mindepth 1 -maxdepth 1 -type d)))
 endif
+
+CHAPTERTEXS = $(foreach chaptername,$(CHAPTERNAMES),$(shell test -f $(CHAPTERSDIR)/$(chaptername)/.ignore || echo $(CHAPTERSDIR)/$(chaptername)/$(chaptername).tex) )
 
 # TODO: onderstaande wildcard dinges kunnen nog verbeterd worden!
 CHAPTERDEFS = $(wildcard $(CHAPTERSDIR)/*/$(DEFS))
 CHAPTERMAKEFILES = $(addsuffix /Makefile,$(shell find $(CHAPTERSDIR) -mindepth 1 -maxdepth 1 -type d))
 CHAPTERAUX = $(foreach chaptername,$(CHAPTERNAMES),$(shell test -f $(CHAPTERSDIR)/$(chaptername)/.ignore || echo $(CHAPTERSDIR)/$(chaptername)/$(chaptername).aux) )
 
-DVIFILE = $(MAINTEX:.tex=.dvi)
-PSFILE = $(MAINTEX:.tex=.ps)
-PDFFILE = $(MAINTEX:.tex=.pdf)
-BBLFILE = $(MAINTEX:.tex=.bbl)
+DVIFILE     = $(MAINTEX:.tex=.dvi)
+PSFILE      = $(MAINTEX:.tex=.ps)
+PDFFILE     = $(MAINTEX:.tex=.pdf)
+BBLFILE     = $(MAINTEX:.tex=.bbl)
 NOMENCLFILE = $(MAINTEX:.tex=.nls)
-GLOSSFILE = $(MAINTEX:.tex=.gls)
+GLOSSFILE   = $(MAINTEX:.tex=.gls)
 
 IGNOREINCHAPTERMODE = \(makefrontcover\|makebackcover\|maketitle\|includepreface\|includeabstract\|listoffigures\|listoftables\|printnomenclature\|printglossary\|includecv\|includepublications\|includeonly\|instructionschapters\)
 
 IGNOREINCHAPTERMODEBARE = $(subst makefrontcover,makefrontcover\|tableofcontents,$(IGNOREINCHAPTERMODE))
 
+# Search for pdfnup and use if found
 PDFNUP = $(shell which pdfnup)
 
 test:
