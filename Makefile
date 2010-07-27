@@ -68,7 +68,8 @@ FORCE_REBUILD = .force_rebuild
 TEX = latex
 PDFTEX = pdflatex
 DVIPS = dvips
-PS2PDF = ps2pdf
+PS2PDF = ps2pdf -dMaxSubsetPct=100 -dSubsetFonts=true -dEmbedAllFonts=true \
+		  -dPDFSETTINGS=/printer -dCompatibilityLevel=1.3
 BIBTEX = bibtex
 MAKEINDEX = makeindex
 DETEX = detex
@@ -144,8 +145,7 @@ $(DVIFILE): %.dvi : $(FORCE_REBUILD)
 	$(DVIPS) -P pdf -o $@ $<
 
 %.pdf: %.ps
-	$(PS2PDF) -dMaxSubsetPct=100 -dSubsetFonts=true -dEmbedAllFonts=true \
-		-dPDFSETTINGS=/printer -dCompatibilityLevel=1.3 $<
+	$(PS2PDF) $<
 
 $(DVIFILE): $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERTEXS) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE) $(GLOSSFILE)
 
