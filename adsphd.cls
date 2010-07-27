@@ -20,6 +20,8 @@
 \newif\ifshowtodo
 \newif\ifshowtodopriv
 \newif\ifshowinstructions
+\newif\ifshellescape
+\newif\ifshowgit
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Options that can be passed to adsphd.cls:
@@ -94,9 +96,36 @@
   \showtodoprivtrue
 }
 
-
 \DeclareOption{showinstructions}{%
   \showinstructionstrue
+}
+
+% Thank you Wannes:
+\DeclareOption{showgit}{%
+	\def\gittmpfile{/tmp/gitdescribe.txt} 
+	\immediate\write18{touch \gittmpfile} 
+	% Check whether shell escapes are enabled 
+	\IfFileExists{\gittmpfile}{\shellescapetrue}{\shellescapefalse} 
+	\ifshellescape 
+		\showgittrue
+		%\newcommand*\cropgitinfo{\gitdescribe}
+		\immediate\write18{git describe --tags --long --always > \gittmpfile} %
+		\openin1=\gittmpfile
+		\read1 to \gitdescribe
+		\closein2
+		\immediate\write18{rm \gittmpfile}%
+	\else
+		\message{Warning: Shell Escapes are not enabled. Run (pdf)latex with the `-shell-escape' option.}
+		\IfFileExists{VERSION}{%
+			\showgittrue
+			\openin1=VERSION
+			\read1 to \gitdescribe
+			\closein2
+			\message{Warning: Fallback on VERSION file for print git information. (Create such a file with a git-hook)}
+		}{%
+			\message{Warning: Also no VERSION file found. Git information will not be shown.}
+		}
+	\fi
 }
 
 \DeclareOption{showlabels}{%
@@ -285,6 +314,13 @@
 \setlength{\parindent}{0mm}
 \setlength{\parskip}{7.2pt}
 \raggedbottom
+
+\ifshowgit
+	%\cropdef[\cropgitinfo]\CROP@@frame\relax\relax\relax{gitinfo}
+	%\crop[gitinfo]
+	\let\orig@CROP@time=\CROP@time
+	\renewcommand{\CROP@time}{\orig@CROP@time\x\gitdescribe}
+\fi
 
 % PAGE CONTROL AND QUOTATION
 \def\startchapter{
