@@ -351,6 +351,26 @@ sanitycheck:
 	done;
 
 ##############################################################################
+### SPELLING AND GRAMMAR #####################################################
+
+spelling:
+	$(foreach f,$(CHAPTERTEXS),$(ASPELL) check $(f);)
+
+grammar:
+	# DICTION: misused words {{{}{
+	@$(foreach f,$(CHAPTERTEXS), $(DETEX) -lc $(f) | $(GNUDICTION) -sb | sed "s#(stdin)#$(f)#";)
+	# }{}}}
+	# STYLE: nominalizations {{{}{
+	@$(foreach f,$(CHAPTERTEXS), $(DETEX) -lc $(f) | $(GNUSTYLE) -N | sed "s#(stdin):\([0-9][0-9]*\):#$(f):\1:Warning, nominalization:#";)
+	# }{}}}
+	# STYLE: passive {{{}{
+	@$(foreach f,$(CHAPTERTEXS), $(DETEX) -lc $(f) | $(GNUSTYLE) -p | sed "s#(stdin):\([0-9][0-9]*\):#$(f):\1:Warning, passive::#";)
+	# }{}}}
+	# DIFFICULT SENTENCES: high ari-index {{{}{
+	@$(foreach f,$(CHAPTERTEXS), $(DETEX) -lc $(f) | $(GNUSTYLE) -r 20 | sed "s#(stdin):\([0-9][0-9]*\):#$(f):\1:Warning, long sentence:#";)
+	# }{}}}
+
+##############################################################################
 ### CLEAN etc ################################################################
 
 .PHONY: clean
