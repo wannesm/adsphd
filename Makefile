@@ -64,6 +64,8 @@ REALCLEANEXTENSIONS = dvi pdf ps
 
 FORCE_REBUILD = .force_rebuild
 
+USEPDFTEX ?= 0 # can be externally set
+
 # Binaries
 TEX = latex
 PDFTEX = pdflatex
@@ -144,10 +146,18 @@ $(DVIFILE): %.dvi : $(FORCE_REBUILD)
 %.ps: %.dvi
 	$(DVIPS) -P pdf -o $@ $<
 
+ifeq ($(USEPDFTEX), 1)
+$(PDFFILE): $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERTEXS) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE) $(GLOSSFILE)
+
+%.pdf: %.tex
+	echo "USEPDFTEX==1"
+	$(PDFTEX) $<
+else
+$(DVIFILE): $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERTEXS) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE) $(GLOSSFILE)
+
 %.pdf: %.ps
 	$(PS2PDF) $<
-
-$(DVIFILE): $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERTEXS) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE) $(GLOSSFILE)
+endif
 
 ##############################################################################
 ### PUT 2 LOGICAL PAGES ON SINGLE PHYSICAL PAGE  #############################

@@ -27,9 +27,16 @@
 % Show a frame around each logical page by default
 \PassOptionsToPackage{frame}{crop}
 
+% Different actions when using pdflatex
+\RequirePackage{ifpdf}
+
 % Default options to report class, taken from the ADS template <--
 \PassOptionsToClass{fleqn,10pt,twoside}{report}
-\PassOptionsToPackage{ps2pdf,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
+\ifpdf
+	\PassOptionsToPackage{bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
+\else
+	\PassOptionsToPackage{ps2pdf,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
+\fi
 % --> end ADS 
 
 \DeclareOption{colorlinks}{%
@@ -228,9 +235,20 @@
 }
 
 % Load the crop package
-\RequirePackage[a4,center,dvips]{crop}
+\ifpdf
+	% Load the crop package
+	\RequirePackage[a4,center,pdftex]{crop}
+	\RequirePackage[pdftex]{graphicx}
+	\DeclareGraphicsExtensions{.pdf, .jpg, .tif}
+	% Use utf-8 encoding for foreign characters
+	\RequirePackage[utf8]{inputenc}
+\else
+	% Load the crop package
+	\RequirePackage[a4,center,dvips]{crop}
+	\RequirePackage[dvips]{graphicx}
+	\DeclareGraphicsExtensions{.eps, .ps}
+\fi
 
-\RequirePackage[dvips]{graphicx}
 \RequirePackage[absolute]{textpos}
 
 % Taken from ADS template  <--
@@ -863,7 +881,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \begin{textblock}{160}(0,0)
 \vspace{-\parskip}
 \begin{center}
-\includegraphics[width=8mm]{image/sedes.eps}
+\includegraphics[width=8mm]{image/sedes}
 \end{center}
 \end{textblock}
 %
@@ -881,7 +899,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \begin{textblock}{60}(0, 20)
 \textblockcolour{}
 \vspace{-\parskip}
-\includegraphics*[width=60mm]{image/kullogo2.eps}
+\includegraphics*[width=60mm]{image/kullogo2}
 \end{textblock}
 %
 %\begin{textblock}{120}(0,80)
@@ -1053,14 +1071,14 @@ ISBN \@isbn
 \begin{textblock}{7}(153,20)
 \textblockcolour{}
 \vspace{-\parskip}
-\includegraphics*[angle=90,width=7mm]{image/kullogo2.eps}
+\includegraphics*[angle=90,width=7mm]{image/kullogo2}
 \end{textblock}
 %
 %\begin{textblock}{12}[0.5,0.5](125,191)
 \begin{textblock}{12}[0.5,0.5](142.5,223.5)
 \textblockcolour{}
 \vspace{-\parskip}
-\includegraphics*[width=12mm]{image/ASSO_ZEGEL_ZW.ps}
+\includegraphics*[width=12mm]{image/ASSO_ZEGEL_ZW}
 \end{textblock}
 }
 
