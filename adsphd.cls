@@ -216,7 +216,7 @@
 \jury{Jurylid 1\\Jurylid 2}
 \externaljurymember{External jury member}
 \externalaffiliation{External affiliation}
-\udc{XXX.XX}
+\udc{}
 \depot{XXXX/XXXX/XX}
 \isbn{XXX-XX-XXXX-XXX-X}
 
@@ -1073,7 +1073,7 @@ in \@degree
     \@externaljurymember \\
     \rule{0.25cm}{0pt}(\@externalaffiliation)\\
     \\
-    U.D.C. \@udc
+    \if\empty\@udc \else U.D.C. \@udc\fi
 %  \end{tabular}
 \end{minipage}
 \begin{minipage}[t]{7cm}
