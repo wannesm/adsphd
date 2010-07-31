@@ -278,7 +278,7 @@ thesisfinal: $(MAINTEX) $(DEFS) $(FORCE_REBUILD)
 	@echo "Done."
 
 ##############################################################################
-### CREATE AND BUILD CHAPTERS ################################################
+### MISC CHAPTER STUFF #######################################################
 .PHONY: newchapter
 newchapter:
 	@echo -n "Input name for the new chapter: " && \
