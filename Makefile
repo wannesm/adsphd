@@ -137,7 +137,7 @@ test:
 	#echo $(CHAPTERDEFS)
 
 # Default build target
-default: $(PSFILE) $(PDFFILE)
+default: $(PDFFILE)
 
 ##############################################################################
 ### BUILD PDF/PS (with relaxed dependencies on bibtex, nomenclature, glossary)
