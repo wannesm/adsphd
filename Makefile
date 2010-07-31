@@ -152,11 +152,25 @@ ifeq ($(USEPDFTEX), 1)
 
 $(TEX) = $(PDFTEX)
 
-$(PDFFILE): $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERTEXS) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE) $(GLOSSFILE)
+##################################################
+# BUILD THESIS
+$(PDFFILE): $(DEPENDENCIES)
+	$(TEX) -jobname $(@:.pdf=) $<
 
-%.pdf: %.tex
-	echo "USEPDFTEX==1"
-	$(PDFTEX) $<
+##################################################
+# BUILD CHAPTERS
+# The following rules provide compilation of individual chapters.
+$(CHAPTERSDIR)/%_ch.pdf: $(DEPENDENCIES)
+	$(TEX) -jobname $(@:.pdf=) $<
+	$(TEX) -jobname $(@:.pdf=) $<
+	$(RM) $(@:_ch.pdf=).{$(subst $(empty) $(empty),$(comma),$(CLEANEXTENSIONS))}
+
+$(CHAPTERSDIR)/%.pdf: $(DEPENDENCIES)
+	$(MAKE) $(CHAPTERSDIR)/$*_ch.pdf
+	mv $(CHAPTERSDIR)/$*_ch.pdf $@
+
+##################################################
+
 else
 
 ##################################################
