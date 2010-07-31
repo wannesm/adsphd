@@ -93,7 +93,6 @@ include Makefile.settings
 ##############################################################################
 ### DERIVED SETTINGS #########################################################
  
-
 # Other tex files that might be included in $(MAINTEX)
 INCLUDEDCHAPTERNAMES = $(shell grep -e "^[^%]*\include" $(MAINTEX) | \
 					   sed -n -e 's|.*{\(.*\)}.*|\1|p')
