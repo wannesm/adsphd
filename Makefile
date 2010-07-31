@@ -107,11 +107,10 @@ else
 endif
 
 CHAPTERTEXS = $(foreach chaptername,$(CHAPTERNAMES),$(shell test -f $(CHAPTERSDIR)/$(chaptername)/.ignore || echo $(CHAPTERSDIR)/$(chaptername)/$(chaptername).tex) )
-
+CHAPTERAUX = $(CHAPTERTEXS:.tex=.aux)
+CHAPTERMAKEFILES = $(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/Makefile)
 # TODO: onderstaande wildcard dinges kunnen nog verbeterd worden!
 CHAPTERDEFS = $(wildcard $(CHAPTERSDIR)/*/$(DEFS))
-CHAPTERMAKEFILES = $(addsuffix /Makefile,$(shell find $(CHAPTERSDIR) -mindepth 1 -maxdepth 1 -type d))
-CHAPTERAUX = $(foreach chaptername,$(CHAPTERNAMES),$(shell test -f $(CHAPTERSDIR)/$(chaptername)/.ignore || echo $(CHAPTERSDIR)/$(chaptername)/$(chaptername).aux) )
 
 DVIFILE     = $(MAINTEX:.tex=.dvi)
 PSFILE      = $(MAINTEX:.tex=.ps)
