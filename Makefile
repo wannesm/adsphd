@@ -122,7 +122,7 @@ IGNOREINCHAPTERMODE = \(makefrontcover\|makebackcover\|maketitle\|includepreface
 
 IGNOREINCHAPTERMODEBARE = $(subst makefrontcover,makefrontcover\|tableofcontents,$(IGNOREINCHAPTERMODE))
 
-# Search for pdfnup and use if found
+# Search for pdfnup and use it (instead of psnup) if found
 PDFNUP = $(shell which pdfnup)
 
 test:
