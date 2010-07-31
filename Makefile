@@ -150,6 +150,9 @@ $(DVIFILE): %.dvi : $(FORCE_REBUILD)
 	$(DVIPS) -P pdf -o $@ $<
 
 ifeq ($(USEPDFTEX), 1)
+
+$(TEX) = $(PDFTEX)
+
 $(PDFFILE): $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERTEXS) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE) $(GLOSSFILE)
 
 %.pdf: %.tex
