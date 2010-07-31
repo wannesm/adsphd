@@ -122,6 +122,10 @@ IGNOREINCHAPTERMODE = \(makefrontcover\|makebackcover\|maketitle\|includepreface
 
 IGNOREINCHAPTERMODEBARE = $(subst makefrontcover,makefrontcover\|tableofcontents,$(IGNOREINCHAPTERMODE))
 
+# Dependencies for the main pdf file (Make sure $(MAINTEX) is the first in
+# this list!)
+DEPENDENCIES = $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERTEXS) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE) $(GLOSSFILE) $(FORCE_REBUILD)
+
 # Search for pdfnup and use it (instead of psnup) if found
 PDFNUP = $(shell which pdfnup)
 
