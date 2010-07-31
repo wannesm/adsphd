@@ -146,13 +146,6 @@ default: $(PDFFILE)
 ##############################################################################
 ### BUILD PDF/PS (with relaxed dependencies on bibtex, nomenclature, glossary)
 
-$(DVIFILE): %.dvi : $(FORCE_REBUILD)
-	$(TEX) $(@:.dvi=.tex)
-	$(TEX) $(@:.dvi=.tex)
-
-%.ps: %.dvi
-	$(DVIPS) -P pdf -o $@ $<
-
 ifeq ($(USEPDFTEX), 1)
 
 $(TEX) = $(PDFTEX)
@@ -163,7 +156,20 @@ $(PDFFILE): $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERTEXS) $(CHAPTERMAKEFILES) $(
 	echo "USEPDFTEX==1"
 	$(PDFTEX) $<
 else
-$(DVIFILE): $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERTEXS) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE) $(GLOSSFILE)
+
+##################################################
+# BUILD THESIS
+$(DVIFILE): $(DEPENDENCIES)
+	$(TEX) -jobname $(@:.dvi=) $(MAINTEX)
+	$(TEX) -jobname $(@:.dvi=) $(MAINTEX)
+
+#$(DVIFILE): %.dvi : $(FORCE_REBUILD)
+#	@echo DVIFILE:%%.dvi rule
+#	$(TEX) -jobname $(@:.dvi=) $(MAINTEX)
+#	$(TEX) -jobname $(@:.dvi=) $(MAINTEX)
+
+%.ps: %.dvi
+	$(DVIPS) -P pdf -o $@ $<
 
 %.pdf: %.ps
 	$(PS2PDF) $<
