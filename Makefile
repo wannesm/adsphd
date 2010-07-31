@@ -165,6 +165,25 @@ $(DVIFILE): $(DEPENDENCIES)
 	$(TEX) -jobname $(@:.dvi=) $(MAINTEX)
 	$(TEX) -jobname $(@:.dvi=) $(MAINTEX)
 
+# Do NOT remove the following line:
+$(DVIFILE:.dvi=_bare.dvi): CHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
+$(DVIFILE:.dvi=_bare.dvi): MYMAINTEX = $(MAINTEX:.tex=_bare.tex)
+$(DVIFILE:.dvi=_bare.dvi): $(DEPENDENCIES)
+	@echo $(CHAPTERNAMES)
+	@echo $(CHAPTERTEXS)
+	@echo "Creating '$@' only containing chapters:"
+	@for i in $(CHAPTERNAMES); do echo "  + $$i"; done
+	grep -v '$(IGNOREINCHAPTERMODEBARE)' $(MAINTEX) \
+		| sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERINCLUDEONLYSTRING)}\\begin{document}|' > $(MYMAINTEX)
+	[ -f $(BBLFILE) ] && cp $(BBLFILE) $(BBLFILE:.bbl=_bare.bbl)
+	[ -f $(NOMENCLFILE) ] && cp $(NOMENCLFILE) $(NOMENCLFILE:.nls=_bare.nls)
+	[ -f $(GLOSSFILE) ] && cp $(GLOSSFILE) $(GLOSSFILE:.gls=_bare.gls)
+	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
+	sed -i.bak -e 's/\\includebibliography/%\\includebibliography/' $(MYMAINTEX)
+	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
+	$(RM) $(@:.dvi=).{$(subst $(empty) $(empty),$(comma),$(CLEANEXTENSIONS))}
+	$(RM) $(MYMAINTEX){,.bak}
+
 # Clear the default rule dvi <-- tex (otherwise it gets preference over the
 # rule that generates $(CHAPTERSDIR)/%_ch.dvi below!!)
 %.dvi: %.tex
@@ -248,27 +267,6 @@ thesisfinal: $(MAINTEX) $(DEFS) $(FORCE_REBUILD)
 	@echo "Converting dvi -> ps -> pdf..."
 	make $(PDFFILE)
 	@echo "Done."
-
-thesis_bare.pdf: empty:=
-thesis_bare.pdf: space:= $(empty) $(empty)
-thesis_bare.pdf: comma:= ,
-thesis_bare.pdf: CHAPTERTEXS = $(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername).tex)
-thesis_bare.pdf: CHAPTERAUX = $(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername).aux)
-thesis_bare.pdf: CHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
-thesis_bare.pdf: $(CHAPTERAUX) $(CHAPTERTEXS)
-	@echo $(CHAPTERNAMES)
-	@echo $(CHAPTERTEXS)
-	@echo "Creating pdf '$@' only containing chapters:"
-	@for i in $(CHAPTERNAMES); do echo "  + $$i"; done
-	grep -v '$(IGNOREINCHAPTERMODE)' $(MAINTEX) \
-		| sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERINCLUDEONLYSTRING)}\\begin{document}|' > my${@:.pdf=.tex}
-	make my${@:.pdf=.bbl}
-	$(TEX) my${@:.pdf=.tex}
-	$(TEX) my${@:.pdf=.tex}
-	make my$@
-	make cleanpar TARGET=my${@:.pdf=}
-	mv my$@ $@
-	$(RM) my${@:.pdf=.tex} my${@:.pdf=.dvi}
 
 $(DEFS): $(DEFS_THESIS) $(CHAPTERDEFS)
 	cat $(DEFS_THESIS) > $@
