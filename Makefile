@@ -254,6 +254,15 @@ psnup: $(PDFFILE)
 	fi;
 
 ##############################################################################
+### DEFS #####################################################################
+$(DEFS): $(DEFS_THESIS) $(CHAPTERDEFS)
+	cat $(DEFS_THESIS) > $@
+	for i in $(CHAPTERDEFS);\
+	do \
+	  [ -f $$i ] && ! [ -L $$i ] && (cat $$i >> $@);\
+	done
+
+##############################################################################
 ### BUILD THESIS #############################################################
 .PHONY: thesisfinal
 thesisfinal: $(MAINTEX) $(DEFS) $(FORCE_REBUILD)
@@ -267,13 +276,6 @@ thesisfinal: $(MAINTEX) $(DEFS) $(FORCE_REBUILD)
 	@echo "Converting dvi -> ps -> pdf..."
 	make $(PDFFILE)
 	@echo "Done."
-
-$(DEFS): $(DEFS_THESIS) $(CHAPTERDEFS)
-	cat $(DEFS_THESIS) > $@
-	for i in $(CHAPTERDEFS);\
-	do \
-	  [ -f $$i ] && ! [ -L $$i ] && (cat $$i >> $@);\
-	done
 
 ##############################################################################
 ### CREATE AND BUILD CHAPTERS ################################################
