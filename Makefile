@@ -44,6 +44,11 @@ all: default
 # Use bash as default shell
 SHELL = bash
 
+# Auxiliary variables
+empty:=
+space:= $(empty) $(empty)
+comma:= ,
+
 ##############################################################################
 ### DEFAULT SETTINGS (can be overridden by Makefile.settings) ################
 
