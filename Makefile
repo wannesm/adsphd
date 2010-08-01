@@ -273,6 +273,21 @@ $(CHAPTERSDIR)/%.pdf: $(DEPENDENCIES) $(CHAPTERSDIR)/%_ch.ps
 # recursively using the previous one!
 $(CHAPTERSDIR)/%_ch.pdf: $(CHAPTERSDIR)/%_ch.ps
 
+# The following rules provide 'bare' compilation of individual chapters
+$(CHAPTERSDIR)/%_bare.dvi: MYCHAPTERINCLUDEONLYSTRING = $(if $(CHAPTERS),$(CHAPTERINCLUDEONLYSTRING),$(CHAPTERSDIR)/$*)
+$(CHAPTERSDIR)/%_bare.dvi: MYMAINTEX = ch_bare_$(MAINTEX)
+$(CHAPTERSDIR)/%_bare.dvi: $(DEPENDENCIES)
+	grep -v '$(IGNOREINCHAPTERMODEBARE)' $(MAINTEX) \
+		| sed -e 's|\\begin{document}|\\includeonly{$(MYCHAPTERINCLUDEONLYSTRING)}\\begin{document}|' > $(MYMAINTEX)
+	cp $(BBLFILE) $(@:.dvi=.bbl)
+	cp $(NOMENCLFILE) $(@:.dvi=.nls)
+	cp $(GLOSSFILE) $(@:.dvi=.gls)
+	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
+	sed -i.bak -e 's/\\includebibliography/%\\includebibliography/' $(MYMAINTEX)
+	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
+	$(RM) $(@:.dvi=).{$(subst $(empty) $(empty),$(comma),$(CLEANEXTENSIONS))}
+	$(RM) $(MYMAINTEX){,.bak}
+
 endif
 
 ##############################################################################
@@ -321,23 +336,6 @@ newchapter:
 	echo -e "\n *** Creating $$NEWCHAPNAME *** \n" && \
 	cd $(CHAPTERSDIR) && ./makeemptychapter.sh $$NEWCHAPNAME && \
 	echo -e "\n==> Succesfully created new chapter '$$NEWCHAPNAME'"
-
-%_bare: BARECHAPNAME = $(@:_bare=)
-%_bare: $(CHAPTERAUX) $(CHAPTERSDIR)/%  
-	@echo "Creating chapter 'my$(BARECHAPNAME)'..."
-	#IGNOREINCHAPTERMODEBARE=$$(echo '$(IGNOREINCHAPTERMODEBARE)' | sed -e 's/\\|includeabstract//')
-	#@echo "$$IGNOREINCHAPTERMODEBARE"
-	grep -v '$(IGNOREINCHAPTERMODEBARE)' $(MAINTEX) \
-		| sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERSDIR)/$(BARECHAPNAME)/$(BARECHAPNAME)}\\begin{document}|' > my$@.tex
-	$(TEX) my$@.tex
-	make my$@.bbl
-	$(TEX) my$@.tex
-	$(TEX) my$@.tex
-	sed -i.bak -e 's/^.*bibliography.*$$//' my$@.tex 
-	$(TEX) my$@.tex
-	make my$@.ps my$@.pdf
-	make cleanpar TARGET=my$@
-	$(RM) my$@.tex my$@.tex.bak
 
 $(CHAPTERAUX): $(DEFS) $(CHAPTERTEXS)
 	@echo "Creating $@ ..."
