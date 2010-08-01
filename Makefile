@@ -236,16 +236,17 @@ $(DVIFILE:.dvi=_bare.dvi): $(DEPENDENCIES)
 # BUILD CHAPTERS
 # The following rules provide compilation of individual chapters.
 $(CHAPTERSDIR)/%_ch.dvi: CHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
+$(CHAPTERSDIR)/%_ch.dvi: MYMAINTEX = ch_$(MAINTEX)
 $(CHAPTERSDIR)/%_ch.dvi: $(DEPENDENCIES)
 	grep -v '$(IGNOREINCHAPTERMODE)' $(MAINTEX) \
-		| sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERINCLUDEONLYSTRING)}\\begin{document}|' > ch_$(MAINTEX)
+		| sed -e 's|\\begin{document}|\\includeonly{$(MYCHAPTERINCLUDEONLYSTRING)}\\begin{document}|' > $(MYMAINTEX)
 	cp $(BBLFILE) $(@:.dvi=.bbl)
 	cp $(NOMENCLFILE) $(@:.dvi=.nls)
 	cp $(GLOSSFILE) $(@:.dvi=.gls)
-	$(TEX) -jobname $(@:.dvi=) ch_$(MAINTEX)
-	$(TEX) -jobname $(@:.dvi=) ch_$(MAINTEX)
+	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
+	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
 	$(RM) $(@:.dvi=).{$(subst $(empty) $(empty),$(comma),$(CLEANEXTENSIONS))}
-	$(RM) ch_$(MAINTEX)
+	$(RM) $(MYMAINTEX)
 
 # The following rule creates e.g. chapters/introduction/introduction.pdf
 # containing only the chapter 'introduction'. The difficulty in doing this, is
