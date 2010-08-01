@@ -28,10 +28,11 @@
 #    Create new chapters 'MYCHAPTER' as follows:
 #    $ make newchapter
 #
-#    From inside a chapter directory, run 'make' to build that chapter only,
+#    From inside a chapter directory, run 'make' to build that chapter only
+#    (This generates a document with TOC, chapter and references).
 #    e.g.:
 #    $ cd chapter/introduction
-#    $ make
+#    $ make      # --> generates introduction.pdf in the current directory
 #
 # Options:
 #    The default settings in this makefile can be overridden by a
