@@ -102,11 +102,15 @@ INCLUDEDCHAPTERNAMES = $(shell grep -e "^[^%]*\include" $(MAINTEX) | \
 # $(CHAPTERNAMES).
 ifneq ($(origin CHAPTERS), undefined) 
 	CHAPTERNAMES = $(CHAPTERS) 
-	CHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
+#	CHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
 else
 	CHAPTERNAMES = $(subst ./,,$(shell (cd $(CHAPTERSDIR); find -mindepth 1 -maxdepth 1 -type d)))
-	CHAPTERINCLUDEONLYSTRING = 
+#	CHAPTERINCLUDEONLYSTRING = 
 endif
+
+# CHAPTERINCLUDEONLYSTRING is empty if CHAPTERS environment variable is not
+# provided:
+CHAPTERINCLUDEONLYSTRING = $(if $(CHAPTERS),$(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERS),$(CHAPTERSDIR)/$(chaptername)/$(chaptername))),)
 
 CHAPTERTEXS = $(foreach chaptername,$(CHAPTERNAMES),$(shell test -f $(CHAPTERSDIR)/$(chaptername)/.ignore || echo $(CHAPTERSDIR)/$(chaptername)/$(chaptername).tex) )
 CHAPTERAUX = $(CHAPTERTEXS:.tex=.aux)
