@@ -263,7 +263,6 @@ $(CHAPTERSDIR)/%_ch.dvi: $(DEPENDENCIES)
 # preference over recursively matching this one. 
 # --> include %_ch.ps (which is the same prereq. as the rule that generates
 #  the chain (the one after this one).
-# _more_ specific than the following so that it will be chosen over that one.
 $(CHAPTERSDIR)/%.pdf: $(DEPENDENCIES) $(CHAPTERSDIR)/%_ch.ps
 	$(MAKE) $(CHAPTERSDIR)/$*_ch.pdf
 	mv $(CHAPTERSDIR)/$*_ch.pdf $@
