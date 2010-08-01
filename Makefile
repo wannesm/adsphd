@@ -234,8 +234,9 @@ $(DVIFILE:.dvi=_bare.dvi): $(DEPENDENCIES)
 
 ##################################################
 # BUILD CHAPTERS
-# The following rules provide compilation of individual chapters.
-$(CHAPTERSDIR)/%_ch.dvi: CHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
+# If no CHAPTERS environment variable given, only include the requested
+# chapter:
+$(CHAPTERSDIR)/%_ch.dvi: MYCHAPTERINCLUDEONLYSTRING = $(if $(CHAPTERS),$(CHAPTERINCLUDEONLYSTRING),$(CHAPTERSDIR)/$*)
 $(CHAPTERSDIR)/%_ch.dvi: MYMAINTEX = ch_$(MAINTEX)
 $(CHAPTERSDIR)/%_ch.dvi: $(DEPENDENCIES)
 	grep -v '$(IGNOREINCHAPTERMODE)' $(MAINTEX) \
