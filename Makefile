@@ -175,9 +175,26 @@ else
 
 ##################################################
 # BUILD THESIS
+    ifneq ($(CHAPTERINCLUDEONLYSTRING),"")
+
+$(DVIFILE): MYMAINTEX = $(MAINTEX:.tex=_sel.tex)
+$(DVIFILE): $(DEPENDENCIES)
+	sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERINCLUDEONLYSTRING)}\\begin{document}|' $(MAINTEX) > $(MYMAINTEX)
+	[ -f $(BBLFILE) ] && cp $(BBLFILE) $(BBLFILE:.bbl=_sel.bbl)
+	[ -f $(NOMENCLFILE) ] && cp $(NOMENCLFILE) $(NOMENCLFILE:.nls=_sel.nls)
+	[ -f $(GLOSSFILE) ] && cp $(GLOSSFILE) $(GLOSSFILE:.gls=_sel.gls)
+	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
+	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
+	$(RM) $(MYMAINTEX:.tex=).{$(subst $(empty) $(empty),$(comma),$(CLEANEXTENSIONS))}
+	$(RM) $(MYMAINTEX)
+
+    else
+
 $(DVIFILE): $(DEPENDENCIES)
 	$(TEX) -jobname $(@:.dvi=) $(MAINTEX)
 	$(TEX) -jobname $(@:.dvi=) $(MAINTEX)
+
+    endif
 
 # Do NOT remove the following line:
 $(DVIFILE:.dvi=_bare.dvi): CHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
