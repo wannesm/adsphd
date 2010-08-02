@@ -365,6 +365,15 @@ $(CHAPTERSDIR)/%/Makefile: $(CHAPTERSDIR)/Makefile.chapters
 	@echo "$*_bare.pdf: " >> $@
 	@echo -e "\t( cd \$$(MAINDIR) && make $(CHAPTERSDIR)/$*/\$$@ )" >> $@
 	@echo "" >> $@
+	@echo -e ".PHONY: image" >> $@
+	@echo -e "image: " >> $@
+	@echo -e "\t@if [ -f $(strip $(IMAGEDIR))/Makefile ]; then (cd $(IMAGEDIR) && make); \\" >> $@
+	@echo -e "\t\telse echo "No Makefile found for $$PWD/$(IMAGEDIR)..."; fi;" >> $@
+	@echo "" >> $@
+	@echo ".PHONY: figurelist" >> $@
+	@echo -e "figurelist:" >> $@
+	@echo -e "\t@( cd \$$(MAINDIR) && make --no-print-directory \$$@ TEXFILE=$(CHAPTERSDIR)/$*/$*.tex )" >> $@
+	@echo "" >> $@
 	@echo "s:" >> $@
 	@echo -e "\t@echo $(EDITOR) $(@:$(CHAPTERSDIR)/%/Makefile=%).tex $(MAINBIBTEXFILE) $(DEFS) > \$$@" >> $@
 	@echo -e "\t@chmod +x \$$@" >> $@
@@ -439,8 +448,9 @@ image: figures
 figures:
 	cd image && make
 
+figurelist: MYTEX = $(if $(TEXFILE),$(TEXFILE),$(MAINTEX))
 figurelist:
-	@fgrep includegraphic $(MAINTEX) | sed 's/^[ \t]*//' | grep -v "^%" | \
+	@fgrep includegraphic $(MYTEX) | sed 's/^[ \t]*//' | grep -v "^%" | \
 		sed -n -e 's/.*includegraphics[^{]*{\([^}]*\)}.*/\1/p' $(FIGPIPE)
 
 figurelist.txt: FIGPIPE := > figurelist.txt
