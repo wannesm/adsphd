@@ -316,7 +316,12 @@ $(DEFS): $(DEFS_THESIS) $(CHAPTERDEFS)
 	done
 
 ##############################################################################
-### BUILD THESIS #############################################################
+### MISC THESIS ##############################################################
+
+$(MAINTEX:.tex=.aux): $(MAINTEX) $(DEFS) 
+	@echo "Creating $@ ..."
+	$(TEX) $(MAINTEX)
+
 .PHONY: thesisfinal
 thesisfinal: $(MAINTEX) $(DEFS) $(FORCE_REBUILD)
 	@make nomenclature
@@ -384,12 +389,9 @@ $(CHAPTERSDIR)/%/Makefile: Makefile
 ref: 
 	@make $(BBLFILE)
 
-%.bbl: %.tex $(MAINBIBTEXFILE)
-	@echo "Running latex..."
-	$(TEX) $<
+%.bbl: %.tex %.aux $(MAINBIBTEXFILE)
 	@echo "Running bibtex..."
 	$(BIBTEX) $(<:.tex=)
-	@[ -f $(<:.tex=.dvi) ] && $(RM) $(<:.tex=.dvi)
 
 reflist:
 	fgrep "\cite" $(MAINTEX) | grep -v "^%.*" | \
@@ -406,9 +408,7 @@ nomenclature:
 	@make $(NOMENCLFILE)
 	
 $(MAINTEX:.tex=).nls: $(MAINTEX) $(DEFS)
-%.nls: %.tex
-	@echo "Running latex..."
-	$(TEX) $<
+%.nls: %.tex %.aux
 	@echo "Creating nomenclature..."
 	$(MAKEINDEX) $(<:.tex=.nlo) -s nomencl.ist -o $(<:.tex=.nls)
 	$(RM) $(DVIFILE)
@@ -420,9 +420,7 @@ $(MAINTEX:.tex=).nls: $(MAINTEX) $(DEFS)
 glossary: 
 	@make $(GLOSSFILE)
 	
-%.gls: %.tex
-	@echo "Running latex..."
-	$(TEX) $<
+%.gls: %.tex %.aux
 	@echo "Creating nomenclature..."
 	$(MAKEINDEX) $(<:.tex=.glo) -s $(<:.tex=.ist) -t $(<:.tex=.glg) -o $(<:.tex=.gls)
 	$(RM) $(DVIFILE)
