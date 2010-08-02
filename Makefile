@@ -181,7 +181,7 @@ endef
 # Make distinction between latex and pdflatex compilation
 ifeq ($(USEPDFTEX), 1)
 
-$(TEX) = $(PDFTEX)
+TEX = $(PDFTEX)
 
 ##################################################
 # BUILD THESIS
