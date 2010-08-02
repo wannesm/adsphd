@@ -194,12 +194,12 @@ $(DVIFILE): $(DEPENDENCIES)
 	[ "$(MAINTEX)" = "$(MYMAINTEX)" ] || $(RM) $(MYMAINTEX)
 
 # Do NOT remove the following line:
-$(DVIFILE:.dvi=_bare.dvi): CHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
+$(DVIFILE:.dvi=_bare.dvi): MYCHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
 $(DVIFILE:.dvi=_bare.dvi): MYMAINTEX = $(MAINTEX:.tex=_bare.tex)
 $(DVIFILE:.dvi=_bare.dvi): $(DEPENDENCIES)
 	@for i in $(CHAPTERNAMES); do echo "  + $$i"; done
 	grep -v '$(IGNOREINCHAPTERMODEBARE)' $(MAINTEX) \
-		| sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERINCLUDEONLYSTRING)}\\begin{document}|' > $(MYMAINTEX)
+		| sed -e 's|\\begin{document}|\\includeonly{$(MYCHAPTERINCLUDEONLYSTRING)}\\begin{document}|' > $(MYMAINTEX)
 	cp $(BBLFILE) $(@:.dvi=.bbl)
 	cp $(NOMENCLFILE) $(@:.dvi=.nls)
 	cp $(GLOSSFILE) $(@:.dvi=.gls)
