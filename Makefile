@@ -34,6 +34,12 @@
 #    $ cd chapter/introduction
 #    $ make      # --> generates introduction.pdf in the current directory
 #
+#    To create a bare document containing just the chapter text (i.e., NO
+#    TOC and references), use the 'bare' target. 
+#    e.g.:
+#    $ cd chapter/introduction
+#    $ make bare
+#
 # Options:
 #    The default settings in this makefile can be overridden by a
 #    Makefile.settings file.
