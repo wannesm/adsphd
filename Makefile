@@ -272,8 +272,8 @@ $(CHAPTERSDIR)/%_ch.dvi: $(DEPENDENCIES)
 # --> include %_ch.ps (which is the same prereq. as the rule that generates
 #  the chain (the one after this one).
 $(CHAPTERSDIR)/%.pdf: $(DEPENDENCIES) $(CHAPTERSDIR)/%_ch.ps
-	$(MAKE) $(CHAPTERSDIR)/$*_ch.pdf
-	mv $(CHAPTERSDIR)/$*_ch.pdf $@
+	$(MAKE) $(@:.pdf=_ch.pdf)
+	mv $(@:.pdf=_ch.pdf) $@
 
 # The following rules ensures that the pdf/ps/dvi chain has preference over
 # recursively using the previous one!
