@@ -356,14 +356,19 @@ $(CHAPTERSDIR)/%/Makefile: $(CHAPTERSDIR)/Makefile.chapters
 	@echo "" >> $@
 	@echo "MAINDIR = $(PWD)" >> $@
 	@echo "" >> $@
-	@echo "s:" >> $@
-	@echo -e "\t@@echo $(EDITOR) $(@:$(CHAPTERSDIR)/%/Makefile=%).tex $(MAINBIBTEXFILE) $(DEFS) > \$$@" >> $@
-	@echo -e "\t@@chmod +x \$$@" >> $@
-	@echo -e "\t@@echo You can now start using ./s" >> $@
-	@echo "" >> $@
 	@echo ".PHONY: $*.pdf" >> $@
 	@echo "$*.pdf: " >> $@
 	@echo -e "\t( cd \$$(MAINDIR) && make $(CHAPTERSDIR)/$*/\$$@ )" >> $@
+	@echo "" >> $@
+	@echo ".PHONY: bare $*_bare.pdf" >> $@
+	@echo "bare: $*_bare.pdf" >> $@
+	@echo "$*_bare.pdf: " >> $@
+	@echo -e "\t( cd \$$(MAINDIR) && make $(CHAPTERSDIR)/$*/\$$@ )" >> $@
+	@echo "" >> $@
+	@echo "s:" >> $@
+	@echo -e "\t@echo $(EDITOR) $(@:$(CHAPTERSDIR)/%/Makefile=%).tex $(MAINBIBTEXFILE) $(DEFS) > \$$@" >> $@
+	@echo -e "\t@chmod +x \$$@" >> $@
+	@echo -e "\t@echo You can now start using ./s" >> $@
 
 ##############################################################################
 ### BIBTEX/REFERENCES ########################################################
