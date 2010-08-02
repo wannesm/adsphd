@@ -186,26 +186,12 @@ else
 
 ##################################################
 # BUILD THESIS
-    ifneq ($(CHAPTERINCLUDEONLYSTRING),"")
-
-$(DVIFILE): MYMAINTEX = $(MAINTEX:.tex=_sel.tex)
+$(DVIFILE): MYMAINTEX = $(if $(CHAPTERINCLUDEONLYSTRING),$(MAINTEX:.tex=_sel.tex),$(MAINTEX))
 $(DVIFILE): $(DEPENDENCIES)
-	sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERINCLUDEONLYSTRING)}\\begin{document}|' $(MAINTEX) > $(MYMAINTEX)
-	cp $(BBLFILE) $(@:.dvi=_sel.bbl)
-	cp $(NOMENCLFILE) $(@:.dvi=_sel.nls)
-	cp $(GLOSSFILE) $(@:.dvi=_sel.gls)
+	[ "$(MAINTEX)" = "$(MYMAINTEX)" ] || sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERINCLUDEONLYSTRING)}\\begin{document}|' $(MAINTEX) > $(MYMAINTEX)
 	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
 	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
-	$(RM) $(MYMAINTEX:.tex=).{$(subst $(empty) $(empty),$(comma),$(CLEANEXTENSIONS))}
-	$(RM) $(MYMAINTEX)
-
-    else
-
-$(DVIFILE): $(DEPENDENCIES)
-	$(TEX) -jobname $(@:.dvi=) $(MAINTEX)
-	$(TEX) -jobname $(@:.dvi=) $(MAINTEX)
-
-    endif
+	[ "$(MAINTEX)" = "$(MYMAINTEX)" ] || $(RM) $(MYMAINTEX)
 
 # Do NOT remove the following line:
 $(DVIFILE:.dvi=_bare.dvi): CHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
