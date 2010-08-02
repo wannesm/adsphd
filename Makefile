@@ -185,20 +185,43 @@ $(TEX) = $(PDFTEX)
 
 ##################################################
 # BUILD THESIS
+$(PDFFILE): MYMAINTEX = $(if $(CHAPTERINCLUDEONLYSTRING),$(MAINTEX:.tex=_sel.tex),$(MAINTEX))
 $(PDFFILE): $(DEPENDENCIES)
-	$(TEX) -jobname $(@:.pdf=) $<
+	[ "$(MAINTEX)" = "$(MYMAINTEX)" ] || sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERINCLUDEONLYSTRING)}\\begin{document}|' $(MAINTEX) > $(MYMAINTEX)
+	$(TEX) -jobname $(@:.pdf=) $(MYMAINTEX)
+	$(TEX) -jobname $(@:.pdf=) $(MYMAINTEX)
+	[ "$(MAINTEX)" = "$(MYMAINTEX)" ] || $(RM) $(MYMAINTEX)
+	#
+# Do NOT remove the following line:
+$(PDFFILE:.pdf=_bare.pdf): MYCHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
+$(PDFFILE:.pdf=_bare.pdf): MYMAINTEX = $(MAINTEX:.tex=_bare.tex)
+$(PDFFILE:.pdf=_bare.pdf): $(DEPENDENCIES)
+	@for i in $(CHAPTERNAMES); do echo "  + $$i"; done
+	$(call run-tex,$(TEX),$(@:.pdf=),$(MYCHAPTERINCLUDEONLYSTRING),$(MYMAINTEX),$(IGNOREINCHAPTERMODEBARE),1)
+	#
+# Clear the default rule pdf <-- tex (otherwise it gets preference over the
+# rule that generates $(CHAPTERSDIR)/%_ch.pdf below!!)
+%.pdf: %.tex
 
 ##################################################
 # BUILD CHAPTERS
-# The following rules provide compilation of individual chapters.
+ 
+# If no CHAPTERS environment variable given, only include the requested
+# chapter:
+$(CHAPTERSDIR)/%_ch.pdf: MYCHAPTERINCLUDEONLYSTRING = $(if $(CHAPTERS),$(CHAPTERINCLUDEONLYSTRING),$(CHAPTERSDIR)/$*)
+$(CHAPTERSDIR)/%_ch.pdf: MYMAINTEX = ch_$(MAINTEX)
 $(CHAPTERSDIR)/%_ch.pdf: $(DEPENDENCIES)
-	$(TEX) -jobname $(@:.pdf=) $<
-	$(TEX) -jobname $(@:.pdf=) $<
-	$(RM) $(@:_ch.pdf=).{$(subst $(empty) $(empty),$(comma),$(CLEANEXTENSIONS))}
+	$(call run-tex,$(TEX),$(@:.pdf=),$(MYCHAPTERINCLUDEONLYSTRING),$(MYMAINTEX),$(IGNOREINCHAPTERMODE),0)
 
 $(CHAPTERSDIR)/%.pdf: $(DEPENDENCIES)
-	$(MAKE) $(CHAPTERSDIR)/$*_ch.pdf
-	mv $(CHAPTERSDIR)/$*_ch.pdf $@
+	$(MAKE) $(@:.pdf=_ch.pdf)
+	mv $(@:.pdf=_ch.pdf) $@
+
+# The following rules provide 'bare' compilation of individual chapters
+$(CHAPTERSDIR)/%_bare.pdf: MYCHAPTERINCLUDEONLYSTRING = $(if $(CHAPTERS),$(CHAPTERINCLUDEONLYSTRING),$(CHAPTERSDIR)/$*)
+$(CHAPTERSDIR)/%_bare.pdf: MYMAINTEX = ch_bare_$(MAINTEX)
+$(CHAPTERSDIR)/%_bare.pdf: $(DEPENDENCIES)
+	$(call run-tex,$(TEX),$(@:.pdf=),$(MYCHAPTERINCLUDEONLYSTRING),$(MYMAINTEX),$(IGNOREINCHAPTERMODEBARE),1)
 
 ##################################################
 
