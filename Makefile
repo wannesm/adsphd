@@ -159,6 +159,26 @@ default: $(PDFFILE)
 ##############################################################################
 ### BUILD PDF/PS (with relaxed dependencies on bibtex, nomenclature, glossary)
 
+# Function to build dvi/pdf (using latex/pdflatex) if we want to include only
+# parts of the full document (i.e., we need to create a temporary file that
+# should be compiled)
+# 
+# $(call run-tex,texcmd,jobname,chapterincludeonlystring,tmpmaintex,ignores,nobibliography)
+TMPSUFFIX = _tmp
+define run-tex
+	[ "$(MAINTEX)" != $4 ] # We would _never_ by accident want to remove \$(MAINTEX)!
+	grep -v '$5' $(MAINTEX) | \
+		sed -e 's|\\begin{document}|\\includeonly{$3}\\begin{document}|' > $4
+	cp $(BBLFILE) $2.bbl
+	cp $(NOMENCLFILE) $2.nls
+	cp $(GLOSSFILE) $2.gls
+	$1 -jobname $2 $4
+	[ "$6" != "1" ] || sed -i.bak -e 's/\\includebibliography/%\\includebibliography/' $4
+	$1 -jobname $2 $4
+	$(RM) $2.{$(subst $(empty) $(empty),$(comma),$(CLEANEXTENSIONS))}
+	$(RM) $4{,.bak}
+endef
+
 ifeq ($(USEPDFTEX), 1)
 
 $(TEX) = $(PDFTEX)
@@ -198,16 +218,7 @@ $(DVIFILE:.dvi=_bare.dvi): MYCHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma
 $(DVIFILE:.dvi=_bare.dvi): MYMAINTEX = $(MAINTEX:.tex=_bare.tex)
 $(DVIFILE:.dvi=_bare.dvi): $(DEPENDENCIES)
 	@for i in $(CHAPTERNAMES); do echo "  + $$i"; done
-	grep -v '$(IGNOREINCHAPTERMODEBARE)' $(MAINTEX) \
-		| sed -e 's|\\begin{document}|\\includeonly{$(MYCHAPTERINCLUDEONLYSTRING)}\\begin{document}|' > $(MYMAINTEX)
-	cp $(BBLFILE) $(@:.dvi=.bbl)
-	cp $(NOMENCLFILE) $(@:.dvi=.nls)
-	cp $(GLOSSFILE) $(@:.dvi=.gls)
-	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
-	sed -i.bak -e 's/\\includebibliography/%\\includebibliography/' $(MYMAINTEX)
-	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
-	$(RM) $(@:.dvi=).{$(subst $(empty) $(empty),$(comma),$(CLEANEXTENSIONS))}
-	$(RM) $(MYMAINTEX){,.bak}
+	$(call run-tex,$(TEX),$(@:.dvi=),$(MYCHAPTERINCLUDEONLYSTRING),$(MYMAINTEX),$(IGNOREINCHAPTERMODEBARE),1)
 
 # Clear the default rule dvi <-- tex (otherwise it gets preference over the
 # rule that generates $(CHAPTERSDIR)/%_ch.dvi below!!)
@@ -231,15 +242,7 @@ $(DVIFILE:.dvi=_bare.dvi): $(DEPENDENCIES)
 $(CHAPTERSDIR)/%_ch.dvi: MYCHAPTERINCLUDEONLYSTRING = $(if $(CHAPTERS),$(CHAPTERINCLUDEONLYSTRING),$(CHAPTERSDIR)/$*)
 $(CHAPTERSDIR)/%_ch.dvi: MYMAINTEX = ch_$(MAINTEX)
 $(CHAPTERSDIR)/%_ch.dvi: $(DEPENDENCIES)
-	grep -v '$(IGNOREINCHAPTERMODE)' $(MAINTEX) \
-		| sed -e 's|\\begin{document}|\\includeonly{$(MYCHAPTERINCLUDEONLYSTRING)}\\begin{document}|' > $(MYMAINTEX)
-	cp $(BBLFILE) $(@:.dvi=.bbl)
-	cp $(NOMENCLFILE) $(@:.dvi=.nls)
-	cp $(GLOSSFILE) $(@:.dvi=.gls)
-	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
-	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
-	$(RM) $(@:.dvi=).{$(subst $(empty) $(empty),$(comma),$(CLEANEXTENSIONS))}
-	$(RM) $(MYMAINTEX)
+	$(call run-tex,$(TEX),$(@:.dvi=),$(MYCHAPTERINCLUDEONLYSTRING),$(MYMAINTEX),$(IGNOREINCHAPTERMODE),0)
 
 # The following rule creates e.g. chapters/introduction/introduction.pdf
 # containing only the chapter 'introduction'. The difficulty in doing this, is
@@ -269,16 +272,7 @@ $(CHAPTERSDIR)/%_ch.pdf: $(CHAPTERSDIR)/%_ch.ps
 $(CHAPTERSDIR)/%_bare.dvi: MYCHAPTERINCLUDEONLYSTRING = $(if $(CHAPTERS),$(CHAPTERINCLUDEONLYSTRING),$(CHAPTERSDIR)/$*)
 $(CHAPTERSDIR)/%_bare.dvi: MYMAINTEX = ch_bare_$(MAINTEX)
 $(CHAPTERSDIR)/%_bare.dvi: $(DEPENDENCIES)
-	grep -v '$(IGNOREINCHAPTERMODEBARE)' $(MAINTEX) \
-		| sed -e 's|\\begin{document}|\\includeonly{$(MYCHAPTERINCLUDEONLYSTRING)}\\begin{document}|' > $(MYMAINTEX)
-	cp $(BBLFILE) $(@:.dvi=.bbl)
-	cp $(NOMENCLFILE) $(@:.dvi=.nls)
-	cp $(GLOSSFILE) $(@:.dvi=.gls)
-	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
-	sed -i.bak -e 's/\\includebibliography/%\\includebibliography/' $(MYMAINTEX)
-	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
-	$(RM) $(@:.dvi=).{$(subst $(empty) $(empty),$(comma),$(CLEANEXTENSIONS))}
-	$(RM) $(MYMAINTEX){,.bak}
+	$(call run-tex,$(TEX),$(@:.dvi=),$(MYCHAPTERINCLUDEONLYSTRING),$(MYMAINTEX),$(IGNOREINCHAPTERMODEBARE),1)
 
 endif
 
