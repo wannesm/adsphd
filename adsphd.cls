@@ -472,7 +472,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
     \let\chapter=\orig@chapter
   }{
     \chapter*{Preface}
-    {\textcolor{Red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
+    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
     sure its starts with "\textbackslash{}chapter*\{Preface\}"\ldots }}
     \instructionsforeword
   }
@@ -496,7 +496,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
     \let\chapter=\orig@chapter
   }{
     \chapter*{Abstract}
-    {\textcolor{Red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
+    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
     sure it starts with "\textbackslash{}chapter*\{Abstract\}"\ldots}}
     \instructionsabstract
   }
@@ -507,7 +507,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
     \include{\chaptersdir/#1/#1}
   }{
     \chapter*{Nomenclature}
-    {\textcolor{Red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
+    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
     sure it starts with "\textbackslash{}chapter*\{Nomenclature\}"\ldots}}
     \instructionslistofsymbols
   }
@@ -556,7 +556,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
     \include{\chaptersdir/#1/#1}
   }{
     \chapter{Appendix}
-    {\textcolor{Red}{Input file \chaptersdir/#1/#1.tex does not exist.}}
+    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist.}}
     \instructionsappendices
   }
 }
@@ -584,7 +584,7 @@ Expects chapter* for CV, changed chapter to chapter*}%
   \let\chapter=\orig@chapter
   }{
     \chapter*{Curriculum vitae}
-    {\textcolor{Red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
+    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
     sure it starts with "\textbackslash{}chapter*\{Curriculum vitae\}"\ldots}}
     \instructionscv
   }
@@ -611,7 +611,7 @@ Expects chapter* for CV, changed chapter to chapter*}%
     }{
       \cleardoublepage
       \chapter*{\pubnametoc}
-      {\textcolor{Red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
+      {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
       sure it starts with "\textbackslash{}chapter*\{\pubnametoc\}"\ldots}}
       \instructionslistofpublications
     }
