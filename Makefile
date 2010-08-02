@@ -164,7 +164,6 @@ default: $(PDFFILE)
 # should be compiled)
 # 
 # $(call run-tex,texcmd,jobname,chapterincludeonlystring,tmpmaintex,ignores,nobibliography)
-TMPSUFFIX = _tmp
 define run-tex
 	[ "$(MAINTEX)" != $4 ] # We would _never_ by accident want to remove \$(MAINTEX)!
 	grep -v '$5' $(MAINTEX) | \
@@ -179,6 +178,7 @@ define run-tex
 	$(RM) $4{,.bak}
 endef
 
+# Make distinction between latex and pdflatex compilation
 ifeq ($(USEPDFTEX), 1)
 
 $(TEX) = $(PDFTEX)
@@ -223,11 +223,6 @@ $(DVIFILE:.dvi=_bare.dvi): $(DEPENDENCIES)
 # Clear the default rule dvi <-- tex (otherwise it gets preference over the
 # rule that generates $(CHAPTERSDIR)/%_ch.dvi below!!)
 %.dvi: %.tex
-
-#$(DVIFILE): %.dvi : $(FORCE_REBUILD)
-#	@echo DVIFILE:%%.dvi rule
-#	$(TEX) -jobname $(@:.dvi=) $(MAINTEX)
-#	$(TEX) -jobname $(@:.dvi=) $(MAINTEX)
 
 %.ps: %.dvi
 	$(DVIPS) -P pdf -o $@ $<
