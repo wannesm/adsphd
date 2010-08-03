@@ -168,6 +168,7 @@ define run-tex
 	[ "$(MAINTEX)" != $4 ] # We would _never_ by accident want to remove \$(MAINTEX)!
 	grep -v '$5' $(MAINTEX) | \
 		sed -e 's|\\begin{document}|\\includeonly{$3}\\begin{document}|' > $4
+	cp $(MAINTEX:.tex=.aux) $2.aux
 	cp $(BBLFILE) $2.bbl
 	cp $(NOMENCLFILE) $2.nls
 	cp $(GLOSSFILE) $2.gls
