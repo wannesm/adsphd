@@ -422,7 +422,7 @@ glossary:
 	@make $(GLOSSFILE)
 	
 %.gls: %.tex %.aux
-	@echo "Creating nomenclature..."
+	@echo "Creating glossary..."
 	$(MAKEINDEX) $(<:.tex=.glo) -s $(<:.tex=.ist) -t $(<:.tex=.glg) -o $(<:.tex=.gls)
 	$(RM) $(DVIFILE)
 
