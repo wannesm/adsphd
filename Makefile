@@ -210,7 +210,7 @@ $(PDFFILE:.pdf=_bare.pdf): $(DEPENDENCIES)
 # If no CHAPTERS environment variable given, only include the requested
 # chapter:
 $(CHAPTERSDIR)/%_ch.pdf: MYCHAPTERINCLUDEONLYSTRING = $(if $(CHAPTERS),$(CHAPTERINCLUDEONLYSTRING),$(CHAPTERSDIR)/$*)
-$(CHAPTERSDIR)/%_ch.pdf: MYMAINTEX = ch_$(MAINTEX)
+$(CHAPTERSDIR)/%_ch.dvi: MYMAINTEX = $(MAINTEX:.tex=_ch.tex)
 $(CHAPTERSDIR)/%_ch.pdf: $(DEPENDENCIES)
 	$(call run-tex,$(TEX),$(@:.pdf=),$(MYCHAPTERINCLUDEONLYSTRING),$(MYMAINTEX),$(IGNOREINCHAPTERMODE),0)
 
@@ -220,7 +220,7 @@ $(CHAPTERSDIR)/%.pdf: $(DEPENDENCIES)
 
 # The following rules provide 'bare' compilation of individual chapters
 $(CHAPTERSDIR)/%_bare.pdf: MYCHAPTERINCLUDEONLYSTRING = $(if $(CHAPTERS),$(CHAPTERINCLUDEONLYSTRING),$(CHAPTERSDIR)/$*)
-$(CHAPTERSDIR)/%_bare.pdf: MYMAINTEX = ch_bare_$(MAINTEX)
+$(CHAPTERSDIR)/%_bare.pdf: MYMAINTEX = $(MAINTEX:.tex=_bare_ch.tex)
 $(CHAPTERSDIR)/%_bare.pdf: $(DEPENDENCIES)
 	$(call run-tex,$(TEX),$(@:.pdf=),$(MYCHAPTERINCLUDEONLYSTRING),$(MYMAINTEX),$(IGNOREINCHAPTERMODEBARE),1)
 
@@ -259,7 +259,7 @@ $(DVIFILE:.dvi=_bare.dvi): $(DEPENDENCIES)
 # If no CHAPTERS environment variable given, only include the requested
 # chapter:
 $(CHAPTERSDIR)/%_ch.dvi: MYCHAPTERINCLUDEONLYSTRING = $(if $(CHAPTERS),$(CHAPTERINCLUDEONLYSTRING),$(CHAPTERSDIR)/$*)
-$(CHAPTERSDIR)/%_ch.dvi: MYMAINTEX = ch_$(MAINTEX)
+$(CHAPTERSDIR)/%_ch.dvi: MYMAINTEX = $(MAINTEX:.tex=_ch.tex)
 $(CHAPTERSDIR)/%_ch.dvi: $(DEPENDENCIES)
 	$(call run-tex,$(TEX),$(@:.dvi=),$(MYCHAPTERINCLUDEONLYSTRING),$(MYMAINTEX),$(IGNOREINCHAPTERMODE),0)
 
@@ -289,7 +289,7 @@ $(CHAPTERSDIR)/%_ch.pdf: $(CHAPTERSDIR)/%_ch.ps
 
 # The following rules provide 'bare' compilation of individual chapters
 $(CHAPTERSDIR)/%_bare.dvi: MYCHAPTERINCLUDEONLYSTRING = $(if $(CHAPTERS),$(CHAPTERINCLUDEONLYSTRING),$(CHAPTERSDIR)/$*)
-$(CHAPTERSDIR)/%_bare.dvi: MYMAINTEX = ch_bare_$(MAINTEX)
+$(CHAPTERSDIR)/%_bare.dvi: MYMAINTEX = $(MAINTEX:.tex=_bare_ch.tex)
 $(CHAPTERSDIR)/%_bare.dvi: $(DEPENDENCIES)
 	$(call run-tex,$(TEX),$(@:.dvi=),$(MYCHAPTERINCLUDEONLYSTRING),$(MYMAINTEX),$(IGNOREINCHAPTERMODEBARE),1)
 
