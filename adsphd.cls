@@ -502,6 +502,32 @@ Expects chapter* for abstract, changed chapter to chapter*}%
   }
 }
 
+\newcommand{\includeabstractnl}[1]{%
+  \selectlanguage{dutch}
+  \cleardoublepage
+  \IfFileExists{\chaptersdir/#1/#1.tex}{
+    \let\orig@chapter=\chapter
+    \renewcommand{\chapter}{%
+      \@ifstar{%
+        \orig@chapter*
+      }{%
+        \message{adsphd.cls Warning: %
+Expects chapter* for abstract, changed chapter to chapter*}%
+        \orig@chapter*%
+      }%
+  }
+    \include{\chaptersdir/#1/#1}
+    \let\chapter=\orig@chapter
+  }{
+    \chapter*{Beknopte samenvatting}
+    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
+    sure it starts with "\textbackslash{}chapter*\{Beknopte
+    samenvatting\}"\ldots}}
+    \instructionsabstract
+  }
+  \selectlanguage{english}
+}
+
 \newcommand{\includenomenclature}[1]{%
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \include{\chaptersdir/#1/#1}
