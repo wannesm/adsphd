@@ -36,20 +36,18 @@ Some convenient Makefile targets:
 *) In the main directory [./]:
 
   make                              # create the full booklet thesis.pdf
-  make thesisfinal                  # create the full booklet regenerating
-                                    # bibliography, nomenclature, etc. so as to
-                                    # no have any issues with old caches.
-  make chapterX                     # create mychapterX.{dvi,pdf,ps} using only
-                                    # the contents of chapters/chapterX/.
   make clean
   make realclean                    # cleanup all mess, including leftover
                                     # mychapter.{dvi,pdf,ps} files.
+  make damnthatreallyclean          # brutally remove all possible temporary
+                                    # files
 *) In a chapter directory [./chapters/chapterX]:
 
-  make                              # Creates chapterX.{ps,pdf} containing the
+  make                              # Creates chapterX.pdf containing the
                                     # TOC, the contents of only chapterX and
                                     # the bibliography.
-
+  make bare                         # Create chapterX.pdf containing only the 
+                                    # chapter text (no TOC, no bibliography).
 
 Other convenient scripts:
   
@@ -72,6 +70,7 @@ Options for the adsphd class:
   12pt
   oneside
   twoside
+  showgit
 
 TROUBLESHOOTING:
 
