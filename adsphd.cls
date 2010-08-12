@@ -150,21 +150,6 @@
   \PassOptionsToPackage{frame}{crop}
 }
 
-\DeclareOption{tothejury}{%
-  \typeout{Creating output for the version to send to the jury!!!}
-  \PassOptionsToPackage{off,noinfo}{crop}
-  \showtodoprivfalse
-  \showtodofalse
-  \showinstructionsfalse
-  \PassOptionsToPackage{final}{showlabels}
-}
-
-\DeclareOption{final}{%
-  \typeout{Creating true page size pdf !!!}
-  \PassOptionsToPackage{off,noinfo}{crop}
-}
-
-% Final document should be a pdf on true size
 \DeclareOption{croppedpdf}{%
   \typeout{Cropped pdf selected!!!}
   \PassOptionsToPackage{off,noinfo}{crop}
@@ -175,7 +160,26 @@
   \PassOptionsToPackage{pdfpagescrop={71 81 524 761}}{hyperref}
 }
 
+\DeclareOption{tothejury}{%
+  \typeout{Creating A4 output for the version to send to the jury!!!}
+  \PassOptionsToPackage{off,noinfo}{crop}
+  \showtodoprivfalse
+  \showtodofalse
+  \showinstructionsfalse
+  \PassOptionsToPackage{final}{showlabels}
+}
 
+\DeclareOption{final}{%
+  \typeout{Creating true page size pdf!}
+  % Remove all 'extra' stuff
+  \PassOptionsToPackage{off,noinfo}{crop}
+  \showtodoprivfalse
+  \showtodofalse
+  \showinstructionsfalse
+  \PassOptionsToPackage{final}{showlabels}
+  % Crop page to true size
+  \PassOptionsToPackage{pdfpagescrop={71 81 524 761}}{hyperref}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now process the options passed to the packages
