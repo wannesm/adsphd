@@ -1097,7 +1097,7 @@ in \@degree
 \begin{minipage}[t]{7.32cm}
 %  \begin{tabular}[t]{p{6.9cm}}
     Jury:\\
-    \@president, president\\
+    \@president, chair\\
     \@promotor, promotor\\
     \@jury \\
     \@externaljurymember \\
