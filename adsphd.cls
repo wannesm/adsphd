@@ -1015,9 +1015,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \begin{textblock}{100}(60,20)
 \vspace{-\parskip}
 \colorbox{gray}{\parbox[c][18mm]{97.92mm}{
-{\bf \small \textcolor{white} {\sffamily Arenberg Doctoral School of Science, Engineering \& Technology}}\\
-{\sffamily\small \textcolor{white} {\@faculty}}\\
-{\sffamily\small \textcolor{white} {\@department}}
+\hspace*{1.3mm}{\bf \small \textcolor{white} {\sffamily Arenberg Doctoral School of Science, Engineering \& Technology}}\\
+\hspace*{1.3mm}{\sffamily\small \textcolor{white} {\@faculty}}\\
+\hspace*{1.3mm}{\sffamily\small \textcolor{white} {\@department}}
 }}
 \end{textblock}
 %
