@@ -1015,9 +1015,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \begin{textblock}{100}(60,20)
 \vspace{-\parskip}
 \colorbox{gray}{\parbox[c][18mm]{97.92mm}{
-{\bf \footnotesize \textcolor{white} {Arenberg Doctoral School of Science, Engineering \& Technology}}\\
-{\footnotesize \textcolor{white} {\@faculty}}\\
-{\footnotesize \textcolor{white} {\@department}}
+{\bf \small \textcolor{white} {\sffamily Arenberg Doctoral School of Science, Engineering \& Technology}}\\
+{\sffamily\small \textcolor{white} {\@faculty}}\\
+{\sffamily\small \textcolor{white} {\@department}}
 }}
 \end{textblock}
 %
@@ -1032,28 +1032,28 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \begin{textblock}{120}(17.5,112.5)
 \textblockcolour{}
 \vspace{-\parskip}
-\Large\sffamily\textbf{\@title}
+\raggedright\selectfont\LARGE\sffamily\textbf{\@title}
 \end{textblock}
 %
 %\begin{textblock}{120}(0,92.5)
 \begin{textblock}{120}(17.5,125)
 \textblockcolour{}
 \vspace{-\parskip}
-\large\sffamily{\@subtitle}
+\Large\sffamily{\@subtitle}
 \end{textblock}
 %
 %\begin{textblock}{120}(0,115)
 \begin{textblock}{120}(17.5,147.5)
 \textblockcolour{}
 \vspace{-\parskip}
-\large\sffamily\textbf{\@authorf\ \MakeUppercase\@authorl}
+\Large\sffamily\@authorf\ \MakeUppercase\@authorl
 \end{textblock}
 %
 %\begin{textblock}{60}(82.5,160)
 \begin{textblock}{60}(100,192.5)
 \textblockcolour{}
 \vspace{-\parskip}
-Dissertation presented in partial\\
+\sffamily Dissertation presented in partial\\
 fulfillment of the requirements for\\
 the degree of Doctor\\
 in \@degree
@@ -1063,14 +1063,13 @@ in \@degree
 \begin{textblock}{160}(0,217.5)
 \textblockcolour{}
 \vspace{-\parskip}
-\begin{center} \@date \end{center}
+\begin{center} \sffamily\@date \end{center}
 \end{textblock}
 
 \newpage
 \thispagestyle{empty} \mbox{}
 \renewcommand{\sfdefault}{\origsfdefault}
 \newpage
-
 }
 
 \renewcommand{\maketitle}{%
@@ -1187,11 +1186,12 @@ ISBN \@isbn
 \colorbox{gray}{\parbox[c][18.75mm]{151mm}{
 \flushright
 \vspace{-3mm}
-{\bf \scriptsize \textcolor{white} {Arenberg Doctoral School of Science, Engineering \& Technology} \ \ }\\[-1mm]
-{\tiny \textcolor{white} {\@faculty\ \ }}\\[-1mm]
-{\tiny \textcolor{white} {\@department \ \ }}\\[-1mm]
-{\tiny \textcolor{white} {\@researchgroup\ \ }}\\[-1mm]
-{\tiny \textcolor{white} {\@address... \ \ }}
+{\bf \scriptsize \textcolor{white} {\sffamily{}Arenberg Doctoral School of Science, Engineering \& Technology} \ \ }\\[-1mm]
+{\scriptsize \textcolor{white} {\sffamily\@faculty\ \ }}\\[-1.2mm]
+{\scriptsize \textcolor{white} {\sffamily\@department \ \ }}\\[-1.2mm]
+{\scriptsize \textcolor{white} {\sffamily\@researchgroup\ \ }}\\[-1.2mm]
+{\scriptsize \textcolor{white} {\sffamily\@address\ \ }}\\[-1.2mm]
+{\scriptsize \textcolor{white} {\sffamily{}B-3001 Leuven\ \ }}
 }}
 \end{textblock}
 %
