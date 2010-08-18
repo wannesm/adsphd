@@ -131,7 +131,7 @@ BBLFILE     = $(MAINTEX:.tex=.bbl)
 NOMENCLFILE = $(MAINTEX:.tex=.nls)
 GLOSSFILE   = $(MAINTEX:.tex=.gls)
 
-IGNOREINCHAPTERMODE = \(makefrontcover\|makebackcover\|maketitle\|includepreface\|includeabstract\|listoffigures\|listoftables\|printnomenclature\|printglossary\|includecv\|includepublications\|includeonly\|instructionschapters\)
+IGNOREINCHAPTERMODE = \(makefrontcover\|makebackcover\|maketitle\|listoffigures\|listoftables\|printnomenclature\|printglossary\|includeonly\|instructionschapters\)
 
 IGNOREINCHAPTERMODEBARE = $(subst makefrontcover,makefrontcover\|tableofcontents,$(IGNOREINCHAPTERMODE))
 
