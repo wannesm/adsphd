@@ -378,6 +378,10 @@ $(CHAPTERSDIR)/%/Makefile: Makefile
 	@echo -e "figurelist:" >> $@
 	@echo -e "\t@( cd \$$(MAINDIR) && make --no-print-directory \$$@ TEXFILE=$(CHAPTERSDIR)/$*/$*.tex )" >> $@
 	@echo "" >> $@
+	@echo ".PHONY: clean" >> $@
+	@echo "clean:" >> $@
+	@echo -e "\t\$$(RM) $*.pdf $*_bare.pdf" >> $@
+	@echo "" >> $@
 	@echo "s:" >> $@
 	@echo -e "\t@echo $(EDITOR) $(@:$(CHAPTERSDIR)/%/Makefile=%).tex $(MAINBIBTEXFILE) $(DEFS) > \$$@" >> $@
 	@echo -e "\t@chmod +x \$$@" >> $@
