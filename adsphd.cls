@@ -488,6 +488,31 @@ Expects chapter* for abstract, changed chapter to chapter*}%
   }
 }
 
+\newcommand{\includeprefacenl}[1]{%
+  \selectlanguage{dutch}
+  \cleardoublepage
+  \IfFileExists{\chaptersdir/#1/#1.tex}{
+    \let\orig@chapter=\chapter
+    \renewcommand{\chapter}{%
+      \@ifstar{%
+        \orig@chapter*
+      }{%
+        \message{adsphd.cls Warning: %
+Expects chapter* for abstract, changed chapter to chapter*}%
+        \orig@chapter*%
+      }%
+  }
+    \include{\chaptersdir/#1/#1}
+    \let\chapter=\orig@chapter
+  }{
+    \chapter*{Dankwoord}
+    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
+    sure its starts with "\textbackslash{}chapter*\{Dankwoord\}"\ldots }}
+    \instructionsforeword
+  }
+  \selectlanguage{english}
+}
+
 \newcommand{\includeabstract}[1]{%
 %  \selectlanguage{english}
   \cleardoublepage
