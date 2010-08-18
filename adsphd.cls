@@ -435,6 +435,12 @@
 \usepackage[dutch,english]{babel} % order of passed options seems to be
                                   % important!
 
+% Helvetica font for the front cover
+\let\origsfdefault\sfdefault
+\RequirePackage[scaled]{helvet}
+\let\helvetsfdefault\sfdefault
+\renewcommand{\sfdefault}{\origsfdefault}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The document consists of 
 %  \frontmatter -> Preface, Summary, etc
@@ -993,6 +999,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 
 % Taken from ADS <--
 \newcommand{\makefrontcover}{%
+\renewcommand{\sfdefault}{\helvetsfdefault}
 \thispagestyle{empty}
 % Now using \usepackage[absolute]{textpos}. The positioning become a lot
 % robuster this way wrt changes in margins etc.
@@ -1061,6 +1068,7 @@ in \@degree
 
 \newpage
 \thispagestyle{empty} \mbox{}
+\renewcommand{\sfdefault}{\origsfdefault}
 \newpage
 
 }
@@ -1167,6 +1175,7 @@ ISBN \@isbn
 
 \newcommand{\makebackcover}{%
 %%% provide back cover
+\renewcommand{\sfdefault}{\helvetsfdefault}
 \cleardoublepage \mbox{}
 \thispagestyle{empty}
 \newpage
@@ -1199,6 +1208,7 @@ ISBN \@isbn
 \vspace{-\parskip}
 \includegraphics*[width=12mm]{image/ASSO_ZEGEL_ZW}
 \end{textblock}
+\renewcommand{\sfdefault}{\origsfdefault}
 }
 
 \endinput
