@@ -1172,7 +1172,7 @@ in \@degree
 \mbox{}
 \vfill
 {\setlength{\parindent}{0ex}\copyright{}~Katholieke Universiteit Leuven -- \@faculty \\
-\@address, B-3001 Leuven (Belgium)}
+\@address, B-3001 Heverlee (Belgium)}
 
 \bigskip
 \selectlanguage{dutch}
@@ -1216,7 +1216,7 @@ ISBN \@isbn
 {\scriptsize \textcolor{white} {\sffamily\@department \ \ }}\\[-1.2mm]
 {\scriptsize \textcolor{white} {\sffamily\@researchgroup\ \ }}\\[-1.2mm]
 {\scriptsize \textcolor{white} {\sffamily\@address\ \ }}\\[-1.2mm]
-{\scriptsize \textcolor{white} {\sffamily{}B-3001 Leuven\ \ }}
+{\scriptsize \textcolor{white} {\sffamily{}B-3001 Heverlee\ \ }}
 }}
 \end{textblock}
 %
