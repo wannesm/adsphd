@@ -279,7 +279,7 @@
 	% Load the crop package
 	\RequirePackage[a4,center,pdftex]{crop}
 	\RequirePackage[pdftex]{graphicx}
-	\DeclareGraphicsExtensions{.pdf, .jpg, .tif}
+	\DeclareGraphicsExtensions{.pdf, .jpg, .tif, .png}
 	% Use utf-8 encoding for foreign characters
 	\RequirePackage[utf8]{inputenc}
 \else
