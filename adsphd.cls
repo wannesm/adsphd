@@ -1078,17 +1078,17 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \begin{textblock}{60}(100,192.5)
 \textblockcolour{}
 \vspace{-\parskip}
-\sffamily Dissertation presented in partial\\
+{\small\sffamily Dissertation presented in partial\\
 fulfillment of the requirements for\\
 the degree of Doctor\\
-in \@degree
+in \@degree}
 \end{textblock}
 %
 %\begin{textblock}{160}(-17.5,185)
 \begin{textblock}{160}(0,217.5)
 \textblockcolour{}
 \vspace{-\parskip}
-\begin{center} \sffamily\@date \end{center}
+\begin{center} {\small \sffamily\@date} \end{center}
 \end{textblock}
 
 \newpage
