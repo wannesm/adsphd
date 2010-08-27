@@ -1070,21 +1070,24 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Provide front cover
-\newcommand{\makefrontcover}{%
+\newcommand{\makefrontcover}{\makefrontcovergeneral{0mm}{1}}
+% \makefrontcovergeneral{xskip}{}clearpage
+\newcommand{\makefrontcovergeneral}[2]{%
+% Use Helvetica
 \renewcommand{\sfdefault}{\helvetsfdefault}
 \thispagestyle{empty}
 % Now using \usepackage[absolute]{textpos}. The positioning become a lot
 % robuster this way wrt changes in margins etc.
-%\begin{textblock}{160}(-17.5,-32.5)
+%
+% Put sedes at top center
 \begin{textblock}{160}(0,0)
 \vspace{-\parskip}
 \begin{center}
 \includegraphics[width=8mm]{image/sedes}
 \end{center}
 \end{textblock}
-%
-%\begin{textblock}{100}(42.5,-12.5)
-\begin{textblock}{100}(60,20)
+% Create gray box
+\begin{textblock*}{100mm+\bleed}(60mm,20mm)
 \textblockcolour{gray}
 \vspace{-\parskip}
 %\parbox[c][20mm]{(97.92mm+\bleed)}{ % This does not work. The bleed is
@@ -1095,67 +1098,85 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 {\sffamily\small \textcolor{white} {\@faculty}}\\
 {\sffamily\small \textcolor{white} {\@department}}
 }
-\end{textblock}
+\end{textblock*}
 %
-% Add gray textblock for bleed at the right if required
-\ifbleed
-\begin{textblock}{7}(160,20) % Fixme! Using hardcoded value of \bleed==7
-\textblockcolour{gray}
-\parbox[c][20mm]{\bleed}{}
-\end{textblock}
-\fi
+% Create blue background 
+\begin{textblock*}{60mm+\bleed}(0mm-\bleed, 20mm)
+\textblockcolour{}
+\includegraphics[width=60mm+\bleed,height=20mm]{image/blue}
+\end{textblock*}
 %
-%
-%\begin{textblock}{60}(-17.5,-12.5)
-\begin{textblock}{60}(0, 20)
+% Put KULeuven logo on top of the blue background
+\begin{textblock*}{60mm}(0mm, 20mm)
 \textblockcolour{}
 %\vspace{-\parskip}
-\hspace*{-\bleed}\includegraphics[width=\bleed,height=20mm]{image/blue}%
 \includegraphics*[height=20mm]{image/kullogo2}
-\end{textblock}
+\end{textblock*}
 %
-%\begin{textblock}{120}(0,80)
-\begin{textblock}{120}(17.5,112.5)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Title, subtitle, authorname, text and date can be moved around.
+% Change the textblock* commands below. 
+%
+% Syntax of textblock environment:
+% 
+%   \begin{textblock*}{width}(xpos,ypos)
+%     ...
+%   \end{textblock*}
+% 
+% !! Make sure not to remove the '+#1' part!!!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Place the title
+\begin{textblock*}{120mm}(17.5mm,112.5mm)
 \textblockcolour{}
 \vspace{-\parskip}
 \raggedright\selectfont\LARGE\sffamily\textbf{\@title}
-\end{textblock}
+\end{textblock*}
 %
-%\begin{textblock}{120}(0,92.5)
-\begin{textblock}{120}(17.5,125)
+% Place the subtitle
+\begin{textblock*}{120mm}(17.5mm,125mm)
 \textblockcolour{}
 \vspace{-\parskip}
 \Large\sffamily{\@subtitle}
-\end{textblock}
+\end{textblock*}
 %
-%\begin{textblock}{120}(0,115)
-\begin{textblock}{120}(17.5,147.5)
+% Place the author name
+\begin{textblock*}{120mm}(17.5mm,147.5mm)
 \textblockcolour{}
 \vspace{-\parskip}
 \Large\sffamily\@authorf\ \MakeUppercase\@authorl
-\end{textblock}
+\end{textblock*}
 %
-%\begin{textblock}{60}(82.5,160)
-\begin{textblock}{60}(100,192.5)
+% Place the misc text
+\begin{textblock*}{60mm}(97.5mm,192.5mm)
 \textblockcolour{}
 \vspace{-\parskip}
 {\small\sffamily Dissertation presented in partial\\
 fulfillment of the requirements for\\
 the degree of Doctor\\
 in \@degree}
-\end{textblock}
+\end{textblock*}
 %
-%\begin{textblock}{160}(-17.5,185)
-\begin{textblock}{160}(0,221.5)
+% Place date
+\begin{textblock*}{160mm}(0mm,221.5mm)
 \textblockcolour{}
 \vspace{-\parskip}
 \begin{center} {\small\sffamily\@date }\end{center}
-\end{textblock}
+\end{textblock*}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+% Only add empty pages if asked for
+\ifthenelse{\equal{#2}{1}}
+{
+  \newpage
+  \thispagestyle{empty} \mbox{}
+  \renewcommand{\sfdefault}{\origsfdefault}
+  \newpage
+}{}
 
-\newpage
-\thispagestyle{empty} \mbox{}
-\renewcommand{\sfdefault}{\origsfdefault}
-\newpage
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
