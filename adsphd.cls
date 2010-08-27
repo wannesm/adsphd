@@ -1485,9 +1485,9 @@ ISBN \@isbn
   }
   \end{turn}
   \end{textblock*}
-%%  \vfill
-%  \renewcommand{\sfdefault}{\origsfdefault}
-%}
+%  \vfill
+  \renewcommand{\sfdefault}{\origsfdefault}
+}
 
 
 %\newcommand{\makespinehorizontal}{%
