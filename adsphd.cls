@@ -44,7 +44,10 @@
 %\setlength{\adsphdspinewidth}{20mm} % Ridiculously large ;)
 \setlength{\adsphdspinewidth}{9mm}
 
+
 % Define bleed
+\newlength{\defaultbleed}
+\setlength{\defaultbleed}{7mm}
 \newlength{\bleed}
 \setlength{\bleed}{0mm} % No bleed in normal mode
 \bleedfalse
