@@ -334,7 +334,6 @@
 % Load the crop package
 \ifpdf
 	% Load the crop package
-  \message{crop: requirepackage[center,pdftex]}
   \ifAthree
     \RequirePackage[center,pdftex]{crop}
   \else
@@ -346,7 +345,6 @@
 	\RequirePackage[utf8]{inputenc}
 \else
 	% Load the crop package
-  \message{crop: requirepackage[center,dvips]}
   \ifAthree
     \RequirePackage[center,dvips]{crop}
   \else
