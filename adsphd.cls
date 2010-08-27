@@ -467,6 +467,9 @@
 \usepackage[dutch,english]{babel} % order of passed options seems to be
                                   % important!
 
+% To easily change line spacing
+\RequirePackage{setspace}
+
 % Helvetica font for the front cover
 \let\origsfdefault\sfdefault
 \RequirePackage[scaled]{helvet}
@@ -1308,6 +1311,40 @@ ISBN \@isbn
 \includegraphics*[width=12mm]{image/ASSO_ZEGEL_ZW}
 \end{textblock}
 \renewcommand{\sfdefault}{\origsfdefault}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Create the spine of the booklet
+\newcommand{\spinetitlewidth}{90mm}
+\newcommand{\makespine}{%
+  \renewcommand{\sfdefault}{\helvetsfdefault}
+  \cleardoublepage \mbox{}%
+  \thispagestyle{empty}%
+
+  \begin{textblock}{20}(19.994,0)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \includegraphics[width=20mm,height=\adsphdspinewidth]{image/blue}%
+  \end{textblock}
+
+  \newlength{\authorlen}
+  \settowidth{\authorlen}{\large\sffamily\@authorf\ \MakeUppercase\@authorl}
+  \begin{textblock}{180}(53,0)
+  \parbox[c][\adsphdspinewidth]{(\authorlen)}{
+  \large\sffamily\@authorf\ \MakeUppercase\@authorl%
+  }
+%  \vspace{-\parskip}
+  \textblockcolour{}
+  \hfill
+  \parbox[c][\adsphdspinewidth]{\spinetitlewidth}{
+    \centering
+    \setstretch{.85}
+    \normalsize\sffamily\textbf{\MakeUppercase\@title}
+  }
+  \hfill\large\sffamily\@date
+  \end{textblock}
+%  \vfill
+  \renewcommand{\sfdefault}{\origsfdefault}
 }
 
 \endinput
