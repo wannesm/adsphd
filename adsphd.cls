@@ -70,6 +70,10 @@
 \fi
 % --> end ADS 
 
+\DeclareOption{frame}{%
+  \PassOptionsToPackage{frame}{crop}
+}
+
 \DeclareOption{colorlinks}{%
   % Nice colored links in the pdf
   \PassOptionsToPackage{colorlinks=true}{hyperref}
@@ -228,9 +232,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now process the options passed to the packages
 
+\ExecuteOptions{frame}
+
 \ProcessOptions\relax
 \LoadClass{report}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Definitions of the input parameters
