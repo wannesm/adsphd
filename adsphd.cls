@@ -479,6 +479,8 @@
 % Simple arithmetic with lengths
 \RequirePackage{calc}
 
+\RequirePackage{rotating}
+
 % Helvetica font for the front cover
 \let\origsfdefault\sfdefault
 \RequirePackage[scaled]{helvet}
@@ -1347,36 +1349,99 @@ ISBN \@isbn
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Create the spine of the booklet
-\newcommand{\spinetitlewidth}{90mm}
-\newcommand{\makespine}{%
-  \renewcommand{\sfdefault}{\helvetsfdefault}
-  \cleardoublepage \mbox{}%
-  \thispagestyle{empty}%
+\newcommand{\defaultspinetitlewidth}{90mm}
+\newcommand{\spinetitlewidth}{\defaultspinetitlewidth}
 
-  \begin{textblock}{20}(19.994,0)
+%\newcommand{\makespine}[2]{\makespinegeneral{xskip}{clearpage}{spinewidth}{spinetitlewidth}}
+\newcommand{\makespine}[2]{\makespinegeneral{0mm}{1}{#1}{#2}}
+\newcommand{\makespinegeneral}[4]{%
+  % Use Helvetica
+  \renewcommand{\sfdefault}{\helvetsfdefault}
+  %
+  % Get adsphdspinewidth as #3
+  \renewcommand{\adsphdspinewidth}{#3}
+  % 
+  % Get spinetitlewidth as #4
+  \ifthenelse{\equal{#4}{}}
+  {}{
+    \renewcommand{\spinetitlewidth}{#4}
+  }
+  %
+  % Only clear page if asked for
+  \ifthenelse{\equal{#2}{1}}
+  {
+    \cleardoublepage \mbox{}%
+    \thispagestyle{empty}%
+  }{}
+  %
+  % Create blue box
+  \begin{textblock*}{\adsphdspinewidth}(0mm,20mm)
   \textblockcolour{}
   \vspace{-\parskip}
-  \includegraphics[width=20mm,height=\adsphdspinewidth]{image/blue}%
-  \end{textblock}
-
+  \includegraphics[width=\adsphdspinewidth,height=20mm]{image/blue}%
+  \end{textblock*}
+  %
   \newlength{\authorlen}
   \settowidth{\authorlen}{\large\sffamily\@authorf\ \MakeUppercase\@authorl}
-  \begin{textblock}{180}(53,0)
+  %
+  \begin{textblock*}{\adsphdspinewidth}(0mm, 53mm)
+  \textblockcolour{}
+  % Rotate the text
+  \begin{turn}{-90}
+  \makebox[\adsphdpaperheight-60mm][c]{% 20mm(white)+20mm(blue)+13mm(space before name)+7mm(after date)
+  %
+  % Place author
   \parbox[c][\adsphdspinewidth]{(\authorlen)}{
   \large\sffamily\@authorf\ \MakeUppercase\@authorl%
   }
-%  \vspace{-\parskip}
-  \textblockcolour{}
   \hfill
+  %
+  % Place title
   \parbox[c][\adsphdspinewidth]{\spinetitlewidth}{
     \centering
     \setstretch{.85}
     \normalsize\sffamily\textbf{\MakeUppercase\@title}
   }
+  %
+  % Place date
   \hfill\large\sffamily\@date
-  \end{textblock}
-%  \vfill
-  \renewcommand{\sfdefault}{\origsfdefault}
+  }
+  \end{turn}
+  \end{textblock*}
+%%  \vfill
+%  \renewcommand{\sfdefault}{\origsfdefault}
+%}
+
+
+%\newcommand{\makespinehorizontal}{%
+%  \renewcommand{\sfdefault}{\helvetsfdefault}
+%  \cleardoublepage \mbox{}%
+%  \thispagestyle{empty}%
+%
+%  \begin{textblock}{20}(19.994,0)
+%  \textblockcolour{}
+%  \vspace{-\parskip}
+%  \includegraphics[width=20mm,height=\adsphdspinewidth]{image/blue}%
+%  \end{textblock}
+%
+%  \newlength{\authorlen}
+%  \settowidth{\authorlen}{\large\sffamily\@authorf\ \MakeUppercase\@authorl}
+%  \begin{textblock}{180}(53,0)
+%  \parbox[c][\adsphdspinewidth]{(\authorlen)}{
+%  \large\sffamily\@authorf\ \MakeUppercase\@authorl%
+%  }
+%%  \vspace{-\parskip}
+%  \textblockcolour{}
+%  \hfill
+%  \parbox[c][\adsphdspinewidth]{\spinetitlewidth}{
+%    \centering
+%    \setstretch{.85}
+%    \normalsize\sffamily\textbf{\MakeUppercase\@title}
+%  }
+%  \hfill\large\sffamily\@date
+%  \end{textblock}
+%%  \vfill
+%  \renewcommand{\sfdefault}{\origsfdefault}
 }
 
 \endinput
