@@ -1073,19 +1073,33 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 %
 %\begin{textblock}{100}(42.5,-12.5)
 \begin{textblock}{100}(60,20)
+\textblockcolour{gray}
 \vspace{-\parskip}
-\colorbox{gray}{\parbox[c][18mm]{97.92mm}{
-\hspace*{1.3mm}{\bf \small \textcolor{white} {\sffamily Arenberg Doctoral School of Science, Engineering \& Technology}}\\
-\hspace*{1.3mm}{\sffamily\small \textcolor{white} {\@faculty}}\\
-\hspace*{1.3mm}{\sffamily\small \textcolor{white} {\@department}}
-}}
+%\parbox[c][20mm]{(97.92mm+\bleed)}{ % This does not work. The bleed is
+                                     % hardcoded in the texblock size. Fixme!
+\hspace*{2mm}
+\parbox[c][20mm]{(97.92mm)}{
+{\bf \small \textcolor{white} {\sffamily Arenberg Doctoral School of Science, Engineering \& Technology}}\\
+{\sffamily\small \textcolor{white} {\@faculty}}\\
+{\sffamily\small \textcolor{white} {\@department}}
+}
 \end{textblock}
+%
+% Add gray textblock for bleed at the right if required
+\ifbleed
+\begin{textblock}{7}(160,20) % Fixme! Using hardcoded value of \bleed==7
+\textblockcolour{gray}
+\parbox[c][20mm]{\bleed}{}
+\end{textblock}
+\fi
+%
 %
 %\begin{textblock}{60}(-17.5,-12.5)
 \begin{textblock}{60}(0, 20)
 \textblockcolour{}
-\vspace{-\parskip}
-\includegraphics*[width=60mm]{image/kullogo2}
+%\vspace{-\parskip}
+\hspace*{-\bleed}\includegraphics[width=\bleed,height=20mm]{image/blue}%
+\includegraphics*[height=20mm]{image/kullogo2}
 \end{textblock}
 %
 %\begin{textblock}{120}(0,80)
@@ -1120,10 +1134,10 @@ in \@degree}
 \end{textblock}
 %
 %\begin{textblock}{160}(-17.5,185)
-\begin{textblock}{160}(0,217.5)
+\begin{textblock}{160}(0,221.5)
 \textblockcolour{}
 \vspace{-\parskip}
-\begin{center} {\small \sffamily\@date} \end{center}
+\begin{center} {\small\sffamily\@date }\end{center}
 \end{textblock}
 
 \newpage
