@@ -546,5 +546,8 @@ spine.pdf: spine.tex adsphd.cls
 cover3pages.pdf: cover.pdf cover.tex spine.pdf spine.tex
 	pdftk A=cover.pdf B=spine.pdf cat A4 B1E A1 output $@
 
+full_cover.pdf: full_cover.tex cover3pages.pdf
+	$(PDFTEX) $<
+
 ##############################################################################
 # vim: tw=78
