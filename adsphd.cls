@@ -1381,8 +1381,11 @@ ISBN \@isbn
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Create the spine of the booklet
-\newcommand{\defaultspinetitlewidth}{90mm}
-\newcommand{\spinetitlewidth}{\defaultspinetitlewidth}
+\newlength{\defaultspinetitlewidth}
+\setlength{\defaultspinetitlewidth}{90mm}
+
+\newlength{\spinetitlewidth}
+\setlength{\spinetitlewidth}{\defaultspinetitlewidth}
 
 %\newcommand{\makespine}[2]{\makespinegeneral{xskip}{clearpage}{spinewidth}{spinetitlewidth}}
 \newcommand{\makespine}[2]{\makespinegeneral{0mm}{1}{#1}{#2}}
@@ -1391,19 +1394,21 @@ ISBN \@isbn
   \renewcommand{\sfdefault}{\helvetsfdefault}
   %
   % Get adsphdspinewidth as #3
-  \renewcommand{\adsphdspinewidth}{#3}
+  \setlength{\adsphdspinewidth}{#3}
   % 
   % Get spinetitlewidth as #4
   \ifthenelse{\equal{#4}{}}
   {}{
-    \renewcommand{\spinetitlewidth}{#4}
+    \setlength{\spinetitlewidth}{#4}
   }
+  %
+  % Empty pagestyle
+  \thispagestyle{empty}%
   %
   % Only clear page if asked for
   \ifthenelse{\equal{#2}{1}}
   {
     \cleardoublepage \mbox{}%
-    \thispagestyle{empty}%
   }{}
   %
   % Create blue box
