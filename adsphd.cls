@@ -55,8 +55,6 @@
 % Temporary var
 \newlength{\tmplength}
 
-% Show a frame around each logical page by default
-\PassOptionsToPackage{frame}{crop}
 
 % Different actions when using pdflatex
 \RequirePackage{ifpdf}
