@@ -1055,6 +1055,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 % Define front and back cover + redefine the title page
 
 % Taken from ADS <--
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Provide front cover
 \newcommand{\makefrontcover}{%
 \renewcommand{\sfdefault}{\helvetsfdefault}
 \thispagestyle{empty}
@@ -1129,6 +1132,8 @@ in \@degree}
 \newpage
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Redefine title page
 \renewcommand{\maketitle}{%
 \cleardoublepage
 \thispagestyle{empty} \mbox{}
@@ -1229,8 +1234,9 @@ ISBN \@isbn
 \cleardoublepage
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Provide back cover
 \newcommand{\makebackcover}{%
-%%% provide back cover
 \renewcommand{\sfdefault}{\helvetsfdefault}
 \cleardoublepage \mbox{}
 \thispagestyle{empty}
