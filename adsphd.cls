@@ -1080,14 +1080,15 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 % robuster this way wrt changes in margins etc.
 %
 % Put sedes at top center
-\begin{textblock}{160}(0,0)
+\begin{textblock*}{160mm}(0mm+#1,0mm)
 \vspace{-\parskip}
 \begin{center}
 \includegraphics[width=8mm]{image/sedes}
 \end{center}
-\end{textblock}
+\end{textblock*}
+%
 % Create gray box
-\begin{textblock*}{100mm+\bleed}(60mm,20mm)
+\begin{textblock*}{100mm+\bleed}(60mm+#1,20mm)
 \textblockcolour{gray}
 \vspace{-\parskip}
 %\parbox[c][20mm]{(97.92mm+\bleed)}{ % This does not work. The bleed is
@@ -1101,13 +1102,13 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \end{textblock*}
 %
 % Create blue background 
-\begin{textblock*}{60mm+\bleed}(0mm-\bleed, 20mm)
+\begin{textblock*}{60mm+\bleed}(0mm-\bleed+#1, 20mm)
 \textblockcolour{}
 \includegraphics[width=60mm+\bleed,height=20mm]{image/blue}
 \end{textblock*}
 %
 % Put KULeuven logo on top of the blue background
-\begin{textblock*}{60mm}(0mm, 20mm)
+\begin{textblock*}{60mm}(0mm+#1, 20mm)
 \textblockcolour{}
 %\vspace{-\parskip}
 \includegraphics*[height=20mm]{image/kullogo2}
@@ -1129,28 +1130,28 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Place the title
-\begin{textblock*}{120mm}(17.5mm,112.5mm)
+\begin{textblock*}{120mm}(17.5mm+#1,112.5mm)
 \textblockcolour{}
 \vspace{-\parskip}
 \raggedright\selectfont\LARGE\sffamily\textbf{\@title}
 \end{textblock*}
 %
 % Place the subtitle
-\begin{textblock*}{120mm}(17.5mm,125mm)
+\begin{textblock*}{120mm}(17.5mm+#1,125mm)
 \textblockcolour{}
 \vspace{-\parskip}
 \Large\sffamily{\@subtitle}
 \end{textblock*}
 %
 % Place the author name
-\begin{textblock*}{120mm}(17.5mm,147.5mm)
+\begin{textblock*}{120mm}(17.5mm+#1,147.5mm)
 \textblockcolour{}
 \vspace{-\parskip}
 \Large\sffamily\@authorf\ \MakeUppercase\@authorl
 \end{textblock*}
 %
 % Place the misc text
-\begin{textblock*}{60mm}(97.5mm,192.5mm)
+\begin{textblock*}{60mm}(97.5mm+#1,192.5mm)
 \textblockcolour{}
 \vspace{-\parskip}
 {\small\sffamily Dissertation presented in partial\\
@@ -1160,7 +1161,7 @@ in \@degree}
 \end{textblock*}
 %
 % Place date
-\begin{textblock*}{160mm}(0mm,221.5mm)
+\begin{textblock*}{160mm}(0mm+#1,221.5mm)
 \textblockcolour{}
 \vspace{-\parskip}
 \begin{center} {\small\sffamily\@date }\end{center}
