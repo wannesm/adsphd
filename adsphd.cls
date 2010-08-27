@@ -1375,7 +1375,7 @@ ISBN \@isbn
   }{}
   %
   % Create blue box
-  \begin{textblock*}{\adsphdspinewidth}(0mm,20mm)
+  \begin{textblock*}{\adsphdspinewidth}(0mm+#1,20mm)
   \textblockcolour{}
   \vspace{-\parskip}
   \includegraphics[width=\adsphdspinewidth,height=20mm]{image/blue}%
@@ -1384,7 +1384,7 @@ ISBN \@isbn
   \newlength{\authorlen}
   \settowidth{\authorlen}{\large\sffamily\@authorf\ \MakeUppercase\@authorl}
   %
-  \begin{textblock*}{\adsphdspinewidth}(0mm, 53mm)
+  \begin{textblock*}{\adsphdspinewidth}(0mm+#1, 53mm)
   \textblockcolour{}
   % Rotate the text
   \begin{turn}{-90}
