@@ -167,12 +167,10 @@
 
 \DeclareOption{croppedpdf}{%
   \typeout{Cropped pdf selected!!!}
-  \PassOptionsToPackage{off,noinfo}{crop}
-  % From ADS <--
-%  \PassOptionsToPackage{pdfpagescrop={92 75 546 750}}{hyperref} % original version
-  % --> end ADS
-  % Adapted to reflect the centering by the crop package
-  \PassOptionsToPackage{pdfpagescrop={71 81 524 761}}{hyperref}
+  \PassOptionsToPackage{off,noinfo,width=\the\adsphdpaperwidth,%
+      height=\the\adsphdpaperheight}{crop}
+}
+
 }
 
 \DeclareOption{tothejury}{%
@@ -186,14 +184,13 @@
 
 \DeclareOption{final}{%
   \typeout{Creating true page size pdf!}
-  % Remove all 'extra' stuff
-  \PassOptionsToPackage{off,noinfo}{crop}
   \showtodoprivfalse
   \showtodofalse
   \showinstructionsfalse
   \PassOptionsToPackage{final}{showlabels}
-  % Crop page to true size
-  \PassOptionsToPackage{pdfpagescrop={71 81 524 761}}{hyperref}
+  % Remove all 'extra' stuff and crop page to true size
+  \PassOptionsToPackage{off,noinfo,width=\the\adsphdpaperwidth,%
+      height=\the\adsphdpaperheight}{crop}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -280,9 +277,9 @@
 %\RequirePackage[dvips=false,pdftex=false,vtex=false]{geometry} # Use this for older versions of geometry (e.g. on Karmic)
 \RequirePackage[driver=none]{geometry}
 \geometry{
-  paperwidth=160mm,
-  paperheight=240mm,
-  width=120mm, %bart
+  paperwidth=\adsphdpaperwidth,
+  paperheight=\adsphdpaperheight,
+  width=120mm,
   height=175mm, %bart
 %  width=125mm, %ads
 %  height=185mm, %ads
