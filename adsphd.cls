@@ -30,6 +30,7 @@
 \newif\ifshellescape
 \newif\ifshowgit
 \newif\ifbleed
+\newif\ifAthree
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Options that can be passed to adsphd.cls:
@@ -85,6 +86,12 @@
 % Options for crop package
 \DeclareOption{noinfo}{%
   \PassOptionsToPackage{off,noinfo}{crop}
+}
+
+\Athreefalse
+\DeclareOption{a3}{%
+  \Athreetrue
+  \PassOptionsToPackage{a3,landscape}{crop}
 }
 
 \DeclareOption{cropmarks}{%
@@ -311,14 +318,24 @@
 % Load the crop package
 \ifpdf
 	% Load the crop package
-	\RequirePackage[a4,center,pdftex]{crop}
+  \message{crop: requirepackage[center,pdftex]}
+  \ifAthree
+    \RequirePackage[center,pdftex]{crop}
+  \else
+    \RequirePackage[a4,center,pdftex]{crop}
+  \fi
 	\RequirePackage[pdftex]{graphicx}
 	\DeclareGraphicsExtensions{.pdf, .jpg, .tif, .png}
 	% Use utf-8 encoding for foreign characters
 	\RequirePackage[utf8]{inputenc}
 \else
 	% Load the crop package
-	\RequirePackage[a4,center,dvips]{crop}
+  \message{crop: requirepackage[center,dvips]}
+  \ifAthree
+    \RequirePackage[center,dvips]{crop}
+  \else
+    \RequirePackage[a4,center,dvips]{crop}
+  \fi
 	\RequirePackage[dvips]{graphicx}
 	\DeclareGraphicsExtensions{.eps, .ps}
 \fi
