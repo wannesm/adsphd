@@ -1114,6 +1114,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 %
 % Put sedes at top center
 \begin{textblock*}{160mm}(0mm+#1,0mm)
+\textblockcolour{}
 \vspace{-\parskip}
 \begin{center}
 \includegraphics[width=8mm]{image/sedes}
@@ -1147,7 +1148,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \includegraphics*[height=20mm]{image/kullogo2}
 \end{textblock*}
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %
 % Title, subtitle, authorname, text and date can be moved around.
 % Change the textblock* commands below. 
@@ -1160,7 +1161,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 % 
 % !! Make sure not to remove the '+#1' part!!!
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %
 % Place the title
 \begin{textblock*}{120mm}(17.5mm+#1,112.5mm)
@@ -1200,8 +1201,8 @@ in \@degree}
 \begin{center} {\small\sffamily\@date }\end{center}
 \end{textblock*}
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
 % Only add empty pages if asked for
 \ifthenelse{\equal{#2}{1}}
 {
