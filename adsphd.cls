@@ -192,7 +192,7 @@
   % Only use 7 mm for \bleed{}!!  Do _NOT_ redefine if you don't know
   % what you are doing. For instance Procopia needs 7mm extra on the
   % left to bind the booklet.
-  \setlength{\bleed}{7mm}
+  \setlength{\bleed}{\defaultbleed}
   \bleedtrue
   % Set crop width to \adsphdpaperwidth+2\bleed
   \newlength{\cropwidth}
