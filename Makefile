@@ -536,4 +536,15 @@ s:
 	chmod +x $@
 
 ##############################################################################
+
+cover.pdf: cover.tex adsphd.cls
+	$(PDFTEX) $<
+
+spine.pdf: spine.tex adsphd.cls
+	$(PDFTEX) $<
+
+cover3pages.pdf: cover.pdf cover.tex spine.pdf spine.tex
+	pdftk A=cover.pdf B=spine.pdf cat A4 B1E A1 output $@
+
+##############################################################################
 # vim: tw=78
