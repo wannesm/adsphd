@@ -299,7 +299,7 @@
   paperwidth=\adsphdpaperwidth,
   paperheight=\adsphdpaperheight,
   width=120mm,
-  height=175mm, %bart
+  height=180mm,
 %  width=125mm, %ads
 %  height=185mm, %ads
   left=20mm, % Equal margins on both sides: (paperwidth - width) / 2
