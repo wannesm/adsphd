@@ -48,6 +48,9 @@
 \setlength{\bleed}{0mm} % No bleed in normal mode
 \bleedfalse
 
+% Temporary var
+\newlength{\tmplength}
+
 % Show a frame around each logical page by default
 \PassOptionsToPackage{frame}{crop}
 
@@ -1081,7 +1084,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 %\parbox[c][20mm]{(97.92mm+\bleed)}{ % This does not work. The bleed is
                                      % hardcoded in the texblock size. Fixme!
 \hspace*{2mm}
-\parbox[c][20mm]{(97.92mm)}{
+\parbox[c][20mm]{97.92mm}{
 {\bf \small \textcolor{white} {\sffamily Arenberg Doctoral School of Science, Engineering \& Technology}}\\
 {\sffamily\small \textcolor{white} {\@faculty}}\\
 {\sffamily\small \textcolor{white} {\@department}}
@@ -1293,7 +1296,9 @@ ISBN \@isbn
 % Create blue background
 \begin{textblock}{7}(152.0,20)
 \textblockcolour{}
-\includegraphics[width=\adsphdpaperwidth+\bleed,height=20mm]{image/blue}%
+\setlength{\tmplength}{\adsphdpaperwidth}
+\addtolength{\tmplength}{\bleed}
+\includegraphics[width=\tmplength,height=20mm]{image/blue}%
 \end{textblock}
 %
 %\begin{textblock}{7}(135.5,-12.5)
