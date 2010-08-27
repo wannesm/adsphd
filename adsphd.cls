@@ -1257,10 +1257,24 @@ ISBN \@isbn
 \newpage
 \thispagestyle{empty}
 %
+\ifbleed
+\begin{textblock}{7}(-7,20) % Add this textblock just to get the gray
+                            % color over the length of the bleed.
+                            % Ideally we should be able to use \bleed
+                            % here, but a length cannot be used as
+                            % input for a textblock?? Fixme!
+\textblockcolour{gray}
+\parbox[c][20mm]{\bleed}{}
+\end{textblock}
+\fi
+%
 %\begin{textblock}{153}(-17.5,-12.5)
-\begin{textblock}{153}(0,20)
+\begin{textblock}{152.5}(0,20)
+\textblockcolour{gray}
 \vspace{-\parskip}
-\colorbox{gray}{\parbox[c][18.75mm]{151mm}{
+%\hspace*{-\bleed}\parbox[c][20mm]{(151.2mm+\bleed)}{ % This does not work. The bleed is
+                                     % hardcoded in the texblock size. Fixme!
+\parbox[c][20mm]{151.2mm}{
 \flushright
 \vspace{-3mm}
 {\bf \scriptsize \textcolor{white} {\sffamily{}Arenberg Doctoral School of Science, Engineering \& Technology} \ \ }\\[-1mm]
@@ -1269,14 +1283,22 @@ ISBN \@isbn
 {\scriptsize \textcolor{white} {\sffamily\@researchgroup\ \ }}\\[-1.2mm]
 {\scriptsize \textcolor{white} {\sffamily\@address\ \ }}\\[-1.2mm]
 {\scriptsize \textcolor{white} {\sffamily{}B-3001 Heverlee\ \ }}
-}}
+}
+\end{textblock}
+%
+%
+% Create blue background
+\begin{textblock}{7}(152.0,20)
+\textblockcolour{}
+\includegraphics[width=\adsphdpaperwidth+\bleed,height=20mm]{image/blue}%
 \end{textblock}
 %
 %\begin{textblock}{7}(135.5,-12.5)
-\begin{textblock}{7}(153,20)
+\begin{textblock}{7}(153.37,20)
 \textblockcolour{}
 \vspace{-\parskip}
-\includegraphics*[angle=90,width=7mm]{image/kullogo2}
+\includegraphics*[angle=90,height=20mm]{image/kullogo2}%
+%\includegraphics[width=\bleed,height=20mm]{image/blue}%
 \end{textblock}
 %
 %\begin{textblock}{12}[0.5,0.5](125,191)
