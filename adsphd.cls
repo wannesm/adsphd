@@ -1106,24 +1106,6 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \setlength{\adsphdspinewidth}{#1}
 
   \newlength{\skiplen}
-%  \setlength{\tmplength}{\adsphdspinewidth}
-
-
-%  %% For unchanged paper size
-%  \begin{textblock*}{.5\adsphdspinewidth+4pt}(.5\adsphdpaperwidth-2pt, 20mm)
-%  \textblockcolour{}
-%  \includegraphics[width=.5\adsphdspinewidth+4pt,height=20mm]{image/blue}
-%  \end{textblock*}
-%
-%  \setlength{\skiplen}{-\bleed-.5\adsphdpaperwidth-0.5\adsphdspinewidth}
-%  \makebackcovergeneral{\skiplen}{0}
-%
-%  \setlength{\skiplen}{0mm+.5\adsphdpaperwidth-.5\adsphdspinewidth}
-%  \makespinegeneral{\skiplen}{0}{#1}{#2}
-%
-%  \setlength{\skiplen}{\bleed+.5\adsphdpaperwidth+.5\adsphdspinewidth}
-%%  \makebackcovergeneral{\skiplen}{0}
-%  \makefrontcovergeneral{\skiplen}{0}
 
   \begin{textblock*}{\adsphdspinewidth+4pt}(2\bleed+\adsphdpaperwidth-2pt, 20mm)
   \textblockcolour{}
