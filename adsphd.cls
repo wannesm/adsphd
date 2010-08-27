@@ -29,9 +29,24 @@
 \newif\ifshowinstructions
 \newif\ifshellescape
 \newif\ifshowgit
+\newif\ifbleed
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Options that can be passed to adsphd.cls:
+
+% Set papersize.
+\newlength{\adsphdpaperheight}
+\setlength{\adsphdpaperheight}{240mm}
+\newlength{\adsphdpaperwidth}
+\setlength{\adsphdpaperwidth}{160mm}
+\newlength{\adsphdspinewidth}
+%\setlength{\adsphdspinewidth}{20mm} % Ridiculously large ;)
+\setlength{\adsphdspinewidth}{9mm}
+
+% Define bleed
+\newlength{\bleed}
+\setlength{\bleed}{0mm} % No bleed in normal mode
+\bleedfalse
 
 % Show a frame around each logical page by default
 \PassOptionsToPackage{frame}{crop}
@@ -293,9 +308,10 @@
 
 % Taken from ADS template  <--
 \RequirePackage{placeins} % provides \FloatBarrier command
-% TEXTPOS options
+
 \definecolor{gray}{rgb}{0.600,0.600,0.600}
 
+% TEXTPOS options
 \setlength{\TPHorizModule}{1mm}
 \setlength{\TPVertModule}{1mm}
 
