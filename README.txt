@@ -31,6 +31,8 @@ The following files will be generated automatically during the compilation proce
 
 
 
+USING MAKE AND OTHER UTILITY SCRIPTS
+
 Some convenient Makefile targets:
 
 *) In the main directory [./]:
@@ -39,8 +41,11 @@ Some convenient Makefile targets:
   make clean
   make realclean                    # cleanup all mess, including leftover
                                     # mychapter.{dvi,pdf,ps} files.
-  make damnthatreallyclean          # brutally remove all possible temporary
+  make damnthatsreallyclean         # brutally remove all possible temporary
                                     # files
+
+  make cover                        # create the full cover page
+
 *) In a chapter directory [./chapters/chapterX]:
 
   make                              # Creates chapterX.pdf containing the
@@ -59,11 +64,15 @@ Options for the adsphd class:
 
   showinstructions                  : TODO
   showtodo
+  showtodopriv
   backref
   pagebackref
   draft
   prelim
   croppedpdf
+  cam
+  cropmarks
+  frame
   noinfo
   10pt
   11pt
@@ -71,6 +80,45 @@ Options for the adsphd class:
   oneside
   twoside
   showgit
+
+Most of the useful commands provided by this class can be found in the provided
+example file 'thesis.tex'. 
+
+Some misc commands that might be useful (try them out):
+
+ \todo{This is a todo}
+ \todoinline{This is a todo}
+ \todopriv{This is a todo}
+ \todoprivinline{\This is a todo}
+
+
+
+GENERATING THE COVER PAGE
+
+A full cover page (combining front cover, spine and back cover) can be
+generated automatically using the command 'make cover'. This creates a pdf
+$(COVERPDF); by default this is 'cover.pdf'.
+
+The width of the spine is set by redefining \adsphdspinewidth (9mm by default).
+
+It can be seen in the provided 'thesis.tex' that all information necessary to
+generate a cover page is contained between two markers '%%% COVER: Settings %%%'
+and '%%% COVER: End settings %%%'. DO NOT REMOVE THESE!! They are used by the 
+Makefile!!
+
+The default front and/or back cover page can be overwritten: 
+ - create a file mycoverpage.tex
+ - redefine the commands \makefrontcovergeneral and \makebackcovergeneral. For
+   an example and more information, see the provided file 'mycoverpage.tex'.
+
+The cover page in the generated pdf has the following structure:
+
+    <--gray bleed--> <--backcoverpage--> <--blue bleed--> <--spine width--> <--blue bleed--> <--frontcoverpage--> <--gray bleed-->
+
+The bleed (both gray and blue) is 7mm by default. I suggest not changing this
+value unless you know what you are doing ;)
+
+
 
 TROUBLESHOOTING:
 
