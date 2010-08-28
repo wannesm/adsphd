@@ -524,6 +524,7 @@
 
 \newcommand{\includepreface}[1]{%
   \cleardoublepage
+  \chaptermark{\prefname}
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \let\orig@chapter=\chapter
     \renewcommand{\chapter}{%
@@ -548,6 +549,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
 \newcommand{\includeprefacenl}[1]{%
   \selectlanguage{dutch}
   \cleardoublepage
+  \chaptermark{\prefnlname}
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \let\orig@chapter=\chapter
     \renewcommand{\chapter}{%
@@ -573,6 +575,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
 \newcommand{\includeabstract}[1]{%
 %  \selectlanguage{english}
   \cleardoublepage
+  \chaptermark{\abstname}
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \let\orig@chapter=\chapter
     \renewcommand{\chapter}{%
@@ -597,6 +600,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
 \newcommand{\includeabstractnl}[1]{%
   \selectlanguage{dutch}
   \cleardoublepage
+  \chaptermark{\abstnlname}
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \let\orig@chapter=\chapter
     \renewcommand{\chapter}{%
@@ -621,6 +625,9 @@ Expects chapter* for abstract, changed chapter to chapter*}%
 }
 
 \newcommand{\includenomenclature}[1]{%
+  % Use this command when making the nomenclature manually. Using the
+  % nomencl package might be a better idea though...
+  \cleardoublepage
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \include{\chaptersdir/#1/#1}
   }{
@@ -634,8 +641,6 @@ Expects chapter* for abstract, changed chapter to chapter*}%
 \newcommand{\includebibliography}[1]{%
   \cleardoublepage
   \phantomsection
-  %%\markboth{\uppercase{Bibliography}}{\uppercase{Bibliography}}
-  \markboth{{Bibliography}}{{Bibliography}}
   \addcontentsline{toc}{chapter}{\bibname}
   \bibliographystyle{\@bibstyle}
   \bibliography{#1}
@@ -645,7 +650,6 @@ Expects chapter* for abstract, changed chapter to chapter*}%
 \renewcommand{\tableofcontents}{%
   \cleardoublepage
   \phantomsection
-  \markboth{{Contents}}{{Contents}}
   \addcontentsline{toc}{chapter}{\tocname}
   \tableofcontentsorig
 }
@@ -654,7 +658,6 @@ Expects chapter* for abstract, changed chapter to chapter*}%
 \renewcommand{\listoffigures}{%
   \cleardoublepage
   \phantomsection
-  \markboth{{List of Figures}}{{List of Figures}}
   \addcontentsline{toc}{chapter}{\lofname}
   \listoffiguresorig
 }
@@ -663,7 +666,6 @@ Expects chapter* for abstract, changed chapter to chapter*}%
 \renewcommand{\listoftables}{%
   \cleardoublepage
   \phantomsection
-  \markboth{{List of Tables}}{{List of Tables}}
   \addcontentsline{toc}{chapter}{\lotname}
   \listoftablesorig
 }
@@ -681,10 +683,8 @@ Expects chapter* for abstract, changed chapter to chapter*}%
 
 \newcommand{\includecv}[1]{%
   \cleardoublepage
-  {
-  \def\rightmark{CURRICULUM VITAE}
-  \def\leftmark{CURRICULUM VITAE}
-  \cleardoublepage
+  \chaptermark{\cvname}
+  \phantomsection
   \addcontentsline{toc}{chapter}{\cvname}
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \let\orig@chapter=\chapter
