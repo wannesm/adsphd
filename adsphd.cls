@@ -1228,10 +1228,11 @@ in \@degree}
 {
   \newpage
   \thispagestyle{empty} \mbox{}
-  \renewcommand{\sfdefault}{\origsfdefault}
   \newpage
 }{}
-
+%
+% Restore font
+\renewcommand{\sfdefault}{\origsfdefault}
 }
 \let\orig@makefrontcovergeneral\makefrontcovergeneral
 
