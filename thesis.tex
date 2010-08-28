@@ -34,7 +34,16 @@
 
 % for the nomenclature
 \renewcommand{\nomname}{List of Symbols}
+\makeatletter
+\let\@printnomenclatureorig\@printnomenclature
+\def\@printnomenclature[#1]{%
+  \cleardoublepage%
+  \chaptermark{\nomname}
+  \@printnomenclatureorig[#1]
+}
+\makeatother
 \makenomenclature
+
 % for the list of abbreviations. 
 \newcommand{\glossname}{Abbreviations}
 \makeglossary
