@@ -1220,61 +1220,61 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   %
   % Create header
   \frontcoverheader{#1}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-%
-% Title, subtitle, authorname, text and date can be moved around.
-% Change the textblock* commands below. 
-%
-% Syntax of textblock environment:
-% 
-%   \begin{textblock*}{width}(xpos,ypos)
-%     ...
-%   \end{textblock*}
-% 
-% !! Make sure not to remove the '+#1' part!!!
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-%
-% Place the title
-\begin{textblock*}{120mm}(17.5mm+#1,112.5mm)
-\textblockcolour{}
-\vspace{-\parskip}
-\raggedright\selectfont\LARGE\sffamily\textbf{\@title}
-\end{textblock*}
-%
-% Place the subtitle
-\begin{textblock*}{120mm}(17.5mm+#1,132mm)
-\textblockcolour{}
-\vspace{-\parskip}
-\Large\sffamily{\@subtitle}
-\end{textblock*}
-%
-% Place the author name
-\begin{textblock*}{120mm}(17.5mm+#1,147.5mm)
-\textblockcolour{}
-\vspace{-\parskip}
-\Large\sffamily\@authorf\ \MakeUppercase\@authorl
-\end{textblock*}
-%
-% Place the misc text
-\begin{textblock*}{60mm}(97.5mm+#1,192.5mm)
-\textblockcolour{}
-\vspace{-\parskip}
-{\small\sffamily Dissertation presented in partial\\
-fulfillment of the requirements for\\
-the degree of Doctor\\
-in \@degree}
-\end{textblock*}
-%
-% Place date
-\begin{textblock*}{160mm}(0mm+#1,221.5mm)
-\textblockcolour{}
-\vspace{-\parskip}
-\begin{center} {\small\sffamily\@date }\end{center}
-\end{textblock*}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %
+  % Title, subtitle, authorname, text and date can be moved around.
+  % Change the textblock* commands below. 
+  %
+  % Syntax of textblock environment:
+  % 
+  %   \begin{textblock*}{width}(xpos,ypos)
+  %     ...
+  %   \end{textblock*}
+  % 
+  % !! Make sure not to remove the '+#1' part!!!
+  %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %
+  % Place the title
+  \begin{textblock*}{120mm}(17.5mm+#1,112.5mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \raggedright\selectfont\LARGE\sffamily\textbf{\@title}
+  \end{textblock*}
+  %
+  % Place the subtitle
+  \begin{textblock*}{120mm}(17.5mm+#1,132mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \Large\sffamily{\@subtitle}
+  \end{textblock*}
+  %
+  % Place the author name
+  \begin{textblock*}{120mm}(17.5mm+#1,147.5mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \Large\sffamily\@authorf\ \MakeUppercase\@authorl
+  \end{textblock*}
+  %
+  % Place the misc text
+  \begin{textblock*}{60mm}(97.5mm+#1,192.5mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  {\small\sffamily Dissertation presented in partial\\
+  fulfillment of the requirements for\\
+  the degree of Doctor\\
+  in \@degree}
+  \end{textblock*}
+  %
+  % Place date
+  \begin{textblock*}{160mm}(0mm+#1,221.5mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \begin{center} {\small\sffamily\@date }\end{center}
+  \end{textblock*}
+  %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
   %
   % Add footer
   \frontcoverfooter{#2}
