@@ -77,6 +77,8 @@ Options for the adsphd class:
   10pt
   11pt
   12pt
+  a3
+  a4
   oneside
   twoside
   showgit
