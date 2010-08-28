@@ -540,11 +540,11 @@ s:
 cover.pdf: cover.tex adsphd.cls
 	$(PDFTEX) $<
 
-spine.pdf: spine.tex adsphd.cls
+spine_horizontal.pdf: spine_horizontal.tex adsphd.cls
 	$(PDFTEX) $<
 
-cover3pages.pdf: cover.pdf cover.tex spine.pdf spine.tex
-	pdftk A=cover.pdf B=spine.pdf cat A4 B1E A1 output $@
+cover3pages.pdf: cover.pdf cover.tex spine_horizontal.pdf spine_horizontal.tex
+	pdftk A=cover.pdf B=spine_horizontal.pdf cat A4 B1E A1 output $@
 
 full_cover.pdf: full_cover.tex cover3pages.pdf
 	$(PDFTEX) $<
