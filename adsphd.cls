@@ -241,7 +241,7 @@
 
 % Default values
 \author{Guust}{Flater}
-\promotor{Prof.~Promotor}
+\promotor{Prof.dr.ir.~Promotor}
 \president{Mr.~De~Voorzitter}
 \jury{Jurylid 1\\Jurylid 2}
 \externaljurymember{External jury member}
