@@ -1472,38 +1472,6 @@ ISBN \@isbn
   \renewcommand{\sfdefault}{\origsfdefault}
 }
 
-
-%\newcommand{\makespinehorizontal}{%
-%  \renewcommand{\sfdefault}{\helvetsfdefault}
-%  \cleardoublepage \mbox{}%
-%  \thispagestyle{empty}%
-%
-%  \begin{textblock}{20}(19.994,0)
-%  \textblockcolour{}
-%  \vspace{-\parskip}
-%  \includegraphics[width=20mm,height=\adsphdspinewidth]{image/blue}%
-%  \end{textblock}
-%
-%  \newlength{\authorlen}
-%  \settowidth{\authorlen}{\large\sffamily\@authorf\ \MakeUppercase\@authorl}
-%  \begin{textblock}{180}(53,0)
-%  \parbox[c][\adsphdspinewidth]{(\authorlen)}{
-%  \large\sffamily\@authorf\ \MakeUppercase\@authorl%
-%  }
-%%  \vspace{-\parskip}
-%  \textblockcolour{}
-%  \hfill
-%  \parbox[c][\adsphdspinewidth]{\spinetitlewidth}{
-%    \centering
-%    \setstretch{.85}
-%    \normalsize\sffamily\textbf{\MakeUppercase\@title}
-%  }
-%  \hfill\large\sffamily\@date
-%  \end{textblock}
-%%  \vfill
-%  \renewcommand{\sfdefault}{\origsfdefault}
-}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\setcustomcoverpage#1{%
