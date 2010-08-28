@@ -259,7 +259,7 @@
 \researchgroup{Research group ...}
 \address{Address ...}
 \title{Dissertation title ...}
-\subtitle{Dissertation subtitle ...}
+\subtitle{}
 \degree{... Computer Science ...}
 \date{Month Year}
 
