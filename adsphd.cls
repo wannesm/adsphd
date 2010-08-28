@@ -1090,7 +1090,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     \input{\@customcoverpage}
   }{
     \typeout{adsphd.cls: Cannot find custom cover page 
-      (\@customcoverpage)}
+      (\@customcoverpage). Restoring default cover page.}
+    \let\makefrontcovergeneral\orig@makefrontcovergeneral
+    \let\makebackcovergeneral\orig@makebackcovergeneral
   }
 }{}
 
@@ -1230,6 +1232,7 @@ in \@degree}
 }{}
 
 }
+\let\orig@makefrontcovergeneral\makefrontcovergeneral
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Redefine title page
@@ -1395,6 +1398,7 @@ ISBN \@isbn
 % Restore font
 \renewcommand{\sfdefault}{\origsfdefault}
 }
+\let\orig@makebackcovergeneral\makebackcovergeneral
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Create the spine of the booklet
