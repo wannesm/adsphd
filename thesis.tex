@@ -53,7 +53,8 @@
 \let\printglossaryorig\printglossary
 \renewcommand{\printglossary}{%
   \renewcommand{\glossaryname}{\glossname}
-  \printglossaryorig}
+  \cleardoublepage%
+  \printglossaryorig\chaptermark{\glossname}}
 
 % See [http://n2.nabble.com/backref-td478438.html]:
 % simple backref command redefinition to avoid double entries
