@@ -1,10 +1,5 @@
 chapters/*/Makefile
-chapters/abstract/abstract.aux
-chapters/conclusion/conclusion.aux
-chapters/curriculum/curriculum.aux
-chapters/introduction/introduction.aux
-chapters/myappendix/myappendix.aux
-chapters/preface/preface.aux
+chapters/*/*.aux
 defs.tex
 q.tex
 thesis.aux
@@ -22,5 +17,10 @@ thesis.ilg
 thesis.nls
 thesis.pdf
 thesis.glo
+thesis.glg
+thesis.gls
 thesis.ist
 thesis.ps
+cover.*
+s
+.force_rebuild
