@@ -1084,6 +1084,25 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Define front and back cover + redefine the title page
 
+\newcommand{\cropline}[4]{%
+  \setlength{\unitlength}{1mm}
+  \linethickness{.5pt}
+  \setlength{\tmplength}{2mm}
+  \setlength{\tmplength}{#3\tmplength}
+  \typeout{the tmplenght \the\tmplength}
+  \begin{textblock*}{0mm}(#1,#2+\tmplength)
+  \ifthenelse{\equal{#3}{1}}{
+    \begin{picture}(1,#4)(0,0)
+      \put(0,0){\line(0,#3){#4}}
+    \end{picture}
+  }{
+    \begin{picture}(1,-#4)(0,0)
+      \put(0,0){\line(0,-#3){#4}}
+    \end{picture}
+  }
+ \end{textblock*}
+}
+
 \newcommand{\useCustomCoverpageIfExists}{%
   \IfFileExists{\@customcoverpage}{%
     \typeout{adsphd.cls: Using custom cover page (\@customcoverpage)}
@@ -1118,6 +1137,21 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \setlength{\skiplen}{3\bleed+\adsphdpaperwidth+\adsphdspinewidth}
 %  \makebackcovergeneral{\skiplen}{0}
   \makefrontcovergeneral{\skiplen}{0}
+
+  % Draw some extra crop lines
+  \cropline{\bleed}{0mm}{-1}{5}
+  \cropline{\bleed+\adsphdpaperwidth}{0mm}{-1}{5}
+  \cropline{2\bleed+\adsphdpaperwidth}{0mm}{-1}{10}
+  \cropline{2\bleed+\adsphdpaperwidth+\adsphdspinewidth}{0mm}{-1}{10}
+  \cropline{3\bleed+\adsphdpaperwidth+\adsphdspinewidth}{0mm}{-1}{5}
+  \cropline{3\bleed+2\adsphdpaperwidth+\adsphdspinewidth}{0mm}{-1}{5}
+  \cropline{\bleed}{\adsphdpaperheight}{1}{5}
+  \cropline{\bleed+\adsphdpaperwidth}{\adsphdpaperheight}{1}{5}
+  \cropline{2\bleed+\adsphdpaperwidth}{\adsphdpaperheight}{1}{10}
+  \cropline{2\bleed+\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{10}
+  \cropline{3\bleed+\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{5}
+  \cropline{3\bleed+2\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{5}
+
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
