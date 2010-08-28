@@ -1452,62 +1452,12 @@ ISBN \@isbn
 % \makebackcovergeneral{xskip}{clearpage}
 \newcommand{\makebackcovergeneral}[2]{%
 \typeout{adsphd.cls: Using default back cover page}
-% Use Helvetica
-\renewcommand{\sfdefault}{\helvetsfdefault}
-%
-% Only add empty pages if asked for
-\ifthenelse{\equal{#2}{1}}
-{
-  \cleardoublepage \mbox{}
-  \thispagestyle{empty}
-  \newpage
-}{}
-\thispagestyle{empty}
-%
-% Create gray box
-\begin{textblock*}{152.5mm+\bleed}(-\bleed+#1,20mm)
-\textblockcolour{gray}
-\vspace{-\parskip}
-%\hspace*{-\bleed}\parbox[c][20mm]{(151.2mm+\bleed)}{ % This does not work. The bleed is
-                                     % hardcoded in the texblock size. Fixme!
-\parbox[c][20mm]{151.2mm+\bleed}{
-\flushright
-\vspace{-3mm}
-{\bf \scriptsize \textcolor{white} {\sffamily{}Arenberg Doctoral School of Science, Engineering \& Technology} \ \ }\\[-1mm]
-{\scriptsize \textcolor{white} {\sffamily\@faculty\ \ }}\\[-1.2mm]
-{\scriptsize \textcolor{white} {\sffamily\@department \ \ }}\\[-1.2mm]
-{\scriptsize \textcolor{white} {\sffamily\@researchgroup\ \ }}\\[-1.2mm]
-{\scriptsize \textcolor{white} {\sffamily\@address\ \ }}\\[-1.2mm]
-{\scriptsize \textcolor{white} {\sffamily{}B-3001 Heverlee\ \ }}
-}
-\end{textblock*}
-%
-%
-% Create blue background
-\setlength{\tmplength}{\adsphdpaperwidth}
-\addtolength{\tmplength}{-152mm}
-\addtolength{\tmplength}{\bleed}
-\begin{textblock*}{\tmplength}(152.0mm+#1,20mm)
-\textblockcolour{}
-\includegraphics[width=\tmplength,height=20mm]{image/blue}%
-\end{textblock*}
-%
-% Put KULeuven logo on top
-\begin{textblock*}{7mm}(153.37mm+#1,20mm)
-\textblockcolour{}
-\vspace{-\parskip}
-\includegraphics*[angle=90,height=20mm]{image/kullogo2}%
-\end{textblock*}
-%
-% Put logo of the association at the bottom right
-\begin{textblock*}{12mm}[0.5,0.5](142.5mm+#1,223.5mm)
-\textblockcolour{}
-\vspace{-\parskip}
-\includegraphics*[width=12mm]{image/ASSO_ZEGEL_ZW}
-\end{textblock*}
-%
-% Restore font
-\renewcommand{\sfdefault}{\origsfdefault}
+  %
+  % Create header
+  \backcoverheader{#1}{#2}
+  %
+  % Add footer
+  \backcoverfooter{#1}
 }
 \let\orig@makebackcovergeneral\makebackcovergeneral
 
