@@ -206,13 +206,8 @@
 
   %%\PassOptionsToPackage{off,noinfo,width=\the\adsphdpaperheight,%
   %%    height=\the\adsphdspinewidth}{crop}
-
-  % Set crop width to \adsphdpaperwidth+2\bleed
-  \newlength{\cropwidth}
-  \setlength{\cropwidth}{\adsphdpaperwidth}
-  \addtolength{\cropwidth}{2\bleed}
-  \PassOptionsToPackage{off,noinfo,width=\the\cropwidth,%
-      height=\the\adsphdpaperheight}{crop}
+  \PassOptionsToPackage{off,noinfo,width=\the\adsphdpaperheight,%
+      height=\the\adsphdspinewidth}{crop}
 }
 
 \DeclareOption{tothejury}{%
