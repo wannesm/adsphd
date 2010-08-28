@@ -280,7 +280,7 @@
 \newcommand{\cvname}{Curriculum vitae}
 
 % Default filename for custom cover page
-\newcommand{\mycoverpage}{mycoverpage.tex}
+\newcommand{\@customcoverpage}{mycoverpage.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now load a whole bunch of packages:
@@ -1085,10 +1085,13 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 % Define front and back cover + redefine the title page
 
 \newcommand{\useCustomCoverpageIfExists}{%
-  \IfFileExists{\mycoverpage}{%
-    \message{adsphd.cls: Using custom cover page <\mycoverpage>...}
-    \input{\mycoverpage}
-  }{}
+  \IfFileExists{\@customcoverpage}{%
+    \typeout{adsphd.cls: Using custom cover page (\@customcoverpage)}
+    \input{\@customcoverpage}
+  }{
+    \typeout{adsphd.cls: Cannot find custom cover page 
+      (\@customcoverpage)}
+  }
 }{}
 
 \newcommand{\makefullcoverpage}[2]{%
@@ -1494,6 +1497,17 @@ ISBN \@isbn
 %%  \vfill
 %  \renewcommand{\sfdefault}{\origsfdefault}
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\setcustomcoverpage#1{%
+  \gdef\@customcoverpage{#1}
+  \typeout{adsphd.cls: Setting new custom cover page (#1)}
+  \useCustomCoverpageIfExists
+}
+
+% Use own version of the cover page
+\useCustomCoverpageIfExists
 
 \endinput
 %%
