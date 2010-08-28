@@ -9,6 +9,114 @@
 % My own cover page
 \makeatletter
 
-% TODO
+%% \renewcommand{\makefrontcovergeneral}[2]{%
+%% % Use Helvetica
+%% \renewcommand{\sfdefault}{\helvetsfdefault}
+%% \thispagestyle{empty}
+%% % Now using \usepackage[absolute]{textpos}. The positioning become a lot
+%% % robuster this way wrt changes in margins etc.
+%% %
+%% % Put sedes at top center
+%% \begin{textblock*}{160mm}(0mm+#1,0mm)
+%% \vspace{-\parskip}
+%% \begin{center}
+%% \includegraphics[width=8mm]{image/sedes}
+%% \end{center}
+%% \end{textblock*}
+%% %
+%% % Create gray box
+%% \begin{textblock*}{100mm+\bleed}(60mm+#1,20mm)
+%% \textblockcolour{gray}
+%% \vspace{-\parskip}
+%% \hspace*{2mm}
+%% \parbox[c][20mm]{97.92mm}{
+%% {\bf \small \textcolor{white} {\sffamily Arenberg Doctoral School of Science, Engineering \& Technology}}\\
+%% {\sffamily\small \textcolor{white} {\@faculty}}\\
+%% {\sffamily\small \textcolor{white} {\@department}}
+%% }
+%% \end{textblock*}
+%% %
+%% % Create blue background 
+%% \begin{textblock*}{60mm+\bleed}(0mm-\bleed+#1, 20mm)
+%% \textblockcolour{}
+%% \includegraphics[width=60mm+\bleed,height=20mm]{image/blue}
+%% \end{textblock*}
+%% %
+%% % Put KULeuven logo on top of the blue background
+%% \begin{textblock*}{60mm}(0mm+#1, 20mm)
+%% \textblockcolour{}
+%% %\vspace{-\parskip}
+%% \includegraphics*[height=20mm]{image/kullogo2}
+%% \end{textblock*}
+%% %
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%% %
+%% % Title, subtitle, authorname, text and date can be moved around.
+%% % Change the textblock* commands below. 
+%% %
+%% % Syntax of textblock environment:
+%% % 
+%% %   \begin{textblock*}{width}(xpos,ypos)
+%% %     ...
+%% %   \end{textblock*}
+%% % 
+%% % !! Make sure not to remove the '+#1' part!!!
+%% %
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%% %
+%% % Place the title
+%% \begin{textblock*}{120mm}(17.5mm+#1,89.5mm)
+%% \textblockcolour{}
+%% \vspace{-\parskip}
+%% \raggedright\selectfont\LARGE\sffamily\textbf{\@title}
+%% \end{textblock*}
+%% %
+%% % Place the subtitle
+%% \begin{textblock*}{120mm}(17.5mm+#1,92.0mm)
+%% \textblockcolour{}
+%% \vspace{-\parskip}
+%% \Large\sffamily{\@subtitle}
+%% \end{textblock*}
+%% %
+%% % Place the author name
+%% \begin{textblock*}{120mm}(17.5mm+#1,109.5mm)
+%% \textblockcolour{}
+%% \vspace{-\parskip}
+%% \Large\sffamily\@authorf\ \MakeUppercase\@authorl
+%% \end{textblock*}
+%% %
+%% %\begin{textblock}{120}(0,115)
+%% \begin{textblock*}{120mm}(17.5mm+#1,132.0mm)
+%% \textblockcolour{}
+%% \includegraphics*{image/coverfigure_400dpi}
+%% \end{textblock*}
+%% %
+%% % Place the misc text
+%% \begin{textblock*}{60mm}(96.5mm+#1,187.5mm)
+%% \textblockcolour{}
+%% \vspace{-\parskip}
+%% {\small\sffamily Dissertation presented in partial\\
+%% fulfillment of the requirements for\\
+%% the degree of Doctor\\
+%% in \@degree}
+%% \end{textblock*}
+%% %
+%% % Place date
+%% \begin{textblock*}{160mm}(0mm+#1,221.5mm)
+%% \textblockcolour{}
+%% \vspace{-\parskip}
+%% \begin{center} {\small\sffamily\@date }\end{center}
+%% \end{textblock*}
+%% %
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%% 
+%% % Only add empty pages if asked for
+%% \ifthenelse{\equal{#2}{1}}
+%% {
+%%   \newpage
+%%   \thispagestyle{empty} \mbox{}
+%%   \renewcommand{\sfdefault}{\origsfdefault}
+%%   \newpage
+%% }{}
 
 \makeatother
