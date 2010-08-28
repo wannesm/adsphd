@@ -279,6 +279,9 @@
 \newcommand{\pubname}{List of publications}
 \newcommand{\cvname}{Curriculum vitae}
 
+% Default filename for custom cover page
+\newcommand{\mycoverpage}{mycoverpage.tex}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now load a whole bunch of packages:
 
@@ -1080,6 +1083,13 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Define front and back cover + redefine the title page
+
+\newcommand{\useCustomCoverpageIfExists}{%
+  \IfFileExists{\mycoverpage}{%
+    \message{adsphd.cls: Using custom cover page <\mycoverpage>...}
+    \input{\mycoverpage}
+  }{}
+}{}
 
 \newcommand{\makefullcoverpage}[2]{%
   % #1: spinewidth
