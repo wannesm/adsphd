@@ -1191,7 +1191,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \end{textblock*}
 %
 % Place the subtitle
-\begin{textblock*}{120mm}(17.5mm+#1,125mm)
+\begin{textblock*}{120mm}(17.5mm+#1,132mm)
 \textblockcolour{}
 \vspace{-\parskip}
 \Large\sffamily{\@subtitle}
@@ -1250,7 +1250,7 @@ in \@degree}
 \end{textblock}
 %
 %\begin{textblock}{120}(0,47.5)
-\begin{textblock}{120}(17.5,82.5)
+\begin{textblock}{120}(17.5,85.0)
 \textblockcolour{}
 \vspace{-\parskip}
 \large\sffamily{\@subtitle}
@@ -1301,7 +1301,7 @@ in \@degree}
 \end{textblock}
 %\vfill
 %\begin{center} {\@date} \end{center}
-\begin{textblock}{160}(0,202.5)
+\begin{textblock}{160}(0,210.0)
 \textblockcolour{}
 \vspace{-\parskip}
 \begin{center} \@date \end{center}
