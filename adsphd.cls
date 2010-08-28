@@ -1217,47 +1217,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 % \makefrontcovergeneral{xskip}{}clearpage
 \newcommand{\makefrontcovergeneral}[2]{%
 \typeout{adsphd.cls: Using default front cover page}
-% Use Helvetica
-\renewcommand{\sfdefault}{\helvetsfdefault}
-\thispagestyle{empty}
-% Now using \usepackage[absolute]{textpos}. The positioning become a lot
-% robuster this way wrt changes in margins etc.
-%
-% Put sedes at top center
-\begin{textblock*}{160mm}(0mm+#1,0mm)
-\textblockcolour{}
-\vspace{-\parskip}
-\begin{center}
-\includegraphics[width=8mm]{image/sedes}
-\end{center}
-\end{textblock*}
-%
-% Create gray box
-\begin{textblock*}{100mm+\bleed}(60mm+#1,20mm)
-\textblockcolour{gray}
-\vspace{-\parskip}
-%\parbox[c][20mm]{(97.92mm+\bleed)}{ % This does not work. The bleed is
-                                     % hardcoded in the texblock size. Fixme!
-\hspace*{2mm}
-\parbox[c][20mm]{97.92mm}{
-{\bf \small \textcolor{white} {\sffamily Arenberg Doctoral School of Science, Engineering \& Technology}}\\
-{\sffamily\small \textcolor{white} {\@faculty}}\\
-{\sffamily\small \textcolor{white} {\@department}}
-}
-\end{textblock*}
-%
-% Create blue background 
-\begin{textblock*}{60mm+\bleed}(0mm-\bleed+#1, 20mm)
-\textblockcolour{}
-\includegraphics[width=60mm+\bleed,height=20mm]{image/blue}
-\end{textblock*}
-%
-% Put KULeuven logo on top of the blue background
-\begin{textblock*}{60mm}(0mm+#1, 20mm)
-\textblockcolour{}
-%\vspace{-\parskip}
-\includegraphics*[height=20mm]{image/kullogo2}
-\end{textblock*}
+  %
+  % Create header
+  \frontcoverheader{#1}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %
@@ -1313,17 +1275,10 @@ in \@degree}
 \end{textblock*}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %
+  % Add footer
+  \frontcoverfooter{#2}
 
-% Only add empty pages if asked for
-\ifthenelse{\equal{#2}{1}}
-{
-  \newpage
-  \thispagestyle{empty} \mbox{}
-  \newpage
-}{}
-%
-% Restore font
-\renewcommand{\sfdefault}{\origsfdefault}
 }
 \let\orig@makefrontcovergeneral\makefrontcovergeneral
 
