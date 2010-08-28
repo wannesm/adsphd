@@ -262,8 +262,18 @@
 % Bibtex style
 \bibstyle{plain}
 
-% Title of chapter with publications
-\newcommand{\pubnametoc}{List of publications}
+% Title of chapter with preface, abstract, publications, cv, ...
+\newcommand{\prefname}{Preface}
+\newcommand{\prefnlname}{Dankwoord}
+\newcommand{\abstname}{Abstract}
+\newcommand{\abstnlname}{Beknopte samenvatting}
+\newcommand{\nomname}{Nomenclature}
+\newcommand{\tocname}{Contents}
+\newcommand{\lofname}{List of Figures}
+\newcommand{\lotname}{List of Tables}
+\renewcommand{\bibname}{Bibliography}
+\newcommand{\pubname}{List of publications}
+\newcommand{\cvname}{Curriculum vitae}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now load a whole bunch of packages:
@@ -527,9 +537,9 @@ Expects chapter* for abstract, changed chapter to chapter*}%
     \include{\chaptersdir/#1/#1}
     \let\chapter=\orig@chapter
   }{
-    \chapter*{Preface}
+    \chapter*{\prefname}
     {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-    sure its starts with "\textbackslash{}chapter*\{Preface\}"\ldots }}
+    sure its starts with "\textbackslash{}chapter*\{\prefname\}"\ldots }}
     \instructionsforeword
   }
 }
@@ -551,9 +561,9 @@ Expects chapter* for abstract, changed chapter to chapter*}%
     \include{\chaptersdir/#1/#1}
     \let\chapter=\orig@chapter
   }{
-    \chapter*{Dankwoord}
+    \chapter*{\prefnlname}
     {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-    sure its starts with "\textbackslash{}chapter*\{Dankwoord\}"\ldots }}
+    sure its starts with "\textbackslash{}chapter*\{\prefnlname\}"\ldots }}
     \instructionsforeword
   }
   \selectlanguage{english}
@@ -576,9 +586,9 @@ Expects chapter* for abstract, changed chapter to chapter*}%
     \include{\chaptersdir/#1/#1}
     \let\chapter=\orig@chapter
   }{
-    \chapter*{Abstract}
+    \chapter*{\abstname}
     {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-    sure it starts with "\textbackslash{}chapter*\{Abstract\}"\ldots}}
+    sure it starts with "\textbackslash{}chapter*\{\abstname\}"\ldots}}
     \instructionsabstract
   }
 }
@@ -600,7 +610,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
     \include{\chaptersdir/#1/#1}
     \let\chapter=\orig@chapter
   }{
-    \chapter*{Beknopte samenvatting}
+    \chapter*{\abstnlname}
     {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
     sure it starts with "\textbackslash{}chapter*\{Beknopte
     samenvatting\}"\ldots}}
@@ -613,9 +623,9 @@ Expects chapter* for abstract, changed chapter to chapter*}%
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \include{\chaptersdir/#1/#1}
   }{
-    \chapter*{Nomenclature}
+    \chapter*{\nomname}
     {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-    sure it starts with "\textbackslash{}chapter*\{Nomenclature\}"\ldots}}
+    sure it starts with "\textbackslash{}chapter*\{\nomname\}"\ldots}}
     \instructionslistofsymbols
   }
 }
@@ -625,7 +635,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
   \phantomsection
   %%\markboth{\uppercase{Bibliography}}{\uppercase{Bibliography}}
   \markboth{{Bibliography}}{{Bibliography}}
-  \addcontentsline{toc}{chapter}{Bibliography}
+  \addcontentsline{toc}{chapter}{\bibname}
   \bibliographystyle{\@bibstyle}
   \bibliography{#1}
 }
@@ -635,7 +645,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
   \cleardoublepage
   \phantomsection
   \markboth{{Contents}}{{Contents}}
-  \addcontentsline{toc}{chapter}{Contents}
+  \addcontentsline{toc}{chapter}{\tocname}
   \tableofcontentsorig
 }
 
@@ -644,7 +654,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
   \cleardoublepage
   \phantomsection
   \markboth{{List of Figures}}{{List of Figures}}
-  \addcontentsline{toc}{chapter}{List of Figures}
+  \addcontentsline{toc}{chapter}{\lofname}
   \listoffiguresorig
 }
 
@@ -653,7 +663,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
   \cleardoublepage
   \phantomsection
   \markboth{{List of Tables}}{{List of Tables}}
-  \addcontentsline{toc}{chapter}{List of Tables}
+  \addcontentsline{toc}{chapter}{\lotname}
   \listoftablesorig
 }
 
@@ -674,8 +684,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
   \def\rightmark{CURRICULUM VITAE}
   \def\leftmark{CURRICULUM VITAE}
   \cleardoublepage
-  % assumes that \chapter* is used
-  \addcontentsline{toc}{chapter}{Curriculum vitae}
+  \addcontentsline{toc}{chapter}{\cvname}
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \let\orig@chapter=\chapter
     \renewcommand{\chapter}{%
@@ -690,39 +699,38 @@ Expects chapter* for CV, changed chapter to chapter*}%
     \include{\chaptersdir/#1/#1}
   \let\chapter=\orig@chapter
   }{
-    \chapter*{Curriculum vitae}
+    \chapter*{\cvname}
     {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-    sure it starts with "\textbackslash{}chapter*\{Curriculum vitae\}"\ldots}}
+    sure it starts with "\textbackslash{}chapter*\{\cvname\}"\ldots}}
     \instructionscv
   }
-  }%
 }
 
 \newcommand{\includepublications}[1]{%
-  {
-    % assumes that \chapter* is used
-    \addcontentsline{toc}{chapter}{\pubnametoc}
-    \IfFileExists{\chaptersdir/#1/#1.tex}{
-      \let\orig@chapter=\chapter
-      \renewcommand{\chapter}{%
-      \@ifstar{%
-        \orig@chapter*%
-      }{%
-        \message{adsphd.cls Warning: %
-Expects chapter* for CV, changed chapter to chapter*}%
-        \orig@chapter*%
-      }%
-    }
-      \include{\chaptersdir/#1/#1}
-      \let\chapter=\orig@chapter
-    }{
-      \cleardoublepage
-      \chapter*{\pubnametoc}
-      {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-      sure it starts with "\textbackslash{}chapter*\{\pubnametoc\}"\ldots}}
-      \instructionslistofpublications
-    }
-  }%
+  \cleardoublepage
+  \chaptermark{\pubname}
+  \phantomsection
+  \addcontentsline{toc}{chapter}{\pubname}
+  \IfFileExists{\chaptersdir/#1/#1.tex}{
+    \let\orig@chapter=\chapter
+    \renewcommand{\chapter}{%
+    \@ifstar{%
+      \orig@chapter*%
+    }{%
+      \message{adsphd.cls Warning: %
+Expects chapter* for publications, changed chapter to chapter*}%
+      \orig@chapter*%
+    }%
+  }
+    \include{\chaptersdir/#1/#1}
+    \let\chapter=\orig@chapter
+  }{
+    \cleardoublepage
+    \chapter*{\pubname}
+    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
+    sure it starts with "\textbackslash{}chapter*\{\pubname\}"\ldots}}
+    \instructionslistofpublications
+  }
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
