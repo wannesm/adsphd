@@ -8,6 +8,15 @@
 \usepackage{nomencl}
 \usepackage[style=long,number=none]{glossary} % For list of abbreviations
 
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% !!                                                               !!
+% !!  WARNING: do not remove the following lines containing        !!
+% !!  "%%% COVER: Settings %%%" and "%%% COVER: End settings %%%"  !!
+% !!  They are used by the Makefile to generate the coverpage.     !!
+% !!                                                               !!
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+%%% COVER: Settings %%%
 \title{Multiscale methods for the macroscopic simulation of individual-based models}
 \subtitle{Multiscale computing for Dummies}
 
@@ -32,6 +41,15 @@
 \depot{XXXX/XXXX/XX}     % Leave out the initial D/ (it is added
                          % automatically)
 \isbn{XXX-XX-XXXX-XXX-X}
+
+% Update page height
+\geometry{%
+  height=180mm,
+}
+% Set spine width:
+\setlength{\adsphdspinewidth}{9mm}
+
+%%% COVER: End settings %%%
 
 % for the nomenclature
 \renewcommand{\nomname}{List of Symbols}
