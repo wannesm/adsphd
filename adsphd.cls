@@ -1125,6 +1125,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \newcommand{\makefrontcover}{\makefrontcovergeneral{0mm}{1}}
 % \makefrontcovergeneral{xskip}{}clearpage
 \newcommand{\makefrontcovergeneral}[2]{%
+\typeout{adsphd.cls: Using default front cover page}
 % Use Helvetica
 \renewcommand{\sfdefault}{\helvetsfdefault}
 \thispagestyle{empty}
@@ -1341,6 +1342,7 @@ ISBN \@isbn
 \newcommand{\makebackcover}{\makebackcovergeneral{0mm}{1}}
 % \makebackcovergeneral{xskip}{clearpage}
 \newcommand{\makebackcovergeneral}[2]{%
+\typeout{adsphd.cls: Using default back cover page}
 % Use Helvetica
 \renewcommand{\sfdefault}{\helvetsfdefault}
 %
