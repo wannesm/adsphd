@@ -186,30 +186,6 @@
       height=\the\adsphdpaperheight}{crop}
 }
 
-\DeclareOption{cover}{%
-  % Only use 7 mm for \bleed{}!!  Do _NOT_ redefine if you don't know
-  % what you are doing. For instance Procopia needs 7mm extra on the
-  % left to bind the booklet.
-  \setlength{\bleed}{\defaultbleed}
-  \bleedtrue
-  % Set crop width to \adsphdpaperwidth+2\bleed
-  \newlength{\cropwidth}
-  \setlength{\cropwidth}{\adsphdpaperwidth}
-  \addtolength{\cropwidth}{2\bleed}
-  \PassOptionsToPackage{off,noinfo,width=\the\cropwidth,%
-      height=\the\adsphdpaperheight}{crop}
-}
-
-\DeclareOption{spine}{%
-  %\PassOptionsToPackage{off,frame,noinfo,width=\the\adsphdpaperheight,height=29cm}{crop}
-  %\PassOptionsToPackage{off,noinfo,width=245mm,height=29cm}{crop}
-
-  %%\PassOptionsToPackage{off,noinfo,width=\the\adsphdpaperheight,%
-  %%    height=\the\adsphdspinewidth}{crop}
-  \PassOptionsToPackage{off,noinfo,width=\the\adsphdpaperheight,%
-      height=\the\adsphdspinewidth}{crop}
-}
-
 \DeclareOption{tothejury}{%
   \typeout{Creating A4 output for the version to send to the jury!!!}
   \PassOptionsToPackage{off,noinfo}{crop}
