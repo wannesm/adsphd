@@ -103,6 +103,10 @@
   \PassOptionsToPackage{cam}{crop}
 }
 
+\DeclareOption{cam}{%
+  \PassOptionsToPackage{cam}{crop}
+}
+
 % Font size
 \DeclareOption{10pt}{%
   \PassOptionsToClass{10pt}{report}
