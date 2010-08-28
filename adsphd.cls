@@ -388,8 +388,9 @@
 % HEADERS
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\renewcommand{\chaptermark}[1]{\uppercase{\markboth{#1}{#1}}}
-\renewcommand{\sectionmark}[1]{\uppercase{\markright{#1}}}
+% Make sure headers are uppercase
+\renewcommand{\chaptermark}[1]{\markboth{\uppercase{#1}}{\uppercase{#1}}}
+\renewcommand{\sectionmark}[1]{\markright{\uppercase{#1}}}
 \fancyhf{}
 \fancyhead[RO]{\scriptsize\sf\rightmark\ \hrulefill\ \thepage}
 \fancyhead[RE]{\scriptsize\sf\thepage\ \hrulefill\ \leftmark}
