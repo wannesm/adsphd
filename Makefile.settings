@@ -37,23 +37,3 @@ psnup2-booklet: $(PSFILE:.ps=-psnup2-booklet.ps)
 .PHONY: addedtextsince
 addedtextsince:
 	git diff $(SINCE) $(FILE) | grep -v '^-' | gvim -
-
-cleanpar:
-	@if [ "$(TARGET)" != "" ]; \
-	then \
-		for i in $(CLEANEXTENSIONS);\
-		do \
-			$(RM) $(TARGET).$$i;\
-		done;\
-	fi
-	
-realcleanpar:
-	echo "Removing temporary files belonging to '$(TARGET)'...";
-	@if [ "$(TARGET)" != "" ];\
-	then \
-		for i in $(CLEANEXTENSIONS) $(REALCLEANEXTENSIONS);\
-		do \
-			$(RM) $(TARGET).$$i;\
-			$(RM) $(TARGET)_bare.$$i;\
-		done;\
-	fi
