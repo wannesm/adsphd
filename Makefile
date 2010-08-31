@@ -85,7 +85,7 @@ TEX = latex
 PDFTEX = pdflatex
 DVIPS = dvips
 PS2PDF = ps2pdf -dMaxSubsetPct=100 -dSubsetFonts=true -dEmbedAllFonts=true \
-		  -dPDFSETTINGS=/printer -dCompatibilityLevel=1.3
+		  -dPDFSETTINGS=/printer -dCompatibilityLevel=1.4
 BIBTEX = bibtex
 MAKEINDEX = makeindex
 DETEX = detex
