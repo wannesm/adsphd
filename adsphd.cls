@@ -502,9 +502,10 @@
 % Conditionals
 \RequirePackage{ifthen}
 
-% Simple arithmetic with lengths
+% Simple arithmetics with lengths
 \RequirePackage{calc}
 
+% Rotate textboxes etc.
 \RequirePackage{rotating}
 
 % Helvetica font for the front cover
@@ -1091,6 +1092,8 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Define front and back cover + redefine the title page
+%
+% +-> For guidelines: http://set.kuleuven.be/phd/doc/guidelines_cover.pdf
 
 \newcommand{\cropline}[4]{%
   \setlength{\unitlength}{1mm}
@@ -1143,7 +1146,6 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \makespinegeneral{\skiplen}{0}{#1}{#2}
 
   \setlength{\skiplen}{3\bleed+\adsphdpaperwidth+\adsphdspinewidth}
-%  \makebackcovergeneral{\skiplen}{0}
   \makefrontcovergeneral{\skiplen}{0}
 
   % Draw some extra crop lines
