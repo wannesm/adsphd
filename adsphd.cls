@@ -24,111 +24,215 @@
 \ProvidesClass{adsphd}
     [2010/02/02 v0.1 Standard K.U.Leuven Arenberg Doctoral School PhD class]
 
-\newif\ifshowtodo
-\newif\ifshowtodopriv
-\newif\ifshowinstructions
 \newif\ifshellescape
-\newif\ifshowgit
-\newif\ifAthree
 
+% Different actions when using pdflatex
+\RequirePackage{ifpdf}
+\RequirePackage[usenames]{color}
+
+% Fix papersize
+\newlength{\adsphdpaperheight}
+\setlength{\adsphdpaperheight}{240mm}
+\newlength{\adsphdpaperwidth}
+\setlength{\adsphdpaperwidth}{160mm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Options that can be passed to adsphd.cls:
 
+% Use kvoptions to process key=value type options
+% Based on http://www.texdev.net/wp-content/uploads/2009/03/keyval.pdf
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{
+    family=adsphd,
+    prefix=adsphd@}
 
-% Different actions when using pdflatex
-\RequirePackage{ifpdf}
+% attributes
+\DeclareBoolOption{info}
+\DeclareBoolOption{frame}
+\DeclareBoolOption{cropmarks}
+\DeclareBoolOption{cam}
+\DeclareBoolOption{showinstructions}
+\DeclareBoolOption{showtodo}
+\DeclareBoolOption{showtodopriv}
+\DeclareBoolOption{showgit}
+\DeclareBoolOption{showlabels}
+\DeclareBoolOption{cover}
+\DeclareBoolOption{british}
 
-% Default options to report class, taken from the ADS template <--
+% font and style
+\DeclareVoidOption{10pt}{
+    \PassOptionsToClass{10pt}{report}
+}
+\DeclareVoidOption{11pt}{
+    \PassOptionsToClass{11pt}{report}
+}
+\DeclareVoidOption{12pt}{
+    \PassOptionsToClass{12pt}{report}
+}
+\DeclareVoidOption{oneside}{
+    \PassOptionsToClass{oneside}{report}
+}
+\DeclareVoidOption{twoside}{
+    \PassOptionsToClass{twoside}{report}
+}
+\DeclareBoolOption{draft}
+\DeclareBoolOption{croppedpdf}
+\DeclareBoolOption{tothejury}{}
+\DeclareBoolOption{final}{}
+
+% bibliography
+\DeclareBoolOption{backref}
+\DeclareBoolOption{pagebackref}
+
+% links
+\DeclareBoolOption{colorlinks}
+
+% Default values
+\setkeys{adsphd}{info=true}
 \PassOptionsToClass{fleqn,10pt,twoside}{report}
+
+% Process global keys
+\ProcessKeyvalOptions{adsphd}
+
+\AtEndOfClass{%
+\AtBeginDocument{%
+    % disable these options such that they cannot be used in the
+    % \adsphdsetup command
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{cropmarks}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{frame}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{10pt}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{11pt}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{12pt}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{oneside}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{twoside}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{draft}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{croppedpdf}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{tothejury}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{final}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biblatex}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{blstyle}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{backref}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{pagebackref}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{cover}
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{british}
+
+    \hypersetup{%
+        pdfauthor={\@authorf~\@authorl},%
+        pdftitle={\@title},%
+        pdfsubject={\@title},%
+        pdfkeywords={phd, thesis, dissertation, \@authorf~\@authorl}%
+    }
+}}
+
+\newcommand*{\adsphdsetup}{%
+    \setkeys{adsphd}%
+}
+
+\PassOptionsToClass{fleqn,10pt,twoside}{report}
+
+% Global keys (these options can only be set when calling the class)
+
 \ifpdf
 	\PassOptionsToPackage{bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
 \else
 	\PassOptionsToPackage{ps2pdf,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
 \fi
-% --> end ADS 
 
-\DeclareOption{frame}{%
+% Various output options
+
+\ifadsphd@final
+    \typeout{Creating true page size pdf!}
+    \adsphd@infofalse
+    \adsphd@showtodoprivfalse
+    \adsphd@showtodofalse
+    \adsphd@showinstructionsfalse
+    \adsphd@showlabelsfalse
+    \adsphd@cropmarksfalse
+    \adsphd@croppedpdftrue
+    \adsphd@tothejuryfalse
+\fi
+
+\ifadsphd@tothejury
+    \typeout{Creating A4 output for the version to send to the jury!!!}
+    \adsphd@infofalse
+    \adsphd@showtodoprivfalse
+    \adsphd@showtodofalse
+    \adsphd@showinstructionsfalse
+\fi
+
+\ifadsphd@draft
+  \typeout{adsphd.cls: [draft]}  
+  \PassOptionsToClass{draft}{report}
+  \adsphd@showlabelstrue
+  % Show a frame around each logical
+  \adsphd@frametrue
+\fi
+
+\ifadsphd@info
+  \adsphd@frametrue
+\else
+  \PassOptionsToPackage{noinfo}{crop}
+\fi
+
+
+\ifadsphd@croppedpdf
+  \typeout{adsphd.cls: Cropped pdf selected!!!}
+  \adsphd@framefalse
+  \PassOptionsToPackage{width=\the\adsphdpaperwidth,%
+      height=\the\adsphdpaperheight}{crop}
+\fi
+
+\ifadsphd@backref
+  \PassOptionsToPackage{ref}{backref}
+\fi
+
+\ifadsphd@pagebackref
+  \PassOptionsToPackage{pageref}{backref}
+\fi
+
+\ifadsphd@showlabels
+%  \typeout{adsphd.cls: [showlabels]}
+  \RequirePackage{showlabels}
+\fi
+
+\ifadsphd@cropmarks
+  \adsphd@camtrue
+\fi
+\ifadsphd@cam
+  \typeout{adsphd.cls: [cam]}
+  \adsphd@framefalse
+  \PassOptionsToPackage{cam}{crop}
+\fi
+
+\ifadsphd@frame
+  \typeout{adsphd.cls: [frame]}
   \PassOptionsToPackage{frame}{crop}
-}
+\fi
 
-\DeclareOption{colorlinks}{%
-  % Nice colored links in the pdf
-  \PassOptionsToPackage{colorlinks=true}{hyperref}
-}
+\ifadsphd@colorlinks
+    \definecolor{darkblue}{rgb}{0,0,0.4}
+    %\PassOptionsToPackage{colorlinks=true,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue}{hyperref}
+    \PassOptionsToPackage{colorlinks=true}{hyperref}
+\else
+    \message{adsphd.cls: No colored links}
+    \PassOptionsToPackage{colorlinks=false}{hyperref}
+\fi
 
-% Control backward referencing of in bibliography
-\DeclareOption{backref}{%
-%  \PassOptionsToClass{backref}{hyperref}
-  \PassOptionsToClass{ref}{backref}
-}
-
-\DeclareOption{pagebackref}{%
-%  \PassOptionsToClass{pagebackref}{hyperref}
-  \PassOptionsToClass{pageref}{backref}
-}
-
-% Options for crop package
-\DeclareOption{noinfo}{%
-  \PassOptionsToPackage{off,noinfo}{crop}
-}
-
-\Athreefalse
-\DeclareOption{a3}{%
-  \Athreetrue
+\ifadsphd@cover
   \PassOptionsToPackage{a3,landscape}{crop}
-}
-
-\DeclareOption{cropmarks}{%
-  \PassOptionsToPackage{cam}{crop}
-}
-
-\DeclareOption{cam}{%
-  \PassOptionsToPackage{cam}{crop}
-}
-
-% Font size
-\DeclareOption{10pt}{%
-  \PassOptionsToClass{10pt}{report}
-}
-
-\DeclareOption{11pt}{%
-  \PassOptionsToClass{11pt}{report}
-}
-
-\DeclareOption{12pt}{%
-  \PassOptionsToClass{12pt}{report}
-}
-
-% Single or double sided?
-\DeclareOption{oneside}{%
-  \PassOptionsToClass{oneside}{report}
-}
-\DeclareOption{twoside}{%
-  \PassOptionsToClass{twoside}{report}
-}
-
-% Misc options
-\DeclareOption{showtodo}{%
-  \showtodotrue
-}
-
-\DeclareOption{showtodopriv}{%
-  \showtodoprivtrue
-}
-
-\DeclareOption{showinstructions}{%
-  \showinstructionstrue
-}
+\else
+  \PassOptionsToPackage{a4}{crop}
+\fi
 
 % Thank you Wannes:
-\DeclareOption{showgit}{%
+\ifadsphd@showgit
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{showgit}
 	\def\gittmpfile{/tmp/gitdescribe.txt} 
 	\immediate\write18{touch \gittmpfile} 
 	% Check whether shell escapes are enabled 
 	\IfFileExists{\gittmpfile}{\shellescapetrue}{\shellescapefalse} 
 	\ifshellescape 
-		\showgittrue
+		\adsphd@showgittrue
 		%\newcommand*\cropgitinfo{\gitdescribe}
 		\immediate\write18{git describe --tags --long --always > \gittmpfile} %
 		\openin1=\gittmpfile
@@ -147,61 +251,17 @@
 			\message{Warning: Also no VERSION file found. Git information will not be shown.}
 		}
 	\fi
-}
-
-\DeclareOption{showlabels}{%
-  % on by default
-}
-
-\DeclareOption{noshowlabels}{%
-  \PassOptionsToPackage{final}{showlabels}
-}
+\fi
 
 \newcommand{\fulfillment}{fulfillment} % American english
-\DeclareOption{british}{%
+\ifadsphd@british
   % In British english, this would be fulfilment...
   % [http://dictionary.cambridge.org/dictionary/british/fulfilment_1#fulfilment_1__3]
   \renewcommand{\fulfillment}{fulfilment}
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Various output options
-
-\DeclareOption{draft}{%
-  \PassOptionsToClass{draft}{report}
-  \PassOptionsToPackage{frame}{crop}
-}
-
-\DeclareOption{croppedpdf}{%
-  \typeout{Cropped pdf selected!!!}
-  \PassOptionsToPackage{off,noinfo,width=\the\adsphdpaperwidth,%
-      height=\the\adsphdpaperheight}{crop}
-}
-
-\DeclareOption{tothejury}{%
-  \typeout{Creating A4 output for the version to send to the jury!!!}
-  \PassOptionsToPackage{off,noinfo}{crop}
-  \showtodoprivfalse
-  \showtodofalse
-  \showinstructionsfalse
-  \PassOptionsToPackage{final}{showlabels}
-}
-
-\DeclareOption{final}{%
-  \typeout{Creating true page size pdf!}
-  \showtodoprivfalse
-  \showtodofalse
-  \showinstructionsfalse
-  \PassOptionsToPackage{final}{showlabels}
-  % Remove all 'extra' stuff and crop page to true size
-  \PassOptionsToPackage{off,noinfo,width=\the\adsphdpaperwidth,%
-      height=\the\adsphdpaperheight}{crop}
-}
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now process the options passed to the packages
-
-\ExecuteOptions{frame}
 
 \ProcessOptions\relax
 \LoadClass{report}
@@ -271,13 +331,8 @@
 % Default filename for custom cover page
 \newcommand{\@customcoverpage}{mycoverpage.tex}
 
-% Set papersize.
-\newlength{\adsphdpaperheight}
-\setlength{\adsphdpaperheight}{240mm}
-\newlength{\adsphdpaperwidth}
-\setlength{\adsphdpaperwidth}{160mm}
+% Set default spine width
 \newlength{\adsphdspinewidth}
-%\setlength{\adsphdspinewidth}{20mm} % Ridiculously large ;)
 \setlength{\adsphdspinewidth}{9mm}
 
 % Define bleed
@@ -296,17 +351,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now load a whole bunch of packages:
 
-\RequirePackage{showlabels}
+%\RequirePackage{showlabels}
 
 \RequirePackage{subfigure} % Just in case...
 
 \RequirePackage{framed} % voor shaded environment
 
-% Taken from ADS <--
 \RequirePackage{backref}
+
 \RequirePackage{hyperref}
-\RequirePackage[usenames]{color}
-% <-- end ADS
 
 % Page layout
 %\RequirePackage[dvips=false,pdftex=false,vtex=false]{geometry} # Use this for older versions of geometry (e.g. on Karmic)
@@ -324,22 +377,14 @@
 % Load the crop package
 \ifpdf
 	% Load the crop package
-  \ifAthree
-    \RequirePackage[center,pdftex]{crop} % Option [a3] already passed
-  \else
-    \RequirePackage[a4,center,pdftex]{crop}
-  \fi
+  \RequirePackage[center,pdftex]{crop}
 	\RequirePackage[pdftex]{graphicx}
 	\DeclareGraphicsExtensions{.pdf, .jpg, .tif, .png}
 	% Use utf-8 encoding for foreign characters
 	\RequirePackage[utf8]{inputenc}
 \else
 	% Load the crop package
-  \ifAthree
-    \RequirePackage[center,dvips]{crop} % Option [a3] already passed
-  \else
-    \RequirePackage[a4,center,dvips]{crop}
-  \fi
+  \RequirePackage[center,dvips]{crop} % Option [a3] already passed
 	\RequirePackage[dvips]{graphicx}
 	\DeclareGraphicsExtensions{.eps, .ps}
 \fi
@@ -382,11 +427,15 @@
 \setlength{\parskip}{7.2pt}
 \raggedbottom
 
-\ifshowgit
-	%\cropdef[\cropgitinfo]\CROP@@frame\relax\relax\relax{gitinfo}
-	%\crop[gitinfo]
-	\let\orig@CROP@time=\CROP@time
-	\renewcommand{\CROP@time}{\orig@CROP@time\x\gitdescribe}
+\ifadsphd@showgit
+    \ifadsphd@info
+        \ifshellescape
+            %\cropdef[\cropgitinfo]\CROP@@frame\relax\relax\relax{gitinfo}
+            %\crop[gitinfo]
+            \let\orig@CROP@time=\CROP@time
+            \renewcommand{\CROP@time}{\orig@CROP@time\x\gitdescribe}
+        \fi
+    \fi
 \fi
 
 % PAGE CONTROL AND QUOTATION
@@ -543,7 +592,7 @@
       \@ifstar{%
         \orig@chapter*
       }{%
-        \message{adsphd.cls Warning: %
+        \message{adsphd.cls: Warning: %
 Expects chapter* for abstract, changed chapter to chapter*}%
         \orig@chapter*%
       }%
@@ -568,7 +617,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
       \@ifstar{%
         \orig@chapter*
       }{%
-        \message{adsphd.cls Warning: %
+        \message{adsphd.cls: Warning: %
 Expects chapter* for abstract, changed chapter to chapter*}%
         \orig@chapter*%
       }%
@@ -594,7 +643,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
       \@ifstar{%
         \orig@chapter*
       }{%
-        \message{adsphd.cls Warning: %
+        \message{adsphd.cls: Warning: %
 Expects chapter* for abstract, changed chapter to chapter*}%
         \orig@chapter*%
       }%
@@ -619,7 +668,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
       \@ifstar{%
         \orig@chapter*
       }{%
-        \message{adsphd.cls Warning: %
+        \message{adsphd.cls: Warning: %
 Expects chapter* for abstract, changed chapter to chapter*}%
         \orig@chapter*%
       }%
@@ -704,7 +753,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
       \@ifstar{%
         \orig@chapter*
       }{%
-        \message{adsphd.cls Warning: %
+        \message{adsphd.cls: Warning: %
 Expects chapter* for CV, changed chapter to chapter*}%
         \orig@chapter*%
       }%
@@ -730,7 +779,7 @@ Expects chapter* for CV, changed chapter to chapter*}%
     \@ifstar{%
       \orig@chapter*%
     }{%
-      \message{adsphd.cls Warning: %
+      \message{adsphd.cls: Warning: %
 Expects chapter* for publications, changed chapter to chapter*}%
       \orig@chapter*%
     }%
@@ -749,7 +798,7 @@ Expects chapter* for publications, changed chapter to chapter*}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Various utility commands
 \newcommand{\todoinline}[1]{%
-  \ifshowtodo
+  \ifadsphd@showtodo
     \definecolor{shadecolor}{rgb}{1,1,.65}
     \begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}
   \else
@@ -761,7 +810,7 @@ Expects chapter* for publications, changed chapter to chapter*}%
 \newcommand\todomarginpar[1]{\-\marginpar[\raggedright\footnotesize #1]%
 {\raggedright\footnotesize #1}}
 \newcommand{\todomargin}[1]{%
-  \ifshowtodo%
+  \ifadsphd@showtodo%
     \definecolor{shadecolor}{rgb}{1,1,.65}%
     \todomarginpar{\begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}}%
   \else
@@ -771,14 +820,14 @@ Expects chapter* for publications, changed chapter to chapter*}%
 \let\todo\todomargin
 
 \newcommand{\todoinlinepriv}[1]{%
-  \ifshowtodopriv%
+  \ifadsphd@showtodopriv%
     \definecolor{shadecolor}{rgb}{.7,1,.53}%
     \begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}
   \else
   \fi
 }
 \newcommand{\todomarginpriv}[1]{%
-  \ifshowtodopriv%
+  \ifadsphd@showtodopriv%
     \definecolor{shadecolor}{rgb}{.7,1,.53}%
     \todomarginpar{\begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}}%
   \else
@@ -803,7 +852,7 @@ Expects chapter* for publications, changed chapter to chapter*}%
 }
 
 \newcommand{\instructionsforeword}{
-  \ifshowinstructions
+  \ifadsphd@showinstructions
 \begin{ftw_instructions}
 In het voorwoord wordt de algemene doelstelling van het werk samengevat in
 enkele regels en worden personen, diensten of firma's bedankt voor hun
@@ -821,7 +870,7 @@ doctoraatsbeurs heeft toegekend wordt bedankt (bv.\ FWO, IWT, \ldots).
 }
 
 \newcommand{\instructionsabstract}{
-  \ifshowinstructions
+  \ifadsphd@showinstructions
 \begin{ftw_instructions}
 In een beknopte tekst van 10 \`a 15 lijnen worden de belangrijkste
 doelstellingen en besluiten geformuleerd, zowel in het Nederlands als in het
@@ -833,7 +882,7 @@ verslagen van het departement of de faculteit.  Het Engels moet vlekkeloos zijn.
 }
 
 \newcommand{\instructionsnlsummary}{
-  \ifshowinstructions
+  \ifadsphd@showinstructions
 \begin{ftw_instructions}
 Voor thesissen van Nederlandstalige studenten die in een vreemde taal opgesteld
 zijn, wordt een Nederlandse samenvatting (bv. 5 \`a 10 blz.) van de thesis
@@ -845,7 +894,7 @@ Nederlandse samenvatting draagt een Nederlandse titel.
 }
 
 \newcommand{\instructionslistofsymbols}{
-  \ifshowinstructions
+  \ifadsphd@showinstructions
 \begin{ftw_instructions}
 Lijst van gebruikte symbolen:
 omvat de lijst van de belangrijkste gebruikte symbolen met indices, betekenis
@@ -856,7 +905,7 @@ en gebruikte eenheden.
 }
 
 \newcommand{\instructionstableofcontents}{
-  \ifshowinstructions
+  \ifadsphd@showinstructions
 \begin{ftw_instructions}
 Inhoudstafel: de inhoudstafel omvat de titels van hoofdstukken en paragrafen
 met verwijzing naar de bladzijden.
@@ -866,7 +915,7 @@ met verwijzing naar de bladzijden.
 }
 
 \newcommand{\instructionsintroduction}{
-  \ifshowinstructions
+  \ifadsphd@showinstructions
 \begin{ftw_instructions}
 De inleiding situeert de problematiek, beschrijft de stand van de huidige
 kennis terzake, omschrijft de voornaamste doelstelligen van het werk, samen
@@ -878,7 +927,7 @@ poneert de belangrijkste stellingen.
 }
 
 \newcommand{\instructionschapters}{
-  \ifshowinstructions
+  \ifadsphd@showinstructions
 \begin{ftw_instructions}
 De hoofdstukken: elk hoofdstuk is ingelast met een bepaald doel voor ogen.
 Dit doel wordt vermeld in de eerste paragraaf van elk hoofdstuk.
@@ -896,7 +945,7 @@ het einde van het werk.
 }
 
 \newcommand{\instructionsconclusions}{
-  \ifshowinstructions
+  \ifadsphd@showinstructions
 \begin{ftw_instructions}
 Algemene besluiten:
 Verwijzend naar de inleiding en naar de besluiten van de afzonderlijke
@@ -911,7 +960,7 @@ suggesties voor eventueel verder onderzoek worden gemaakt.
 }
 
 \newcommand{\instructionsbibliography}{
-  \ifshowinstructions
+  \ifadsphd@showinstructions
 \begin{ftw_instructions}
 De bibliografie.
 Departementale richtlijnen terzake te volgen.
@@ -921,7 +970,7 @@ Departementale richtlijnen terzake te volgen.
 }
 
 \newcommand{\instructionslistofpublications}{
-  \ifshowinstructions
+  \ifadsphd@showinstructions
 \begin{ftw_instructions}
 Lijst van de publicaties door de doctorandus/a (auteur of co-auteur).
 \end{ftw_instructions}
@@ -930,7 +979,7 @@ Lijst van de publicaties door de doctorandus/a (auteur of co-auteur).
 }
 
 \newcommand{\instructionscv}{
-  \ifshowinstructions
+  \ifadsphd@showinstructions
 \begin{ftw_instructions}
 Beknopt CV van de doctorandus.
 \end{ftw_instructions}
@@ -939,7 +988,7 @@ Beknopt CV van de doctorandus.
 }
 
 \newcommand{\instructionsappendices}{
-  \ifshowinstructions
+  \ifadsphd@showinstructions
 \begin{ftw_instructions}
 De appendices:
 ze omvatten alle gedeelten uit de tekst die weliswaar essentieel zijn voor het
