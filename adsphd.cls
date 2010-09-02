@@ -1092,7 +1092,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   % robuster this way wrt changes in margins etc.
   %
   % Put sedes at top center
-  \begin{textblock*}{160mm}(0mm+#1,0mm)
+  \begin{textblock*}{\adsphdpaperwidth}(0mm+#1,0mm)
   \textblockcolour{}
   \vspace{-\parskip}
   \begin{center}
@@ -1196,7 +1196,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \end{textblock*}
   %
   % Place date
-  \begin{textblock*}{160mm}(0mm+#1,221.5mm)
+  \begin{textblock*}{\adsphdpaperwidth}(0mm+#1,221.5mm)
   \textblockcolour{}
   \vspace{-\parskip}
   \begin{center} {\small\sffamily\@date }\end{center}
