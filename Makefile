@@ -152,6 +152,7 @@ PDFNUP = $(shell which pdfnup)
 
 test:
 	@echo $(CHAPTERNAMES)
+	# DEPENDENCIES: $(DEPENDENCIES)
 	#@echo $(IGNOREINCHAPTERMODEBARE)
 	#@echo $(PDFNUP)
 	#@echo $(CHAPTERAUX)
