@@ -1503,7 +1503,7 @@ ISBN \@isbn
   \newlength{\authorlen}
   \settowidth{\authorlen}{\large\sffamily\@authorf\ \MakeUppercase\@authorl}
   %
-  \begin{textblock*}{\adsphdspinewidth}(0mm+#1, 53mm)
+  \begin{textblock*}{\adsphdspinewidth}(0mm+#1, 51mm)
   \textblockcolour{}
   % Rotate the text
   \begin{turn}{-90}
