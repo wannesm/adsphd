@@ -177,6 +177,14 @@
   \PassOptionsToPackage{final}{showlabels}
 }
 
+\newcommand{\fulfillment}{fulfillment} % American english
+\DeclareOption{british}{%
+  % In British english, this would be fulfilment...
+  % [http://dictionary.cambridge.org/dictionary/british/fulfilment_1#fulfilment_1__3]
+  \renewcommand{\fulfillment}{fulfilment}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Various output options
 
 \DeclareOption{draft}{%
@@ -1262,7 +1270,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \textblockcolour{}
   \vspace{-\parskip}
   {\small\sffamily Dissertation presented in partial\\
-  fulfillment of the requirements for\\
+  \fulfillment of the requirements for\\
   the degree of Doctor\\
   in \@degree}
   \end{textblock*}
@@ -1328,7 +1336,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \begin{minipage}[t]{7cm}
 %  \begin{tabular}[t]{l}
     Dissertation presented in partial\\
-    fulfillment of the requirements for\\
+    \fulfillment of the requirements for\\
     the degree of Doctor \\
     in \@degree
 %  \end{tabular}
