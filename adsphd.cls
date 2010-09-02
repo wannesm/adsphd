@@ -46,10 +46,14 @@
 
 
 % Define bleed
-\newlength{\defaultbleed}
-\setlength{\defaultbleed}{7mm}
-\newlength{\bleed}
-\setlength{\bleed}{0mm} % No bleed in normal mode
+\newlength{\defaultlbleed}
+\setlength{\defaultlbleed}{7mm}
+\newlength{\defaultrbleed}
+\setlength{\defaultrbleed}{7mm}
+\newlength{\lbleed}
+\setlength{\lbleed}{0mm} % No bleed in normal mode
+\newlength{\rbleed}
+\setlength{\rbleed}{0mm} % No bleed in normal mode
 \bleedfalse
 
 % Temporary var
@@ -1047,38 +1051,39 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \newcommand{\makefullcoverpage}[2]{%
   % #1: spinewidth
   % #2: spinetitlewidth
-  \setlength{\bleed}{\defaultbleed}
+  \setlength{\lbleed}{\defaultlbleed}
+  \setlength{\rbleed}{\defaultrbleed}
   \setlength{\adsphdspinewidth}{#1}
 
   \newlength{\skiplen}
 
-  \begin{textblock*}{\adsphdspinewidth+4pt}(2\bleed+\adsphdpaperwidth-2pt, 20mm)
+  \begin{textblock*}{\adsphdspinewidth+4pt}(\lbleed+\rbleed+\adsphdpaperwidth-2pt, 20mm)
   \textblockcolour{}
   \includegraphics[width=\adsphdspinewidth+4pt,height=20mm]{image/blue}
   \end{textblock*}
 
-  \setlength{\skiplen}{0mm+\bleed}
+  \setlength{\skiplen}{0mm+\rbleed}
   \makebackcovergeneral{\skiplen}{0}
 
-  \setlength{\skiplen}{2\bleed+\adsphdpaperwidth}
+  \setlength{\skiplen}{\lbleed+\rbleed+\adsphdpaperwidth}
   \makespinegeneral{\skiplen}{0}{#1}{#2}
 
-  \setlength{\skiplen}{3\bleed+\adsphdpaperwidth+\adsphdspinewidth}
+  \setlength{\skiplen}{\rbleed+2\lbleed+\adsphdpaperwidth+\adsphdspinewidth}
   \makefrontcovergeneral{\skiplen}{0}
 
   % Draw some extra crop lines
-  \cropline{\bleed}{0mm}{-1}{5}
-  \cropline{\bleed+\adsphdpaperwidth}{0mm}{-1}{5}
-  \cropline{2\bleed+\adsphdpaperwidth}{0mm}{-1}{10}
-  \cropline{2\bleed+\adsphdpaperwidth+\adsphdspinewidth}{0mm}{-1}{10}
-  \cropline{3\bleed+\adsphdpaperwidth+\adsphdspinewidth}{0mm}{-1}{5}
-  \cropline{3\bleed+2\adsphdpaperwidth+\adsphdspinewidth}{0mm}{-1}{5}
-  \cropline{\bleed}{\adsphdpaperheight}{1}{5}
-  \cropline{\bleed+\adsphdpaperwidth}{\adsphdpaperheight}{1}{5}
-  \cropline{2\bleed+\adsphdpaperwidth}{\adsphdpaperheight}{1}{10}
-  \cropline{2\bleed+\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{10}
-  \cropline{3\bleed+\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{5}
-  \cropline{3\bleed+2\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{5}
+  \cropline{\rbleed}{0mm}{-1}{5}
+  \cropline{\rbleed+\adsphdpaperwidth}{0mm}{-1}{5}
+  \cropline{\rbleed+\lbleed+\adsphdpaperwidth}{0mm}{-1}{10}
+  \cropline{\rbleed+\lbleed+\adsphdpaperwidth+\adsphdspinewidth}{0mm}{-1}{10}
+  \cropline{\rbleed+2\lbleed+\adsphdpaperwidth+\adsphdspinewidth}{0mm}{-1}{5}
+  \cropline{\rbleed+2\lbleed+2\adsphdpaperwidth+\adsphdspinewidth}{0mm}{-1}{5}
+  \cropline{\rbleed}{\adsphdpaperheight}{1}{5}
+  \cropline{\rbleed+\adsphdpaperwidth}{\adsphdpaperheight}{1}{5}
+  \cropline{\rbleed+\lbleed+\adsphdpaperwidth}{\adsphdpaperheight}{1}{10}
+  \cropline{\rbleed+\lbleed+\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{10}
+  \cropline{\rbleed+2\lbleed+\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{5}
+  \cropline{\rbleed+2\lbleed+2\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{5}
 
 }
 
@@ -1101,11 +1106,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \end{textblock*}
   %
   % Create gray box
-  \begin{textblock*}{100mm+\bleed}(60mm+#1,20mm)
+  \begin{textblock*}{100mm+\rbleed}(60mm+#1,20mm)
   \textblockcolour{gray}
   \vspace{-\parskip}
-  %\parbox[c][20mm]{(97.92mm+\bleed)}{ % This does not work. The bleed is
-                                       % hardcoded in the texblock size. Fixme!
   \hspace*{2mm}
   \parbox[c][20mm]{97.92mm}{
   {\bf \small \textcolor{white} {\sffamily Arenberg Doctoral School of Science, Engineering \& Technology}}\\
@@ -1115,9 +1118,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \end{textblock*}
   %
   % Create blue background 
-  \begin{textblock*}{60mm+\bleed}(0mm-\bleed+#1, 20mm)
+  \begin{textblock*}{60mm+\lbleed}(0mm-\lbleed+#1, 20mm)
   \textblockcolour{}
-  \includegraphics[width=60mm+\bleed,height=20mm]{image/blue}
+  \includegraphics[width=60mm+\lbleed,height=20mm]{image/blue}
   \end{textblock*}
   %
   % Put KULeuven logo on top of the blue background
@@ -1329,10 +1332,10 @@ ISBN \@isbn
   \thispagestyle{empty}
   %
   % Create gray box
-  \begin{textblock*}{152.5mm+\bleed}(-\bleed+#1,20mm)
+  \begin{textblock*}{152.5mm+\rbleed}(-\rbleed+#1,20mm)
   \textblockcolour{gray}
   \vspace{-\parskip}
-  \parbox[c][20mm]{151.2mm+\bleed}{
+  \parbox[c][20mm]{151.2mm+\rbleed}{
   \flushright
   \vspace{-3mm}
   {\bf \scriptsize \textcolor{white} {\sffamily{}Arenberg Doctoral School of Science, Engineering \& Technology} \ \ }\\[-1mm]
@@ -1348,7 +1351,7 @@ ISBN \@isbn
   % Create blue background
   \setlength{\tmplength}{\adsphdpaperwidth}
   \addtolength{\tmplength}{-152mm}
-  \addtolength{\tmplength}{\bleed}
+  \addtolength{\tmplength}{\rbleed}
   \begin{textblock*}{\tmplength}(152.0mm+#1,20mm)
   \textblockcolour{}
   \includegraphics[width=\tmplength,height=20mm]{image/blue}%

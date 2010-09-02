@@ -484,7 +484,8 @@ $(COVERTEX): $(MAINTEX) $(MYCOVERPAGE) adsphd.cls Makefile
 	@echo "% Compute total page width"                             >> $@
 	@echo "\newlength{\fullpagewidth}"                             >> $@
 	@echo "\setlength{\fullpagewidth}{2\adsphdpaperwidth}"         >> $@
-	@echo "\addtolength{\fullpagewidth}{4\defaultbleed}"           >> $@
+	@echo "\addtolength{\fullpagewidth}{2\defaultlbleed}"           >> $@
+	@echo "\addtolength{\fullpagewidth}{2\defaultrbleed}"           >> $@
 	@echo "\addtolength{\fullpagewidth}{\adsphdspinewidth}"        >> $@
 	@echo ""                                                       >> $@
 	@echo "\geometry{"                                             >> $@
@@ -508,7 +509,8 @@ $(COVERTEX): $(MAINTEX) $(MYCOVERPAGE) adsphd.cls Makefile
 	@echo "\subsection*{Used settings:}"                           >> $@
 	@echo "\begin{itemize}"                                        >> $@
 	@echo "	\item Spine width: \printlength{\adsphdspinewidth}"    >> $@
-	@echo "	\item Bleed: \printlength{\bleed}"                     >> $@
+	@echo "	\item Left bleed: \printlength{\lbleed}"               >> $@
+	@echo "	\item Right bleed: \printlength{\rbleed}"              >> $@
 	@echo "	\item Paper width: \printlength{\adsphdpaperwidth}"    >> $@
 	@echo "	\item Paper height: \printlength{\adsphdpaperheight}"  >> $@
 	@echo "	\item Text width: \printlength{\textwidth}"            >> $@
