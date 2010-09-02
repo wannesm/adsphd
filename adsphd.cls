@@ -1332,8 +1332,6 @@ ISBN \@isbn
   \begin{textblock*}{152.5mm+\bleed}(-\bleed+#1,20mm)
   \textblockcolour{gray}
   \vspace{-\parskip}
-  %\hspace*{-\bleed}\parbox[c][20mm]{(151.2mm+\bleed)}{ % This does not work. The bleed is
-                                       % hardcoded in the texblock size. Fixme!
   \parbox[c][20mm]{151.2mm+\bleed}{
   \flushright
   \vspace{-3mm}
@@ -1455,7 +1453,7 @@ ISBN \@isbn
   }
   \end{turn}
   \end{textblock*}
-%  \vfill
+
   \renewcommand{\sfdefault}{\origsfdefault}
 }
 
