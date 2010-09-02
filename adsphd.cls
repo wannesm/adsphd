@@ -329,7 +329,7 @@
 \ifpdf
 	% Load the crop package
   \ifAthree
-    \RequirePackage[center,pdftex]{crop}
+    \RequirePackage[center,pdftex]{crop} % Option [a3] already passed
   \else
     \RequirePackage[a4,center,pdftex]{crop}
   \fi
@@ -340,7 +340,7 @@
 \else
 	% Load the crop package
   \ifAthree
-    \RequirePackage[center,dvips]{crop}
+    \RequirePackage[center,dvips]{crop} % Option [a3] already passed
   \else
     \RequirePackage[a4,center,dvips]{crop}
   \fi
