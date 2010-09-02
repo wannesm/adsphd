@@ -29,7 +29,6 @@
 \newif\ifshowinstructions
 \newif\ifshellescape
 \newif\ifshowgit
-\newif\ifbleed
 \newif\ifAthree
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -54,7 +53,6 @@
 \setlength{\lbleed}{0mm} % No bleed in normal mode
 \newlength{\rbleed}
 \setlength{\rbleed}{0mm} % No bleed in normal mode
-\bleedfalse
 
 % Temporary var
 \newlength{\tmplength}
@@ -255,7 +253,8 @@
 % Bibtex style
 \def\bibstyle#1{\gdef\@bibstyle{#1}}
 
-% Default values
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Default values and other settings
 \author{Guust}{Flater}
 \promotor{Prof.dr.ir.~Promotor}
 \president{Mr.~De~Voorzitter}
