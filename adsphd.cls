@@ -1438,10 +1438,10 @@ ISBN \@isbn
 
 \newcommand{\backcoverfooter}[1]{%
   % Put logo of the association at the bottom right
-  \begin{textblock*}{12mm}[0.5,0.5](142.5mm+#1,223.5mm)
+  \begin{textblock*}{7mm}[2.,1.](150mm+#1,231.0mm)
   \textblockcolour{}
   \vspace{-\parskip}
-  \includegraphics*[width=12mm]{image/ASSO_ZEGEL_ZW}
+  \includegraphics*[height=20mm]{image/ASSO_ZEGEL_ZW}
   \end{textblock*}
   %
   % Restore font
