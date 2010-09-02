@@ -31,31 +31,9 @@
 \newif\ifshowgit
 \newif\ifAthree
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Options that can be passed to adsphd.cls:
-
-% Set papersize.
-\newlength{\adsphdpaperheight}
-\setlength{\adsphdpaperheight}{240mm}
-\newlength{\adsphdpaperwidth}
-\setlength{\adsphdpaperwidth}{160mm}
-\newlength{\adsphdspinewidth}
-%\setlength{\adsphdspinewidth}{20mm} % Ridiculously large ;)
-\setlength{\adsphdspinewidth}{9mm}
-
-
-% Define bleed
-\newlength{\defaultlbleed}
-\setlength{\defaultlbleed}{7mm}
-\newlength{\defaultrbleed}
-\setlength{\defaultrbleed}{7mm}
-\newlength{\lbleed}
-\setlength{\lbleed}{0mm} % No bleed in normal mode
-\newlength{\rbleed}
-\setlength{\rbleed}{0mm} % No bleed in normal mode
-
-% Temporary var
-\newlength{\tmplength}
 
 
 % Different actions when using pdflatex
@@ -292,6 +270,28 @@
 
 % Default filename for custom cover page
 \newcommand{\@customcoverpage}{mycoverpage.tex}
+
+% Set papersize.
+\newlength{\adsphdpaperheight}
+\setlength{\adsphdpaperheight}{240mm}
+\newlength{\adsphdpaperwidth}
+\setlength{\adsphdpaperwidth}{160mm}
+\newlength{\adsphdspinewidth}
+%\setlength{\adsphdspinewidth}{20mm} % Ridiculously large ;)
+\setlength{\adsphdspinewidth}{9mm}
+
+% Define bleed
+\newlength{\defaultlbleed}
+\setlength{\defaultlbleed}{7mm}
+\newlength{\defaultrbleed}
+\setlength{\defaultrbleed}{7mm}
+\newlength{\lbleed}
+\setlength{\lbleed}{0mm} % No bleed in normal mode
+\newlength{\rbleed}
+\setlength{\rbleed}{0mm} % No bleed in normal mode
+
+% Temporary var
+\newlength{\tmplength}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now load a whole bunch of packages:
