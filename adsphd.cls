@@ -300,14 +300,7 @@
 
 \RequirePackage{subfigure} % Just in case...
 
-% Een aantal packages uit de cls van Bart
-%\RequirePackage{xcolor}
 \RequirePackage{framed} % voor shaded environment
-%
-%\RequirePackage{nomencl}
-%\renewcommand{\nomname}{List of Symbols}
-%
-%\RequirePackage{makeidx}
 
 % Taken from ADS <--
 \RequirePackage{backref}
