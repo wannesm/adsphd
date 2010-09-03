@@ -499,15 +499,6 @@
 \def\mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
 \def\mathclapinternal#1#2{\clap{$\mathsurround=0pt#1{#2}$}}
 
-% CLAP
-\def\clap#1{\hbox to 0pt{\hss#1\hss}}
-\def\mathllap{\mathpalette\mathllapinternal}
-\def\mathrlap{\mathpalette\mathrlapinternal}
-\def\mathclap{\mathpalette\mathclapinternal}
-\def\mathllapinternal#1#2{\llap{$\mathsurround=0pt#1{#2}$}}
-\def\mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
-\def\mathclapinternal#1#2{\clap{$\mathsurround=0pt#1{#2}$}}
-
 % CPV
 \def\Xint#1{\mathchoice
 {\XXint\displaystyle\textstyle{#1}}%
