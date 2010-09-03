@@ -847,6 +847,7 @@ Expects chapter* for publications, changed chapter to chapter*}%
   \definecolor{shadecolor}{gray}{0.95}
   \begin{shaded}
   \textbf{Instructies van de faculteit:}
+
   }
   {
     \end{shaded}
@@ -930,7 +931,9 @@ poneert de belangrijkste stellingen.
 \newcommand{\instructionschapters}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-De hoofdstukken: elk hoofdstuk is ingelast met een bepaald doel voor ogen.
+\paragraph{De hoofdstukken:} 
+
+Elk hoofdstuk is ingelast met een bepaald doel voor ogen.
 Dit doel wordt vermeld in de eerste paragraaf van elk hoofdstuk.
 Naargelang de aard van de tekst (experiment, uitvoering, theoretische
 ontwikkeling, \ldots) volgen de paragrafen elkaar op.  Beweringen worden altijd
