@@ -123,12 +123,16 @@
         pdfkeywords={phd, thesis, dissertation, \@authorf~\@authorl}%
     }
 
-  \ifadsphd@showlabels
-  %  \typeout{adsphd.cls: [showlabels]}
-    \RequirePackage{showlabels}
-  \fi
 
 }}
+
+\RequirePackage{etoolbox}
+\AtEndPreamble{%
+  \ifadsphd@showlabels
+    \typeout{adsphd.cls: [showlabels]}
+    \RequirePackage{showlabels}
+  \fi
+}
 
 \newcommand*{\adsphdsetup}{%
     \setkeys{adsphd}%
