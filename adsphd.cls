@@ -99,6 +99,7 @@
   % disable these options such that they cannot be used in the
   % \adsphdsetup command
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{cropmarks}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{cam}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{frame}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{10pt}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{11pt}
@@ -115,6 +116,7 @@
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{pagebackref}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{cover}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{british}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{showlabels}
 
   \hypersetup{%
     pdfauthor={\@authorf~\@authorl},%
