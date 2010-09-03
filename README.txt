@@ -44,7 +44,8 @@ Some convenient Makefile targets:
   make damnthatsreallyclean         # brutally remove all possible temporary
                                     # files
 
-  make cover                        # create the full cover page
+  make cover                        # create the full cover page. By default
+                                    # this is cover.pdf.
 
 *) In a chapter directory [./chapters/chapterX]:
 
@@ -62,26 +63,44 @@ Other convenient scripts:
 
 Options for the adsphd class:
 
-  showinstructions                  : TODO
-  showtodo
-  showtodopriv
-  backref
-  pagebackref
-  draft
-  prelim
-  croppedpdf
-  cam
-  cropmarks
-  frame
-  noinfo
-  10pt
-  11pt
-  12pt
-  a3
-  a4
-  oneside
-  twoside
-  showgit
+  10pt, 11pt, 12pt                  : text point size
+  oneside, twoside
+  showgit                           : when showing extra info (with [info] or
+                                      [frame] option), also show git related
+                                      stuff.
+  british                           : Use British spelling in cover (i.e.
+                                      fulfilment instead of fulfillment)
+  showinstructions                  : show instructions provided by the
+                                      faculty. These can be included anywhere
+                                      in the tex by commands of the form
+                                      \instructionsabstract,
+                                      \instructionsintroduction, ...  
+  showtodo                          : show todos created by \todo{} or
+                                      \todoinline{}
+  showtodopriv                      : show todos created by \todopriv{} or
+                                      \todoprivinline
+  pagebackref                       : show in the bibliography in which page
+                                      each paper is cited
+  backref                           : TODO
+
+  info                              : put logical page on physical A4 paper and
+                                      show some info (compilation time, ...)
+  draft                             : show info and compile the document as a
+                                      draft
+  prelim                            : generate a version of the document
+                                      suitable to send to the jury. This means
+                                      that the logical page is put on an A4
+                                      without info, frame, todos, ... 
+  final                             : generate true size (cropped!) pdf without
+                                      info, frame, todos, ...
+  croppedpdf                        : generate true size pdf
+  frame                             : put frame around the logical page and
+                                      place the result on an A4 page
+  cam                               : instead of a frame, use cropmarks
+  cropmarks                         : identical to cam
+
+  cover                             : to be used when generating the coverpage.
+                                      Puts the result centered on a landscape A3.
 
 Most of the useful commands provided by this class can be found in the provided
 example file 'thesis.tex'. 
