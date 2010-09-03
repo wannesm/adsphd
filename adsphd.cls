@@ -122,6 +122,12 @@
         pdfsubject={\@title},%
         pdfkeywords={phd, thesis, dissertation, \@authorf~\@authorl}%
     }
+
+  \ifadsphd@showlabels
+  %  \typeout{adsphd.cls: [showlabels]}
+    \RequirePackage{showlabels}
+  \fi
+
 }}
 
 \newcommand*{\adsphdsetup}{%
@@ -188,11 +194,6 @@
 
 \ifadsphd@pagebackref
   \PassOptionsToPackage{pageref}{backref}
-\fi
-
-\ifadsphd@showlabels
-%  \typeout{adsphd.cls: [showlabels]}
-  \RequirePackage{showlabels}
 \fi
 
 \ifadsphd@cropmarks
