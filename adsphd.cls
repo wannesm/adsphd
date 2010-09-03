@@ -61,19 +61,19 @@
 
 % font and style
 \DeclareVoidOption{10pt}{
-    \PassOptionsToClass{10pt}{report}
+  \PassOptionsToClass{10pt}{report}
 }
 \DeclareVoidOption{11pt}{
-    \PassOptionsToClass{11pt}{report}
+  \PassOptionsToClass{11pt}{report}
 }
 \DeclareVoidOption{12pt}{
-    \PassOptionsToClass{12pt}{report}
+  \PassOptionsToClass{12pt}{report}
 }
 \DeclareVoidOption{oneside}{
-    \PassOptionsToClass{oneside}{report}
+  \PassOptionsToClass{oneside}{report}
 }
 \DeclareVoidOption{twoside}{
-    \PassOptionsToClass{twoside}{report}
+  \PassOptionsToClass{twoside}{report}
 }
 \DeclareBoolOption{draft}
 \DeclareBoolOption{croppedpdf}
@@ -96,34 +96,32 @@
 
 \AtEndOfClass{%
 \AtBeginDocument{%
-    % disable these options such that they cannot be used in the
-    % \adsphdsetup command
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{cropmarks}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{frame}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{10pt}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{11pt}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{12pt}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{oneside}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{twoside}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{draft}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{croppedpdf}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{tothejury}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{final}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biblatex}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{blstyle}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{backref}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{pagebackref}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{cover}
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{british}
+  % disable these options such that they cannot be used in the
+  % \adsphdsetup command
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{cropmarks}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{frame}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{10pt}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{11pt}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{12pt}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{oneside}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{twoside}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{draft}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{croppedpdf}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{tothejury}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{final}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biblatex}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{blstyle}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{backref}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{pagebackref}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{cover}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{british}
 
-    \hypersetup{%
-        pdfauthor={\@authorf~\@authorl},%
-        pdftitle={\@title},%
-        pdfsubject={\@title},%
-        pdfkeywords={phd, thesis, dissertation, \@authorf~\@authorl}%
-    }
-
-
+  \hypersetup{%
+    pdfauthor={\@authorf~\@authorl},%
+    pdftitle={\@title},%
+    pdfsubject={\@title},%
+    pdfkeywords={phd, thesis, dissertation, \@authorf~\@authorl}%
+  }
 }}
 
 \RequirePackage{etoolbox}
@@ -135,7 +133,7 @@
 }
 
 \newcommand*{\adsphdsetup}{%
-    \setkeys{adsphd}%
+  \setkeys{adsphd}%
 }
 
 \PassOptionsToClass{fleqn,10pt,twoside}{report}
@@ -143,31 +141,31 @@
 % Global keys (these options can only be set when calling the class)
 
 \ifpdf
-	\PassOptionsToPackage{bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
+  \PassOptionsToPackage{bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
 \else
-	\PassOptionsToPackage{ps2pdf,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
+  \PassOptionsToPackage{ps2pdf,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
 \fi
 
 % Various output options
 
 \ifadsphd@final
-    \typeout{Creating true page size pdf!}
-    \adsphd@infofalse
-    \adsphd@showtodoprivfalse
-    \adsphd@showtodofalse
-    \adsphd@showinstructionsfalse
-    \adsphd@showlabelsfalse
-    \adsphd@cropmarksfalse
-    \adsphd@croppedpdftrue
-    \adsphd@tothejuryfalse
+  \typeout{Creating true page size pdf!}
+  \adsphd@infofalse
+  \adsphd@showtodoprivfalse
+  \adsphd@showtodofalse
+  \adsphd@showinstructionsfalse
+  \adsphd@showlabelsfalse
+  \adsphd@cropmarksfalse
+  \adsphd@croppedpdftrue
+  \adsphd@tothejuryfalse
 \fi
 
 \ifadsphd@tothejury
-    \typeout{Creating A4 output for the version to send to the jury!!!}
-    \adsphd@infofalse
-    \adsphd@showtodoprivfalse
-    \adsphd@showtodofalse
-    \adsphd@showinstructionsfalse
+  \typeout{Creating A4 output for the version to send to the jury!!!}
+  \adsphd@infofalse
+  \adsphd@showtodoprivfalse
+  \adsphd@showtodofalse
+  \adsphd@showinstructionsfalse
 \fi
 
 \ifadsphd@draft
@@ -215,12 +213,12 @@
 \fi
 
 \ifadsphd@colorlinks
-    \definecolor{darkblue}{rgb}{0,0,0.4}
-    %\PassOptionsToPackage{colorlinks=true,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue}{hyperref}
-    \PassOptionsToPackage{colorlinks=true}{hyperref}
+  \definecolor{darkblue}{rgb}{0,0,0.4}
+  %\PassOptionsToPackage{colorlinks=true,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue}{hyperref}
+  \PassOptionsToPackage{colorlinks=true}{hyperref}
 \else
-    \message{adsphd.cls: No colored links}
-    \PassOptionsToPackage{colorlinks=false}{hyperref}
+  \message{adsphd.cls: No colored links}
+  \PassOptionsToPackage{colorlinks=false}{hyperref}
 \fi
 
 \ifadsphd@cover
@@ -232,30 +230,30 @@
 % Thank you Wannes:
 \ifadsphd@showgit
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{showgit}
-	\def\gittmpfile{/tmp/gitdescribe.txt} 
-	\immediate\write18{touch \gittmpfile} 
-	% Check whether shell escapes are enabled 
-	\IfFileExists{\gittmpfile}{\shellescapetrue}{\shellescapefalse} 
-	\ifshellescape 
-		\adsphd@showgittrue
-		%\newcommand*\cropgitinfo{\gitdescribe}
-		\immediate\write18{git describe --tags --long --always > \gittmpfile} %
-		\openin1=\gittmpfile
-		\read1 to \gitdescribe
-		\closein2
-		\immediate\write18{rm \gittmpfile}%
-	\else
-		\message{Warning: Shell Escapes are not enabled. Run (pdf)latex with the `-shell-escape' option.}
-		\IfFileExists{VERSION}{%
-			\showgittrue
-			\openin1=VERSION
-			\read1 to \gitdescribe
-			\closein2
-			\message{Warning: Fallback on VERSION file for print git information. (Create such a file with a git-hook)}
-		}{%
-			\message{Warning: Also no VERSION file found. Git information will not be shown.}
-		}
-	\fi
+  \def\gittmpfile{/tmp/gitdescribe.txt} 
+  \immediate\write18{touch \gittmpfile} 
+  % Check whether shell escapes are enabled 
+  \IfFileExists{\gittmpfile}{\shellescapetrue}{\shellescapefalse} 
+  \ifshellescape 
+    \adsphd@showgittrue
+    %\newcommand*\cropgitinfo{\gitdescribe}
+    \immediate\write18{git describe --tags --long --always > \gittmpfile} %
+    \openin1=\gittmpfile
+    \read1 to \gitdescribe
+    \closein2
+    \immediate\write18{rm \gittmpfile}%
+  \else
+    \message{Warning: Shell Escapes are not enabled. Run (pdf)latex with the `-shell-escape' option.}
+    \IfFileExists{VERSION}{%
+      \showgittrue
+      \openin1=VERSION
+      \read1 to \gitdescribe
+      \closein2
+      \message{Warning: Fallback on VERSION file for print git information. (Create such a file with a git-hook)}
+    }{%
+      \message{Warning: Also no VERSION file found. Git information will not be shown.}
+    }
+  \fi
 \fi
 
 \newcommand{\fulfillment}{fulfillment} % American english
@@ -381,17 +379,17 @@
 
 % Load the crop package
 \ifpdf
-	% Load the crop package
+  % Load the crop package
   \RequirePackage[center,pdftex]{crop}
-	\RequirePackage[pdftex]{graphicx}
-	\DeclareGraphicsExtensions{.pdf, .jpg, .tif, .png}
-	% Use utf-8 encoding for foreign characters
-	\RequirePackage[utf8]{inputenc}
+  \RequirePackage[pdftex]{graphicx}
+  \DeclareGraphicsExtensions{.pdf, .jpg, .tif, .png}
+  % Use utf-8 encoding for foreign characters
+  \RequirePackage[utf8]{inputenc}
 \else
-	% Load the crop package
+  % Load the crop package
   \RequirePackage[center,dvips]{crop} % Option [a3] already passed
-	\RequirePackage[dvips]{graphicx}
-	\DeclareGraphicsExtensions{.eps, .ps}
+  \RequirePackage[dvips]{graphicx}
+  \DeclareGraphicsExtensions{.eps, .ps}
 \fi
 
 \RequirePackage[absolute]{textpos}
@@ -433,14 +431,14 @@
 \raggedbottom
 
 \ifadsphd@showgit
-    \ifadsphd@info
-        \ifshellescape
-            %\cropdef[\cropgitinfo]\CROP@@frame\relax\relax\relax{gitinfo}
-            %\crop[gitinfo]
-            \let\orig@CROP@time=\CROP@time
-            \renewcommand{\CROP@time}{\orig@CROP@time\x\gitdescribe}
-        \fi
+  \ifadsphd@info
+    \ifshellescape
+      %\cropdef[\cropgitinfo]\CROP@@frame\relax\relax\relax{gitinfo}
+      %\crop[gitinfo]
+      \let\orig@CROP@time=\CROP@time
+      \renewcommand{\CROP@time}{\orig@CROP@time\x\gitdescribe}
     \fi
+  \fi
 \fi
 
 % PAGE CONTROL AND QUOTATION
@@ -448,7 +446,8 @@
   \ifodd\count0
     \clearpage\thispagestyle{myheadings}\vspace*{\fill}\clearpage
   \else
-    \vspace*{\fill}\clearpage\fi}
+    \vspace*{\fill}\clearpage\fi%
+}
 
 % HEADERS
 \usepackage{fancyhdr}
@@ -850,9 +849,7 @@ Expects chapter* for publications, changed chapter to chapter*}%
 \newenvironment{ftw_instructions}{
   \definecolor{shadecolor}{gray}{0.95}
   \begin{shaded}
-  \textbf{Instructies van de faculteit:}
-
-  }
+  \textbf{Instructies van de faculteit:} }
   {
     \end{shaded}
 }
