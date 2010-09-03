@@ -407,7 +407,7 @@
 \usepackage{lmodern}  % to make pdf searchable
 \usepackage{textcomp} % nice greek alphabet
 \usepackage{pifont}   % Dingbats
-%\usepackage{booktabs}
+\usepackage{booktabs}
 \newcommand{\labfont}{\fontfamily{phv}\selectfont} % fonts used in labels
 \usepackage{sectsty}
 \allsectionsfont{\sffamily}
