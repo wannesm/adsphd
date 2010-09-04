@@ -574,6 +574,55 @@
 
 \def\chaptersdir{chapters}
 
+% Create own chapter command based on the original \@chapter from
+% report.cls:
+%   - do not number the chapter
+%   - include chapter in toc
+%   - create headings
+\def\@nonumberchapter[#1]#2{%
+                    \addcontentsline{toc}{chapter}{#1}%
+                    \chaptermark{#1}%
+                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+                    \if@twocolumn
+                      \@topnewpage[\@makeschapterhead{#2}]%
+                    \else
+                      \@makeschapterhead{#2}%
+                      \@afterheading
+                    \fi}
+% The starred version is not included in the TOC (but headings are
+% set!)
+\def\@snonumberchapter#1{%
+                    \chaptermark{#1}%
+                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+                    \if@twocolumn
+                      \@topnewpage[\@makeschapterhead{#1}]%
+                    \else
+                      \@makeschapterhead{#1}%
+                      \@afterheading
+                    \fi}
+
+\newcommand{\IncludeChapterIfExists}[3]{%
+  \cleardoublepage
+  \typeout{adsphd.cls: IncludeChapterIfExists}
+  \IfFileExists{\chaptersdir/#1/#1.tex}{
+    \let\orig@chapter=\chapter
+    \renewcommand\chapter{\if@openright\cleardoublepage\else\clearpage\fi
+                    \thispagestyle{plain}%
+                    \global\@topnum\z@
+                    \@afterindentfalse
+                    \secdef\@nonumberchapter\@snonumberchapter}
+    \include{\chaptersdir/#1/#1}
+    \let\chapter=\orig@chapter
+  }{
+    \chapter*{#2}
+    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
+    sure its starts with "\textbackslash{}chapter\{#2\}"\ldots }}
+    #3
+  }
+}
+
 \newcommand{\includechapter}[1]{%
   \graphicspath{{\chaptersdir/#1/image/}}%
 %  \cleardoublepage%
