@@ -630,7 +630,9 @@
   }{
     \chapter*{#2}
     {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-    sure its starts with "\textbackslash{}chapter\{#2\}"\ldots }}
+    sure its starts with "\textbackslash{}chapter\{#2\}". To not
+    include this chapter in the table of contents, use the starred
+    version of the \textbackslash{}chapter command\ldots }}
     #3
   }
 }
