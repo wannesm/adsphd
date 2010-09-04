@@ -320,19 +320,6 @@
 % Bibtex style
 \bibstyle{plain}
 
-% Title of chapter with preface, abstract, publications, cv, ...
-\newcommand{\prefname}{Preface}
-\newcommand{\prefnlname}{Dankwoord}
-\newcommand{\abstname}{Abstract}
-\newcommand{\abstnlname}{Beknopte samenvatting}
-\newcommand{\nomname}{Nomenclature}
-\newcommand{\tocname}{Contents}
-\newcommand{\lofname}{List of Figures}
-\newcommand{\lotname}{List of Tables}
-\renewcommand{\bibname}{Bibliography}
-\newcommand{\pubname}{List of publications}
-\newcommand{\cvname}{Curriculum vitae}
-
 % Default filename for custom cover page
 \newcommand{\@customcoverpage}{mycoverpage.tex}
 
@@ -352,6 +339,24 @@
 
 % Temporary var
 \newlength{\tmplength}
+
+% Default title of chapter containing preface, abstract, publications,
+% cv, ...  Note that the values below are merely suggestions. In
+% practice only the string given in the \chapter{.} command in the
+% included tex file will be used!
+\newcommand{\prefname}{Preface}
+\newcommand{\prefnlname}{Dankwoord}
+\newcommand{\abstname}{Abstract}
+\newcommand{\abstnlname}{Beknopte samenvatting}
+\newcommand{\tocname}{Contents}
+\newcommand{\pubname}{List of publications}
+\newcommand{\cvname}{Curriculum vitae}
+% The following _are_ used in practice as the contents of these
+% chapters are generated automatically:
+\renewcommand{\bibname}{Bibliography}
+\newcommand{\lofname}{List of Figures}
+\newcommand{\lotname}{List of Tables}
+\newcommand{\nomname}{Nomenclature}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now load a whole bunch of packages:
