@@ -600,7 +600,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
     \chapter*{\prefname}
     {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
     sure its starts with "\textbackslash{}chapter*\{\prefname\}"\ldots }}
-    \instructionsforeword
+    \instructionspreface
   }
 }
 
@@ -625,7 +625,7 @@ Expects chapter* for abstract, changed chapter to chapter*}%
     \chapter*{\prefnlname}
     {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
     sure its starts with "\textbackslash{}chapter*\{\prefnlname\}"\ldots }}
-    \instructionsforeword
+    \instructionspreface
   }
   \selectlanguage{english}
 }
@@ -847,7 +847,7 @@ Expects chapter* for publications, changed chapter to chapter*}%
     \end{shaded}
 }
 
-\newcommand{\instructionsforeword}{
+\newcommand{\instructionspreface}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
 In het voorwoord wordt de algemene doelstelling van het werk samengevat in
