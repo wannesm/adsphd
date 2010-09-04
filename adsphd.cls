@@ -542,6 +542,12 @@
 % Setup babel
 \usepackage[dutch,english]{babel} % order of passed options seems to be
                                   % important!
+% Make sure babel does not overwrite our lof/lot name
+\addto\captionsenglish{%
+  \renewcommand\listfigurename{\lofname}
+  \renewcommand\listtablename{\lotname}
+}
+
 
 % To easily change line spacing
 \RequirePackage{setspace}
@@ -681,7 +687,7 @@
 \renewcommand{\listoffigures}{%
   \cleardoublepage
   \phantomsection
-  \addcontentsline{toc}{chapter}{\lofname}
+  \addcontentsline{toc}{chapter}{\listfigurename}
   \listoffiguresorig
 }
 
