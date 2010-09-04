@@ -603,9 +603,10 @@
                       \@afterheading
                     \fi}
 
-\newcommand{\IncludeChapterIfExists}[3]{%
+\newcommand{\IncludeChapterIfExists}[4]{%
+  \typeout{adsphd.cls: chapter '#1'}
   \cleardoublepage
-  \typeout{adsphd.cls: IncludeChapterIfExists}
+  #4
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \let\orig@chapter=\chapter
     \renewcommand\chapter{\if@openright\cleardoublepage\else\clearpage\fi
@@ -630,99 +631,29 @@
 }
 
 \newcommand{\includepreface}[1]{%
-  \IncludeChapterIfExists{#1}{\prefname}{\instructionspreface}
+  \IncludeChapterIfExists{#1}{\prefname}{\instructionspreface}{}
 }
 
 \newcommand{\includeprefacenl}[1]{%
   \selectlanguage{dutch}
-  \cleardoublepage
-  \chaptermark{\prefnlname}
-  \IfFileExists{\chaptersdir/#1/#1.tex}{
-    \let\orig@chapter=\chapter
-    \renewcommand{\chapter}{%
-      \@ifstar{%
-        \orig@chapter*
-      }{%
-        \message{adsphd.cls: Warning: %
-Expects chapter* for abstract, changed chapter to chapter*}%
-        \orig@chapter*%
-      }%
-  }
-    \include{\chaptersdir/#1/#1}
-    \let\chapter=\orig@chapter
-  }{
-    \chapter*{\prefnlname}
-    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-    sure its starts with "\textbackslash{}chapter*\{\prefnlname\}"\ldots }}
-    \instructionspreface
-  }
+  \IncludeChapterIfExists{#1}{\prefnlname}{\instructionspreface}{}
   \selectlanguage{english}
 }
 
 \newcommand{\includeabstract}[1]{%
-%  \selectlanguage{english}
-  \cleardoublepage
-  \chaptermark{\abstname}
-  \IfFileExists{\chaptersdir/#1/#1.tex}{
-    \let\orig@chapter=\chapter
-    \renewcommand{\chapter}{%
-      \@ifstar{%
-        \orig@chapter*
-      }{%
-        \message{adsphd.cls: Warning: %
-Expects chapter* for abstract, changed chapter to chapter*}%
-        \orig@chapter*%
-      }%
-  }
-    \include{\chaptersdir/#1/#1}
-    \let\chapter=\orig@chapter
-  }{
-    \chapter*{\abstname}
-    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-    sure it starts with "\textbackslash{}chapter*\{\abstname\}"\ldots}}
-    \instructionsabstract
-  }
+  \IncludeChapterIfExists{#1}{\abstractname}{\instructionsabstract}{}
 }
 
 \newcommand{\includeabstractnl}[1]{%
   \selectlanguage{dutch}
-  \cleardoublepage
-  \chaptermark{\abstnlname}
-  \IfFileExists{\chaptersdir/#1/#1.tex}{
-    \let\orig@chapter=\chapter
-    \renewcommand{\chapter}{%
-      \@ifstar{%
-        \orig@chapter*
-      }{%
-        \message{adsphd.cls: Warning: %
-Expects chapter* for abstract, changed chapter to chapter*}%
-        \orig@chapter*%
-      }%
-  }
-    \include{\chaptersdir/#1/#1}
-    \let\chapter=\orig@chapter
-  }{
-    \chapter*{\abstnlname}
-    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-    sure it starts with "\textbackslash{}chapter*\{Beknopte
-    samenvatting\}"\ldots}}
-    \instructionsabstract
-  }
+  \IncludeChapterIfExists{#1}{\abstractnlname}{\instructionsabstract}{}
   \selectlanguage{english}
 }
 
 \newcommand{\includenomenclature}[1]{%
   % Use this command when making the nomenclature manually. Using the
   % nomencl package might be a better idea though...
-  \cleardoublepage
-  \IfFileExists{\chaptersdir/#1/#1.tex}{
-    \include{\chaptersdir/#1/#1}
-  }{
-    \chapter*{\nomname}
-    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-    sure it starts with "\textbackslash{}chapter*\{\nomname\}"\ldots}}
-    \instructionslistofsymbols
-  }
+  \IncludeChapterIfExists{#1}{\nomname}{\instructionslistofsymbols}{}
 }
 
 \newcommand{\includebibliography}[1]{%
@@ -758,67 +689,18 @@ Expects chapter* for abstract, changed chapter to chapter*}%
 }
 
 \newcommand{\includeappendix}[1]{%
-  \cleardoublepage
-  \IfFileExists{\chaptersdir/#1/#1.tex}{
-    \include{\chaptersdir/#1/#1}
-  }{
-    \chapter{Appendix}
-    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist.}}
-    \instructionsappendices
-  }
+  \IncludeChapterIfExists{#1}{}{\instructionsappendices}%
+        {\phantomsection}
 }
 
 \newcommand{\includecv}[1]{%
-  \cleardoublepage
-  \chaptermark{\cvname}
-  \phantomsection
-  \addcontentsline{toc}{chapter}{\cvname}
-  \IfFileExists{\chaptersdir/#1/#1.tex}{
-    \let\orig@chapter=\chapter
-    \renewcommand{\chapter}{%
-      \@ifstar{%
-        \orig@chapter*
-      }{%
-        \message{adsphd.cls: Warning: %
-Expects chapter* for CV, changed chapter to chapter*}%
-        \orig@chapter*%
-      }%
-    }
-    \include{\chaptersdir/#1/#1}
-  \let\chapter=\orig@chapter
-  }{
-    \chapter*{\cvname}
-    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-    sure it starts with "\textbackslash{}chapter*\{\cvname\}"\ldots}}
-    \instructionscv
-  }
+  \IncludeChapterIfExists{#1}{\cvname}{\instructionscv}%
+        {\phantomsection}
 }
 
 \newcommand{\includepublications}[1]{%
-  \cleardoublepage
-  \chaptermark{\pubname}
-  \phantomsection
-  \addcontentsline{toc}{chapter}{\pubname}
-  \IfFileExists{\chaptersdir/#1/#1.tex}{
-    \let\orig@chapter=\chapter
-    \renewcommand{\chapter}{%
-    \@ifstar{%
-      \orig@chapter*%
-    }{%
-      \message{adsphd.cls: Warning: %
-Expects chapter* for publications, changed chapter to chapter*}%
-      \orig@chapter*%
-    }%
-  }
-    \include{\chaptersdir/#1/#1}
-    \let\chapter=\orig@chapter
-  }{
-    \cleardoublepage
-    \chapter*{\pubname}
-    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-    sure it starts with "\textbackslash{}chapter*\{\pubname\}"\ldots}}
-    \instructionslistofpublications
-  }
+  \IncludeChapterIfExists{#1}{\pubname}%
+        {\instructionslistofpublications}{\phantomsection}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
