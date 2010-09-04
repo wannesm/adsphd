@@ -630,27 +630,7 @@
 }
 
 \newcommand{\includepreface}[1]{%
-  \cleardoublepage
-  \chaptermark{\prefname}
-  \IfFileExists{\chaptersdir/#1/#1.tex}{
-    \let\orig@chapter=\chapter
-    \renewcommand{\chapter}{%
-      \@ifstar{%
-        \orig@chapter*
-      }{%
-        \message{adsphd.cls: Warning: %
-Expects chapter* for abstract, changed chapter to chapter*}%
-        \orig@chapter*%
-      }%
-  }
-    \include{\chaptersdir/#1/#1}
-    \let\chapter=\orig@chapter
-  }{
-    \chapter*{\prefname}
-    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-    sure its starts with "\textbackslash{}chapter*\{\prefname\}"\ldots }}
-    \instructionspreface
-  }
+  \IncludeChapterIfExists{#1}{\prefname}{\instructionspreface}
 }
 
 \newcommand{\includeprefacenl}[1]{%
