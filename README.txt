@@ -25,7 +25,8 @@ The directory structure looks like this
 
 
 
-The following files will be generated automatically during the compilation process:
+The following files will be generated automatically during the compilation
+process:
 
   ./defs.tex                        # contains all notations, combined from
                                     # defs_thesis.tex and chapters/*/defs.tex.
@@ -42,7 +43,8 @@ Some convenient Makefile targets:
   make                              # create the full booklet thesis.pdf
   make clean
   make realclean                    # cleanup all mess, including leftover
-                                    # mychapter.{dvi,pdf,ps} files.
+                                    # {dvi,pdf,ps} files of main file or the
+                                    # chapters
   make damnthatsreallyclean         # brutally remove all possible temporary
                                     # files
 
@@ -56,6 +58,10 @@ Some convenient Makefile targets:
                                     # the bibliography.
   make bare                         # Create chapterX.pdf containing only the 
                                     # chapter text (no TOC, no bibliography).
+  make clean                        # remove pdf's
+  make figurelist                   # Print out the names of all figures that are
+                                      effectively used in ./chapters/chapterX/chapterX.tex
+
 
 Other convenient scripts:
   
@@ -197,12 +203,13 @@ redefining \defaultlbleed and \defaultrbleed respectively.
 TROUBLESHOOTING:
 
  *) To be able to make the chapter compilation work, you should make sure that
-    the desired chapter is included in thesis.tex (e.g., using \includechapter{.})!!
+    the desired chapter is included in thesis.tex (e.g., using
+    \includechapter{introduction})!!
 
  *) If you get spurious empty pages when compiling a single chapter, this is
     probably due to the combination of \cleardoublepage and \includeonly. To
     avoid it, make sure you end all included chapters (and appendices) with
-    \cleardoublepage (or use makeemptychapter.sh to generate the chapter
-    skeleton).
+    \cleardoublepage (if you use makeemptychapter.sh to generate the chapter
+    skeleton this is automatically done!)
 
-# vim: expandtab
+# vim: expandtab tw=79
