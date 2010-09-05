@@ -7,8 +7,11 @@ The directory structure looks like this
                                     # settings used by make.
 
   ./chapters/chapter1               # per chapter a directory with:
-  ./chapters/chapter1/chapter.tex   #  + .tex file with identical name
-  ./chapters/chapter1/image/        #  + image/ directory
+  ./chapters/chapter1/chapter1.tex  #  + .tex file with identical name
+  ./chapters/chapter1/image/        #  + image/ directory. Note that to include
+                                         a figure in chapter1.tex, you should
+                                         NOT include the relative path, i.e.,
+                                            \includegraphics{myfigure} % and not {image/myfigure}!
   ./chapters/chapter1/defs.tex      #  + contains notations specific for this
                                          chapter. Only used to create ./defs.tex, 
                                          which should be included in thesis.tex
@@ -28,7 +31,6 @@ The following files will be generated automatically during the compilation proce
                                     # defs_thesis.tex and chapters/*/defs.tex.
   ./chapters/chapterX/Makefile      # Makefile dealing with all dependencies of
                                     # the chapter.
-
 
 
 USING MAKE AND OTHER UTILITY SCRIPTS
@@ -70,18 +72,21 @@ Options for the adsphd class:
                                       stuff.
   british                           : Use British spelling in cover (i.e.
                                       fulfilment instead of fulfillment)
+
   showinstructions                  : show instructions provided by the
                                       faculty. These can be included anywhere
                                       in the tex by commands of the form
                                       \instructionsabstract,
                                       \instructionsintroduction, ...  
   showtodo                          : show todos created by \todo{} or
-                                      \todoinline{}
+                                      \todoinline{}.
   showtodopriv                      : show todos created by \todopriv{} or
-                                      \todoprivinline
+                                      \todoprivinline.
+
   pagebackref                       : show in the bibliography in which page
-                                      each paper is cited
-  backref                           : TODO
+                                      each article is cited.
+  backref                           : show in the bibliography in which section
+                                      each article is cited.
 
   info                              : put logical page on physical A4 paper and
                                       show some info (compilation time, ...)
@@ -105,13 +110,60 @@ Options for the adsphd class:
 Most of the useful commands provided by this class can be found in the provided
 example file 'thesis.tex'. 
 
-Some misc commands that might be useful (try them out):
+
+Some misc commands that might be useful (try them out, but do not forget to add
+the [showtodo,showtodopriv] options or you won't see anything):
 
  \todo{This is a todo}
  \todoinline{This is a todo}
  \todopriv{This is a todo}
  \todoprivinline{\This is a todo}
 
+REMARK: to make the above commands interact as little as possible with your
+normal text, alway add a % directly after the closing bracket.
+
+
+INCLUSION OF NORMAL CHAPTERS
+
+Use the command \includechapter{.}, e.g., 
+    \includechapter{introduction} % includes ./chapters/introduction/introduction.tex
+
+If the chapter is an appendix, use \includeappendix{.}!
+
+
+INCLUSION OF 'SPECIAL' CHAPTERS
+
+The term 'special' chapters refers to the
+
+  - preface                 (preface)
+  - dutch abstract          (prefacenl)
+  - abstract                (abstract)
+  - dutch abstract          (abstractnl)
+  - list of publications    (publications)
+  - curriculum vitae        (cv)
+
+To include any of the above, use the command
+
+    \includeXXX{filename}
+
+where XXX stands for the name indicated in between brackets above, and filename
+is as in the \includechapter command. For instance,
+
+    \includeappendix{myappendix} % includes ./chapters/myappendix/myappendix.tex as an appendix
+
+
+Other special chapters are
+
+  - list of figures
+  - list of tables
+  - table of contents
+  - bibliography            
+
+but these different from the above as they are generated using standard
+commands (\listoffigures, \listoftables, \tableofcontents,
+\includebibliography).
+
+For typical usage, see the provided file thesis.tex.
 
 
 GENERATING THE COVER PAGE
@@ -134,10 +186,11 @@ The default front and/or back cover page can be overwritten:
 
 The cover page in the generated pdf has the following structure:
 
-    <--gray bleed--> <--backcoverpage--> <--blue bleed--> <--spine width--> <--blue bleed--> <--frontcoverpage--> <--gray bleed-->
+    <--rbleed--> <--backcoverpage--> <--lbleed--> <--spine width--> <--lbleed--> <--frontcoverpage--> <--rbleed-->
 
-The bleed (both gray and blue) is 7mm by default. I suggest not changing this
-value unless you know what you are doing ;)
+The default bleed (both lbleed and rbleed) is 7mm. I suggest not changing this
+value unless you know what you are doing ;) The latter can be done by
+redefining \defaultlbleed and \defaultrbleed respectively.
 
 
 
