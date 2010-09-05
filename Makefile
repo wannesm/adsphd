@@ -404,7 +404,7 @@ ref:
 	@make $(BBLFILE)
 
 %.bbl: %.tex $(MAINBIBTEXFILE)
-	@make $($@:.bbl=.aux)
+	@make $(<:.tex=.aux)
 	@echo "Running bibtex..."
 	$(BIBTEX) $(<:.tex=)
 
@@ -424,7 +424,7 @@ nomenclature:
 	
 $(MAINTEX:.tex=).nls: $(MAINTEX) $(DEFS)
 %.nls: %.tex
-	@make $($@:.bbl=.aux)
+	@make $(<:.tex=.aux)
 	@echo "Creating nomenclature..."
 	$(MAKEINDEX) $(<:.tex=.nlo) -s nomencl.ist -o $(<:.tex=.nls)
 	$(RM) $(DVIFILE)
@@ -437,7 +437,7 @@ glossary:
 	@make $(GLOSSFILE)
 	
 %.gls: %.tex
-	@make $($@:.bbl=.aux)
+	@make $(<:.tex=.aux)
 	@echo "Creating glossary..."
 	$(MAKEINDEX) $(<:.tex=.glo) -s $(<:.tex=.ist) -t $(<:.tex=.glg) -o $(<:.tex=.gls)
 	$(RM) $(DVIFILE)
