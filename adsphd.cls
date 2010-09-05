@@ -1258,7 +1258,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
       \\\rule{0.25cm}{0pt}(\affiliation)
     }}
     \DTLforeach{copromotor}{\name=name,\affiliation=affiliation}{%
-    \\\name, copromotor
+    \\\name, co-promotor
     \ifthenelse{\equal{\affiliation}{}}{}{%
       \\\rule{0.25cm}{0pt}(\affiliation)
     }}
