@@ -275,17 +275,52 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Definitions of the input parameters
 
-\RequirePackage{datatool}
+\RequirePackage{datatool}[2009/07/01]
+
+% Allow for multiple promotors
+\DTLnewdb{promotor}
+\newcommand{\@promotor}[2]{%
+  \DTLnewrow{promotor}%
+  \DTLnewdbentry{promotor}{name}{#1}%
+  \DTLnewdbentry{promotor}{affiliation}{#2}%
+}
+\newcommand{\@promotorfirst}[2]{%
+  \DTLforeach{promotor}{}{\DTLremovecurrentrow}
+  \let\promotor\@promotor
+  \promotor{#1}{#2}
+}
+\let\promotor\@promotorfirst
+
+% Allow for multiple copromotors
+\DTLnewdb{copromotor}
+\newcommand{\@copromotor}[2]{%
+  \DTLnewrow{copromotor}%
+  \DTLnewdbentry{copromotor}{name}{#1}%
+  \DTLnewdbentry{copromotor}{affiliation}{#2}%
+}
+\newcommand{\@copromotorfirst}[2]{%
+  \DTLforeach{copromotor}{}{\DTLremovecurrentrow}
+  \let\copromotor\@copromotor
+  \copromotor{#1}{#2}
+}
+\let\copromotor\@copromotorfirst
+
+% Allow for multiple external jury members
 \DTLnewdb{externaljury}
-\newcommand{\externaljurymember}[2]{%
+\newcommand{\@externaljurymember}[2]{%
   \DTLnewrow{externaljury}%
   \DTLnewdbentry{externaljury}{name}{#1}%
   \DTLnewdbentry{externaljury}{affiliation}{#2}%
 }
+\newcommand{\@externaljurymemberfirst}[2]{%
+  \DTLforeach{externaljury}{}{\DTLremovecurrentrow}
+  \let\externaljurymember\@externaljurymember
+  \externaljurymember{#1}{#2}
+}
+\let\externaljurymember\@externaljurymemberfirst
 
 \def\subtitle#1{\gdef\@subtitle{#1}}
 \def\author#1#2{\gdef\@authorf{#1}\gdef\@authorl{#2}}
-\def\promotor#1{\gdef\@promotor{#1}}
 \def\president#1{\gdef\@president{#1}}
 \def\jury#1{\gdef\@jury{#1}}
 \def\udc#1{\gdef\@udc{#1}}
@@ -306,10 +341,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Default values and other settings
 \author{Guust}{Flater}
-\promotor{Prof.dr.ir.~Promotor}
+\@promotor{Prof.dr.ir.~Promotor}{}
 \president{Mr.~De~Voorzitter}
 \jury{Jurylid 1\\Jurylid 2}
-\externaljurymember{External jury member}{External affiliation}
+\@externaljurymember{External jury member}{External affiliation}
 \udc{}
 \depot{XXXX/XXXX/XX}
 \isbn{XXX-XX-XXXX-XXX-X}
@@ -1216,9 +1251,22 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \begin{minipage}[t]{7.32cm}
 %  \begin{tabular}[t]{p{6.9cm}}
     Jury:\\
-    \@president, chair\\
-    \@promotor, promotor\\
-    \@jury \\
+    \@president, chair
+    \DTLforeach{promotor}{\name=name,\affiliation=affiliation}{%
+    \\\name, promotor
+    \ifthenelse{\equal{\affiliation}{}}{}{%
+      \\\rule{0.25cm}{0pt}(\affiliation)
+    }}
+    \DTLforeach{copromotor}{\name=name,\affiliation=affiliation}{%
+    \\\name, copromotor
+    \ifthenelse{\equal{\affiliation}{}}{}{%
+      \\\rule{0.25cm}{0pt}(\affiliation)
+    }}
+    \\\@jury%
+    \DTLforeach{externaljury}{\name=name,\affiliation=affiliation}{%
+    \\\name \\
+    \rule{0.25cm}{0pt}(\affiliation)
+    }
 %    \@externaljurymember \\ TODO
 %    \rule{0.25cm}{0pt}(\@externalaffiliation)\\ %TODO
     \\
