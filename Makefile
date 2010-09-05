@@ -403,7 +403,8 @@ $(CHAPTERSDIR)/%/Makefile: Makefile
 ref: 
 	@make $(BBLFILE)
 
-%.bbl: %.tex %.aux $(MAINBIBTEXFILE)
+%.bbl: %.tex $(MAINBIBTEXFILE)
+	@make $($@:.bbl=.aux)
 	@echo "Running bibtex..."
 	$(BIBTEX) $(<:.tex=)
 
@@ -422,7 +423,8 @@ nomenclature:
 	@make $(NOMENCLFILE)
 	
 $(MAINTEX:.tex=).nls: $(MAINTEX) $(DEFS)
-%.nls: %.tex %.aux
+%.nls: %.tex
+	@make $($@:.bbl=.aux)
 	@echo "Creating nomenclature..."
 	$(MAKEINDEX) $(<:.tex=.nlo) -s nomencl.ist -o $(<:.tex=.nls)
 	$(RM) $(DVIFILE)
@@ -434,7 +436,8 @@ $(MAINTEX:.tex=).nls: $(MAINTEX) $(DEFS)
 glossary: 
 	@make $(GLOSSFILE)
 	
-%.gls: %.tex %.aux
+%.gls: %.tex
+	@make $($@:.bbl=.aux)
 	@echo "Creating glossary..."
 	$(MAKEINDEX) $(<:.tex=.glo) -s $(<:.tex=.ist) -t $(<:.tex=.glg) -o $(<:.tex=.gls)
 	$(RM) $(DVIFILE)
