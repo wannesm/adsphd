@@ -28,6 +28,7 @@
 
 % Different actions when using pdflatex
 \RequirePackage{ifpdf}
+
 \RequirePackage[usenames]{color}
 
 % Fix papersize
@@ -274,13 +275,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Definitions of the input parameters
 
+\RequirePackage{datatool}
+\DTLnewdb{externaljury}
+\newcommand{\externaljurymember}[2]{%
+  \DTLnewrow{externaljury}%
+  \DTLnewdbentry{externaljury}{name}{#1}%
+  \DTLnewdbentry{externaljury}{affiliation}{#2}%
+}
+
 \def\subtitle#1{\gdef\@subtitle{#1}}
 \def\author#1#2{\gdef\@authorf{#1}\gdef\@authorl{#2}}
 \def\promotor#1{\gdef\@promotor{#1}}
 \def\president#1{\gdef\@president{#1}}
 \def\jury#1{\gdef\@jury{#1}}
-\def\externaljurymember#1{\gdef\@externaljurymember{#1}}
-\def\externalaffiliation#1{\gdef\@externalaffiliation{#1}}
 \def\udc#1{\gdef\@udc{#1}}
 \def\depot#1{\gdef\@depot{#1}}
 \def\isbn#1{\gdef\@isbn{#1}}
@@ -302,8 +309,7 @@
 \promotor{Prof.dr.ir.~Promotor}
 \president{Mr.~De~Voorzitter}
 \jury{Jurylid 1\\Jurylid 2}
-\externaljurymember{External jury member}
-\externalaffiliation{External affiliation}
+\externaljurymember{External jury member}{External affiliation}
 \udc{}
 \depot{XXXX/XXXX/XX}
 \isbn{XXX-XX-XXXX-XXX-X}
@@ -1213,8 +1219,8 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     \@president, chair\\
     \@promotor, promotor\\
     \@jury \\
-    \@externaljurymember \\
-    \rule{0.25cm}{0pt}(\@externalaffiliation)\\
+%    \@externaljurymember \\ TODO
+%    \rule{0.25cm}{0pt}(\@externalaffiliation)\\ %TODO
     \\
     \if\empty\@udc \else U.D.C. \@udc\fi
 %  \end{tabular}
