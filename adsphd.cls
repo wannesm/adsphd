@@ -84,12 +84,15 @@
 % bibliography
 \DeclareBoolOption{backref}
 \DeclareBoolOption{pagebackref}
+% Biblatex
+\DeclareBoolOption{biblatex}
+\DeclareStringOption{biblatexstyle} % Needs to be defined at load-time
 
 % links
 \DeclareBoolOption{colorlinks}
 
 % Default values
-\setkeys{adsphd}{info=true}
+\setkeys{adsphd}{info=true,biblatexstyle=numeric-comp}
 \PassOptionsToClass{fleqn,10pt,twoside}{report}
 
 % Process global keys
@@ -112,7 +115,7 @@
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{tothejury}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{final}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biblatex}
-  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{blstyle}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biblatexstyle}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{backref}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{pagebackref}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{cover}
@@ -193,12 +196,21 @@
       height=\the\adsphdpaperheight}{crop}
 \fi
 
-\ifadsphd@backref
-  \PassOptionsToPackage{ref}{backref}
-\fi
-
-\ifadsphd@pagebackref
-  \PassOptionsToPackage{pageref}{backref}
+\ifadsphd@biblatex
+    \edef\TmpPass{%
+        \csname PassOptionsToPackage\endcsname{style=\adsphd@biblatexstyle}{biblatex}}
+    \TmpPass
+    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biblatex}
+    \ifadsphd@backref
+        \PassOptionsToPackage{backref}{biblatex}
+    \fi
+\else
+    \ifadsphd@backref
+      \PassOptionsToPackage{ref}{backref}
+    \fi
+    \ifadsphd@pagebackref
+      \PassOptionsToPackage{pageref}{backref}
+    \fi
 \fi
 
 \ifadsphd@cropmarks
@@ -408,7 +420,17 @@
 
 \RequirePackage{framed} % voor shaded environment
 
-\RequirePackage{backref}
+\ifadsphd@biblatex
+    \typeout{adsphd.cls: Using biblatex}
+    \RequirePackage{csquotes}
+    \RequirePackage[hyperref=auto,mincrossrefs=999]{biblatex}
+    %\setlength{\bibhang}{\orig@parindent}
+    \setlength{\bibhang}{.5cm}
+    %\setlength{\bibitemsep}{\orig@parskip}
+    \setlength{\bibitemsep}{.5ex}
+\else
+    \RequirePackage{backref}
+\fi
 
 \RequirePackage{hyperref}
 
@@ -710,13 +732,30 @@
   \IncludeChapterIfExists{#1}{\nomname}{\instructionslistofsymbols}{}
 }
 
-\newcommand{\includebibliography}[1]{%
-  \cleardoublepage
-  \phantomsection
-  \addcontentsline{toc}{chapter}{\bibname}
-  \bibliographystyle{\@bibstyle}
-  \bibliography{#1}
-}
+\ifadsphd@biblatex
+    \newcommand{\includebibliography}{%
+        \@ifnextchar \bgroup{\ClassError{adsphd}{%
+            Biblatex expects the bib-file in the preambe}{%
+            Don't pass an argument to the includebibliography command
+            and\MessageBreak
+            add the bib-file to the preambe as follows:\MessageBreak
+            \bibliography{path/to/file.bib}.\MessageBreak}%
+        }{%
+            \cleardoublepage
+            \phantomsection
+            \addcontentsline{toc}{chapter}{\bibname}
+            \printbibliography
+        }
+    }
+\else
+    \newcommand{\includebibliography}[1]{%
+      \cleardoublepage
+      \phantomsection
+      \addcontentsline{toc}{chapter}{\bibname}
+      \bibliographystyle{\@bibstyle}
+      \bibliography{#1}
+    }
+\fi
 
 \let\tableofcontentsorig\tableofcontents
 \renewcommand{\tableofcontents}{%
