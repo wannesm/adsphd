@@ -1,6 +1,6 @@
-%\documentclass[croppedpdf,pagebackref,showinstructions,showtodo]{adsphd}
-%\documentclass[pagebackref,showinstructions,showtodo]{adsphd}
-\documentclass[pagebackref,showinstructions,showtodo,showtodopriv,showlabels,biblatex,biblatexstyle=authoryear]{adsphd}
+%\documentclass[croppedpdf,backref,showinstructions,showtodo]{adsphd}
+%\documentclass[backref,showinstructions,showtodo]{adsphd}
+\documentclass[backref,showinstructions,showtodo,showtodopriv,showlabels,biblatex,biblatexstyle=authoryear]{adsphd}
 % Preamble {{{}{
 
 \usepackage[english,dutch]{babel}
@@ -80,21 +80,6 @@
   \renewcommand{\glossaryname}{\glossname}
   \cleardoublepage%
   \printglossaryorig\chaptermark{\glossname}}
-
-% See [http://n2.nabble.com/backref-td478438.html]:
-% simple backref command redefinition to avoid double entries
-\renewcommand*{\backref}[1]{}
-% redefinition of the actually used \backrefalt 
-\renewcommand*{\backrefalt}[4]{% 
-\ifcase #1 % 
-   % case: not cited 
-\or 
-   % case: cited on exactly one page 
-   Cited on page~#2.
-\else 
-   % case: cited on multiple pages 
-   Cited on pages~#2.
-\fi}
 
 % Bibtex style
 \bibstyle{abbrv}

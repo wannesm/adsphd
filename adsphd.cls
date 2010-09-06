@@ -204,6 +204,7 @@
     \ifadsphd@backref
         \PassOptionsToPackage{backref}{biblatex}
     \fi
+    \PassOptionsToPackage{backref=false}{hyperref} % Avoid loading of backref
 \else
     \ifadsphd@backref
       \PassOptionsToPackage{ref}{backref}
@@ -422,6 +423,7 @@
 
 \ifadsphd@biblatex
     \typeout{adsphd.cls: Using biblatex}
+    \RequirePackage[utf8]{inputenc}
     \RequirePackage{csquotes}
     \RequirePackage[hyperref=auto,mincrossrefs=999]{biblatex}
     %\setlength{\bibhang}{\orig@parindent}
