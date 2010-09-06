@@ -119,7 +119,7 @@ ifneq ($(origin CHAPTERS), undefined)
 	CHAPTERNAMES = $(CHAPTERS) 
 #	CHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
 else
-	CHAPTERNAMES = $(subst ./,,$(shell (cd $(CHAPTERSDIR); find -mindepth 1 -maxdepth 1 -type d)))
+	CHAPTERNAMES = $(subst ./,,$(shell (cd $(CHAPTERSDIR); find . -mindepth 1 -maxdepth 1 -type d)))
 #	CHAPTERINCLUDEONLYSTRING = 
 endif
 
