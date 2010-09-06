@@ -1,5 +1,5 @@
 # Makefile.settings: contains general configuration settings.
-MAINTEX = thesis.tex
+MAINTEX ?= thesis.tex
 MAINBIBTEXFILE = ~/research/papers/allpapers.bib
 DEFS_THESIS = defs_thesis.tex # Thesiswide preamble settings
 
@@ -19,6 +19,8 @@ USETEXPACKAGEGLOSSARY = 1     # Set this to 1 if you are using the glossary
 TEX = latex -shell-escape
 PDFTEX = pdflatex -shell-escape
 EDITOR = gvim
+
+USEPDFTEX=1
 
 ##############################################################################
 # You should not need to make changes below this line

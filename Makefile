@@ -61,7 +61,7 @@ comma:= ,
 
 # Filenames
 MAINDIR = $(empty)$(empty)
-MAINTEX = thesis.tex
+MAINTEX ?= thesis.tex
 MAINBIBTEXFILE = thesis.bib
 DEFS_THESIS = defs_thesis.tex # Thesiswide preamble settings
 
