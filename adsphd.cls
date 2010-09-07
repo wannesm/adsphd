@@ -204,6 +204,9 @@
     \ifadsphd@backref
         \PassOptionsToPackage{backref}{biblatex}
     \fi
+    \ifadsphd@pagebackref
+        \PassOptionsToPackage{backref}{biblatex}
+    \fi
     \PassOptionsToPackage{backref=false}{hyperref} % Avoid loading of backref
 \else
     \ifadsphd@backref
