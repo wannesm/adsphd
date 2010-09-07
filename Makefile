@@ -99,10 +99,13 @@ ASPELL = aspell --lang=en_GB --add-tex-command="eqref p" \
 			--add-tex-command="psfrag pP" --add-tex-command="special p" \
 			--encoding=iso-8859-1 -t
 
+USETEXPACKAGENOMENCLATURE = 0
+USETEXPACKAGEGLOSSARY = 0
+
 ##############################################################################
 ### INCLUDE GENERAL SETTINGS (Everything above can be overridden) ############
 include Makefile.settings
- 
+
 ##############################################################################
 ### DERIVED SETTINGS #########################################################
  
@@ -145,13 +148,22 @@ IGNOREINCHAPTERMODEBARE = $(subst makefrontcover,makefrontcover\|tableofcontents
 
 # Dependencies for the main pdf file (Make sure $(MAINTEX) is the first in
 # this list!)
-DEPENDENCIES = $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERTEXS) $(CHAPTERMAKEFILES) $(BBLFILE) $(NOMENCLFILE) $(GLOSSFILE) $(CHAPTERAUX) $(FORCE_REBUILD)
+DEPENDENCIES = $(MAINTEX) $(DEFS) $(EXTRADEP) $(CHAPTERTEXS) $(CHAPTERMAKEFILES) $(BBLFILE) $(CHAPTERAUX) $(FORCE_REBUILD)
+
+ifeq ($(strip $(USETEXPACKAGENOMENCLATURE)), 1)
+	DEPENDENCIES += $(NOMENCLFILE) 
+endif
+
+ifeq ($(strip $(USETEXPACKAGEGLOSSARY)), 1)
+	DEPENDENCIES += $(GLOSSFILE) 
+endif
 
 # Search for pdfnup and use it (instead of psnup) if found
 PDFNUP = $(shell which pdfnup)
 
 test:
 	@echo $(CHAPTERNAMES)
+	# USETEXPACKAGENOMENCLATURE: a$(strip $(USETEXPACKAGENOMENCLATURE))a
 	# DEPENDENCIES: $(DEPENDENCIES)
 	#@echo $(IGNOREINCHAPTERMODEBARE)
 	#@echo $(PDFNUP)
