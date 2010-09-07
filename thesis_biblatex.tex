@@ -5,8 +5,14 @@
 
 \usepackage[english,dutch]{babel}
 
-\usepackage{nomencl}
+\usepackage{nomencl}   % If using this package, make sure to add
+                       %     USETEXPACKAGENOMENCLATURE = 1 
+                       % to Makefile.settings
+
 \usepackage[style=long,number=none]{glossary} % For list of abbreviations
+                       % If using this package, make sure to add
+                       %     USETEXPACKAGEGLOSSARY = 1 
+                       % to Makefile.settings
 
 \bibliography{allpapers}
 
