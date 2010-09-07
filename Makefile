@@ -543,14 +543,89 @@ $(COVERPDF): $(COVERTEX)
 
 sanitycheck:
 	# Check some basic things in the tex source
+	@echo ""	
 	##############################
 	# 1. look for todo or toremove or tofix
 	@for f in $(MAINTEX) $(CHAPTERTEXS); \
 	do \
-		echo "\nProcessing $$f...\n";\
+		echo -e "\nProcessing $$f...\n";\
 		GREP_COLOR="41;50" grep -n -i --color '\(todo\|toremove\|tofix\)' $$f;\
-		echo "";\
-	done;
+	done; echo "";
+	##############################
+	# 2. If using the latex packages nomenclature or glossary, check that the
+	# Makefile is aware of this
+	@if ( grep -e '^[\s]*[^\%]*\\usepackage.*{nomencl}.*' $(MAINTEX) >/dev/null );\
+	then \
+		if [ "$(strip $(USETEXPACKAGENOMENCLATURE))" != "1" ]; \
+		then \
+			echo "";\
+			echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";\
+			echo "+ " ;\
+			echo "+ WARNING: Use of latex package 'nomencl' detected but this is "| GREP_COLOR="41;51" grep -i --color "WARNING:";\
+			echo "+          not taken into account in the make process.";\
+			echo "+          Add the following line to Makefile.settings:";\
+			echo "+ ";\
+			echo "+ USETEXPACKAGENOMENCLATURE = 1";\
+			echo "+ ";\
+			echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";\
+			echo "";\
+		else \
+			echo -e "  +-> 'nomencl' detected + Makefile knows... \t==>\tOK!";\
+		fi; \
+	else \
+		if [ "$(strip $(USETEXPACKAGENOMENCLATURE))" == "1" ]; \
+		then \
+			echo "";\
+			echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";\
+			echo "+ " ;\
+			echo "+ WARNING: No use of latex package 'nomencl' detected but the make " | GREP_COLOR="41;51" grep -i --color "WARNING:";\
+			echo "+          process thinks otherwise...";\
+			echo "+          Add the following line to Makefile.settings:";\
+			echo "+ ";\
+			echo "+ USETEXPACKAGENOMENCLATURE = 0";\
+			echo "+ ";\
+			echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";\
+			echo "";\
+		else \
+			echo -e "  +-> OK!";\
+		fi; \
+	fi; 
+	@if ( grep -e '^[\s]*[^\%]*\\usepackage.*{glossar.*' $(MAINTEX) >/dev/null ); \
+	then \
+		if [ "$(strip $(USETEXPACKAGEGLOSSARY))" != "1" ]; \
+		then \
+			echo "";\
+			echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";\
+			echo "+ " ;\
+			echo "+ WARNING: Use of latex package 'glossary' detected but this is "| GREP_COLOR="41;51" grep -i --color "WARNING:";\
+			echo "+          not taken into account in the make process.";\
+			echo "+          Add the following line to Makefile.settings:";\
+			echo "+ " ;\
+			echo "+ USETEXPACKAGEGLOSSARY = 1" ;\
+			echo "+ " ;\
+			echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" ;\
+			echo "" ;\
+		else \
+			echo -e "  +-> 'glossary' detected + Makefile knows... \t==>\tOK!";\
+		fi; \
+	else \
+		if [ "$(strip $(USETEXPACKAGEGLOSSARY))" == "1" ]; \
+		then \
+			echo "";\
+			echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";\
+			echo "+ " ;\
+			echo "+ WARNING: No use of latex package 'glossary' detected but the make "| GREP_COLOR="41;51" grep -i --color "WARNING:";\
+			echo "+          process thinks otherwise...";\
+			echo "+          Add the following line to Makefile.settings:";\
+			echo "+ ";\
+			echo "+ USETEXPACKAGEGLOSSARY = 0";\
+			echo "+ ";\
+			echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";\
+			echo "";\
+		else \
+			echo -e "  +-> OK!";\
+		fi; \
+	fi;
 
 ##############################################################################
 ### SPELLING AND GRAMMAR #####################################################
