@@ -429,7 +429,7 @@ reflist:
 	fgrep "\cite" $(MAINTEX) | grep -v "^%.*" | \
 		sed -n -e 's/^.*cite{\([^}]*\)}.*/\1/p' | sed -e 's/,/\n/g' | uniq $(PIPE)
 
-reflist.bib: PIPE := | python extract_from_bibtex.py --bibfile=$(MAINBIBTEXFILE)--stdin > reflist.bib
+reflist.bib: PIPE := | python extract_from_bibtex.py --bibfile=$(MAINBIBTEXFILE) --stdin > reflist.bib
 reflist.bib: reflist
 
 ##############################################################################
