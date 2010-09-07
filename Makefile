@@ -420,6 +420,11 @@ ref:
 	@echo "Running bibtex..."
 	$(BIBTEX) $(<:.tex=)
 
+$(MAINBIBTEXFILE):
+	# This target is only called when $$(MAINBIBTEXFILE) does not exist...
+	@echo ERROR: $(MAINBIBTEXFILE) does not exist... exit.
+	@exit 1
+
 reflist:
 	fgrep "\cite" $(MAINTEX) | grep -v "^%.*" | \
 		sed -n -e 's/^.*cite{\([^}]*\)}.*/\1/p' | sed -e 's/,/\n/g' | uniq $(PIPE)
