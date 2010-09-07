@@ -427,7 +427,7 @@
 \ifadsphd@biblatex
     \typeout{adsphd.cls: Using biblatex}
     \RequirePackage[utf8]{inputenc}
-    %\RequirePackage{csquotes}
+    \RequirePackage{csquotes}
     \RequirePackage[hyperref=auto,mincrossrefs=999]{biblatex}
     %\setlength{\bibhang}{\orig@parindent}
     \setlength{\bibhang}{.5cm}
