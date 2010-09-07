@@ -1,6 +1,6 @@
 # Makefile.settings: contains general configuration settings.
 MAINTEX ?= thesis.tex
-MAINBIBTEXFILE = ~/research/papers/allpapers.bib
+MAINBIBTEXFILE = allpapers.bib
 DEFS_THESIS = defs_thesis.tex # Thesiswide preamble settings
 
 CHAPTERSDIR = chapters
