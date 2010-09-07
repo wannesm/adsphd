@@ -212,4 +212,45 @@ TROUBLESHOOTING:
     \cleardoublepage (if you use makeemptychapter.sh to generate the chapter
     skeleton this is automatically done!)
 
+
+TIPS AND TRICKS
+
+*) Finetuning the backref package (when _not_ using biblatex). Add the
+   following to your preamble:
+
+  % See [http://n2.nabble.com/backref-td478438.html]:
+  % simple backref command redefinition to avoid double entries
+  \makeatletter
+  \ifadsphd@biblatex\else
+    \ifadsphd@pagebackref%
+      \renewcommand*{\backref}[1]{}
+      % redefinition of the actually used \backrefalt 
+      \renewcommand*{\backrefalt}[4]{% 
+      \ifcase #1 % 
+         % case: not cited 
+      \or 
+         % case: cited on exactly one page 
+         Cited on page~#2.
+      \else 
+         % case: cited on multiple pages 
+         Cited on pages~#2.
+      \fi}
+    \else
+      \renewcommand*{\backref}[1]{}
+      % redefinition of the actually used \backrefalt 
+      \renewcommand*{\backrefalt}[4]{% 
+      \ifcase #1 % 
+         % case: not cited 
+      \or 
+         % case: cited on exactly one page 
+         Cited in Section~#2.
+      \else 
+         % case: cited on multiple pages 
+         Cited in Sections~#2.
+      \fi}
+    \fi
+  \fi
+  \makeatother
+
+
 # vim: expandtab tw=79
