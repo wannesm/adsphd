@@ -215,6 +215,8 @@
     \ifadsphd@pagebackref
       \PassOptionsToPackage{pageref}{backref}
     \fi
+    \let\orig@bibliography\bibliography
+    \renewcommand{\bibliography}[1]{\gdef\@bibliography{#1}}
 \fi
 
 \ifadsphd@cropmarks
@@ -753,12 +755,12 @@
         }
     }
 \else
-    \newcommand{\includebibliography}[1]{%
+    \newcommand{\includebibliography}{%
       \cleardoublepage
       \phantomsection
       \addcontentsline{toc}{chapter}{\bibname}
       \bibliographystyle{\@bibstyle}
-      \bibliography{#1}
+      \orig@bibliography{\@bibliography}
     }
 \fi
 
