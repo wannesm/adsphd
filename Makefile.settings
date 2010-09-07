@@ -20,7 +20,7 @@ TEX = latex -shell-escape
 PDFTEX = pdflatex -shell-escape
 EDITOR = gvim
 
-USEPDFTEX=1
+#USEPDFTEX=1
 
 ##############################################################################
 # You should not need to make changes below this line
