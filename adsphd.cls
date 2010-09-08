@@ -673,7 +673,7 @@
                       \@afterheading
                     \fi
                     \ifthenelse{\equal{\@chaptitlemoveup}{0mm}}{}{
-                      \chaptitlemoveup{0mm}}
+                      \setlength{\@chaptitlemoveup}{0mm}}
                     }
 % The starred version is not included in the TOC (but headings are
 % set!)
@@ -688,7 +688,10 @@
                       \vspace*{-\@chaptitlemoveup}
                       \@makeschapterhead{#1}%
                       \@afterheading
-                    \fi}
+                    \fi
+                    \ifthenelse{\equal{\@chaptitlemoveup}{0mm}}{}{
+                      \setlength{\@chaptitlemoveup}{0mm}}
+                    }
 \newlength{\@chaptitlemoveup}
 \newcommand{\chaptitlemoveup}[1]{\setlength{\@chaptitlemoveup}{#1}}
 
