@@ -142,8 +142,6 @@
   \setkeys{adsphd}%
 }
 
-\PassOptionsToClass{fleqn,10pt,twoside}{report}
-
 % Global keys (these options can only be set when calling the class)
 
 \ifpdf
@@ -287,7 +285,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now process the options passed to the packages
 
-\ProcessOptions\relax
 \LoadClass{report}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
