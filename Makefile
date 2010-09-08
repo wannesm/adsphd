@@ -495,7 +495,7 @@ MYCOVERPAGE=$(wildcard $(MYCOVERPAGENAME))
 cover: $(COVERPDF)
 
 $(COVERTEX): $(MAINTEX) $(MYCOVERPAGE) adsphd.cls Makefile
-	@echo "\documentclass[cam,a3]{adsphd}"                         >  $@
+	@echo "\documentclass[cam,cover]{adsphd}"                      >  $@
 	@echo ""                                                       >> $@
 	@echo "\usepackage{printlen}"                                  >> $@
 	@echo "\uselengthunit{mm}"                                     >> $@
