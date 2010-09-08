@@ -725,22 +725,26 @@
 }
 
 \newcommand{\includepreface}[1]{%
-  \IncludeUnnumberedChapterIfExists{#1}{\prefname}{\instructionspreface}{}
+  \IncludeUnnumberedChapterIfExists{#1}{\prefname}{\instructionspreface}%
+      {\phantomsection}
 }
 
 \newcommand{\includeprefacenl}[1]{%
   \selectlanguage{dutch}
-  \IncludeUnnumberedChapterIfExists{#1}{\prefnlname}{\instructionspreface}{}
+  \IncludeUnnumberedChapterIfExists{#1}{\prefnlname}{\instructionspreface}
+        {\phantomsection}
   \selectlanguage{english}
 }
 
 \newcommand{\includeabstract}[1]{%
-  \IncludeUnnumberedChapterIfExists{#1}{\abstractname}{\instructionsabstract}{}
+  \IncludeUnnumberedChapterIfExists{#1}{\abstractname}{\instructionsabstract}
+        {\phantomsection}
 }
 
 \newcommand{\includeabstractnl}[1]{%
   \selectlanguage{dutch}
-  \IncludeUnnumberedChapterIfExists{#1}{\abstractnlname}{\instructionsabstract}{}
+  \IncludeUnnumberedChapterIfExists{#1}{\abstractnlname}{\instructionsabstract}
+        {\phantomsection}
   \selectlanguage{english}
 }
 
