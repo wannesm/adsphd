@@ -873,9 +873,11 @@
 % FTW instructions for each chapter
 
 \newenvironment{ftw_instructions}{
-  \definecolor{shadecolor}{gray}{0.95}
+  \definecolor{shadecolor}{gray}{0.85}
   \begin{shaded}
-  \textbf{Instructies van de faculteit:} }
+  \textbf{Instructies van de faculteit:} 
+  
+  }%
   {
     \end{shaded}
 }
@@ -958,9 +960,7 @@ poneert de belangrijkste stellingen.
 \newcommand{\instructionschapters}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-\paragraph{De hoofdstukken:} 
-
-Elk hoofdstuk is ingelast met een bepaald doel voor ogen.
+De hoofdstukken: Elk hoofdstuk is ingelast met een bepaald doel voor ogen.
 Dit doel wordt vermeld in de eerste paragraaf van elk hoofdstuk.
 Naargelang de aard van de tekst (experiment, uitvoering, theoretische
 ontwikkeling, \ldots) volgen de paragrafen elkaar op.  Beweringen worden altijd
