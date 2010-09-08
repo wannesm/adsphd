@@ -1491,12 +1491,31 @@ ISBN \@isbn
   %
   \newlength{\authorlen}
   \settowidth{\authorlen}{\large\sffamily\@authorf\ \MakeUppercase\@authorl}
+  \newlength{\authorlenpenalty}
+  \ifthenelse{\lengthtest{\authorlen>4.2cm}}{%
+      % For really really long names, move the name up a bit more
+      \typeout{adsphd.cls: Really long author name detected in %
+        generation of spine. Moving it up by 4mm.}
+      \setlength{\authorlenpenalty}{4mm}
+  }{%
+    \ifthenelse{\lengthtest{\authorlen>4.0cm}}{%
+      % For really long names, move the name up a bit
+      \typeout{adsphd.cls: Long author name detected in generation of %
+        spine. Moving it up by 3mm.}
+      \setlength{\authorlenpenalty}{3mm}
+    }{%
+    \setlength{\authorlenpenalty}{0mm}
+    }
+  }
   %
-  \begin{textblock*}{\adsphdspinewidth}(0mm+#1, 51mm)
+  \begin{textblock*}{\adsphdspinewidth}(0mm+#1,49mm-\authorlenpenalty) % 9mm whitespace 
+                                        % between blue and first letter of the author name
+                                        % (possibly less because the author name might be
+                                        % reallyreally long)
   \textblockcolour{}
   % Rotate the text
   \begin{turn}{-90}
-  \makebox[\adsphdpaperheight-60mm][c]{% 20mm(white)+20mm(blue)+13mm(space before name)+7mm(after date)
+  \makebox[\adsphdpaperheight-56mm+\authorlenpenalty][c]{% 20mm(white)+20mm(blue)+9mm(space before name)+7mm(after date)
   %
   % Place author
   \parbox[c][\adsphdspinewidth]{(\authorlen)}{
