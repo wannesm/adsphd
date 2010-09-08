@@ -797,8 +797,15 @@
 }
 
 \newcommand{\includeappendix}[1]{%
-  \IncludeChapterIfExists{#1}{}{\instructionsappendices}%
-        {\phantomsection}
+  \typeout{adsphd.cls: chapter '#1'}
+  \cleardoublepage
+  \IfFileExists{\chaptersdir/#1/#1.tex}{
+    \include{\chaptersdir/#1/#1}
+  }{
+    \chapter{#1}
+    {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist.
+    \instructionsappendices}}
+  }
 }
 
 \newcommand{\includecv}[1]{%
