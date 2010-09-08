@@ -665,11 +665,16 @@
                     \addtocontents{lof}{\protect\addvspace{10\p@}}%
                     \addtocontents{lot}{\protect\addvspace{10\p@}}%
                     \if@twocolumn
-                      \@topnewpage[\@makeschapterhead{#2}]%
+                      \@topnewpage[\vspace*{-\@chaptitlemoveup}%
+                          \@makeschapterhead{#2}]%
                     \else
+                      \vspace*{-\@chaptitlemoveup}
                       \@makeschapterhead{#2}%
                       \@afterheading
-                    \fi}
+                    \fi
+                    \ifthenelse{\equal{\@chaptitlemoveup}{0mm}}{}{
+                      \chaptitlemoveup{0mm}}
+                    }
 % The starred version is not included in the TOC (but headings are
 % set!)
 \def\@snonumberchapter#1{%
@@ -677,11 +682,15 @@
                     \addtocontents{lof}{\protect\addvspace{10\p@}}%
                     \addtocontents{lot}{\protect\addvspace{10\p@}}%
                     \if@twocolumn
-                      \@topnewpage[\@makeschapterhead{#1}]%
+                      \@topnewpage[\vspace*{-\@chaptitlemoveup}%
+                          \@makeschapterhead{#1}]%
                     \else
+                      \vspace*{-\@chaptitlemoveup}
                       \@makeschapterhead{#1}%
                       \@afterheading
                     \fi}
+\newlength{\@chaptitlemoveup}
+\newcommand{\chaptitlemoveup}[1]{\setlength{\@chaptitlemoveup}{#1}}
 
 \newcommand{\IncludeChapterIfExists}[4]{%
   \typeout{adsphd.cls: chapter '#1'}
