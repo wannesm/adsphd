@@ -348,7 +348,7 @@
 \def\department#1{\gdef\@department{#1}}
 \def\researchgroup#1{\gdef\@researchgroup{#1}}
 \def\address#1{\gdef\@address{#1}}
-\def\degree#1{\gdef\@degree{#1}} % It will say "Doctor in \degree"
+\def\degree#1{\gdef\@degree{#1}} % It will say "Doctor of \degree"
 
 % Bibtex style
 \def\bibstyle#1{\gdef\@bibstyle{#1}}
@@ -1321,7 +1321,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     Dissertation presented in partial\\
     \fulfillment of the requirements for\\
     the degree of Doctor \\
-    in \@degree
+    of \@degree
 %  \end{tabular}
 \end{minipage}
 
