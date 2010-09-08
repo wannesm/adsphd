@@ -692,7 +692,7 @@
 \newlength{\@chaptitlemoveup}
 \newcommand{\chaptitlemoveup}[1]{\setlength{\@chaptitlemoveup}{#1}}
 
-\newcommand{\IncludeChapterIfExists}[4]{%
+\newcommand{\IncludeUnnumberedChapterIfExists}[4]{%
   \typeout{adsphd.cls: chapter '#1'}
   \cleardoublepage
   #4
@@ -722,29 +722,29 @@
 }
 
 \newcommand{\includepreface}[1]{%
-  \IncludeChapterIfExists{#1}{\prefname}{\instructionspreface}{}
+  \IncludeUnnumberedChapterIfExists{#1}{\prefname}{\instructionspreface}{}
 }
 
 \newcommand{\includeprefacenl}[1]{%
   \selectlanguage{dutch}
-  \IncludeChapterIfExists{#1}{\prefnlname}{\instructionspreface}{}
+  \IncludeUnnumberedChapterIfExists{#1}{\prefnlname}{\instructionspreface}{}
   \selectlanguage{english}
 }
 
 \newcommand{\includeabstract}[1]{%
-  \IncludeChapterIfExists{#1}{\abstractname}{\instructionsabstract}{}
+  \IncludeUnnumberedChapterIfExists{#1}{\abstractname}{\instructionsabstract}{}
 }
 
 \newcommand{\includeabstractnl}[1]{%
   \selectlanguage{dutch}
-  \IncludeChapterIfExists{#1}{\abstractnlname}{\instructionsabstract}{}
+  \IncludeUnnumberedChapterIfExists{#1}{\abstractnlname}{\instructionsabstract}{}
   \selectlanguage{english}
 }
 
 \newcommand{\includenomenclature}[1]{%
   % Use this command when making the nomenclature manually. Using the
   % nomencl package might be a better idea though...
-  \IncludeChapterIfExists{#1}{\nomname}{\instructionslistofsymbols}{}
+  \IncludeUnnumberedChapterIfExists{#1}{\nomname}{\instructionslistofsymbols}{}
 }
 
 \ifadsphd@biblatex
@@ -809,12 +809,12 @@
 }
 
 \newcommand{\includecv}[1]{%
-  \IncludeChapterIfExists{#1}{\cvname}{\instructionscv}%
+  \IncludeUnnumberedChapterIfExists{#1}{\cvname}{\instructionscv}%
         {\phantomsection}
 }
 
 \newcommand{\includepublications}[1]{%
-  \IncludeChapterIfExists{#1}{\pubname}%
+  \IncludeUnnumberedChapterIfExists{#1}{\pubname}%
         {\instructionslistofpublications}{\phantomsection}
 }
 
