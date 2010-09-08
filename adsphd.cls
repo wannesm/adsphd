@@ -22,7 +22,7 @@
 
 \NeedsTeXFormat{LaTeX2e}[2009/09/24]
 \ProvidesClass{adsphd}
-    [2010/02/02 v0.1 Standard K.U.Leuven Arenberg Doctoral School PhD class]
+    [2010/02/02 v1.0 Standard K.U.Leuven Arenberg Doctoral School PhD class]
 
 \newif\ifshellescape
 
