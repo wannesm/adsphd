@@ -348,6 +348,7 @@
 \def\department#1{\gdef\@department{#1}}
 \def\researchgroup#1{\gdef\@researchgroup{#1}}
 \def\address#1{\gdef\@address{#1}}
+\def\addresscity#1{\gdef\@addresspc{#1}}
 \def\degree#1{\gdef\@degree{#1}} % It will say "Doctor of \degree"
 
 % Bibtex style
@@ -368,6 +369,7 @@
 \department{Department of ....}
 \researchgroup{Research group ...}
 \address{Address ...}
+\addresscity{B-3001 Heverlee}
 \title{Dissertation title ...}
 \subtitle{}
 \degree{... Computer Science ...}
@@ -1350,7 +1352,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \mbox{}
 \vfill
 {\setlength{\parindent}{0ex}\copyright{}~Katholieke Universiteit Leuven -- \@faculty \\
-\@address, B-3001 Heverlee (Belgium)}
+\@address, \@addresspc (Belgium)}
 
 \bigskip
 \selectlanguage{dutch}
@@ -1403,7 +1405,7 @@ ISBN \@isbn
   {\scriptsize \textcolor{white} {\sffamily\@department \ \ }}\\[-1.2mm]
   {\scriptsize \textcolor{white} {\sffamily\@researchgroup\ \ }}\\[-1.2mm]
   {\scriptsize \textcolor{white} {\sffamily\@address\ \ }}\\[-1.2mm]
-  {\scriptsize \textcolor{white} {\sffamily{}B-3001 Heverlee\ \ }}
+  {\scriptsize \textcolor{white} {\sffamily{}\@addresspc\ \ }}
   }
   \end{textblock*}
   %
