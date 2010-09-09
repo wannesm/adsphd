@@ -1,0 +1,92 @@
+% This file illustrates how to create the full cover page 'manually'. Normally
+% this should only be done on Windows systems as on Linux/MacOS, the generation
+% of the cover page is fully automated via the 'make cover' command. 
+% 
+% Changes should only be made between the markers '%%% COVER: Settings %%%' and
+% '%%% COVER: End settings %%%' (these could/should be copy/pasted from
+% thesis.tex).
+
+\documentclass[cam,cover]{adsphd}
+
+\usepackage{printlen}
+\uselengthunit{mm}
+
+%%% COVER: Settings %%%
+\title{Multiscale methods for the simulation of
+  molecular dynamics and stochastic models}
+%\subtitle{Multiscale computing for Dummies}
+
+\author{Yves}{Frederix}
+
+\promotor{Prof.~dr.~ir.~D.~Roose}{}
+%\copromotor{Prof.~dr.~ir.~R.Cools}{}
+\president{Prof.~dr.~ir.~Mr.~De~Voorzitter}
+\jury{Prof.~dr.~ir.~Den~Ene\\
+      Prof.~dr.~ir.~Den Andere
+}
+\externaljurymember{Prof.~dr.~Het~extern~jurylid}{Ver weg}
+
+\degree{Engineering} % "Doctor of ..."
+\faculty{Faculty of Engineering}
+\department{Department of Computer Science}
+\researchgroup{Scientific Computing Group}
+\address{Celestijnenlaan 200A box 2402}
+% \addresscity{B-3001 Heverlee} % This is the default value. Note
+                                % that 'B-3001 Leuven' is _incorrect_!!
+                                % [http://www.kuleuven.be/communicatie/schrijven/taalgebruik.html]
+
+\date{September 2010}
+%\udc{XXX.XX}            % UDC is no longer necessary.
+\depot{XXXX/XXXX/XX}     % Leave out the initial D/ (it is added
+                         % automatically)
+\isbn{XXX-XX-XXXX-XXX-X}
+
+% Set spine width:
+\setlength{\adsphdspinewidth}{9mm}
+
+%% Set bleeds
+%\setlength{\defaultlbleed}{7mm}
+%\setlength{\defaultrbleed}{7mm}
+
+% Set custom cover page
+% \setcustomcoverpage{mycoverpage.tex} % mycoverpage.tex is the default
+
+%%% COVER: End settings %%%
+
+% Compute total page width
+\newlength{\fullpagewidth}
+\setlength{\fullpagewidth}{2\adsphdpaperwidth}
+\addtolength{\fullpagewidth}{2\defaultlbleed}
+\addtolength{\fullpagewidth}{2\defaultrbleed}
+\addtolength{\fullpagewidth}{\adsphdspinewidth}
+
+\geometry{
+	paperwidth=\fullpagewidth,
+	paperheight=\adsphdpaperheight,
+}
+
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\makefullcoverpage{\adsphdspinewidth}{}
+
+\newlength{\testje}
+\setlength{\testje}{10mm}
+
+\mbox{}
+\newpage
+\subsection*{Used settings:}
+\begin{itemize}
+	\item Spine width: \printlength{\adsphdspinewidth}
+	\item Left bleed: \printlength{\lbleed}
+	\item Right bleed: \printlength{\rbleed}
+	\item Paper width: \printlength{\adsphdpaperwidth}
+	\item Paper height: \printlength{\adsphdpaperheight}
+	\item Text width: \printlength{\textwidth}
+	\item Text height: \printlength{\textheight}
+\end{itemize}
+
+\end{document}
