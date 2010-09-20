@@ -243,9 +243,10 @@
 \fi
 
 \ifadsphd@colorlinks
-  \definecolor{darkblue}{rgb}{0,0,0.4}
-  %\PassOptionsToPackage{colorlinks=true,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue}{hyperref}
-  \PassOptionsToPackage{colorlinks=true}{hyperref}
+%  \definecolor{darkblue}{rgb}{0,0,0.4}
+  \definecolor{darkblue}{rgb}{0,0,0.55}
+  \PassOptionsToPackage{colorlinks=true,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue}{hyperref}
+  %\PassOptionsToPackage{colorlinks=true}{hyperref}
 \else
   \message{adsphd.cls: No colored links}
   \PassOptionsToPackage{colorlinks=false}{hyperref}
