@@ -80,6 +80,8 @@
 \DeclareBoolOption{croppedpdf}
 \DeclareBoolOption{tothejury}{}
 \DeclareBoolOption{final}{}
+\DeclareBoolOption{print}{}
+\DeclareBoolOption{online}{}
 
 % bibliography
 \DeclareBoolOption{backref}
@@ -151,6 +153,15 @@
 \fi
 
 % Various output options
+\ifadsphd@print
+  \adsphd@colorlinksfalse
+  \adsphd@finaltrue
+\fi
+
+\ifadsphd@online
+  \adsphd@colorlinkstrue
+  \adsphd@finaltrue
+\fi
 
 \ifadsphd@final
   \typeout{Creating true page size pdf!}
