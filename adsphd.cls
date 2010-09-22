@@ -1194,8 +1194,8 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \vspace{-\parskip}
   \hspace*{2mm}
   \parbox[c][20mm]{97.92mm}{
-  {\bf \small \textcolor{white} {\sffamily Arenberg Doctoral School of Science, Engineering \& Technology}}\\
-  {\sffamily\small \textcolor{white} {\@faculty}}\\
+  {\bf \small \textcolor{white} {\sffamily Arenberg Doctoral School of Science, Engineering \& Technology}}\\[.2mm]
+  {\sffamily\small \textcolor{white} {\@faculty}}\\[.2mm]
   {\sffamily\small \textcolor{white} {\@department}}
   }
   \end{textblock*}
