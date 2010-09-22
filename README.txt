@@ -104,6 +104,15 @@ Options for the adsphd class:
                                       without info, frame, todos, ... 
   final                             : generate true size (cropped!) pdf without
                                       info, frame, todos, ...
+  print                             : generate true size (cropped!) pdf without
+                                      info, frame, todos, ... suitable for
+                                      printing (basically equal to final, but
+                                      forcing uncolored links, even when this
+                                      option is given explicitly)
+  online                            : generate true size (cropped!) pdf without
+                                      info, frame, todos, ... suitable for
+                                      printing (basically equal to final, but
+                                      forcing colored links)
   croppedpdf                        : generate true size pdf
   frame                             : put frame around the logical page and
                                       place the result on an A4 page
