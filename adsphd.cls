@@ -492,7 +492,7 @@
 
 % FONTS
 \usepackage{microtype}
-%\usepackage[T1]{fontenc}
+\usepackage[T1]{fontenc}
 \usepackage{lmodern}  % to make pdf searchable
 \usepackage{textcomp} % nice greek alphabet
 \usepackage{pifont}   % Dingbats
