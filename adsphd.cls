@@ -768,10 +768,10 @@
 \ifadsphd@biblatex
     \newcommand{\includebibliography}{%
         \@ifnextchar \bgroup{\ClassError{adsphd}{%
-            Biblatex expects the bib-file in the preambe}{%
+            Biblatex expects the bib-file in the preamble}{%
             Don't pass an argument to the includebibliography command
             and\MessageBreak
-            add the bib-file to the preambe as follows:\MessageBreak
+            add the bib-file to the preamble as follows:\MessageBreak
             \bibliography{path/to/file.bib}.\MessageBreak}%
         }{%
             \cleardoublepage
