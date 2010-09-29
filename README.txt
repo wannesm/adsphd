@@ -2,6 +2,7 @@ The directory structure looks like this
 
   ./thesis.tex                      # main tex file for the final booklet
   ./Makefile
+  ./defs.tex                        # Put your own preamble settings here.
   ./Makefile.settings               # This file contains file names and other
                                     # settings used by make.
 
