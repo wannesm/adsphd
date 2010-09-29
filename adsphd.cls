@@ -147,9 +147,9 @@
 % Global keys (these options can only be set when calling the class)
 
 \ifpdf
-  \PassOptionsToPackage{bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
+  \PassOptionsToPackage{plainpages=false,pdfpagelabels,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
 \else
-  \PassOptionsToPackage{ps2pdf,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
+  \PassOptionsToPackage{plainpages=false,pdfpagelabels,ps2pdf,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
 \fi
 
 % Various output options
@@ -653,6 +653,14 @@
 %  \mainmatter  -> Main text
 %  \appendix    -> Appendix
 %  \backmatter  -> Bibliography
+
+% Set initial pagenumbering at the beginning to a,b,c...
+% This is required to avoid warnings with pdflatex (see also
+% http://en.wikibooks.org/wiki/LaTeX/Hyperlinks [Problems with Links
+% and Pages]).
+% In the course of the booklet, the numbering should be changed
+% (resetted) only twice(!), i.e., using \frontmatter and \mainmatter.
+\pagenumbering{alph} 
 
 \newcommand{\frontmatter}{\cleardoublepage\pagenumbering{roman}}
 
@@ -1380,7 +1388,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \begin{center} \@date \end{center}
 \end{textblock}
 % NEW PAGE
-\pagenumbering{roman}
+%\pagenumbering{roman}
 \newpage
 \thispagestyle{empty}
 \mbox{}
