@@ -239,7 +239,7 @@ $(PDFFILE:.pdf=_bare.pdf): $(DEPENDENCIES)
 # If no CHAPTERS environment variable given, only include the requested
 # chapter:
 $(CHAPTERSDIR)/%_ch.pdf: MYCHAPTERINCLUDEONLYSTRING = $(if $(CHAPTERS),$(CHAPTERINCLUDEONLYSTRING),$(CHAPTERSDIR)/$*)
-$(CHAPTERSDIR)/%_ch.dvi: MYMAINTEX = $(MAINTEX:.tex=_ch.tex)
+$(CHAPTERSDIR)/%_ch.pdf: MYMAINTEX = $(MAINTEX:.tex=_ch.tex)
 $(CHAPTERSDIR)/%_ch.pdf: $(DEPENDENCIES)
 	$(call run-tex,$(TEX),$(@:.pdf=),$(MYCHAPTERINCLUDEONLYSTRING),$(MYMAINTEX),$(IGNOREINCHAPTERMODE),0)
 
