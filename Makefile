@@ -431,6 +431,10 @@ $(CHAPTERSDIR)/%/Makefile: Makefile
 	@echo "" >> $@
 	@echo ".PHONY: clean" >> $@
 	@echo "clean:" >> $@
+	@echo -e "\t\$$(RM) \$$(foreach ext, $(CLEANEXTENSIONS), \$$(wildcard $**\$$(ext)))" >> $@
+	@echo "" >> $@
+	@echo ".PHONY: realclean" >> $@
+	@echo "realclean: clean" >> $@
 	@echo -e "\t\$$(RM) $*.pdf $*_bare.pdf" >> $@
 	@echo "" >> $@
 	@echo "s:" >> $@

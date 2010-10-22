@@ -52,7 +52,9 @@ Some convenient Makefile targets:
                                     # the bibliography.
   make bare                         # Create chapterX.pdf containing only the 
                                     # chapter text (no TOC, no bibliography).
-  make clean                        # remove pdf's
+  make clean                        # remove temporary files left from
+                                    # compilation
+  make realclean                    # clean + also remove {ps,pdf} files
   make figurelist                   # Print out the names of all figures that are
                                       effectively used in ./chapters/chapterX/chapterX.tex
 
