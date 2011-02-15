@@ -217,6 +217,8 @@
         \PassOptionsToPackage{backref}{biblatex}
     \fi
     \PassOptionsToPackage{backref=false}{hyperref} % Avoid loading of backref
+    %\PassOptionsToPackage{maxnames=99}{biblatex}
+    \PassOptionsToPackage{firstinits=true}{biblatex}
 \else
     \ifadsphd@backref
       \PassOptionsToPackage{ref}{backref}
@@ -788,7 +790,7 @@
             \cleardoublepage
             \phantomsection
             \addcontentsline{toc}{chapter}{\bibname}
-            \printbibliography
+            \printbibliography[maxnames=99]
         }
     }
 \else
