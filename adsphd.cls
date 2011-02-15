@@ -19,10 +19,14 @@
 %%             This includes the [showgit] option, parts of the work
 %%             to enable compilation with pdflatex, the redefinition
 %%             of \chapter when used in abstract/preface/cv/publications.
+%%  2011-02-02: Added overview of TODOs, changed some internal command
+%%             names such that they are inaccessible from the outside,
+%%             and place DRAFT on front page to avoid mistakes with
+%%             final copy. (Wannes)
 
 \NeedsTeXFormat{LaTeX2e}[2009/09/24]
 \ProvidesClass{adsphd}
-    [2010/02/02 v1.0 Standard K.U.Leuven Arenberg Doctoral School PhD class]
+    [2011/02/02 v1.1 Standard K.U.Leuven Arenberg Doctoral School PhD class]
 
 \newif\ifshellescape
 
@@ -851,22 +855,84 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Various utility commands
+
+\newcounter{todocounter}%
+
+\newcommand*\todosectionname{TODO}
+\newcommand*\printtodos{%
+  \ifadsphd@showtodo
+      \typeout{Printing todo list from \jobname.tds}
+      \cleardoublepage
+      \phantomsection
+      \addcontentsline{toc}{chapter}{\todosectionname}
+      \section*{% 
+        \todosectionname\@mkboth{\MakeUppercase\todosectionname}% 
+                                {\MakeUppercase\todosectionname}% 
+      }\nobreak
+      \begin{description}% 
+      % Let short summaries go to the file \jobname.wds : 
+      \IfFileExists{\jobname.tds}{}{\item No todos}% 
+      \@starttoc{tds}% Define a .tds file
+      %\ifnum\value{todocounter} < 1
+        %\item No todos (0)
+      %\fi
+      \item
+      \end{description}% 
+  \fi
+}
+
+\newcommand*\todo@temp{} 
+
+\@ifpackageloaded{hyperref}{% 
+  \newcommand\printtodoline[2]{% 
+    \item[{\hyperref[tds#2]{% 
+      \getrefbykeydefault{tds#2}{}{??}~% 
+      \getrefbykeydefault{tds#2}{name}{??} % 
+      (on page \getrefbykeydefault{tds#2}{page}{??})}}]\hfill\\#1% 
+  }% 
+}{% 
+  \newcommand\printtodoline[2]{% 
+    \item[\ref{tds#2}~\nameref{tds#2} (on page \pageref{tds#2})]#1% 
+  }% 
+} 
+
+
 \newcommand{\todoinline}[1]{%
   \ifadsphd@showtodo
     \definecolor{shadecolor}{rgb}{1,1,.65}
     \begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}
+    %% for summary
+    \@bsphack
+    \stepcounter{todocounter}%
+    \label{tds\thetodocounter}%
+    \begingroup
+    \protected@edef\todo@temp{#1}%
+    \addtocontents{tds}{\protect\printtodoline{\todo@temp}{\thetodocounter}}%
+    \endgroup
+    \@esphack
   \else
   \fi
 }
 
 \setlength{\marginparwidth}{3.5cm}
 
-\newcommand\todomarginpar[1]{\-\marginpar[\raggedright\footnotesize #1]%
-{\raggedright\footnotesize #1}}
+\newcommand\todomarginpar@[1]{%
+  \-\marginpar[\raggedright\footnotesize #1]%
+  {\raggedright\footnotesize #1}%
+}
 \newcommand{\todomargin}[1]{%
   \ifadsphd@showtodo%
     \definecolor{shadecolor}{rgb}{1,1,.65}%
-    \todomarginpar{\begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}}%
+    \todomarginpar@{\begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}}%
+    %% for summary
+    \@bsphack
+    \stepcounter{todocounter}%
+    \label{tds\thetodocounter}%
+    \begingroup
+    \protected@edef\todo@temp{#1}%
+    \addtocontents{tds}{\protect\printtodoline{\todo@temp}{\thetodocounter}}%
+    \endgroup
+    \@esphack
   \else
   \fi
 }
@@ -877,13 +943,31 @@
   \ifadsphd@showtodopriv%
     \definecolor{shadecolor}{rgb}{.7,1,.53}%
     \begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}
+    %% for summary
+    \@bsphack
+    \stepcounter{todocounter}%
+    \label{tds\thetodocounter}%
+    \begingroup
+    \protected@edef\todo@temp{#1}%
+    \addtocontents{tds}{\protect\printtodoline{\todo@temp}{\thetodocounter}}%
+    \endgroup
+    \@esphack
   \else
   \fi
 }
 \newcommand{\todomarginpriv}[1]{%
   \ifadsphd@showtodopriv%
     \definecolor{shadecolor}{rgb}{.7,1,.53}%
-    \todomarginpar{\begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}}%
+    \todomarginpar@{\begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}}%
+    %% for summary
+    \@bsphack
+    \stepcounter{todocounter}%
+    \label{tds\thetodocounter}%
+    \begingroup
+    \protected@edef\todo@temp{#1}%
+    \addtocontents{tds}{\protect\printtodoline{\todo@temp}{\thetodocounter}}%
+    \endgroup
+    \@esphack
   \else
   \fi
 }
@@ -1262,6 +1346,18 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   % !! Make sure not to remove the '+#1' part!!!
   %
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %
+  % Place the DRAFT notifier on the front page to avoid printing a wrong
+  % version
+  \ifadsphd@final\else
+    \begin{textblock*}{120mm}(17.5mm+#1,90mm)
+    \textblockcolour{}
+    \vspace{-\parskip}
+    \begin{center}
+        \selectfont\LARGE\sffamily\textbf{\color{red}{DRAFT}}
+    \end{center}
+    \end{textblock*}
+  \fi
   %
   % Place the title
   \begin{textblock*}{120mm}(17.5mm+#1,112.5mm)
