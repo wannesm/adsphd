@@ -604,7 +604,7 @@
 \def\dashint{\Xint-}
 
 % VEC
-\def\vec#1{{\bf\bm{#1}}}
+%\def\vec#1{{\bf\bm{#1}}}
 
 % DTILDE
 \def\dtilde#1{\mathrlap{\rlap{\raise1.2pt\hbox{$\mathsurround=0pt%
