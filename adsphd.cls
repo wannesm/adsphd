@@ -128,7 +128,7 @@
     pdfauthor={\@authorf~\@authorl},%
     pdftitle={\@title},%
     pdfsubject={\@title},%
-    pdfkeywords={phd, thesis, dissertation, \@authorf~\@authorl}%
+    pdfkeywords={phd, thesis, dissertation, doctoraat, kuleuven, \@authorf~\@authorl\gitaskeyword}%
   }
 }}
 
@@ -284,6 +284,9 @@
       \message{Warning: Also no VERSION file found. Git information will not be shown.}
     }
   \fi
+  \edef\gitaskeyword{ , \gitdescribe}
+\else
+  \def\gitaskeyword{}
 \fi
 
 \newcommand{\fulfillment}{fulfillment} % American english
