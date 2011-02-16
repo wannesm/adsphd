@@ -729,7 +729,9 @@ damnthatsreallyclean: realclean
 
 .PHONY: dist
 dist:
-	zip -r adsphd.zip Makefile Makefile.settings README.txt *.cls *.bib chapters *.tex *.py *.sty image
+	git describe --tags --long > VERSION
+	git show -s --format="%H %ci" >> VERSION
+	zip -r adsphd.zip VERSION Makefile Makefile.settings README.txt *.cls *.bib chapters *.tex *.py *.sty image
 
 
 ##############################################################################
