@@ -727,6 +727,11 @@ damnthatsreallyclean: realclean
 		$(RM) $(CHAPTERSDIR)/"$$i"/"$$i"_{ch,bare}{$(subst $(empty) $(empty),$(comma),$(REALCLEANEXTENSIONS))};\
 	done
 
+.PHONY: dist
+dist:
+	zip -r adsphd.zip Makefile Makefile.settings README.txt *.cls *.bib chapters *.tex *.py *.sty image
+
+
 ##############################################################################
 
 s:
