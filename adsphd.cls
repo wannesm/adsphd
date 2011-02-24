@@ -1495,7 +1495,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \mbox{}
 \vfill
 {\setlength{\parindent}{0ex}\copyright{}~Katholieke Universiteit Leuven -- \@faculty \\
-\@address, \@addresspc (Belgium)}
+\@address, \@addresspc{} (Belgium)}
 
 \bigskip
 \selectlanguage{dutch}
