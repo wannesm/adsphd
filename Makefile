@@ -731,7 +731,14 @@ damnthatsreallyclean: realclean
 dist:
 	git describe --tags --long > VERSION
 	git show -s --format="%H %ci" >> VERSION
-	zip -r adsphd.zip VERSION Makefile Makefile.settings README.txt *.cls *.bib chapters *.tex *.py *.sty image
+	#zip -r adsphd.zip VERSION Makefile Makefile.settings README.txt *.cls *.bib chapters *.tex *.py *.sty image
+	echo VERSION Makefile Makefile.settings README.txt *.cls *.bib chapters *.tex *.py *.sty image >MANIFEST;
+	cat MANIFEST | tr ' ' '\n' | sed -e "s/^/adsphd.src\//g" > MANIFEST; 
+	(cd ..; ln -s adsphd adsphd.src); 
+	(cd ..; tar -czvf adsphd/adsphd.src.tgz `cat adsphd/MANIFEST`);
+	(cd ..; rm adsphd.src); 
+	rm MANIFEST; 
+	
 
 
 ##############################################################################
