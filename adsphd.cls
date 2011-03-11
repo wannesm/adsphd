@@ -493,7 +493,8 @@
 % Taken from ADS template  <--
 \RequirePackage{placeins} % provides \FloatBarrier command
 
-\definecolor{gray}{rgb}{0.600,0.600,0.600}
+%\definecolor{gray}{rgb}{0.600,0.600,0.600}
+\definecolor{gray}{cmyk}{0.0,0.0,0.0,0.500}
 
 % TEXTPOS options
 \setlength{\TPHorizModule}{1mm}
