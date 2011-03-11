@@ -1466,7 +1466,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     Dissertation presented in partial\\
     \fulfillment\ of the requirements for\\
     the degree of Doctor \\
-    of \@degree
+    in \@degree
 %  \end{tabular}
 \end{minipage}
 
