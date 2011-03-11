@@ -695,6 +695,7 @@ clean:
 	$(RM) $(MAINTEX:%.tex=%){$(subst $(empty) $(empty),$(comma),$(CLEANEXTENSIONS))}
 	# Clean temporary files for cover compilation
 	$(RM) $(COVERTEX:.tex=){$(subst $(empty) $(empty),$(comma),$(CLEANEXTENSIONS))}
+	$(RM) -f adsphd.src.tgz
 
 .PHONY: realclean 
 realclean: clean cleandefs
@@ -732,12 +733,11 @@ dist:
 	git describe --tags --long > VERSION
 	git show -s --format="%H %ci" >> VERSION
 	#zip -r adsphd.zip VERSION Makefile Makefile.settings README.txt *.cls *.bib chapters *.tex *.py *.sty image
-	echo VERSION Makefile Makefile.settings README.txt *.cls *.bib chapters *.tex *.py *.sty image >MANIFEST;
+	echo VERSION Makefile Makefile.settings README.txt *.cls *.bib chapters *.tex *.py *.sty image >MANIFEST2;
+	mv MANIFEST2 MANIFEST
 	cat MANIFEST | tr ' ' '\n' | sed -e "s/^/adsphd.src\//g" > MANIFEST; 
-	(cd ..; ln -s adsphd adsphd.src); 
-	(cd ..; tar -czvf adsphd/adsphd.src.tgz `cat adsphd/MANIFEST`);
-	(cd ..; rm adsphd.src); 
-	rm MANIFEST; 
+	(ADSPHDDIR=$$(pwd); cd ..; if [ -n $${ADSPHDDIR}/adsphd.src ]; then ln -s $${ADSPHDDIR} adsphd.src; fi; echo $${ADSPHDDIR}/MANIFEST; tar -czvf $${ADSPHDDIR}/adsphd.src.tgz $$(cat $${ADSPHDDIR}/MANIFEST); rm $${ADSPHDDIR}/MANIFEST; rm adsphd.src;); 
+	 
 	
 
 
