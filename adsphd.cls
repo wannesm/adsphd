@@ -281,15 +281,18 @@
   \else
     \message{Warning: Shell Escapes are not enabled. Run (pdf)latex with the `-shell-escape' option.}
     \IfFileExists{VERSION}{%
-      \showgittrue
+      \adsphd@showgittrue
       \openin1=VERSION
       \read1 to \gitdescribe
       \closein2
       \message{Warning: Fallback on VERSION file for print git information. (Create such a file with a git-hook)}
     }{%
+      \adsphd@showgitfalse
       \message{Warning: Also no VERSION file found. Git information will not be shown.}
     }
   \fi
+\fi
+\ifadsphd@showgit
   \edef\gitaskeyword{ , \gitdescribe}
 \else
   \def\gitaskeyword{}
