@@ -70,8 +70,10 @@ Options for the adsphd class:
   10pt, 11pt, 12pt                  : text point size
   oneside, twoside
   showgit                           : when showing extra info (with [info] or
-                                      [frame] option), also show git related
-                                      stuff.
+                                      [frame] option), also show git version.
+                                      You need to run latex with '-shell-escape'
+                                      for this to work! (default in Makefile)
+
   british                           : Use British spelling in cover (i.e.
                                       fulfilment instead of fulfillment)
 
