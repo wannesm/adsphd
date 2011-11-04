@@ -205,6 +205,11 @@ The default bleed (both lbleed and rbleed) is 7mm. I suggest not changing this
 value unless you know what you are doing ;) The latter can be done by
 redefining \defaultlbleed and \defaultrbleed respectively.
 
+Warning: most printing services will create their own cover page and do not
+supply all necessary parameters (e.g., thickness of the paper) because these
+differ from machine to machine. Therefore, the generated cover page is only
+indicative and not guaranteed to be used or even correct for your printing
+service.
 
 
 TROUBLESHOOTING:
