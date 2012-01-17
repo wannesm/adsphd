@@ -315,33 +315,33 @@
 
 \RequirePackage{datatool}[2009/07/01]
 
-% Allow for multiple promotors
-\DTLnewdb{promotor}
-\newcommand{\@promotor}[2]{%
-  \DTLnewrow{promotor}%
-  \DTLnewdbentry{promotor}{name}{#1}%
-  \DTLnewdbentry{promotor}{affiliation}{#2}%
+% Allow for multiple supervisors
+\DTLnewdb{supervisor}
+\newcommand{\@supervisor}[2]{%
+  \DTLnewrow{supervisor}%
+  \DTLnewdbentry{supervisor}{name}{#1}%
+  \DTLnewdbentry{supervisor}{affiliation}{#2}%
 }
-\newcommand{\@promotorfirst}[2]{%
-  \DTLforeach{promotor}{}{\DTLremovecurrentrow}
-  \let\promotor\@promotor
-  \promotor{#1}{#2}
+\newcommand{\@supervisorfirst}[2]{%
+  \DTLforeach{supervisor}{}{\DTLremovecurrentrow}
+  \let\supervisor\@supervisor
+  \supervisor{#1}{#2}
 }
-\let\promotor\@promotorfirst
+\let\supervisor\@supervisorfirst
 
-% Allow for multiple copromotors
-\DTLnewdb{copromotor}
-\newcommand{\@copromotor}[2]{%
-  \DTLnewrow{copromotor}%
-  \DTLnewdbentry{copromotor}{name}{#1}%
-  \DTLnewdbentry{copromotor}{affiliation}{#2}%
+% Allow for multiple cosupervisors
+\DTLnewdb{cosupervisor}
+\newcommand{\@cosupervisor}[2]{%
+  \DTLnewrow{cosupervisor}%
+  \DTLnewdbentry{cosupervisor}{name}{#1}%
+  \DTLnewdbentry{cosupervisor}{affiliation}{#2}%
 }
-\newcommand{\@copromotorfirst}[2]{%
-  \DTLforeach{copromotor}{}{\DTLremovecurrentrow}
-  \let\copromotor\@copromotor
-  \copromotor{#1}{#2}
+\newcommand{\@cosupervisorfirst}[2]{%
+  \DTLforeach{cosupervisor}{}{\DTLremovecurrentrow}
+  \let\cosupervisor\@cosupervisor
+  \cosupervisor{#1}{#2}
 }
-\let\copromotor\@copromotorfirst
+\let\cosupervisor\@cosupervisorfirst
 
 % Allow for multiple external jury members
 \DTLnewdb{externaljury}
@@ -380,7 +380,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Default values and other settings
 \author{Guust}{Flater}
-\@promotor{Prof.dr.ir.~Promotor}{}
+\@supervisor{Prof.dr.ir.~Supervisor}{}
 \president{Mr.~De~Voorzitter}
 \jury{Jurylid 1\\Jurylid 2}
 \@externaljurymember{External jury member}{External affiliation}
@@ -1002,8 +1002,8 @@ enkele regels en worden personen, diensten of firma's bedankt voor hun
 medewerking bij het tot stand komen van het werk.
 
 De naam van firma's en personen uit deze firma's mogen slechts worden vermeld
-mits hun uitdrukkelijke toelating \'en na overleg met de promotor(en)!
-Steeds wordt de promotor(en) vermeld, de verantwoordelijke en eventueel de
+mits hun uitdrukkelijke toelating \'en na overleg met de supervisor(en)!
+Steeds wordt de supervisor(en) vermeld, de verantwoordelijke en eventueel de
 personen die rechtstreeks geholpen hebben bv.\ door het ter beschikking stelling
 van meetresultaten, faciliteiten.  Ook de instantie die eventueel een
 doctoraatsbeurs heeft toegekend wordt bedankt (bv.\ FWO, IWT, \ldots).
@@ -1444,13 +1444,13 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 %  \begin{tabular}[t]{p{6.9cm}}
     Jury:\\
     \@president, chair
-    \DTLforeach{promotor}{\name=name,\affiliation=affiliation}{%
-    \\\name, promotor
+    \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
+    \\\name, supervisor
     \ifthenelse{\equal{\affiliation}{}}{}{%
       \\\rule{0.25cm}{0pt}(\affiliation)
     }}
-    \DTLforeach{copromotor}{\name=name,\affiliation=affiliation}{%
-    \\\name, co-promotor
+    \DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
+    \\\name, co-supervisor
     \ifthenelse{\equal{\affiliation}{}}{}{%
       \\\rule{0.25cm}{0pt}(\affiliation)
     }}
@@ -1477,7 +1477,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 %\begin{tabular}{p{7cm}l}
 % Jury:                                                   & Dissertation presented in partial\\
 % \@president, president                                  & fulfillment of the requirements for\\
-% \@promotor, promotor                                    & the degree of Doctor \\
+% \@supervisor, supervisor                                & the degree of Doctor \\
 % titles first name last name                             & in \@degree\\
 % titles first name last name                             & \\
 %   \rule{0.25cm}{0pt}(external affiliation)              & \\
