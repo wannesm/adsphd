@@ -5,26 +5,19 @@
 \documentclass[pagebackref,showinstructions,showtodo,showtodopriv,showlabels]{adsphd}
 
 % To use biblatex:
-%\documentclass[biblatex,biblatexstyle=authoryear]{adsphd}
+%\documentclass[biblatex,biblatexstyle=authoryear,showinstructions,showlabels]{adsphd}
 
 % Preamble {{{}{
 
 \usepackage[english,dutch]{babel}
 
-\usepackage{nomencl}   % If using this package, make sure to add
-                       %     USETEXPACKAGENOMENCLATURE = 1 
-                       % to Makefile.settings
-
+\usepackage{nomencl}   % For nomenclature
 \usepackage[style=long,number=none]{glossary} % For list of abbreviations
-                       % If using this package, make sure to add
-                       %     USETEXPACKAGEGLOSSARY = 1 
-                       % to Makefile.settings
 
 % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 % !!                                                               !!
-% !!  WARNING: do not remove the following lines containing        !!
+% !!  WARNING: do not remove the following lines between           !!
 % !!  "%%% COVER: Settings %%%" and "%%% COVER: End settings %%%"  !!
-% !!  They are used by the Makefile to generate the coverpage.     !!
 % !!                                                               !!
 % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -155,16 +148,10 @@
 
 \includechapter{introduction}
 
-%%%
-% Some dummy code to make sure bibtex does not complain
-\red{\cite{FrRo2010Diffusion}}
-% Some dummy code to get at least 1 entry in the nomenclature
-\red{$\Theta$}
-\nomenclature{\red{$\Theta$}}{\red{A nice symbol}}
-% Some dummy code to get at least 1 entry in the list of
-% abbreviations
-\glossary{name=MD,description=molecular dynamics}
-%%%
+% Insert here your own chapters
+% Chapters are expected to be in a tex-file with the given name dot
+% tex and in a directory with the given name in the chapters
+% directory.
 
 \includechapter{conclusion}
 

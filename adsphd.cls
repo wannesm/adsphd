@@ -1363,7 +1363,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     \textblockcolour{}
     \vspace{-\parskip}
     \begin{center}
-        \selectfont\LARGE\sffamily\textbf{\color{red}{DRAFT}}
+        \selectfont\LARGE\sffamily\textbf{\color{red}{DRAFT\\{\small To remove add `final' to class options}}}
     \end{center}
     \end{textblock*}
   \fi
