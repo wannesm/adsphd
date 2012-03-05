@@ -458,7 +458,12 @@
     %\setlength{\bibitemsep}{\orig@parskip}
     \setlength{\bibitemsep}{.5ex}
 \else
-    \RequirePackage{backref}
+    \ifadsphd@backref
+        \RequirePackage{backref}
+    \fi
+    \ifadsphd@pagebackref
+        \RequirePackage{backref}
+    \fi
 \fi
 
 \RequirePackage{hyperref}
