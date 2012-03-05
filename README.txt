@@ -28,6 +28,16 @@ process:
                                     # the chapter.
 
 
+USING LATEX DIRECTLY
+
+The adsphd.cls can be used directly by latex:
+
+    pdflatex thesis
+    bibtex thesis
+    pdflatex thesis
+    pdflatex thesis
+
+
 USING SIMPLE PYTHON COMPILE SCRIPT
 
 There is a simple Python compilation script supplied.
