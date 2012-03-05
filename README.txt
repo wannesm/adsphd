@@ -28,6 +28,17 @@ process:
                                     # the chapter.
 
 
+USING SIMPLE PYTHON COMPILE SCRIPT
+
+There is a simple Python compilation script supplied.
+
+    python3 compile.py             # Compile to pdf
+    python3 compile.py clean       # Clean auxiliary files
+    python3 compile.py cleanall    # Clean everything
+    python3 compile.py newchapter  # Set up files for a new chapter
+    python3 compile.py --help      # Help and more options
+
+
 USING MAKE AND OTHER UTILITY SCRIPTS
 
 Some convenient Makefile targets:
