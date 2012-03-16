@@ -98,6 +98,13 @@ Options for the adsphd class:
   british                           : Use British spelling in cover (i.e.
                                       fulfilment instead of fulfillment)
 
+  biblatex                          : Use biblatex instead of bibtex.
+  biblatexstyle=<name>              : Change the biblatex style.
+  custombibtex                      : Don't load any bib(la)tex files. This way
+                                      the user can load and customize the
+                                      bibtex environments he wants. (For
+                                      advanced use)
+
   showinstructions                  : show instructions provided by the
                                       faculty. These can be included anywhere
                                       in the tex by commands of the form

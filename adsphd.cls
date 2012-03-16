@@ -92,6 +92,7 @@
 \DeclareBoolOption{pagebackref}
 % Biblatex
 \DeclareBoolOption{biblatex}
+\DeclareBoolOption{custombibtex}
 \DeclareStringOption{biblatexstyle} % Needs to be defined at load-time
 
 % links
@@ -122,6 +123,7 @@
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{final}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biblatex}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biblatexstyle}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{custombibtex}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{backref}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{pagebackref}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{cover}
@@ -223,6 +225,8 @@
     \PassOptionsToPackage{backref=false}{hyperref} % Avoid loading of backref
     %\PassOptionsToPackage{maxnames=99}{biblatex}
     \PassOptionsToPackage{firstinits=true}{biblatex}
+\else\ifadsphd@custombibtex
+    \message{adsphd.cls: Not loading any BibTeX packages (custombibtex)}
 \else
     \ifadsphd@backref
       \PassOptionsToPackage{ref}{backref}
@@ -806,6 +810,11 @@
             \printbibliography[maxnames=99]
         }
     }
+\else\ifadsphd@custombibtex
+    \newcommand{\includebibliography}{%
+        \message{adsphd.cls: includebiblography command is not defined
+        because of the custombibtex setting.}
+    }
 \else
     \newcommand{\includebibliography}{%
       \cleardoublepage
@@ -1363,7 +1372,10 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     \textblockcolour{}
     \vspace{-\parskip}
     \begin{center}
-        \selectfont\LARGE\sffamily\textbf{\color{red}{DRAFT\\{\small To remove add `final' to class options}}}
+        \selectfont\LARGE\sffamily\textbf{\color{red}{
+            DRAFT\\
+            {\small To remove, add `final' to class options}
+        }}
     \end{center}
     \end{textblock*}
   \fi
