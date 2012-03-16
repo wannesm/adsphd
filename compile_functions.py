@@ -18,6 +18,7 @@ class application:
 		
 			:returns: Return code
 		"""
+		returncode = 1
 		try:
 			cmd = self.options.format(**settings)
 			args = shlex.split(cmd)

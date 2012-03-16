@@ -50,7 +50,7 @@ if sys.platform == 'darwin':
 	bibtex       = application('bibtex',    '--min-crossref=100 {basename}', verbose)
 	glossary     = application('makeindex', '{basename}.glo -s {basename}.ist -t {basename}.glg -o {basename}.gls', verbose)
 	nomenclature = application('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
-	pdfviewer    = application('open',      '{basename}.pdf', verbose)
+	pdfviewer    = application('open',      '{pdffile}', verbose)
 	remove       = application('rm',        '-f {cleanfiles}', verbose)
 elif sys.platform == 'win32' or sys.platform == 'cygwin':
 	## Windows ##
@@ -59,7 +59,7 @@ elif sys.platform == 'win32' or sys.platform == 'cygwin':
 	bibtex       = application('bibtex',    '--min-crossref=100 {basename}', verbose)
 	glossary     = application('makeindex', '{basename}.glo -s {basename}.ist -t {basename}.glg -o {basename}.gls', verbose)
 	nomenclature = application('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
-	pdfviewer    = application('open',      '{basename}.pdf', verbose)
+	pdfviewer    = application('open',      '{pdffile}', verbose)
 	remove       = application('rm',        '-f {cleanfiles}', verbose)
 else:
 	## *NIX ##
@@ -67,16 +67,16 @@ else:
 	bibtex       = application('bibtex',    '--min-crossref=100 {basename}', verbose)
 	glossary     = application('makeindex', '{basename}.glo -s {basename}.ist -t {basename}.glg -o {basename}.gls', verbose)
 	nomenclature = application('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
-	pdfviewer    = application('acroread',  '{basename}.pdf', verbose)
+	pdfviewer    = application('acroread',  '{pdffile}', verbose)
 	remove       = application('rm',        '-f {cleanfiles}', verbose)
 
 
 ## DERIVED SETTINGS ##
 
-settings = {
-	'basename' : os.path.splitext(mainfile)[0],
-	'cleanfiles' : " ".join([os.path.splitext(mainfile)[0]+"."+ext for ext in ['toc','aux','log','bbl','blg','log','lof','lot','ilg','out','glo','gls','nlo','nls','brf','ist','glg','synctexgz','tgz','idx','ind','-blxbib','fdb_latexmk','synctex.gz']]),
-}
+settings = {'basename':'', 'cleanfiles':'', 'pdffile':''}
+settings['basename']   = os.path.splitext(mainfile)[0]
+settings['cleanfiles'] = " ".join([settings['basename']+"."+ext for ext in ['toc','aux','log','bbl','blg','log','lof','lot','ilg','out','glo','gls','nlo','nls','brf','ist','glg','synctexgz','tgz','idx','ind','-blxbib','fdb_latexmk','synctex.gz']])
+settings['pdffile']    = settings['basename']+'.pdf'
 #print(settings)
 
 
@@ -198,6 +198,10 @@ def newchapter():
 \\cleardoublepage\n", file=newfile)
 	newfile.close()
 
+@target()
+def view():
+	print("Opening "+settings['pdffile'])
+	pdfviewer.run(settings, 'Opening pdf failed.')
 
 @target()
 def targets():
