@@ -24,3 +24,7 @@ thesis.ps
 cover.*
 s
 .force_rebuild
+*.bbl
+*.blg
+*.tgz
+VERSION
