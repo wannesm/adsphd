@@ -21,7 +21,7 @@ Usage:
 Options:
 	-h --help      This help
 	-v             Verbose output
-	-t --targets   Print available targets
+	-T --targets   Print available targets
 
 Settings:
 	Open compile.py with a text editor and change values in the settings 
@@ -222,7 +222,7 @@ def main(argv=None):
 		argv = sys.argv
 	try:
 		try:
-			opts, args = getopt.getopt(argv[1:], "ht", ["help", "targets"])
+			opts, args = getopt.getopt(argv[1:], "htT", ["help", "targets"])
 		except getopt.error as msg:
 			raise Usage(msg)
 		
@@ -230,7 +230,7 @@ def main(argv=None):
 		for option, value in opts:
 			if option == "-v":
 				verbose = True
-			if option in ("-t", "--targets"):
+			if option in ("-T", "-t", "--targets"):
 				targets()
 				return
 			if option in ("-h", "--help"):
