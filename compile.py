@@ -84,7 +84,6 @@ settings['pdffile']    = settings['basename']+'.pdf'
 
 knowntargets = dict()
 
-
 def target(targetname = None):
 	def decorate(f):
 		global knowntargets
@@ -93,6 +92,8 @@ def target(targetname = None):
 		return f
 	return decorate
 
+
+## TARGETS ##
 
 @target()
 def compile():
@@ -205,9 +206,16 @@ def view():
 
 @target()
 def targets():
+	"""Print overview of available targets."""
 	print("Targets:")
-	for (key,value) in knowntargets.items():
-		print("- "+key)
+	targetdocs = [(target,f.__doc__) for (target,f) in  knowntargets.items()]
+	maxl = max((len(t) for (t,d) in targetdocs))
+	targetdocs.sort()
+	for (target,doc) in targetdocs:
+		s = "- {:<"+str(maxl)+"}   {}"
+		if doc == None:
+			doc = ''
+		print(s.format(target,doc))
 
 
 ## COMMAND LINE INTERFACE ##
