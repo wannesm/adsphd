@@ -225,17 +225,19 @@
     \PassOptionsToPackage{backref=false}{hyperref} % Avoid loading of backref
     %\PassOptionsToPackage{maxnames=99}{biblatex}
     \PassOptionsToPackage{firstinits=true}{biblatex}
-\else\ifadsphd@custombibtex
-    \message{adsphd.cls: Not loading any BibTeX packages (custombibtex)}
 \else
-    \ifadsphd@backref
-      \PassOptionsToPackage{ref}{backref}
+    \ifadsphd@custombibtex
+        \message{adsphd.cls: Not loading any BibTeX packages (custombibtex)}
+    \else
+        \ifadsphd@backref
+          \PassOptionsToPackage{ref}{backref}
+        \fi
+        \ifadsphd@pagebackref
+          \PassOptionsToPackage{pageref}{backref}
+        \fi
+        \let\orig@bibliography\bibliography
+        \renewcommand{\bibliography}[1]{\gdef\@bibliography{#1}}
     \fi
-    \ifadsphd@pagebackref
-      \PassOptionsToPackage{pageref}{backref}
-    \fi
-    \let\orig@bibliography\bibliography
-    \renewcommand{\bibliography}[1]{\gdef\@bibliography{#1}}
 \fi
 
 \ifadsphd@cropmarks
@@ -815,19 +817,21 @@
             \printbibliography[maxnames=99]
         }
     }
-\else\ifadsphd@custombibtex
-    \newcommand{\includebibliography}{%
-        \message{adsphd.cls: includebiblography command is not defined
-        because of the custombibtex setting.}
-    }
 \else
-    \newcommand{\includebibliography}{%
-      \cleardoublepage
-      \phantomsection
-      \addcontentsline{toc}{chapter}{\bibname}
-      \bibliographystyle{\@bibstyle}
-      \orig@bibliography{\@bibliography}
-    }
+    \ifadsphd@custombibtex
+        \newcommand{\includebibliography}{%
+            \message{adsphd.cls: includebiblography command is not defined
+            because of the custombibtex setting.}
+        }
+    \else
+        \newcommand{\includebibliography}{%
+          \cleardoublepage
+          \phantomsection
+          \addcontentsline{toc}{chapter}{\bibname}
+          \bibliographystyle{\@bibstyle}
+          \orig@bibliography{\@bibliography}
+        }
+    \fi
 \fi
 
 \let\tableofcontentsorig\tableofcontents
