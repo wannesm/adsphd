@@ -98,6 +98,10 @@
 % links
 \DeclareBoolOption{colorlinks}
 
+% additional packages
+\DeclareBoolOption[true]{subfig}
+\DeclareComplementaryOption{subfigure}{subfig}
+
 % Default values
 \setkeys{adsphd}{info=true,biblatexstyle=numeric-comp}
 \PassOptionsToClass{fleqn,10pt,twoside}{report}
@@ -450,7 +454,13 @@
 
 %\RequirePackage{showlabels}
 
-\RequirePackage{subfigure} % Just in case...
+\ifadsphd@subfig
+    \RequirePackage{subfig}
+\else
+    \RequirePackage{subfigure}
+    \PassOptionsToPackage{subfigure}{tocloft}
+    \typeout{^^J(adsphd.cls) Info: You should consider using the new package 'subfig' which is the replacement for the older package 'subfigure'.^^J}
+\fi
 
 \RequirePackage{framed} % voor shaded environment
 
