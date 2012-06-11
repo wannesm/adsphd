@@ -789,6 +789,11 @@
   \selectlanguage{english}
 }
 
+\newcommand{\includeabbreviations}[1]{%
+  % Use this command when making the abbreviation manually. Using the
+  \IncludeUnnumberedChapterIfExists{#1}{Abbreviations}{\instructionslistofsymbols}{}
+}
+
 \newcommand{\includenomenclature}[1]{%
   % Use this command when making the nomenclature manually. Using the
   % nomencl package might be a better idea though...
