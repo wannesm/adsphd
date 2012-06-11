@@ -38,15 +38,20 @@ The adsphd.cls can be used directly by latex:
     pdflatex thesis
 
 
-USING SIMPLE PYTHON COMPILE SCRIPT
+USING THE SIMPLE PYTHON COMPILE SCRIPT
 
 There is a simple Python compilation script supplied.
 
-    python3 compile.py             # Compile to pdf
-    python3 compile.py clean       # Clean auxiliary files
-    python3 compile.py cleanall    # Clean everything
-    python3 compile.py newchapter  # Set up files for a new chapter
-    python3 compile.py --help      # Help and more options
+    ./run.py             # Compile to pdf
+    ./run.py clean       # Clean auxiliary files
+    ./run.py cleanall    # Clean everything
+    ./run.py newchapter  # Set up files for a new chapter
+    ./run.py --help      # Help and more options
+
+If you want to specify the Python version to be used explicitely you can use
+the command as follows:
+
+    python3 run.py
 
 
 USING MAKE AND OTHER UTILITY SCRIPTS

@@ -1,30 +1,43 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 #
+# Copyright (C), 2012 by Wannes Meert, KU Leuven
+#
 # Very simple compile script for the ADSPHD class. For a more extended solution
 # use the included Makefile or the latexmk or rubber applications.
 #
-# No file dependency checks are performed (use latexmk or rubber if you want
-# such a feature.
+# No file dependency checks are performed (use TeXnicCenter, Texmaker, latexmk,
+# rubber, or make if you want such a feature.
 #
-from compile_functions import *
+
 import getopt
+import glob
 import os
 import re
+import shlex
 import sys
 
+from subprocess import *
 
 help_message = '''
 Usage:
-	./compile.py [options] target
+	./run.py [options] target
 
 Options:
 	-h --help      This help
 	-v             Verbose output
 	-T --targets   Print available targets
 
+Example:
+	./run.py compile
+
+Summary:
+	Simple compilation script for the ADSPhD class. No file dependency checks
+	are performed. Use TeXnicCenter, Texmaker, latexmk, rubber, or make for 
+	such a feature.
+
 Settings:
-	Open compile.py with a text editor and change values in the settings 
+	Open run.py with a text editor and change values in the settings 
 	definition.
 
 Remarks:
@@ -44,31 +57,29 @@ makenomenclature = True
 
 verbose          = True
 
-if sys.platform == 'darwin':
-	## Mac OS X ##
-	pdflatex     = application('pdflatex',  '-interaction=nonstopmode -synctex=1 -shell-escape {basename}', verbose)
-	bibtex       = application('bibtex',    '--min-crossref=100 {basename}', verbose)
-	glossary     = application('makeindex', '{basename}.glo -s {basename}.ist -t {basename}.glg -o {basename}.gls', verbose)
-	nomenclature = application('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
-	pdfviewer    = application('open',      '{pdffile}', verbose)
-	remove       = application('rm',        '-f {cleanfiles}', verbose)
-elif sys.platform == 'win32' or sys.platform == 'cygwin':
-	## Windows ##
-	## TODO: does not yet work
-	pdflatex     = application('pdflatex',  '-interaction=nonstopmode -synctex=1 -shell-escape {basename}', verbose)
-	bibtex       = application('bibtex',    '--min-crossref=100 {basename}', verbose)
-	glossary     = application('makeindex', '{basename}.glo -s {basename}.ist -t {basename}.glg -o {basename}.gls', verbose)
-	nomenclature = application('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
-	pdfviewer    = application('open',      '{pdffile}', verbose)
-	remove       = application('rm',        '-f {cleanfiles}', verbose)
-else:
+apps = {}
+
+def initapplications():
+	"""Initialize the application commands and arguments for the different
+	   platforms."""
+	global apps
+	# Unix and linux are the default setup
 	## *NIX ##
-	pdflatex     = application('pdflatex',  '-interaction=nonstopmode -synctex=1 -shell-escape {basename}', verbose)
-	bibtex       = application('bibtex',    '--min-crossref=100 {basename}', verbose)
-	glossary     = application('makeindex', '{basename}.glo -s {basename}.ist -t {basename}.glg -o {basename}.gls', verbose)
-	nomenclature = application('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
-	pdfviewer    = application('acroread',  '{pdffile}', verbose)
-	remove       = application('rm',        '-f {cleanfiles}', verbose)
+	apps['pdflatex']    = App('pdflatex',  '-interaction=nonstopmode -synctex=1 -shell-escape {basename}', verbose)
+	apps['bibtex']      = App('bibtex',    '--min-crossref=100 {basename}', verbose)
+	apps['glossary']    = App('makeindex', '{basename}.glo -s {basename}.ist -t {basename}.glg -o {basename}.gls', verbose)
+	apps['nomenclature']= App('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
+	apps['pdfviewer']   = App('acroread',  '{pdffile}', verbose)
+	apps['remove']      = App('rm',        '-f {cleanfiles}', verbose)
+
+	if sys.platform == 'darwin':
+		## Mac OS X ##
+		apps['pdfviewer']   = App('open',      '{pdffile}', verbose)
+
+	elif sys.platform == 'win32' or sys.platform == 'cygwin':
+		## Windows ##
+		## TODO: does not yet work
+		pass
 
 
 ## DERIVED SETTINGS ##
@@ -104,11 +115,11 @@ def compile():
 def latex():
 	rerun = False
 	print('#### LATEX ####')
-	pdflatex.run(settings, 'Latex failed')
+	apps['pdflatex'].run(settings, 'Latex failed')
 	if makebibliography:
 		rerun = True
 		print('#### BIBTEX ####')
-		bibtex.run(settings, 'Bibtex failed')
+		apps['bibtex'].run(settings, 'Bibtex failed')
 	if makeindex:
 		rerun = True
 		print('#### INDEX ####')
@@ -116,17 +127,17 @@ def latex():
 		# List of abbreviations
 		rerun = True
 		print('#### GLOSSARY ####')
-		glossary.run(settings, 'Creating glossary failed')
+		apps['glossary'].run(settings, 'Creating glossary failed')
 	if makenomenclature:
 		# List of symbols
 		rerun = True
 		print('#### NOMENCLATURE ####')
-		nomenclature.run(settings, 'Creating glossary failed')
+		apps['nomenclature'].run(settings, 'Creating glossary failed')
 	if rerun:
 		print('#### LATEX ####')
-		pdflatex.run(settings, 'Rerunning Latex failed')
+		apps['pdflatex'].run(settings, 'Rerunning Latex failed')
 		print('#### LATEX ####')
-		pdflatex.run(settings, 'Rerunning Latex failed')
+		apps['pdflatex'].run(settings, 'Rerunning Latex failed')
 
 
 def sanitycheck():
@@ -145,7 +156,7 @@ def checknomenclature():
 	if not found and makenomenclature:
 		print("\nWARNING: Trying to build the nomenclature but you have not include the nomencl Latex package.\n")
 	if found and not makenomenclature:
-		print("\nWARNING: You have included the nomencl Latex package but in the compile.py script this step is not activated.\n")
+		print("\nWARNING: You have included the nomencl Latex package but in the run.py script this step is not activated.\n")
 
 
 def checkglossary():
@@ -159,7 +170,7 @@ def checkglossary():
 	if not found and makeglossary:
 		print("\nWARNING: Trying to build the glossary but you have not include the glossary Latex package.\n")
 	if found and not makeglossary:
-		print("\nWARNING: You have included the glossary Latex package but in the compile.py script this step is not activated.\n")
+		print("\nWARNING: You have included the glossary Latex package but in the run.py script this step is not activated.\n")
 
 
 @target()
@@ -201,6 +212,7 @@ def newchapter():
 
 @target()
 def view():
+	"""Open the generated pdf file in a pdf viewer."""
 	print("Opening "+settings['pdffile'])
 	pdfviewer.run(settings, 'Opening pdf failed.')
 
@@ -217,6 +229,32 @@ def targets():
 			doc = ''
 		print(s.format(target,doc))
 
+## APPLICATION ##
+
+class App:
+	def __init__(self, b, o, v=False):
+		self.binary = b
+		self.options = o
+		self.verbose = v
+
+	def run(self, settings, errmsg):
+		""" Run the command for the given settings.
+			Required settings:
+				- basename
+				- cleanfiles
+		
+			:returns: Return code
+		"""
+		returncode = 1
+		try:
+			cmd = self.options.format(**settings)
+			args = shlex.split(cmd)
+			if self.verbose:
+				print("Running: "+self.binary+" "+" ".join(args))
+			returncode = check_call([self.binary] + args)
+		except CalledProcessError as err:
+			print(sys.argv[0].split("/")[-1] + ": "+errmsg+" (exitcode "+str(err.returncode)+")", file=sys.stderr)
+		return returncode
 
 ## COMMAND LINE INTERFACE ##
 
@@ -247,6 +285,8 @@ def main(argv=None):
 		if len(args) == 0:
 			print("No targets given, using default target: compile")
 			compile()
+
+		initapplications()
 
 		for target in args:
 			print("Target: "+target)
