@@ -113,6 +113,7 @@ def compile():
 
 
 def latex():
+	global apps
 	rerun = False
 	print('#### LATEX ####')
 	apps['pdflatex'].run(settings, 'Latex failed')
@@ -176,16 +177,18 @@ def checkglossary():
 @target()
 def clean():
 	"""Remove the auxiliary files created by Latex."""
-	remove.run(settings, 'Removing auxiliary files failed')
+	global apps
+	apps['remove'].run(settings, 'Removing auxiliary files failed')
 
 
 @target()
 def realclean():
 	"""Remove all files created by Latex."""
+	global apps
 	clean()
 	newsettings = dict(settings)
 	newsettings['cleanfiles'] = 'thesis.pdf thesis.dvi thesis.ps'
-	remove.run(newsettings, 'Removing pdf files failed.')
+	apps['remove'].run(newsettings, 'Removing pdf files failed.')
 
 
 @target()
