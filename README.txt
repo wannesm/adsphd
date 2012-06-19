@@ -153,6 +153,9 @@ Options for the adsphd class:
   cover                             : to be used when generating the coverpage.
                                       Puts the result centered on a landscape A3.
 
+  subfig                            : load package subfig (default)
+  subfigure                         : load older package subfigure
+
 Most of the useful commands provided by this class can be found in the provided
 example file 'thesis.tex'. 
 
