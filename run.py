@@ -86,7 +86,7 @@ def initapplications():
 
 settings = {'basename':'', 'cleanfiles':'', 'pdffile':''}
 settings['basename']   = os.path.splitext(mainfile)[0]
-settings['cleanfiles'] = " ".join([settings['basename']+"."+ext for ext in ['toc','aux','log','bbl','blg','log','lof','lot','ilg','out','glo','gls','nlo','nls','brf','ist','glg','synctexgz','tgz','idx','ind','-blxbib','fdb_latexmk','synctex.gz']])
+settings['cleanfiles'] = " ".join([settings['basename']+ext for ext in ['.toc','.aux','.log','.bbl','.blg','.log','.lof','.lot','.ilg','.out','.glo','.gls','.nlo','.nls','.brf','.ist','.glg','.synctexgz','.tgz','.idx','.ind','-blx.bib','.fdb_latexmk','.synctex.gz']])
 settings['pdffile']    = settings['basename']+'.pdf'
 #print(settings)
 
