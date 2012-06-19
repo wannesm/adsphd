@@ -282,11 +282,11 @@ def main(argv=None):
 			if option in ("-h", "--help"):
 				raise Usage(help_message)
 		
+		initapplications()
+		
 		if len(args) == 0:
 			print("No targets given, using default target: compile")
 			compile()
-
-		initapplications()
 
 		for target in args:
 			print("Target: "+target)
