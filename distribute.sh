@@ -3,7 +3,7 @@
 git describe --tags --long > VERSION
 git show -s --format="%H %ci" >> VERSION
 
-echo VERSION Makefile Makefile.settings compile.py compile_functions.py README.txt *.cls *.bib chapters *.tex *.py *.sty image >MANIFEST2;
+echo VERSION Makefile Makefile.settings run.py README.txt *.cls *.bib chapters *.tex *.py *.sty image >MANIFEST2;
 cat MANIFEST2
 cat MANIFEST2 | tr ' ' '\n' | sed -e "s/^/adsphd.src\//g" > MANIFEST; 
 
