@@ -217,7 +217,7 @@ def newchapter():
 def view():
 	"""Open the generated pdf file in a pdf viewer."""
 	print("Opening "+settings['pdffile'])
-	pdfviewer.run(settings, 'Opening pdf failed.')
+	apps['pdfviewer'].run(settings, 'Opening pdf failed.')
 
 @target()
 def targets():
