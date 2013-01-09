@@ -41,6 +41,9 @@
 \newlength{\adsphdpaperwidth}
 \setlength{\adsphdpaperwidth}{160mm}
 
+% Colors
+\definecolor{blueXII}{cmyk}{.81,.19,.12,.06}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Options that can be passed to adsphd.cls:
 
@@ -1306,6 +1309,35 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Provide front cover
+\newcommand{\frontcoverheaderXII}[1]{%
+  % Use Helvetica
+  \renewcommand{\sfdefault}{\helvetsfdefault}
+  \thispagestyle{empty}
+  % Blue bar on top
+  \begin{textblock*}{\adsphdpaperwidth}(0mm+#1,20mm)
+  \textblockcolour{blueXII}
+  %\vspace{-\parskip}
+  \rule{0pt}{20mm}
+  \end{textblock*}
+  %
+  % Create logo box
+  \begin{textblock*}{56mm}(10mm+#1,15mm)
+  \includegraphics[width=56mm,height=20mm]{image/KULEUVEN_LOGO_2012}
+  \end{textblock*}
+  %
+  % Create ADS+faculty box
+  \begin{textblock*}{75mm+\rbleed}(80mm+#1,20mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  %\hspace*{2mm}
+  \begin{flushright}
+  \fontsize{12}{15}\selectfont
+  {\bf \textcolor{white} {\sffamily ARENBERG DOCTORAL SCHOOL}}\\[.2mm]
+  {\sffamily \textcolor{white} {\@faculty}}
+  \end{flushright}
+  \end{textblock*}
+}
+
 \newcommand{\frontcoverheader}[1]{%
   % Use Helvetica
   \renewcommand{\sfdefault}{\helvetsfdefault}
@@ -1359,6 +1391,142 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   %
   % Restore font
   \renewcommand{\sfdefault}{\origsfdefault}
+}
+
+\newcommand{\frontcoverfooterXII}[1]{%
+  % Only add empty pages if asked for
+  \ifthenelse{\equal{#1}{1}}
+  {
+    \newpage
+    \thispagestyle{empty} \mbox{}
+    \newpage
+  }{}
+  %
+  % Restore font
+  \renewcommand{\sfdefault}{\origsfdefault}
+}
+
+\newcommand{\makefrontcoverXII}{\makefrontcovergeneralXII{0mm}{1}}
+\newcommand{\makefrontcovergeneralXII}[2]{%
+  %
+  % Create header
+  \frontcoverheaderXII{#1}
+  %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %
+  % Title, subtitle, authorname, text and date can be moved around.
+  % Change the textblock* commands below. 
+  %
+  % Syntax of textblock environment:
+  % 
+  %   \begin{textblock*}{width}(xpos,ypos)
+  %     ...
+  %   \end{textblock*}
+  % 
+  % !! Make sure not to remove the '+#1' part!!!
+  %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %
+  % Place the DRAFT notifier on the front page to avoid printing a wrong
+  % version
+  \ifadsphd@final\else
+    \begin{textblock*}{120mm}(17.5mm+#1,50mm)
+    \textblockcolour{}
+    \vspace{-\parskip}
+    \begin{center}
+        \selectfont\LARGE\sffamily\textbf{\color{red}{
+            DRAFT\\
+            {\small To remove, add `final' to class options}
+        }}
+    \end{center}
+    \end{textblock*}
+  \fi
+  %
+  % Place the title and subtitle
+  \begin{textblock*}{135mm}(17.5mm+#1,100mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \raggedright
+  \fontsize{30}{38}\selectfont\sffamily{\color{blueXII}\@title}\\
+  \fontsize{20}{25}\selectfont\sffamily{\@subtitle}
+  \end{textblock*}
+  %
+  % Place the author name
+  \begin{textblock*}{135mm}(17.5mm+#1,170mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \begin{flushright}
+  \fontsize{14}{19}\selectfont\sffamily\textbf{\@authorf\ \@authorl}
+  \end{flushright}
+  \end{textblock*}
+  %
+  % Place the fullfilment text
+  \begin{textblock*}{67.5mm}(85mm+#1,185mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \begin{minipage}[t]{67mm}
+  \begin{flushright}
+  {\fontsize{12}{15}\selectfont\sffamily Dissertation presented in partial\\
+  \fulfillment\ of the requirements for the\\
+  the degree of Doctor in \@degree}
+  \end{flushright}
+  \end{minipage}
+  \end{textblock*}
+  %
+  % Place the date text
+  \begin{textblock*}{67.5mm}(85mm+#1,220mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \begin{minipage}[t]{67mm}
+  \begin{flushright}
+  {\fontsize{12}{15}\selectfont\sffamily\@date}
+  \end{flushright}
+  \end{minipage}
+  \end{textblock*}
+  %
+  % Place the supervisory committee text
+  \begin{textblock*}{67.5mm}(17.5mm+#1,185mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \begin{minipage}[t]{67mm}
+    \fontsize{12}{15}\selectfont\sffamily
+    %\begin{tabular}[t]{p{6.9cm}}
+    Supervisory Committee::\\
+    \@president, chair
+    \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
+    \\\name, supervisor
+    \ifthenelse{\equal{\affiliation}{}}{}{%
+      \\\rule{0.25cm}{0pt}(\affiliation)
+    }}
+    \DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
+    \\\name, co-supervisor
+    \ifthenelse{\equal{\affiliation}{}}{}{%
+      \\\rule{0.25cm}{0pt}(\affiliation)
+    }}
+    \\\@jury%
+    \DTLforeach{externaljury}{\name=name,\affiliation=affiliation}{%
+    \\\name \\
+    \rule{0.25cm}{0pt}(\affiliation)
+    }
+    %\@externaljurymember \\ TODO
+    %\rule{0.25cm}{0pt}(\@externalaffiliation)\\ %TODO
+    \\
+    \if\empty\@udc \else U.D.C. \@udc\fi
+  %\end{tabular}
+  \end{minipage}
+  \end{textblock*}
+  %
+  % Bottom blue bar
+  \begin{textblock*}{\adsphdpaperwidth}(0mm+#1,238mm)
+  \textblockcolour{blueXII}
+  %\vspace{-\parskip}
+  \rule{0pt}{2.1mm}
+  \end{textblock*}
+  %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %
+  % Add footer
+  \frontcoverfooterXII{#2}
 }
 
 \newcommand{\makefrontcover}{\makefrontcovergeneral{0mm}{1}}
