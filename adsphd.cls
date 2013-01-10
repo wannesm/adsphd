@@ -43,7 +43,8 @@
 \setlength{\adsphdpaperwidth}{160mm}
 
 % Colors
-\definecolor{blueXII}{cmyk}{.81,.19,.12,.06}
+\definecolor{blueXIIdark}{cmyk}{.81,.19,.12,.06}
+\definecolor{blueXIIlight}{cmyk}{.59,.05,.02,.00}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Options that can be passed to adsphd.cls:
@@ -391,6 +392,8 @@
 \def\researchgroup#1{\gdef\@researchgroup{#1}}
 \def\address#1{\gdef\@address{#1}}
 \def\addresscity#1{\gdef\@addresspc{#1}}
+\def\email#1{\gdef\@email{#1}}
+\def\website#1{\gdef\@website{#1}}
 \def\degree#1{\gdef\@degree{#1}} % It will say "Doctor of \degree"
 
 % Bibtex style
@@ -416,6 +419,8 @@
 \subtitle{}
 \degree{... Computer Science ...}
 \date{Month Year}
+\email{first.name@dept.kuleuven.be}
+\website{www.website.kuleuven.be}
 
 % Bibtex style
 \bibstyle{plain}
@@ -1321,7 +1326,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \thispagestyle{empty}
   % Blue bar on top
   \begin{textblock*}{\adsphdpaperwidth}(0mm+#1,20mm)
-  \textblockcolour{blueXII}
+  \textblockcolour{blueXIIdark}
   %\vspace{-\parskip}
   \rule{0pt}{20mm}
   \end{textblock*}
@@ -1465,7 +1470,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \textblockcolour{}
   \vspace{-\parskip}
   \raggedright
-  \fontsize{30}{34}\selectfont\sffamily{\color{blueXII}\@title}\\
+  \fontsize{30}{34}\selectfont\sffamily{\color{blueXIIdark}\@title}\\
   \fontsize{20}{25}\selectfont\sffamily{\@subtitle}
   \end{textblock*}
   %
@@ -1538,7 +1543,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   %
   % Bottom blue bar
   \begin{textblock*}{\adsphdpaperwidth}(0mm+#1,234mm)
-  \textblockcolour{blueXII}
+  \textblockcolour{blueXIIlight}
   %\vspace{-\parskip}
   \rule{0pt}{2.1mm}
   \end{textblock*}
@@ -1798,6 +1803,67 @@ ISBN \@isbn
   \end{textblock*}
 }
 
+\newcommand{\backcoverheaderXII}[2]{%
+  \typeout{adsphd.cls: Using default XII back cover page}
+  % Use Helvetica
+  \renewcommand{\sfdefault}{\helvetsfdefault}
+  %
+  % Only add empty pages if asked for
+  \ifthenelse{\equal{#2}{1}}
+  {
+    \cleardoublepage \mbox{}
+    \thispagestyle{empty}
+    \newpage
+  }{}
+  \thispagestyle{empty}
+  % Blue lines in right corner
+  %
+  \begin{textblock*}{55mm}(-\rbleed+#1+97.5mm,20mm)
+  \textblockcolour{blueXIIlight}
+  %\vspace{-\parskip}
+  \rule{0pt}{2mm}
+  \end{textblock*}
+  \begin{textblock*}{2mm}(-\rbleed+#1+152mm,20mm)
+  \textblockcolour{blueXIIlight}
+  %\vspace{-\parskip}
+  \rule{0pt}{18mm}
+  \end{textblock*}
+  %
+  % Create gray box
+  \begin{textblock*}{137.5mm+\rbleed}(-\rbleed+#1,23mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  %\parbox[c][20mm]{151.2mm+\rbleed}{
+  \flushright
+  %\vspace{-3mm}
+  {\scriptsize {\sffamily\MakeUppercase\@faculty}}\\[-1mm]
+  {\scriptsize {\sffamily\MakeUppercase\@department}}\\[-1mm]
+  {\scriptsize {\sffamily\MakeUppercase\@researchgroup}}\\[-1mm]
+  {\scriptsize {\sffamily\@address}}\\[-1mm]
+  {\scriptsize {\sffamily{}\@addresspc}}\\[-1mm]
+  {\scriptsize {\sffamily{}\@email}}\\[-1mm]
+  {\scriptsize {\sffamily{}\@website}}
+  %}
+  \end{textblock*}
+  %
+  %
+  % Create blue background
+  %\setlength{\tmplength}{\adsphdpaperwidth}
+  %\addtolength{\tmplength}{-152mm}
+  %\addtolength{\tmplength}{\rbleed}
+  %\begin{textblock*}{\tmplength}(152.0mm+#1,20mm)
+  %\textblockcolour{}
+  %\includegraphics[width=\tmplength,height=20mm]{image/blue}%
+  %\end{textblock*}
+  %
+  % Put KULeuven sedes on top
+  \begin{textblock*}{7mm}(140mm+#1,24mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \includegraphics*[height=15mm]{image/sedes}%
+  \end{textblock*}
+}
+
 \newcommand{\backcoverfooter}[1]{%
   % Put logo of the association at the bottom right
   \begin{textblock*}{7mm}[2.,1.](150mm+#1,231.0mm)
@@ -1808,6 +1874,38 @@ ISBN \@isbn
   %
   % Restore font
   \renewcommand{\sfdefault}{\origsfdefault}
+}
+
+\newcommand{\backcoverfooterXII}[1]{%
+  % Put logo of the association at the bottom right
+  %\begin{textblock*}{7mm}[2.,1.](150mm+#1,231.0mm)
+  %\textblockcolour{}
+  %\vspace{-\parskip}
+  %\includegraphics*[height=20mm]{image/ASSO_ZEGEL_ZW}
+  %\end{textblock*}
+  %
+  % Bottom blue bar
+  \begin{textblock*}{\adsphdpaperwidth}(-\rbleed+#1,222mm)
+  %\begin{textblock*}{\adsphdpaperwidth}(0mm+#1,234mm)
+  \textblockcolour{blueXIIdark}
+  %\vspace{-\parskip}
+  \rule{0pt}{15mm}
+  \end{textblock*}
+  %
+  % Restore font
+  \renewcommand{\sfdefault}{\origsfdefault}
+}
+
+\newcommand{\makebackcoverXII}{\makebackcovergeneralXII{0mm}{1}}
+% \makebackcovergeneral{xskip}{clearpage}
+\newcommand{\makebackcovergeneralXII}[2]{%
+\typeout{adsphd.cls: Using default back cover page}
+  %
+  % Create header
+  \backcoverheaderXII{#1}{#2}
+  %
+  % Add footer
+  \backcoverfooterXII{#1}
 }
 
 \newcommand{\makebackcover}{\makebackcovergeneral{0mm}{1}}
