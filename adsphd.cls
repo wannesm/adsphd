@@ -1,5 +1,6 @@
 %%
 %% Copyright (C) 2010 by Yves Frederix
+%% Copyright (C) 2011,2012,2013 by Wannes Meert
 %% 
 %% This file may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either
@@ -26,7 +27,7 @@
 
 \NeedsTeXFormat{LaTeX2e}[2009/09/24]
 \ProvidesClass{adsphd}
-    [2011/02/02 v1.1 Standard K.U.Leuven Arenberg Doctoral School PhD class]
+    [2013/01/10 v1.2 Standard KU Leuven Arenberg Doctoral School PhD class]
 
 \newif\ifshellescape
 
@@ -105,8 +106,11 @@
 \DeclareBoolOption[true]{subfig}
 \DeclareComplementaryOption{subfigure}{subfig}
 
+% Cover options
+\DeclareStringOption{coverfontpercent}
+
 % Default values
-\setkeys{adsphd}{info=true,biblatexstyle=numeric-comp}
+\setkeys{adsphd}{info=true,biblatexstyle=numeric-comp,coverfontpercent=1}
 \PassOptionsToClass{fleqn,10pt,twoside}{report}
 
 % Process global keys
@@ -136,6 +140,7 @@
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{cover}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{british}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{showlabels}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{coverfontpercent}
 
   \hypersetup{%
     pdfauthor={\@authorf~\@authorl},%
@@ -716,38 +721,38 @@
 %   - include chapter in toc
 %   - create headings
 \def\@nonumberchapter[#1]#2{%
-                    \addcontentsline{toc}{chapter}{#1}%
-                    \chaptermark{#1}%
-                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
-                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
-                    \if@twocolumn
-                      \@topnewpage[\vspace*{-\@chaptitlemoveup}%
-                          \@makeschapterhead{#2}]%
-                    \else
-                      \vspace*{-\@chaptitlemoveup}
-                      \@makeschapterhead{#2}%
-                      \@afterheading
-                    \fi
-                    \ifthenelse{\equal{\@chaptitlemoveup}{0mm}}{}{
-                      \setlength{\@chaptitlemoveup}{0mm}}
-                    }
+  \addcontentsline{toc}{chapter}{#1}%
+  \chaptermark{#1}%
+  \addtocontents{lof}{\protect\addvspace{10\p@}}%
+  \addtocontents{lot}{\protect\addvspace{10\p@}}%
+  \if@twocolumn
+    \@topnewpage[\vspace*{-\@chaptitlemoveup}%
+        \@makeschapterhead{#2}]%
+  \else
+    \vspace*{-\@chaptitlemoveup}
+    \@makeschapterhead{#2}%
+    \@afterheading
+  \fi
+  \ifthenelse{\equal{\@chaptitlemoveup}{0mm}}{}{
+    \setlength{\@chaptitlemoveup}{0mm}}
+}
 % The starred version is not included in the TOC (but headings are
 % set!)
 \def\@snonumberchapter#1{%
-                    \chaptermark{#1}%
-                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
-                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
-                    \if@twocolumn
-                      \@topnewpage[\vspace*{-\@chaptitlemoveup}%
-                          \@makeschapterhead{#1}]%
-                    \else
-                      \vspace*{-\@chaptitlemoveup}
-                      \@makeschapterhead{#1}%
-                      \@afterheading
-                    \fi
-                    \ifthenelse{\equal{\@chaptitlemoveup}{0mm}}{}{
-                      \setlength{\@chaptitlemoveup}{0mm}}
-                    }
+  \chaptermark{#1}%
+  \addtocontents{lof}{\protect\addvspace{10\p@}}%
+  \addtocontents{lot}{\protect\addvspace{10\p@}}%
+  \if@twocolumn
+    \@topnewpage[\vspace*{-\@chaptitlemoveup}%
+        \@makeschapterhead{#1}]%
+  \else
+    \vspace*{-\@chaptitlemoveup}
+    \@makeschapterhead{#1}%
+    \@afterheading
+  \fi
+  \ifthenelse{\equal{\@chaptitlemoveup}{0mm}}{}{
+    \setlength{\@chaptitlemoveup}{0mm}}
+}
 \newlength{\@chaptitlemoveup}
 \newcommand{\chaptitlemoveup}[1]{\setlength{\@chaptitlemoveup}{#1}}
 
@@ -758,10 +763,10 @@
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \let\orig@chapter=\chapter
     \renewcommand\chapter{\if@openright\cleardoublepage\else\clearpage\fi
-                    \thispagestyle{plain}%
-                    \global\@topnum\z@
-                    \@afterindentfalse
-                    \secdef\@nonumberchapter\@snonumberchapter}
+      \thispagestyle{plain}%
+      \global\@topnum\z@
+      \@afterindentfalse
+      \secdef\@nonumberchapter\@snonumberchapter}
     \include{\chaptersdir/#1/#1}
     \let\chapter=\orig@chapter
   }{
@@ -776,7 +781,7 @@
 
 \newcommand{\includechapter}[1]{%
   \graphicspath{{\chaptersdir/#1/image/}}%
-%  \cleardoublepage%
+  %\cleardoublepage%
   \include{\chaptersdir/#1/#1}%
 }
 
@@ -816,35 +821,35 @@
 }
 
 \ifadsphd@biblatex
-    \newcommand{\includebibliography}{%
-        \@ifnextchar \bgroup{\ClassError{adsphd}{%
-            Biblatex expects the bib-file in the preamble}{%
-            Don't pass an argument to the includebibliography command
-            and\MessageBreak
-            add the bib-file to the preamble as follows:\MessageBreak
-            \bibliography{path/to/file.bib}.\MessageBreak}%
-        }{%
-            \cleardoublepage
-            \phantomsection
-            \addcontentsline{toc}{chapter}{\bibname}
-            \printbibliography[maxnames=99]
-        }
+  \newcommand{\includebibliography}{%
+    \@ifnextchar \bgroup{\ClassError{adsphd}{%
+      Biblatex expects the bib-file in the preamble}{%
+      Don't pass an argument to the includebibliography command
+      and\MessageBreak
+      add the bib-file to the preamble as follows:\MessageBreak
+      \bibliography{path/to/file.bib}.\MessageBreak}%
+    }{%
+      \cleardoublepage
+      \phantomsection
+      \addcontentsline{toc}{chapter}{\bibname}
+      \printbibliography[maxnames=99]
     }
+  }
 \else
-    \ifadsphd@custombibtex
-        \newcommand{\includebibliography}{%
-            \message{adsphd.cls: includebiblography command is not defined
-            because of the custombibtex setting.}
-        }
-    \else
-        \newcommand{\includebibliography}{%
-          \cleardoublepage
-          \phantomsection
-          \addcontentsline{toc}{chapter}{\bibname}
-          \bibliographystyle{\@bibstyle}
-          \orig@bibliography{\@bibliography}
-        }
-    \fi
+  \ifadsphd@custombibtex
+    \newcommand{\includebibliography}{%
+      \message{adsphd.cls: includebiblography command is not defined
+      because of the custombibtex setting.}
+    }
+  \else
+    \newcommand{\includebibliography}{%
+      \cleardoublepage
+      \phantomsection
+      \addcontentsline{toc}{chapter}{\bibname}
+      \bibliographystyle{\@bibstyle}
+      \orig@bibliography{\@bibliography}
+    }
+  \fi
 \fi
 
 \let\tableofcontentsorig\tableofcontents
@@ -901,23 +906,23 @@
 \newcommand*\todosectionname{TODO}
 \newcommand*\printtodos{%
   \ifadsphd@showtodo
-      \typeout{Printing todo list from \jobname.tds}
-      \cleardoublepage
-      \phantomsection
-      \addcontentsline{toc}{chapter}{\todosectionname}
-      \section*{% 
-        \todosectionname\@mkboth{\MakeUppercase\todosectionname}% 
-                                {\MakeUppercase\todosectionname}% 
-      }\nobreak
-      \begin{description}% 
-      % Let short summaries go to the file \jobname.wds : 
-      \IfFileExists{\jobname.tds}{}{\item No todos}% 
-      \@starttoc{tds}% Define a .tds file
-      %\ifnum\value{todocounter} < 1
-        %\item No todos (0)
-      %\fi
-      \item
-      \end{description}% 
+    \typeout{Printing todo list from \jobname.tds}
+    \cleardoublepage
+    \phantomsection
+    \addcontentsline{toc}{chapter}{\todosectionname}
+    \section*{% 
+      \todosectionname\@mkboth{\MakeUppercase\todosectionname}% 
+                              {\MakeUppercase\todosectionname}% 
+    }\nobreak
+    \begin{description}% 
+    % Let short summaries go to the file \jobname.wds : 
+    \IfFileExists{\jobname.tds}{}{\item No todos}% 
+    \@starttoc{tds}% Define a .tds file
+    %\ifnum\value{todocounter} < 1
+      %\item No todos (0)
+    %\fi
+    \item
+    \end{description}% 
   \fi
 }
 
@@ -1406,6 +1411,18 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \renewcommand{\sfdefault}{\origsfdefault}
 }
 
+\newcommand{\coverfontsize}[2]{%
+  \count1=#1
+  \count2=#2
+  %\expandafter\message{COVERFONTSIZE: #1 #2 \adsphd@coverfontpercent}
+  \multiply \count1 by \adsphd@coverfontpercent
+  \divide \count1 by 100
+  \multiply \count2 by \adsphd@coverfontpercent
+  \divide \count2 by 100
+  %\expandafter\message{COVERFONTSIZE: #1 #2 \the\count1\ \the\count2}
+  \fontsize{\the\count1}{\the\count2}
+}
+
 \newcommand{\makefrontcoverXII}{\makefrontcovergeneralXII{0mm}{1}}
 \newcommand{\makefrontcovergeneralXII}[2]{%
   %
@@ -1447,7 +1464,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \textblockcolour{}
   \vspace{-\parskip}
   \raggedright
-  \fontsize{30}{38}\selectfont\sffamily{\color{blueXII}\@title}\\
+  \fontsize{30}{34}\selectfont\sffamily{\color{blueXII}\@title}\\
   \fontsize{20}{25}\selectfont\sffamily{\@subtitle}
   \end{textblock*}
   %
@@ -1466,7 +1483,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \vspace{-\parskip}
   \begin{minipage}[t]{67mm}
   \begin{flushright}
-  {\fontsize{12}{15}\selectfont\sffamily Dissertation presented in partial\\
+  {\coverfontsize{12}{15}\selectfont\sffamily Dissertation presented in partial\\
   \fulfillment\ of the requirements for the\\
   the degree of Doctor in \@degree}
   \end{flushright}
@@ -1479,7 +1496,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \vspace{-\parskip}
   \begin{minipage}[t]{67mm}
   \begin{flushright}
-  {\fontsize{12}{15}\selectfont\sffamily\@date}
+  {\coverfontsize{12}{15}\selectfont\sffamily\@date}
   \end{flushright}
   \end{minipage}
   \end{textblock*}
@@ -1489,9 +1506,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \textblockcolour{}
   \vspace{-\parskip}
   \begin{minipage}[t]{67mm}
-    \fontsize{12}{15}\selectfont\sffamily
+    \coverfontsize{12}{15}\selectfont\sffamily
     %\begin{tabular}[t]{p{6.9cm}}
-    Supervisory Committee::\\
+    Supervisory Committee:\\
     \@president, chair
     \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
     \\\name, supervisor
@@ -1646,7 +1663,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \vspace{-\parskip}
 \begin{minipage}[t]{7.32cm}
 %  \begin{tabular}[t]{p{6.9cm}}
-    Jury:\\
+    Supervisory Committee:\\
     \@president, chair
     \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
     \\\name, supervisor
@@ -1702,7 +1719,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \thispagestyle{empty}
 \mbox{}
 \vfill
-{\setlength{\parindent}{0ex}\copyright{}~Katholieke Universiteit Leuven -- \@faculty \\
+{\setlength{\parindent}{0ex}\copyright{}~KU Leuven -- \@faculty \\
 \@address, \@addresspc{} (Belgium)}
 
 \bigskip
