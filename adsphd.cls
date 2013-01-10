@@ -108,6 +108,7 @@
 
 % Cover options
 \DeclareStringOption{coverfontpercent}
+\DeclareBoolOption{coverhidecommittee}
 
 % Default values
 \setkeys{adsphd}{info=true,biblatexstyle=numeric-comp,coverfontpercent=1}
@@ -1502,6 +1503,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \end{textblock*}
   %
   % Place the supervisory committee text
+  \ifadsphd@coverhidecommittee\else
   \begin{textblock*}{67.5mm}(17.5mm+#1,185mm)
   \textblockcolour{}
   \vspace{-\parskip}
@@ -1532,9 +1534,10 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   %\end{tabular}
   \end{minipage}
   \end{textblock*}
+  \fi
   %
   % Bottom blue bar
-  \begin{textblock*}{\adsphdpaperwidth}(0mm+#1,238mm)
+  \begin{textblock*}{\adsphdpaperwidth}(0mm+#1,234mm)
   \textblockcolour{blueXII}
   %\vspace{-\parskip}
   \rule{0pt}{2.1mm}
