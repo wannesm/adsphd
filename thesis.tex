@@ -2,7 +2,7 @@
 %\documentclass[pagebackref,showinstructions,showtodo,showtodopriv,showlabels,biblatex,biblatexstyle=authoryear]{adsphd}
 %\documentclass[online]{adsphd}
 %\documentclass[print]{adsphd}
-\documentclass[pagebackref,showinstructions,showtodo,showtodopriv,showlabels]{adsphd}
+\documentclass[pagebackref,showinstructions,showtodo,showtodopriv,showlabels,coverfontpercent=90]{adsphd}
 
 % To use biblatex:
 %\documentclass[biblatex,biblatexstyle=authoryear,showinstructions,showlabels]{adsphd}
@@ -22,15 +22,14 @@
 % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 %%% COVER: Settings %%%
-\title{Multiscale methods for the simulation of
-  molecular dynamics and stochastic models}
+\title{The Title of Your PhD Dissertation}
 %\subtitle{Multiscale computing for Dummies}
 
-\author{Yves}{Frederix}
+\author{Wannes}{Meert}
 
-\supervisor{Prof.~dr.~ir.~D.~Roose}{}
+\supervisor{Prof.~dr.~ir.~H.~Blockeel}{}
 %\cosupervisor{Prof.~dr.~ir.~R.Cools}{}
-\president{Prof.~dr.~ir.~Mr.~De~Voorzitter}
+\president{Prof.~dr.~ir.~De~Voorzitter}
 \jury{Prof.~dr.~ir.~Den~Ene\\
       Prof.~dr.~ir.~Den Andere
 }
@@ -44,8 +43,10 @@
 % \addresscity{B-3001 Heverlee} % This is the default value. Note
                                 % that 'B-3001 Leuven' is _incorrect_!!
                                 % [http://www.kuleuven.be/communicatie/schrijven/taalgebruik.html]
+\email{first.name@dept.kuleuven.be} % Leave empty to hide
+\website{http://www.dept.cs.kuleuven.be} % Leave empty to hide
 
-\date{September 2010}
+\date{January 2013}
 %\udc{XXX.XX}            % UDC is no longer necessary.
 \depot{XXXX/XXXX/XX}     % Leave out the initial D/ (it is added
                          % automatically)
@@ -105,6 +106,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%\makefrontcover
 \makefrontcoverXII
 
 \maketitle
@@ -171,7 +173,8 @@
 
 \includepublications{publications}
 
-\makebackcover
+%\makebackcover
+\makebackcoverXII
 
 \end{document}
 
