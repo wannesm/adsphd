@@ -1470,8 +1470,8 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \textblockcolour{}
   \vspace{-\parskip}
   \raggedright
-  \fontsize{30}{34}\selectfont\sffamily{\color{blueXIIdark}\@title}\\
-  \fontsize{20}{25}\selectfont\sffamily{\@subtitle}
+  \coverfontsize{30}{34}\selectfont\sffamily{\color{blueXIIdark}\@title}\\
+  \coverfontsize{20}{25}\selectfont\sffamily{\@subtitle}
   \end{textblock*}
   %
   % Place the author name
@@ -1479,7 +1479,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \textblockcolour{}
   \vspace{-\parskip}
   \begin{flushright}
-  \fontsize{14}{19}\selectfont\sffamily\textbf{\@authorf\ \@authorl}
+  \coverfontsize{14}{19}\selectfont\sffamily\textbf{\@authorf\ \@authorl}
   \end{flushright}
   \end{textblock*}
   %
