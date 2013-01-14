@@ -1488,11 +1488,13 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \textblockcolour{}
   \vspace{-\parskip}
   \begin{minipage}[t]{67mm}
+  {\coverfontsize{12}{15}\selectfont\sffamily%
   \begin{flushright}
-  {\coverfontsize{12}{15}\selectfont\sffamily Dissertation presented in partial\\
-  \fulfillment\ of the requirements for the\\
-  the degree of Doctor in \@degree}
+  Dissertation presented in partial\\%
+  \fulfillment\ of the requirements for the\\%
+  the degree of Doctor in \@degree
   \end{flushright}
+  }
   \end{minipage}
   \end{textblock*}
   %
