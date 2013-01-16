@@ -1492,7 +1492,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \begin{flushright}
   Dissertation presented in partial\\%
   \fulfillment\ of the requirements for the\\%
-  the degree of Doctor in \@degree
+  degree of Doctor in \@degree
   \end{flushright}
   }
   \end{minipage}
