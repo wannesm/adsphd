@@ -394,7 +394,7 @@
 \def\addresscity#1{\gdef\@addresspc{#1}}
 \def\email#1{\gdef\@email{#1}}
 \def\website#1{\gdef\@website{#1}}
-\def\degree#1{\gdef\@degree{#1}} % It will say "Doctor of \degree"
+\def\phddegree#1{\gdef\@phddegree{#1}} % It will say "Doctor of \phddegree"
 
 % Bibtex style
 \def\bibstyle#1{\gdef\@bibstyle{#1}}
@@ -417,7 +417,7 @@
 \addresscity{B-3001 Heverlee}
 \title{Dissertation title ...}
 \subtitle{}
-\degree{... Computer Science ...}
+\phddegree{... Computer Science ...}
 \date{Month Year}
 \email{first.name@dept.kuleuven.be}
 \website{www.website.kuleuven.be}
@@ -1492,7 +1492,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \begin{flushright}
   Dissertation presented in partial\\%
   \fulfillment\ of the requirements for the\\%
-  degree of Doctor in \@degree
+  degree of Doctor in \@phddegree
   \end{flushright}
   }
   \end{minipage}
@@ -1622,7 +1622,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   {\small\sffamily Dissertation presented in partial\\
   \fulfillment\ of the requirements for\\
   the degree of Doctor\\
-  in \@degree}
+  in \@phddegree}
   \end{textblock*}
   %
   % Place date
@@ -1701,7 +1701,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     Dissertation presented in partial\\
     \fulfillment\ of the requirements for\\
     the degree of Doctor \\
-    in \@degree
+    in \@phddegree
 %  \end{tabular}
 \end{minipage}
 
@@ -1709,7 +1709,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 % Jury:                                                   & Dissertation presented in partial\\
 % \@president, president                                  & fulfillment of the requirements for\\
 % \@supervisor, supervisor                                & the degree of Doctor \\
-% titles first name last name                             & in \@degree\\
+% titles first name last name                             & in \@phddegree\\
 % titles first name last name                             & \\
 %   \rule{0.25cm}{0pt}(external affiliation)              & \\
 %                                                         & \\
