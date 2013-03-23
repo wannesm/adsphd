@@ -99,6 +99,7 @@
 \DeclareBoolOption{biblatex}
 \DeclareBoolOption{custombibtex}
 \DeclareStringOption{biblatexstyle} % Needs to be defined at load-time
+\DeclareBoolOption{biber} % Needs to be defined at load-time
 
 % links
 \DeclareBoolOption{colorlinks}
@@ -137,6 +138,7 @@
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{final}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biblatex}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biblatexstyle}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biber}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{custombibtex}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{backref}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{pagebackref}
@@ -237,9 +239,12 @@
     \ifadsphd@pagebackref
         \PassOptionsToPackage{backref}{biblatex}
     \fi
+    \ifadsphd@biber
+        \PassOptionsToPackage{backend=biber}{biblatex}
+    \fi
     \PassOptionsToPackage{backref=false}{hyperref} % Avoid loading of backref
     %\PassOptionsToPackage{maxnames=99}{biblatex}
-    \PassOptionsToPackage{firstinits=true}{biblatex}
+    %\PassOptionsToPackage{firstinits=true}{biblatex}
 \else
     \ifadsphd@custombibtex
         \message{adsphd.cls: Not loading any BibTeX packages (custombibtex)}
@@ -482,11 +487,12 @@
     \typeout{adsphd.cls: Using biblatex}
     \RequirePackage[utf8]{inputenc}
     \RequirePackage{csquotes}
-    \RequirePackage[hyperref=auto,mincrossrefs=999]{biblatex}
+    \RequirePackage[hyperref=auto]{biblatex}
+    %\RequirePackage[hyperref=auto,mincrossrefs=999]{biblatex}
     %\setlength{\bibhang}{\orig@parindent}
-    \setlength{\bibhang}{.5cm}
+    %\setlength{\bibhang}{.5cm}
     %\setlength{\bibitemsep}{\orig@parskip}
-    \setlength{\bibitemsep}{.5ex}
+    %\setlength{\bibitemsep}{.5ex}
 \else
     \ifadsphd@backref
         \RequirePackage{backref}
@@ -838,7 +844,8 @@
       \cleardoublepage
       \phantomsection
       \addcontentsline{toc}{chapter}{\bibname}
-      \printbibliography[maxnames=99]
+      %\printbibliography[maxnames=99]
+      \printbibliography
     }
   }
 \else

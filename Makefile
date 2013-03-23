@@ -85,12 +85,15 @@ MYCOVERPAGENAME = mycoverpage.tex # If changing this (e.g., to mycover.tex),
 								  # line in $(MAINTEX):
 								  # \setcustomcoverpage{mycover.tex}
 
-CLEANEXTENSIONS = .toc .aux .log .bbl .blg .log .lof .lot .ilg .out .glo .gls .nlo .nls .brf .ist .glg .synctex.gz .tgz .idx .ind -blx.bib .fdb_latexmk
+CLEANEXTENSIONS = .toc .aux .log .bbl .blg .log .lof .lot .ilg .out .glo .gls .nlo .nls .brf .ist .glg .synctex.gz .tgz .idx .ind -blx.bib .fdb_latexmk .run.xml .bcf
 REALCLEANEXTENSIONS = .dvi .pdf .ps
 
 FORCE_REBUILD = .force_rebuild
 
 USEPDFTEX ?= 0 # can be externally set
+
+USEBIBLATEX = 0
+BIBLATEXBACKEND = biber
 
 # Binaries
 TEX = latex
@@ -116,6 +119,14 @@ include Makefile.settings
 
 ##############################################################################
 ### DERIVED SETTINGS #########################################################
+
+# If biblatex is used: hijack BIBTEX and override it with the requested biblatex backend (possibly fall back to bibtex again)
+ifeq ($(strip $(USEBIBLATEX)), 1)
+	BIBTEX = $(strip $(BIBLATEXBACKEND))
+	ifeq ("$(BIBTEX)", "")
+		BIBTEX = bibtex
+	endif
+endif
  
 # Other tex files that might be included in $(MAINTEX)
 INCLUDEDCHAPTERNAMES = $(shell grep -e "^[^%]*\include" $(MAINTEX) | \

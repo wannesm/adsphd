@@ -57,6 +57,9 @@ makenomenclature = True
 
 verbose          = True
 
+usebiblatex      = False
+biblatexbackend  = 'biber' # alternative: bibtex
+
 apps = {}
 
 def initapplications():
@@ -67,6 +70,7 @@ def initapplications():
 	## *NIX ##
 	apps['pdflatex']    = App('pdflatex',  '-interaction=nonstopmode -synctex=1 -shell-escape {basename}', verbose)
 	apps['bibtex']      = App('bibtex',    '--min-crossref=100 {basename}', verbose)
+	apps['biber']       = App('biber',     '{basename}', verbose)
 	apps['glossary']    = App('makeindex', '{basename}.glo -s {basename}.ist -t {basename}.glg -o {basename}.gls', verbose)
 	apps['nomenclature']= App('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
 	apps['pdfviewer']   = App('acroread',  '{pdffile}', verbose)
@@ -86,7 +90,7 @@ def initapplications():
 
 settings = {'basename':'', 'cleanfiles':'', 'pdffile':''}
 settings['basename']   = os.path.splitext(mainfile)[0]
-settings['cleanfiles'] = " ".join([settings['basename']+ext for ext in ['.toc','.aux','.log','.bbl','.blg','.log','.lof','.lot','.ilg','.out','.glo','.gls','.nlo','.nls','.brf','.ist','.glg','.synctexgz','.tgz','.idx','.ind','-blx.bib','.fdb_latexmk','.synctex.gz']])
+settings['cleanfiles'] = " ".join([settings['basename']+ext for ext in ['.toc','.aux','.log','.bbl','.blg','.log','.lof','.lot','.ilg','.out','.glo','.gls','.nlo','.nls','.brf','.ist','.glg','.synctexgz','.tgz','.idx','.ind','-blx.bib','.fdb_latexmk','.synctex.gz','.run.xml','.bcf']])
 settings['pdffile']    = settings['basename']+'.pdf'
 #print(settings)
 
@@ -119,8 +123,12 @@ def latex():
 	apps['pdflatex'].run(settings, 'Latex failed')
 	if makebibliography:
 		rerun = True
-		print('#### BIBTEX ####')
-		apps['bibtex'].run(settings, 'Bibtex failed')
+		if usebiblatex and biblatexbackend == 'biber':
+			print('#### BIBER ####')
+			apps['biber'].run(settings, 'Biber failed')
+		else:
+			print('#### BIBTEX ####')
+			apps['bibtex'].run(settings, 'Bibtex failed')
 	if makeindex:
 		rerun = True
 		print('#### INDEX ####')

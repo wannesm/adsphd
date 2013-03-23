@@ -106,6 +106,7 @@ Options for the adsphd class:
 
   biblatex                          : Use biblatex instead of bibtex.
   biblatexstyle=<name>              : Change the biblatex style.
+  biber                             : Use the biber backend for biblatex.
   custombibtex                      : Don't load any bib(la)tex files. This way
                                       the user can load and customize the
                                       bibtex environments he wants. (For
