@@ -24,12 +24,13 @@ Directory structure
 
 The directory structure looks like this
 
-* `thesis.tex`: Main tex file for the final booklet
-* `Makefile`
-* `run.py`
+* `thesis.tex`: Main tex file for the final booklet.
 * `defs.tex`: Put your own preamble settings here.
+* `run.py`: Simple compilation script.
+* `Makefile`
 * `Makefile.settings`: This file contains file names and other
                        settings used by make.
+* `biblatex.cfg`: Biblatex settings.
 * `chapters`
     * `chapter1`: Per chapter a directory with
         * `chapter1.tex`: Tex file with *identical* name
@@ -39,7 +40,7 @@ The directory structure looks like this
                     `\includegraphics{myfigure}` and not
                     `{image/myfigure}`!
 
-Using latex directly
+Using Latex directly
 --------------------
 
 The adsphd.cls can be used directly by latex:
@@ -49,8 +50,10 @@ The adsphd.cls can be used directly by latex:
     pdflatex thesis
     pdflatex thesis
 
+Any other Latex build tool like latexmk, rubber, TeXShop or TeXWorks 
+should also work out of the box.
 
-Using the simple python compile script
+Using the simple Python compile script
 --------------------------------------
 
 There is a simple Python compilation script supplied.
@@ -66,6 +69,7 @@ the command as follows:
 
     python3 run.py
 
+Some settings are available at the top of the `run.py` file.
 
 Using make and other utility scripts
 ------------------------------------
@@ -104,6 +108,8 @@ Some convenient Makefile targets:
     ./chapters/makeemptychapter.sh # Create the directory structure for a new
                                    # chapter.
 
+Settings for the Makefile script can be found in the `makefile.settings`
+file.
 
 Options for the adsphd class
 ----------------------------
