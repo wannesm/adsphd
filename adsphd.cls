@@ -109,10 +109,11 @@
 
 % Cover options
 \DeclareStringOption{coverfontpercent}
-\DeclareBoolOption{coverhidecommittee}
+\DeclareBoolOption{covershowcommittee}
+\DeclareComplementaryOption{coverhidecommittee}{covershowcommittee}
 
 % Default values
-\setkeys{adsphd}{info=true,biblatexstyle=numeric-comp,coverfontpercent=1}
+\setkeys{adsphd}{info=true,biblatexstyle=numeric-comp,coverfontpercent=100}
 \PassOptionsToClass{fleqn,10pt,twoside}{report}
 
 % Process global keys
@@ -283,7 +284,6 @@
   \PassOptionsToPackage{a4}{crop}
 \fi
 
-% Thank you Wannes:
 \ifadsphd@showgit
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{showgit}
   \def\gittmpfile{/tmp/gitdescribe.txt} 
@@ -1510,7 +1510,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \end{textblock*}
   %
   % Place the supervisory committee text
-  \ifadsphd@coverhidecommittee\else
+  \ifadsphd@covershowcommittee
   \begin{textblock*}{67.5mm}(17.5mm+#1,185mm)
   \textblockcolour{}
   \vspace{-\parskip}

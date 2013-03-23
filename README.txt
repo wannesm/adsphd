@@ -2,6 +2,7 @@ The directory structure looks like this
 
   ./thesis.tex                      # main tex file for the final booklet
   ./Makefile
+  ./run.py
   ./defs.tex                        # Put your own preamble settings here.
   ./Makefile.settings               # This file contains file names and other
                                     # settings used by make.
@@ -155,6 +156,11 @@ Options for the adsphd class:
 
   subfig                            : load package subfig (default)
   subfigure                         : load older package subfigure
+
+  covershowcommittee                : show the committee also on the front
+                                      page.
+  coverfontpercent                  : change the cover title font size. Should
+                                      be an integer number between 1 and 100.
 
 Most of the useful commands provided by this class can be found in the provided
 example file 'thesis.tex'. 
