@@ -267,7 +267,7 @@ The default bleed (both lbleed and rbleed) is 7mm. I suggest not changing this
 value unless you know what you are doing ;) The latter can be done by
 redefining `\defaultlbleed` and `\defaultrbleed` respectively.
 
-Warning: most printing services will create their own cover page and do not
+**Remark**: most printing services will create their own cover page and do not
 supply all necessary parameters (e.g., thickness of the paper) because these
 differ from machine to machine. Therefore, the generated cover page is only
 indicative and not guaranteed to be used or even correct for your printing
@@ -279,11 +279,11 @@ Troubleshooting
 
 * To be able to make the chapter compilation work, you should make sure that
   the desired chapter is included in thesis.tex (e.g., using
-  \includechapter{introduction})!!
+  `\includechapter{introduction})`!!
 * If you get spurious empty pages when compiling a single chapter, this is
-  probably due to the combination of \cleardoublepage and \includeonly. To
+  probably due to the combination of `\cleardoublepage` and `\includeonly`. To
   avoid it, make sure you end all included chapters (and appendices) with
-  \cleardoublepage (if you use makeemptychapter.sh to generate the chapter
+  `\cleardoublepage` (if you use `makeemptychapter.sh` to generate the chapter
   skeleton this is automatically done!)
 
 
@@ -291,14 +291,14 @@ Todos
 -----
 
 Some misc commands that might be useful (try them out, but do not forget to add
-the [showtodo,showtodopriv] options or you won't see anything):
+the `[showtodo,showtodopriv]` options or you won't see anything):
 
     \todo{This is a todo}
     \todoinline{This is a todo}
     \todopriv{This is a todo}
     \todoprivinline{\This is a todo}
 
-REMARK: to make the above commands interact as little as possible with your
+**Remark**: to make the above commands interact as little as possible with your
 normal text, alway add a % directly after the closing bracket.
 
 Tips and tricks
