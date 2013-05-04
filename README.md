@@ -15,8 +15,8 @@ Questions and issues can be submitted to the
 [ADS PhD issues component](https://github.com/wannesm/adsphd/issues) 
 at Github.
 
-This package is currently maintained by 
-[Wannes Meert](http://people.cs.kuleuven.be/wannes.meert).
+For a Beamer presentation template take a look at the [KU Leuven presentation
+template](http://www.kuleuven.be/communicatie/publicaties/powerpointsjablonen).
 
 
 Directory structure
@@ -300,6 +300,15 @@ the [showtodo,showtodopriv] options or you won't see anything):
 
 REMARK: to make the above commands interact as little as possible with your
 normal text, alway add a % directly after the closing bracket.
+
+
+Presentation template
+---------------------
+
+A Beamer template has been created by 
+[Roland Pastorino](www.rolandpastorino.com) and is available on the [KU Leuven 
+template page](http://www.kuleuven.be/communicatie/publicaties/powerpointsjablonen).
+
 
 Tips and tricks
 ---------------
