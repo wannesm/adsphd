@@ -14,16 +14,6 @@
 %% 
 %% This file is based on engphd.cls created by Bart Vandewoestyne.
 %% 
-%%  2010-07-27: Large cleanup and addition of some functionality.
-%%             Some of it shamelessly copied from or inspired by
-%%             refactoring work by Wannes Meert. 
-%%             This includes the [showgit] option, parts of the work
-%%             to enable compilation with pdflatex, the redefinition
-%%             of \chapter when used in abstract/preface/cv/publications.
-%%  2011-02-02: Added overview of TODOs, changed some internal command
-%%             names such that they are inaccessible from the outside,
-%%             and place DRAFT on front page to avoid mistakes with
-%%             final copy. (Wannes)
 
 \NeedsTeXFormat{LaTeX2e}[2009/09/24]
 \ProvidesClass{adsphd}
@@ -41,6 +31,12 @@
 \setlength{\adsphdpaperheight}{240mm}
 \newlength{\adsphdpaperwidth}
 \setlength{\adsphdpaperwidth}{160mm}
+
+% When boxes touch the border of the page a 5mm bleed  is required to
+% send it to the print service. (Default on both sides making the page
+% width 170mm.
+\newlength{\adsphdpaperbleed}
+\setlength{\adsphdpaperbleed}{5mm}
 
 % Colors
 \definecolor{blueXIIdark}{cmyk}{.81,.19,.12,.06}
