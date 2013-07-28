@@ -47,6 +47,7 @@ The adsphd.cls can be used directly by latex:
 
     pdflatex thesis
     bibtex thesis
+    # biber thesis
     pdflatex thesis
     pdflatex thesis
 
