@@ -424,12 +424,12 @@ $(CHAPTERSDIR)/%/Makefile: Makefile
 	@echo "" >> $@
 	@echo ".PHONY: $*.pdf" >> $@
 	@echo "$*.pdf: " >> $@
-	@echo -e "\t( cd \$$(MAINDIR) && make $(CHAPTERSDIR)/$*/\$$@ )" >> $@
+	@echo -e "\t( cd \"\$$(MAINDIR)\" && make $(CHAPTERSDIR)/$*/\$$@ )" >> $@
 	@echo "" >> $@
 	@echo ".PHONY: bare $*_bare.pdf" >> $@
 	@echo "bare: $*_bare.pdf" >> $@
 	@echo "$*_bare.pdf: " >> $@
-	@echo -e "\t( cd \$$(MAINDIR) && make $(CHAPTERSDIR)/$*/\$$@ )" >> $@
+	@echo -e "\t( cd \"\$$(MAINDIR)\" && make $(CHAPTERSDIR)/$*/\$$@ )" >> $@
 	@echo "" >> $@
 	@echo -e ".PHONY: image" >> $@
 	@echo -e "image: " >> $@
