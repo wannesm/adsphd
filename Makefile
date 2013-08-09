@@ -210,8 +210,8 @@ define run-tex
 		sed -e 's|\\begin{document}|\\includeonly{$3}\\begin{document}|' > $4
 	cp $(MAINTEX:.tex=.aux) $2.aux
 	cp $(BBLFILE) $2.bbl
-	cp $(NOMENCLFILE) $2.nls
-	cp $(GLOSSFILE) $2.gls
+	cp $(NOMENCLFILE) $2.nls || true
+	cp $(GLOSSFILE) $2.gls || true
 	$1 -jobname $2 $4
 	[ "$6" != "1" ] || sed -i.bak -e 's/\\includebibliography/%\\includebibliography/' $4
 	$1 -jobname $2 $4
