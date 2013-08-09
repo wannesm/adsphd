@@ -1742,7 +1742,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \bigskip
 \selectlanguage{dutch}
 Alle rechten voorbehouden. Niets uit deze uitgave mag worden vermenigvuldigd en/of openbaar gemaakt
-worden door middel van druk, fotocopie, microfilm, elektronisch
+worden door middel van druk, fotokopie, microfilm, elektronisch
 of op welke andere wijze ook zonder voorafgaande schriftelijke
 toestemming van de uitgever.
 
