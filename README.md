@@ -86,9 +86,7 @@ Some convenient Makefile targets:
                                # chapters
     make damnthatsreallyclean  # brutally remove all possible temporary
                                # files
-   
-    make cover                 # create the full cover page. By default
-                               # this is cover.pdf.
+
 
 **In a chapter directory [`./chapters/chapterX`]**:
 
@@ -175,6 +173,9 @@ Options for the adsphd class
    
     cover                 : to be used when generating the coverpage.
                             Puts the result centered on a landscape A3.
+                            (Creating a cover is not needed, the printshop
+                            will create the cover themselves based on the details
+                            you give them.)
    
     subfig                : load package subfig (default)
     subfigure             : load older package subfigure
@@ -239,6 +240,13 @@ For typical usage, see the provided file `thesis.tex`.
 Generating the cover page
 -------------------------
 
+**Important**: most printing services will create their own cover page based
+on the details you send them (title, name, affiliation, ...) and do not supply
+you with all necessary parameters (e.g., thickness of the paper) because these
+differ from machine to machine. Therefore, the generated cover page is only
+indicative and probably not used by your printing server (or even correct).
+
+
 A full cover page (combining front cover, spine and back cover) can be
 generated automatically using the command 'make cover'. This creates a pdf
 `$(COVERPDF)`; by default this is `cover.pdf`.
@@ -268,11 +276,6 @@ The default bleed (both lbleed and rbleed) is 7mm. I suggest not changing this
 value unless you know what you are doing ;) The latter can be done by
 redefining `\defaultlbleed` and `\defaultrbleed` respectively.
 
-**Remark**: most printing services will create their own cover page and do not
-supply all necessary parameters (e.g., thickness of the paper) because these
-differ from machine to machine. Therefore, the generated cover page is only
-indicative and not guaranteed to be used or even correct for your printing
-service.
 
 
 Troubleshooting
