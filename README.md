@@ -355,14 +355,15 @@ Finetuning the backref package (when _not_ using biblatex). Add the
 Contributors
 ------------
 
-[Wannes Meert](http://people.cs.kuleuven.be/wannes.meert),
+Wannes Meert,
 Yves Frederix,
 Bart Vandewoestyne,
 Nele Famaey,
 Tias Guns,
 Jan Hendrik Becker,
 Steven Op de beeck,
-Frederik Colle.
+Frederik Colle,
+Dominique Devriese.
 
 
 ----
