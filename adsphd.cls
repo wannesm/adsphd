@@ -33,6 +33,7 @@
 
 % Different actions when using pdflatex
 \RequirePackage{ifpdf}
+\RequirePackage{iftex}
 
 \RequirePackage[usenames]{color}
 
@@ -483,9 +484,13 @@
 
 \RequirePackage{framed} % voor shaded environment
 
+
+
 \ifadsphd@biblatex
     \typeout{adsphd.cls: Using biblatex}
-    \RequirePackage[utf8]{inputenc}
+    \ifPDFTeX
+      \RequirePackage[utf8]{inputenc}
+    \fi
     \RequirePackage{csquotes}
     \RequirePackage[hyperref=auto]{biblatex}
     %\RequirePackage[hyperref=auto,mincrossrefs=999]{biblatex}
@@ -524,7 +529,9 @@
   \RequirePackage[pdftex]{graphicx}
   \DeclareGraphicsExtensions{.pdf, .jpg, .tif, .png}
   % Use utf-8 encoding for foreign characters
-  \RequirePackage[utf8]{inputenc}
+    \ifPDFTeX
+      \RequirePackage[utf8]{inputenc}
+    \fi
 \else
   % Load the crop package
   \RequirePackage[center,dvips]{crop} % Option [a3] already passed
