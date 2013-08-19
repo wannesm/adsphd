@@ -51,13 +51,14 @@ The adsphd.cls can be used directly by latex:
     pdflatex thesis
     pdflatex thesis
 
-Any other Latex build tool like latexmk, rubber, TeXShop or TeXWorks 
+Any other Latex build tool like latexmk, rubber, SCons, TeXShop or TeXWorks 
 should also work out of the box.
 
 Using the simple Python compile script
 --------------------------------------
 
-There is a simple Python compilation script supplied.
+There is a simple and naive Python compilation script supplied which should
+work cross-platform.
 
     ./run.py             # Compile to pdf
     ./run.py clean       # Clean auxiliary files
@@ -366,7 +367,8 @@ Tias Guns,
 Jan Hendrik Becker,
 Steven Op de beeck,
 Frederik Colle,
-Dominique Devriese.
+Dominique Devriese,
+Marko van Dooren.
 
 
 ----
