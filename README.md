@@ -368,7 +368,8 @@ Jan Hendrik Becker,
 Steven Op de beeck,
 Frederik Colle,
 Dominique Devriese,
-Marko van Dooren.
+Marko van Dooren,
+Ruther Claes.
 
 
 ----
