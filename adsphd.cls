@@ -393,6 +393,7 @@
 \def\rev#1{\gdef\@rev{#1}}
 \gdef\@rev{}
 
+\def\copyyear#1{\gdef\@copyyear{#1}}
 \def\faculty#1{\gdef\@faculty{#1}}
 \def\department#1{\gdef\@department{#1}}
 \def\researchgroup#1{\gdef\@researchgroup{#1}}
@@ -425,6 +426,7 @@
 \subtitle{}
 \phddegree{... Computer Science ...}
 \date{Month Year}
+\copyyear{2013}
 \email{first.name@dept.kuleuven.be}
 \website{www.website.kuleuven.be}
 
@@ -1743,8 +1745,8 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \thispagestyle{empty}
 \mbox{}
 \vfill
-{\setlength{\parindent}{0ex}\copyright{}~KU Leuven -- \@faculty \\
-\@address, \@addresspc{} (Belgium)}
+{\scriptsize\sffamily{\setlength{\parindent}{0ex}\copyright{}~\@copyyear~KU Leuven -- \@faculty \\
+Uitgegeven in eigen beheer, \@authorf~\@authorl, \@address, \@addresspc{} (Belgium)}
 
 \bigskip
 \selectlanguage{dutch}
@@ -1761,10 +1763,10 @@ without written permission from the publisher.
 
 \medskip
 
-D/\@depot\\
-ISBN \@isbn
-
-\vspace{2cm}
+ISBN \@isbn\\
+D/\@depot
+}
+%\vspace{1cm}
 
 \cleardoublepage
 }
