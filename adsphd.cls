@@ -23,6 +23,7 @@
 
 % Different actions when using pdflatex
 \RequirePackage{ifpdf}
+\RequirePackage{iftex}
 
 \RequirePackage[usenames]{color}
 
@@ -388,6 +389,7 @@
 \def\rev#1{\gdef\@rev{#1}}
 \gdef\@rev{}
 
+\def\copyyear#1{\gdef\@copyyear{#1}}
 \def\faculty#1{\gdef\@faculty{#1}}
 \def\department#1{\gdef\@department{#1}}
 \def\researchgroup#1{\gdef\@researchgroup{#1}}
@@ -420,6 +422,7 @@
 \subtitle{}
 \phddegree{... Computer Science ...}
 \date{Month Year}
+\copyyear{2013}
 \email{first.name@dept.kuleuven.be}
 \website{www.website.kuleuven.be}
 
@@ -479,9 +482,13 @@
 
 \RequirePackage{framed} % voor shaded environment
 
+
+
 \ifadsphd@biblatex
     \typeout{adsphd.cls: Using biblatex}
-    \RequirePackage[utf8]{inputenc}
+    \ifPDFTeX
+      \RequirePackage[utf8]{inputenc}
+    \fi
     \RequirePackage{csquotes}
     \RequirePackage[hyperref=auto]{biblatex}
     %\RequirePackage[hyperref=auto,mincrossrefs=999]{biblatex}
@@ -520,7 +527,9 @@
   \RequirePackage[pdftex]{graphicx}
   \DeclareGraphicsExtensions{.pdf, .jpg, .tif, .png}
   % Use utf-8 encoding for foreign characters
-  \RequirePackage[utf8]{inputenc}
+    \ifPDFTeX
+      \RequirePackage[utf8]{inputenc}
+    \fi
 \else
   % Load the crop package
   \RequirePackage[center,dvips]{crop} % Option [a3] already passed
@@ -1732,13 +1741,13 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \thispagestyle{empty}
 \mbox{}
 \vfill
-{\setlength{\parindent}{0ex}\copyright{}~KU Leuven -- \@faculty \\
-\@address, \@addresspc{} (Belgium)}
+{\scriptsize\sffamily{\setlength{\parindent}{0ex}\copyright{}~\@copyyear~KU Leuven -- \@faculty \\
+Uitgegeven in eigen beheer, \@authorf~\@authorl, \@address, \@addresspc{} (Belgium)}
 
 \bigskip
 \selectlanguage{dutch}
 Alle rechten voorbehouden. Niets uit deze uitgave mag worden vermenigvuldigd en/of openbaar gemaakt
-worden door middel van druk, fotocopie, microfilm, elektronisch
+worden door middel van druk, fotokopie, microfilm, elektronisch
 of op welke andere wijze ook zonder voorafgaande schriftelijke
 toestemming van de uitgever.
 
@@ -1750,10 +1759,10 @@ without written permission from the publisher.
 
 \medskip
 
-D/\@depot\\
-ISBN \@isbn
-
-\vspace{2cm}
+ISBN \@isbn\\
+D/\@depot
+}
+%\vspace{1cm}
 
 \cleardoublepage
 }
