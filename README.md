@@ -369,7 +369,7 @@ Steven Op de beeck,
 Frederik Colle,
 Dominique Devriese,
 Marko van Dooren,
-Ruther Claes.
+Rutger Claes.
 
 
 ----
