@@ -138,11 +138,7 @@ Options for the adsphd class
                             in the tex by commands of the form
                             \instructionsabstract,
                             \instructionsintroduction, ...  
-    showtodo              : show todos created by \todo{} or
-                            \todoinline{}.
-    showtodopriv          : show todos created by \todopriv{} or
-                            \todoprivinline.
-   
+
     pagebackref           : show in the bibliography in which page
                             each article is cited.
     backref               : show in the bibliography in which section
@@ -291,16 +287,19 @@ Troubleshooting
 Todos
 -----
 
-Some misc commands that might be useful (try them out, but do not forget to add
-the `[showtodo,showtodopriv]` options or you won't see anything):
+We recommend the todonotes package for annotating your text with todo
+notes. Some commands that might be useful. Note that the adsphd
+automatically disables todo notes when making the final version.
 
     \todo{This is a todo}
-    \todoinline{This is a todo}
-    \todopriv{This is a todo}
-    \todoprivinline{\This is a todo}
+    \todo[inline]{This is a todo}
 
 **Remark**: to make the above commands interact as little as possible with your
 normal text, alway add a % directly after the closing bracket.
+
+If you want to disable todo notes explicitly, you can change the call
+`\usepackage{todonotes}` in defs.tex to
+`\usepackage[disable]{todonotes}`.
 
 
 Presentation template

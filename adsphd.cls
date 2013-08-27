@@ -24,6 +24,8 @@
 %%             names such that they are inaccessible from the outside,
 %%             and place DRAFT on front page to avoid mistakes with
 %%             final copy. (Wannes)
+%%  2013-08-27: Remove custom todo notes stuff in favour of todonotes 
+%%             package.  (Dominique)
 
 \NeedsTeXFormat{LaTeX2e}[2009/09/24]
 \ProvidesClass{adsphd}
@@ -62,8 +64,6 @@
 \DeclareBoolOption{cropmarks}
 \DeclareBoolOption{cam}
 \DeclareBoolOption{showinstructions}
-\DeclareBoolOption{showtodo}
-\DeclareBoolOption{showtodopriv}
 \DeclareBoolOption{showgit}
 \DeclareBoolOption{showlabels}
 \DeclareBoolOption{cover}
@@ -189,20 +189,19 @@
 \ifadsphd@final
   \typeout{Creating true page size pdf!}
   \adsphd@infofalse
-  \adsphd@showtodoprivfalse
-  \adsphd@showtodofalse
   \adsphd@showinstructionsfalse
   \adsphd@showlabelsfalse
   \adsphd@cropmarksfalse
   \adsphd@croppedpdftrue
   \adsphd@tothejuryfalse
+  
+  %disable TODOs
+  \PassOptionsToPackage{disable}{todonotes}
 \fi
 
 \ifadsphd@tothejury
   \typeout{Creating A4 output for the version to send to the jury!!!}
   \adsphd@infofalse
-  \adsphd@showtodoprivfalse
-  \adsphd@showtodofalse
   \adsphd@showinstructionsfalse
 \fi
 
@@ -913,123 +912,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Various utility commands
-
-\newcounter{todocounter}%
-
-\newcommand*\todosectionname{TODO}
-\newcommand*\printtodos{%
-  \ifadsphd@showtodo
-    \typeout{Printing todo list from \jobname.tds}
-    \cleardoublepage
-    \phantomsection
-    \addcontentsline{toc}{chapter}{\todosectionname}
-    \section*{% 
-      \todosectionname\@mkboth{\MakeUppercase\todosectionname}% 
-                              {\MakeUppercase\todosectionname}% 
-    }\nobreak
-    \begin{description}% 
-    % Let short summaries go to the file \jobname.wds : 
-    \IfFileExists{\jobname.tds}{}{\item No todos}% 
-    \@starttoc{tds}% Define a .tds file
-    %\ifnum\value{todocounter} < 1
-      %\item No todos (0)
-    %\fi
-    \item
-    \end{description}% 
-  \fi
-}
-
-\newcommand*\todo@temp{} 
-
-\@ifpackageloaded{hyperref}{% 
-  \newcommand\printtodoline[2]{% 
-    \item[{\hyperref[tds#2]{% 
-      \getrefbykeydefault{tds#2}{}{??}~% 
-      \getrefbykeydefault{tds#2}{name}{??} % 
-      (on page \getrefbykeydefault{tds#2}{page}{??})}}]\hfill\\#1% 
-  }% 
-}{% 
-  \newcommand\printtodoline[2]{% 
-    \item[\ref{tds#2}~\nameref{tds#2} (on page \pageref{tds#2})]#1% 
-  }% 
-} 
-
-
-\newcommand{\todoinline}[1]{%
-  \ifadsphd@showtodo
-    \definecolor{shadecolor}{rgb}{1,1,.65}
-    \begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}
-    %% for summary
-    \@bsphack
-    \stepcounter{todocounter}%
-    \label{tds\thetodocounter}%
-    \begingroup
-    \protected@edef\todo@temp{#1}%
-    \addtocontents{tds}{\protect\printtodoline{\todo@temp}{\thetodocounter}}%
-    \endgroup
-    \@esphack
-  \else
-  \fi
-}
-
-\setlength{\marginparwidth}{3.5cm}
-
-\newcommand\todomarginpar@[1]{%
-  \-\marginpar[\raggedright\footnotesize #1]%
-  {\raggedright\footnotesize #1}%
-}
-\newcommand{\todomargin}[1]{%
-  \ifadsphd@showtodo%
-    \definecolor{shadecolor}{rgb}{1,1,.65}%
-    \todomarginpar@{\begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}}%
-    %% for summary
-    \@bsphack
-    \stepcounter{todocounter}%
-    \label{tds\thetodocounter}%
-    \begingroup
-    \protected@edef\todo@temp{#1}%
-    \addtocontents{tds}{\protect\printtodoline{\todo@temp}{\thetodocounter}}%
-    \endgroup
-    \@esphack
-  \else
-  \fi
-}
-
-\let\todo\todomargin
-
-\newcommand{\todoinlinepriv}[1]{%
-  \ifadsphd@showtodopriv%
-    \definecolor{shadecolor}{rgb}{.7,1,.53}%
-    \begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}
-    %% for summary
-    \@bsphack
-    \stepcounter{todocounter}%
-    \label{tds\thetodocounter}%
-    \begingroup
-    \protected@edef\todo@temp{#1}%
-    \addtocontents{tds}{\protect\printtodoline{\todo@temp}{\thetodocounter}}%
-    \endgroup
-    \@esphack
-  \else
-  \fi
-}
-\newcommand{\todomarginpriv}[1]{%
-  \ifadsphd@showtodopriv%
-    \definecolor{shadecolor}{rgb}{.7,1,.53}%
-    \todomarginpar@{\begin{shaded}{\color{red}\textbf{TODO:} #1}\end{shaded}}%
-    %% for summary
-    \@bsphack
-    \stepcounter{todocounter}%
-    \label{tds\thetodocounter}%
-    \begingroup
-    \protected@edef\todo@temp{#1}%
-    \addtocontents{tds}{\protect\printtodoline{\todo@temp}{\thetodocounter}}%
-    \endgroup
-    \@esphack
-  \else
-  \fi
-}
-\let\todopriv\todomarginpriv
 
 % 'Roman' references (the reference in 'Proposition 1.1' should be roman, not italics)
 \def\@Rref#1{\hbox{\rm \ref{#1}}}
