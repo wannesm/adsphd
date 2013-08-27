@@ -51,13 +51,14 @@ The adsphd.cls can be used directly by latex:
     pdflatex thesis
     pdflatex thesis
 
-Any other Latex build tool like latexmk, rubber, TeXShop or TeXWorks 
+Any other Latex build tool like latexmk, rubber, SCons, TeXShop or TeXWorks 
 should also work out of the box.
 
 Using the simple Python compile script
 --------------------------------------
 
-There is a simple Python compilation script supplied.
+There is a simple and naive Python compilation script supplied which should
+work cross-platform.
 
     ./run.py             # Compile to pdf
     ./run.py clean       # Clean auxiliary files
@@ -86,9 +87,7 @@ Some convenient Makefile targets:
                                # chapters
     make damnthatsreallyclean  # brutally remove all possible temporary
                                # files
-   
-    make cover                 # create the full cover page. By default
-                               # this is cover.pdf.
+
 
 **In a chapter directory [`./chapters/chapterX`]**:
 
@@ -171,6 +170,9 @@ Options for the adsphd class
    
     cover                 : to be used when generating the coverpage.
                             Puts the result centered on a landscape A3.
+                            (Creating a cover is not needed, the printshop
+                            will create the cover themselves based on the details
+                            you give them.)
    
     subfig                : load package subfig (default)
     subfigure             : load older package subfigure
@@ -235,6 +237,13 @@ For typical usage, see the provided file `thesis.tex`.
 Generating the cover page
 -------------------------
 
+**Important**: most printing services will create their own cover page based
+on the details you send them (title, name, affiliation, ...) and do not supply
+you with all necessary parameters (e.g., thickness of the paper) because these
+differ from machine to machine. Therefore, the generated cover page is only
+indicative and probably not used by your printing server (or even correct).
+
+
 A full cover page (combining front cover, spine and back cover) can be
 generated automatically using the command 'make cover'. This creates a pdf
 `$(COVERPDF)`; by default this is `cover.pdf`.
@@ -264,11 +273,6 @@ The default bleed (both lbleed and rbleed) is 7mm. I suggest not changing this
 value unless you know what you are doing ;) The latter can be done by
 redefining `\defaultlbleed` and `\defaultrbleed` respectively.
 
-**Remark**: most printing services will create their own cover page and do not
-supply all necessary parameters (e.g., thickness of the paper) because these
-differ from machine to machine. Therefore, the generated cover page is only
-indicative and not guaranteed to be used or even correct for your printing
-service.
 
 
 Troubleshooting
@@ -354,14 +358,17 @@ Finetuning the backref package (when _not_ using biblatex). Add the
 Contributors
 ------------
 
-[Wannes Meert](http://people.cs.kuleuven.be/wannes.meert),
+Wannes Meert,
 Yves Frederix,
 Bart Vandewoestyne,
 Nele Famaey,
 Tias Guns,
 Jan Hendrik Becker,
 Steven Op de beeck,
-Frederik Colle.
+Frederik Colle,
+Dominique Devriese,
+Marko van Dooren,
+Rutger Claes.
 
 
 ----

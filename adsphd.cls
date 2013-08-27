@@ -14,19 +14,6 @@
 %% 
 %% This file is based on engphd.cls created by Bart Vandewoestyne.
 %% 
-%%  2010-07-27: Large cleanup and addition of some functionality.
-%%             Some of it shamelessly copied from or inspired by
-%%             refactoring work by Wannes Meert. 
-%%             This includes the [showgit] option, parts of the work
-%%             to enable compilation with pdflatex, the redefinition
-%%             of \chapter when used in abstract/preface/cv/publications.
-%%  2011-02-02: Added overview of TODOs, changed some internal command
-%%             names such that they are inaccessible from the outside,
-%%             and place DRAFT on front page to avoid mistakes with
-%%             final copy. (Wannes)
-%%  2013-08-27: Remove custom todo notes stuff in favour of todonotes 
-%%             package.  (Dominique)
-
 \NeedsTeXFormat{LaTeX2e}[2009/09/24]
 \ProvidesClass{adsphd}
     [2013/01/10 v1.2 Standard KU Leuven Arenberg Doctoral School PhD class]
@@ -35,6 +22,7 @@
 
 % Different actions when using pdflatex
 \RequirePackage{ifpdf}
+\RequirePackage{iftex}
 
 \RequirePackage[usenames]{color}
 
@@ -43,6 +31,12 @@
 \setlength{\adsphdpaperheight}{240mm}
 \newlength{\adsphdpaperwidth}
 \setlength{\adsphdpaperwidth}{160mm}
+
+% When boxes touch the border of the page a 5mm bleed  is required to
+% send it to the print service. (Default on both sides making the page
+% width 170mm.
+\newlength{\adsphdpaperbleed}
+\setlength{\adsphdpaperbleed}{5mm}
 
 % Colors
 \definecolor{blueXIIdark}{cmyk}{.81,.19,.12,.06}
@@ -391,6 +385,7 @@
 \def\rev#1{\gdef\@rev{#1}}
 \gdef\@rev{}
 
+\def\copyyear#1{\gdef\@copyyear{#1}}
 \def\faculty#1{\gdef\@faculty{#1}}
 \def\department#1{\gdef\@department{#1}}
 \def\researchgroup#1{\gdef\@researchgroup{#1}}
@@ -423,6 +418,7 @@
 \subtitle{}
 \phddegree{... Computer Science ...}
 \date{Month Year}
+\copyyear{2013}
 \email{first.name@dept.kuleuven.be}
 \website{www.website.kuleuven.be}
 
@@ -482,9 +478,13 @@
 
 \RequirePackage{framed} % voor shaded environment
 
+
+
 \ifadsphd@biblatex
     \typeout{adsphd.cls: Using biblatex}
-    \RequirePackage[utf8]{inputenc}
+    \ifPDFTeX
+      \RequirePackage[utf8]{inputenc}
+    \fi
     \RequirePackage{csquotes}
     \RequirePackage[hyperref=auto]{biblatex}
     %\RequirePackage[hyperref=auto,mincrossrefs=999]{biblatex}
@@ -523,7 +523,9 @@
   \RequirePackage[pdftex]{graphicx}
   \DeclareGraphicsExtensions{.pdf, .jpg, .tif, .png}
   % Use utf-8 encoding for foreign characters
-  \RequirePackage[utf8]{inputenc}
+    \ifPDFTeX
+      \RequirePackage[utf8]{inputenc}
+    \fi
 \else
   % Load the crop package
   \RequirePackage[center,dvips]{crop} % Option [a3] already passed
@@ -1618,8 +1620,8 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \thispagestyle{empty}
 \mbox{}
 \vfill
-{\setlength{\parindent}{0ex}\copyright{}~KU Leuven -- \@faculty \\
-\@address, \@addresspc{} (Belgium)}
+{\scriptsize\sffamily{\setlength{\parindent}{0ex}\copyright{}~\@copyyear~KU Leuven -- \@faculty \\
+Uitgegeven in eigen beheer, \@authorf~\@authorl, \@address, \@addresspc{} (Belgium)}
 
 \bigskip
 \selectlanguage{dutch}
@@ -1631,15 +1633,15 @@ toestemming van de uitgever.
 \medskip
 \selectlanguage{english}
 All rights reserved. No part of the publication may be reproduced
-in any form by print, photoprint, microfilm or any other means
+in any form by print, photoprint, microfilm, electronic or any other means
 without written permission from the publisher.
 
 \medskip
 
-D/\@depot\\
-ISBN \@isbn
-
-\vspace{2cm}
+ISBN \@isbn\\
+D/\@depot
+}
+%\vspace{1cm}
 
 \cleardoublepage
 }
