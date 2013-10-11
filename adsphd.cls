@@ -1734,8 +1734,8 @@ D/\@depot
   {\scriptsize {\sffamily\MakeUppercase\@researchgroup}}\\[-1mm]
   {\scriptsize {\sffamily\@address}}\\[-1mm]
   {\scriptsize {\sffamily{}\@addresspc}}\\[-1mm]
-  {\scriptsize {\sffamily{}\@email}}\\[-1mm]
-  {\scriptsize {\sffamily{}\@website}}
+  \ifdefempty{\@email}{}{{\scriptsize {\sffamily{}\@email}}\\[-1mm]}
+  \ifdefempty{\@website}{}{{\scriptsize {\sffamily{}\@website}}}
   %}
   \end{textblock*}
   %
