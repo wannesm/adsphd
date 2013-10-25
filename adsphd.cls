@@ -1,19 +1,19 @@
 %%
 %% Copyright (C) 2010 by Yves Frederix
 %% Copyright (C) 2011,2012,2013 by Wannes Meert
-%% 
+%%
 %% This file may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either
 %% version 1.2 of this license or (at your option) any later
 %% version.  The latest version of the license is in:
-%% 
+%%
 %%    http://www.latex-project.org/lppl.txt
-%% 
+%%
 %% and version 1.2 or later is part of all distributions of
 %% LaTeX version 1999/12/01 or later.
-%% 
+%%
 %% This file is based on engphd.cls created by Bart Vandewoestyne.
-%% 
+%%
 \NeedsTeXFormat{LaTeX2e}[2009/09/24]
 \ProvidesClass{adsphd}
     [2013/01/10 v1.2 Standard KU Leuven Arenberg Doctoral School PhD class]
@@ -188,7 +188,7 @@
   \adsphd@cropmarksfalse
   \adsphd@croppedpdftrue
   \adsphd@tothejuryfalse
-  
+
   %disable TODOs
   \PassOptionsToPackage{disable}{todonotes}
 \fi
@@ -200,7 +200,7 @@
 \fi
 
 \ifadsphd@draft
-  \typeout{adsphd.cls: [draft]}  
+  \typeout{adsphd.cls: [draft]}
   \PassOptionsToClass{draft}{report}
   \adsphd@showlabelstrue
   % Show a frame around each logical
@@ -284,11 +284,11 @@
 
 \ifadsphd@showgit
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{showgit}
-  \def\gittmpfile{/tmp/gitdescribe.txt} 
-  \immediate\write18{touch \gittmpfile} 
-  % Check whether shell escapes are enabled 
-  \IfFileExists{\gittmpfile}{\shellescapetrue}{\shellescapefalse} 
-  \ifshellescape 
+  \def\gittmpfile{/tmp/gitdescribe.txt}
+  \immediate\write18{touch \gittmpfile}
+  % Check whether shell escapes are enabled
+  \IfFileExists{\gittmpfile}{\shellescapetrue}{\shellescapefalse}
+  \ifshellescape
     \adsphd@showgittrue
     %\newcommand*\cropgitinfo{\gitdescribe}
     \immediate\write18{git describe --tags --long --always > \gittmpfile} %
@@ -549,17 +549,45 @@
 \setlength{\TPHorizModule}{1mm}
 \setlength{\TPVertModule}{1mm}
 
-% FONTS
-\usepackage{microtype}
-\usepackage[T1]{fontenc}
+% FONTSPEC (Steven Op de beeck, adapted from Koen Yskout)
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathrsfs} % scripted letters
+
 \usepackage{lmodern}  % to make pdf searchable
 \usepackage{textcomp} % nice greek alphabet
 \usepackage{pifont}   % Dingbats
 \usepackage{booktabs}
-\newcommand{\labfont}{\fontfamily{phv}\selectfont} % fonts used in labels
+
+\usepackage{fontspec}
+\ifxetex
+ \defaultfontfeatures{Mapping=tex-text}
+\else
+\ifluatex
+  \defaultfontfeatures{Ligatures=TeX}
+\fi
+\fi
+\newfontfeature{Microtype}{protrusion=default;expansion=default;}
+\setromanfont[Microtype,Numbers=OldStyle,Scale=1.02]{Linux Libertine O}
+%\setromanfont[Microtype,Scale=1.02]{minionpro} #non-free font
+%\linespread{1.06}
+\setsansfont[Microtype,Numbers=OldStyle]{Linux Biolinum O}
+\setmonofont[Microtype,Scale=0.96]{DejaVu Sans Mono}
+\directlua{fonts.protrusions.setups.default.factor=.5}
+
+\newcommand{\titlefont}{\sffamily}
+\newcommand{\mychapterfont}{\sffamily}
+\newcommand{\mychapternumfont}{\fontspec{Linux Biolinum O}}
+\newcommand{\labfont}{\fontspec{DejaVu Sans Mono}} % fonts used in labels
+
 \usepackage{sectsty}
-\allsectionsfont{\sffamily}
-\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+\allsectionsfont{\fontspec{Linux Biolinum O}}
+
+% necessary for the front cover code
+\let\origsfdefault\sfdefault
+\let\helvetsfdefault\sfdefault
+\renewcommand{\sfdefault}{\origsfdefault}
 
 % TABLE OF CONTENTS
 \usepackage[subfigure,titles]{tocloft}
@@ -595,19 +623,34 @@
     \vspace*{\fill}\clearpage\fi%
 }
 
-% HEADERS
+% HEADERS (Steven Op de beeck, adapted from Koen Yskout)
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 % Make sure headers are uppercase
-\renewcommand{\chaptermark}[1]{\markboth{\uppercase{#1}}{\uppercase{#1}}}
-\renewcommand{\sectionmark}[1]{\markright{\uppercase{#1}}}
+\renewcommand{\chaptermark}[1]{
+    \markboth
+    {\uppercase{#1}}
+    {\uppercase{#1}}
+}
+\let\chaptermarksimple\chaptermark
+
+\renewcommand{\chaptermark}[1]{
+\markboth
+{{\scriptsize\uppercase{\@chapapp}} \thechapter{} \textbullet\ \uppercase{#1}}
+{{\scriptsize\uppercase{\@chapapp}} \thechapter{} \textbullet\ \uppercase{#1}}
+}
+\let\chaptermarkfull\chaptermark
+
+\renewcommand{\sectionmark}[1]{
+\markright{\thesection{} \textbullet\ \uppercase{#1}}
+}
 \fancyhf{}
-\fancyhead[RO]{\scriptsize\sf\rightmark\ \hrulefill\ \thepage}
-\fancyhead[RE]{\scriptsize\sf\thepage\ \hrulefill\ \leftmark}
+\fancyhead[RO]{\color{darkgray}{\footnotesize\sf\rightmark}\ \hfill\ {\small\sffamily|\ \thepage}}
+\fancyhead[RE]{\color{darkgray}{\small\sffamily\thepage\ |}\ \hfill\ {\footnotesize\sf\leftmark}}
 \renewcommand{\headrulewidth}{0pt}
 \fancypagestyle{plain}{
 \fancyhf{}
-\fancyfoot[C]{\scriptsize\sf\thepage}
+\fancyfoot[C]{\small\sf\thepage}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 }
@@ -700,14 +743,8 @@
 % Rotate textboxes etc.
 \RequirePackage{rotating}
 
-% Helvetica font for the front cover
-\let\origsfdefault\sfdefault
-\RequirePackage[scaled]{helvet}
-\let\helvetsfdefault\sfdefault
-\renewcommand{\sfdefault}{\origsfdefault}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% The document consists of 
+% The document consists of
 %  \frontmatter -> Preface, Summary, etc
 %  \mainmatter  -> Main text
 %  \appendix    -> Appendix
@@ -719,13 +756,43 @@
 % and Pages]).
 % In the course of the booklet, the numbering should be changed
 % (resetted) only twice(!), i.e., using \frontmatter and \mainmatter.
-\pagenumbering{alph} 
+\pagenumbering{alph}
 
 \newcommand{\frontmatter}{\cleardoublepage\pagenumbering{roman}}
 
 \newcommand{\mainmatter}{\cleardoublepage\pagenumbering{arabic}}
 
 \newcommand{\backmatter}{\cleardoublepage}
+
+% Different Chapter Head (Steven Op de beeck)
+\newlength{\midchapskip}
+\setlength{\midchapskip}{\paperwidth}
+\addtolength{\midchapskip}{-\textwidth}
+%\addtolength{\midchapskip}{\marginparsep}
+%\addtolength{\midchapskip}{-\marginparwidth}
+\addtolength{\midchapskip}{-80pt}
+
+\def\@makechapterhead#1{%
+  \vspace*{80\p@}%
+  {\normalfont\LARGE\flushright
+  %\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+        \hspace{-1.2em}\normalfont\LARGE \sffamily\MakeUppercase{\@chapapp}\space
+        \makebox[0pt][l]{\hspace{.2mm}%
+        \resizebox{!}{12mm}{\normalfont\sffamily\Huge \thechapter}%
+         \hspace{.3em}%
+          \rule{\midchapskip}{12mm}%
+        }%
+        \par\nobreak
+        \vskip 20\p@
+    \fi
+    \interlinepenalty\@M
+    \sffamily\Huge \bfseries #1\par\nobreak
+    \vskip 40\p@
+  }}
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Commands for easy chapter inclusion
@@ -803,27 +870,37 @@
 }
 
 \newcommand{\includepreface}[1]{%
+  \let\chaptermark\chaptermarksimple
   \IncludeUnnumberedChapterIfExists{#1}{\prefname}{\instructionspreface}%
       {\phantomsection}
+  \let\chaptermark\chaptermarkfull
 }
 
 \newcommand{\includeprefacenl}[1]{%
+  \let\chaptermark\chaptermarksimple
   \selectlanguage{dutch}
   \IncludeUnnumberedChapterIfExists{#1}{\prefnlname}{\instructionspreface}
         {\phantomsection}
   \selectlanguage{english}
+  \let\chaptermark\chaptermarkfull
 }
 
 \newcommand{\includeabstract}[1]{%
+  \let\chaptermark\chaptermarksimple
+
   \IncludeUnnumberedChapterIfExists{#1}{\abstractname}{\instructionsabstract}
         {\phantomsection}
+
+  \let\chaptermark\chaptermarkfull
 }
 
 \newcommand{\includeabstractnl}[1]{%
+  \let\chaptermark\chaptermarksimple
   \selectlanguage{dutch}
   \IncludeUnnumberedChapterIfExists{#1}{\abstractnlname}{\instructionsabstract}
         {\phantomsection}
   \selectlanguage{english}
+  \let\chaptermark\chaptermarkfull
 }
 
 \newcommand{\includeabbreviations}[1]{%
@@ -941,8 +1018,8 @@
 \newenvironment{ftw_instructions}{
   \definecolor{shadecolor}{gray}{0.85}
   \begin{shaded}
-  \textbf{Instructies van de faculteit:} 
-  
+  \textbf{Instructies van de faculteit:}
+
   }%
   {
     \end{shaded}
@@ -1179,7 +1256,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     \typeout{adsphd.cls: Using custom cover page (\@customcoverpage)}
     \input{\@customcoverpage}
   }{
-    \typeout{adsphd.cls: Cannot find custom cover page 
+    \typeout{adsphd.cls: Cannot find custom cover page
       (\@customcoverpage). Restoring default cover page.}
     \let\makefrontcovergeneral\orig@makefrontcovergeneral
     \let\makebackcovergeneral\orig@makebackcovergeneral
@@ -1284,7 +1361,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   }
   \end{textblock*}
   %
-  % Create blue background 
+  % Create blue background
   \begin{textblock*}{60mm+\lbleed}(0mm-\lbleed+#1, 20mm)
   \textblockcolour{}
   \includegraphics[width=60mm+\lbleed,height=20mm]{image/blue}
@@ -1342,20 +1419,20 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   % Create header
   \frontcoverheaderXII{#1}
   %
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %
   % Title, subtitle, authorname, text and date can be moved around.
-  % Change the textblock* commands below. 
+  % Change the textblock* commands below.
   %
   % Syntax of textblock environment:
-  % 
+  %
   %   \begin{textblock*}{width}(xpos,ypos)
   %     ...
   %   \end{textblock*}
-  % 
+  %
   % !! Make sure not to remove the '+#1' part!!!
   %
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %
   % Place the DRAFT notifier on the front page to avoid printing a wrong
   % version
@@ -1377,7 +1454,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \textblockcolour{}
   \vspace{-\parskip}
   \raggedright
-  \coverfontsize{30}{34}\selectfont\sffamily{\color{blueXIIdark}\@title}\\
+  \coverfontsize{24}{26}\selectfont\sffamily{{\color{blueXIIdark}\@title}}\\
   \coverfontsize{20}{25}\selectfont\sffamily{\@subtitle}
   \end{textblock*}
   %
@@ -1457,7 +1534,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \rule{0pt}{2.1mm}
   \end{textblock*}
   %
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %
   % Add footer
   \frontcoverfooterXII{#2}
@@ -1471,20 +1548,20 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   % Create header
   \frontcoverheader{#1}
   %
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %
   % Title, subtitle, authorname, text and date can be moved around.
-  % Change the textblock* commands below. 
+  % Change the textblock* commands below.
   %
   % Syntax of textblock environment:
-  % 
+  %
   %   \begin{textblock*}{width}(xpos,ypos)
   %     ...
   %   \end{textblock*}
-  % 
+  %
   % !! Make sure not to remove the '+#1' part!!!
   %
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %
   % Place the DRAFT notifier on the front page to avoid printing a wrong
   % version
@@ -1539,7 +1616,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \begin{center} {\small\sffamily\@date }\end{center}
   \end{textblock*}
   %
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %
   % Add footer
   \frontcoverfooter{#2}
@@ -1557,11 +1634,11 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \begin{textblock}{120}(17.5,70)
 \textblockcolour{}
 \vspace{-\parskip}
-\Large\sffamily\textbf{\@title}
+\huge\sffamily{\@title}
 \end{textblock}
 %
 %\begin{textblock}{120}(0,47.5)
-\begin{textblock}{120}(17.5,85.0)
+\begin{textblock}{120}(17.5,90.0)
 \textblockcolour{}
 \vspace{-\parskip}
 \large\sffamily{\@subtitle}
@@ -1571,11 +1648,12 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \begin{textblock}{120}(17.5,105)
 \textblockcolour{}
 \vspace{-\parskip}
-\large\sffamily\textbf{\@authorf\ \MakeUppercase\@authorl}
+\sffamily\large{\@authorf\ \MakeUppercase\@authorl}
 \end{textblock}
 %
 %\begin{textblock}{120}(0,125)
 \begin{textblock}{160}(17.5,157.5)
+\sffamily
 \textblockcolour{}
 \vspace{-\parskip}
 \begin{minipage}[t]{7.32cm}
@@ -1607,8 +1685,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 %  \begin{tabular}[t]{l}
     Dissertation presented in partial\\
     \fulfillment\ of the requirements for\\
-    the degree of Doctor \\
-    in \@phddegree
+    the degree of Doctor in \@phddegree
 %  \end{tabular}
 \end{minipage}
 
@@ -1628,7 +1705,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \begin{textblock}{160}(0,210.0)
 \textblockcolour{}
 \vspace{-\parskip}
-\begin{center} \@date \end{center}
+\begin{center} \sffamily\@date \end{center}
 \end{textblock}
 % NEW PAGE
 %\pagenumbering{roman}
@@ -1636,7 +1713,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \thispagestyle{empty}
 \mbox{}
 \vfill
-{\scriptsize\sffamily{\setlength{\parindent}{0ex}\copyright{}~\@copyyear~KU Leuven -- \@faculty \\
+{\small{\setlength{\parindent}{0ex}\copyright{}~\@copyyear~KU Leuven --- \@faculty \\
 Uitgegeven in eigen beheer, \@authorf~\@authorl, \@address, \@addresspc{} (Belgium)}
 
 \bigskip
@@ -1846,7 +1923,7 @@ D/\@depot
   %
   % Get adsphdspinewidth as #3
   \setlength{\adsphdspinewidth}{#3}
-  % 
+  %
   % Get spinetitlewidth as #4
   \ifthenelse{\equal{#4}{}}
   {}{
@@ -1888,7 +1965,7 @@ D/\@depot
     }
   }
   %
-  \begin{textblock*}{\adsphdspinewidth}(0mm+#1,49mm-\authorlenpenalty) % 9mm whitespace 
+  \begin{textblock*}{\adsphdspinewidth}(0mm+#1,49mm-\authorlenpenalty) % 9mm whitespace
                                         % between blue and first letter of the author name
                                         % (possibly less because the author name might be
                                         % reallyreally long)

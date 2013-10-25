@@ -16,11 +16,12 @@ USETEXPACKAGEGLOSSARY = 1     # Set this to 1 if you are using the glossary
 							  # package to tell 'make' to take this into
 							  # account.
 
-TEX = latex -shell-escape
-PDFTEX = pdflatex -shell-escape
-EDITOR = gvim
+TEX = /usr/texbin/latex -shell-escape
+PDFTEX = /usr/texbin/lualatex -shell-escape
+BIBTEX = /usr/texbin/bibtex
+EDITOR = vim
 
-#USEPDFTEX=1
+USEPDFTEX=1
 
 USEBIBLATEX = 0
 BIBLATEXBACKEND = biber # alternative: bibtex
