@@ -461,6 +461,7 @@
 \renewcommand{\bibname}{Bibliography}
 \newcommand{\lofname}{List of Figures}
 \newcommand{\lotname}{List of Tables}
+\newcommand{\lolname}{List of Listings}
 \newcommand{\nomname}{Nomenclature}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -468,12 +469,15 @@
 
 %\RequirePackage{showlabels}
 
+\RequirePackage{listings}
+\renewcommand{\lstlistlistingname}{\lolname}
+
 \ifadsphd@subfig
     \RequirePackage{subfig}
 \else
     \RequirePackage{subfigure}
     \PassOptionsToPackage{subfigure}{tocloft}
-    \typeout{^^J(adsphd.cls) Info: You should consider using the new package 'subfig' which is the replacement for the older package 'subfigure'.^^J}
+    \typeout{^^J(adsphd.cls) Info: You should consider using the new package `subfig' which is the replacement for the older package `subfigure'.^^J}
 \fi
 
 \RequirePackage{framed} % voor shaded environment
@@ -770,7 +774,7 @@
 \newcommand{\chaptitlemoveup}[1]{\setlength{\@chaptitlemoveup}{#1}}
 
 \newcommand{\IncludeUnnumberedChapterIfExists}[4]{%
-  \typeout{adsphd.cls: chapter '#1'}
+  \typeout{adsphd.cls: chapter `#1'}
   \cleardoublepage
   #4
   \IfFileExists{\chaptersdir/#1/#1.tex}{
@@ -785,7 +789,7 @@
   }{
     \chapter*{#2}
     {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist. Make
-    sure its starts with "\textbackslash{}chapter\{#2\}". To not
+    sure its starts with ``\textbackslash{}chapter\{#2\}''. To not
     include this chapter in the table of contents, use the starred
     version of the \textbackslash{}chapter command\ldots }}
     #3
@@ -874,6 +878,18 @@
   \tableofcontentsorig
 }
 
+\let\lstlistoflistingsorig\lstlistoflistings
+\renewcommand{\lstlistoflistings}{%
+  \cleardoublepage
+  \phantomsection
+  %\addcontentsline{toc}{chapter}{\lolname}
+
+  \let\tableofcontentsnew\tableofcontents
+  \let\tableofcontents\tableofcontentsorig
+  \lstlistoflistingsorig
+  \let\tableofcontents\tableofcontentsnew
+}
+
 \let\listoffiguresorig\listoffigures
 \renewcommand{\listoffigures}{%
   \cleardoublepage
@@ -891,7 +907,7 @@
 }
 
 \newcommand{\includeappendix}[1]{%
-  \typeout{adsphd.cls: chapter '#1'}
+  \typeout{adsphd.cls: chapter `#1'}
   \cleardoublepage
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \include{\chaptersdir/#1/#1}
