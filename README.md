@@ -62,16 +62,11 @@ Using the simple Python compile script
 There is a simple and naive Python compilation script supplied which should
 work cross-platform.
 
-    ./run.py             # Compile to pdf
-    ./run.py clean       # Clean auxiliary files
-    ./run.py cleanall    # Clean everything
-    ./run.py newchapter  # Set up files for a new chapter
-    ./run.py --help      # Help and more options
-
-If you want to specify the Python version to be used explicitely you can use
-the command as follows:
-
-    python3 run.py
+    python3 run.py             # Compile to pdf
+    python3 run.py clean       # Clean auxiliary files
+    python3 run.py cleanall    # Clean everything
+    python3 run.py newchapter  # Set up files for a new chapter
+    python3 run.py --help      # Help and more options
 
 Some settings are available at the top of the `run.py` file.
 
