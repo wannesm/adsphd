@@ -54,7 +54,7 @@ The adsphd.cls can be used directly by latex:
     pdflatex thesis
 
 Any other Latex build tool like latexmk, rubber, SCons, TeXShop or TeXWorks 
-should also work out of the box.
+should also work out of the box (`makeindex` might not run by default).
 
 Using the simple Python compile script
 --------------------------------------
