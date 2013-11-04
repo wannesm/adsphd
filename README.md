@@ -48,6 +48,8 @@ The adsphd.cls can be used directly by latex:
     pdflatex thesis
     bibtex thesis
     # biber thesis
+    makeindex thesis.glo -s thesis.ist -t thesis.glg -o thesis.gls
+    makeindex thesis.nlo -s nomencl.ist -o thesis.nls
     pdflatex thesis
     pdflatex thesis
 
