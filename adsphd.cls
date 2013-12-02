@@ -24,7 +24,8 @@
 \RequirePackage{ifpdf}
 \RequirePackage{iftex}
 
-\RequirePackage[usenames]{color}
+%\RequirePackage[usenames]{color}
+\RequirePackage[usenames,dvipsnames,svgnames,table]{xcolor}
 
 % Fix papersize
 \newlength{\adsphdpaperheight}
@@ -396,7 +397,9 @@
 \def\phddegree#1{\gdef\@phddegree{#1}} % It will say "Doctor of \phddegree"
 
 % Bibtex style
-\def\bibstyle#1{\gdef\@bibstyle{#1}}
+\def\bibstyle#1{%
+  \message{adsph.cls: Setting new bibliography style: #1}
+  \gdef\@bibstyle{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Default values and other settings
@@ -941,6 +944,7 @@
       \cleardoublepage
       \phantomsection
       \addcontentsline{toc}{chapter}{\bibname}
+      \message{adsphd.cls: includebibliography with style: \@bibstyle}
       \bibliographystyle{\@bibstyle}
       \orig@bibliography{\@bibliography}
     }
