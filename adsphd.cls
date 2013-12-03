@@ -1493,7 +1493,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \end{minipage}
   \end{textblock*}
   %
-  % Place the supervisory committee text
+  % Place the Examination committee text
   \ifadsphd@covershowcommittee
   \begin{textblock*}{67.5mm}(17.5mm+#1,185mm)
   \textblockcolour{}
@@ -1501,7 +1501,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \begin{minipage}[t]{67mm}
     \coverfontsize{12}{15}\selectfont\sffamily
     %\begin{tabular}[t]{p{6.9cm}}
-    Supervisory Committee:\\
+    Examination committee:\\
     \@president, chair
     \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
     \\\name, supervisor
@@ -1658,7 +1658,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \vspace{-\parskip}
 \begin{minipage}[t]{7.32cm}
 %  \begin{tabular}[t]{p{6.9cm}}
-    Supervisory Committee:\\
+    Examination committee:\\
     \@president, chair
     \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
     \\\name, supervisor
