@@ -167,13 +167,6 @@ Options for the adsphd class
                             place the result on an A4 page
     cam                   : instead of a frame, use cropmarks
     cropmarks             : identical to cam
-   
-    cover                 : to be used when generating the coverpage.
-                            Puts the result centered on a landscape A3.
-                            (Creating a cover is not needed, the printshop
-                            will create the cover themselves based on the details
-                            you give them.)
-   
     subfig                : load package subfig (default)
     subfigure             : load older package subfigure
    
@@ -237,42 +230,10 @@ For typical usage, see the provided file `thesis.tex`.
 Generating the cover page
 -------------------------
 
-**Important**: most printing services will create their own cover page based
-on the details you send them (title, name, affiliation, ...) and do not supply
-you with all necessary parameters (e.g., thickness of the paper) because these
-differ from machine to machine. Therefore, the generated cover page is only
-indicative and probably not used by your printing server (or even correct).
-
-
-A full cover page (combining front cover, spine and back cover) can be
-generated automatically using the command 'make cover'. This creates a pdf
-`$(COVERPDF)`; by default this is `cover.pdf`.
-
-The width of the spine is set by redefining `\adsphdspinewidth` (9mm by default).
-
-It can be seen in the provided `thesis.tex` that all information necessary to
-generate a cover page is contained between two markers
-
-    %%% COVER: Settings %%%
-    ...
-    %%% COVER: End settings %%%
-
-DO NOT REMOVE THESE!! They are used by the Makefile!!
-
-The default front and/or back cover page can be overwritten: 
-
- - create a file `mycoverpage.tex`
- - redefine the commands `\makefrontcovergeneral` and `\makebackcovergeneral`. For
-   an example and more information, see the provided file `mycoverpage.tex`.
-
-The cover page in the generated pdf has the following structure:
-
-    <--rbleed--> <--backcoverpage--> <--lbleed--> <--spine width--> <--lbleed--> <--frontcoverpage--> <--rbleed-->
-
-The default bleed (both lbleed and rbleed) is 7mm. I suggest not changing this
-value unless you know what you are doing ;) The latter can be done by
-redefining `\defaultlbleed` and `\defaultrbleed` respectively.
-
+Most printing services will create their own cover page based
+on the details you send them (title, name, affiliation, ...). The template
+generates only a front and back cover for the version you want to distribute online,
+not for the version you send to the printing service.
 
 
 Troubleshooting
