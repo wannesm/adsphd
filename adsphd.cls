@@ -973,7 +973,7 @@ doctoraatsbeurs heeft toegekend wordt bedankt (bv.\ FWO, IWT, \ldots).
 \newcommand{\instructionsabstract}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-In een beknopte tekst van 10 \`a 15 lijnen worden de belangrijkste
+In een beknopte tekst van maximum 2 pagina's worden de belangrijkste
 doelstellingen en besluiten geformuleerd, zowel in het Nederlands als in het
 Engels.  Zulke samenvattingen kunnen worden gebruikt in wetenschappelijke
 verslagen van het departement of de faculteit.  Het Engels moet vlekkeloos zijn.
