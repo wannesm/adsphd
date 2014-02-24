@@ -1,6 +1,9 @@
 ADS PhD LaTeX template
 ======================
 
+*This template is the result of a group effort. Please contribute updates and
+improvements.*
+
 Information
 -----------
 
