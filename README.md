@@ -365,7 +365,8 @@ Steven Op de beeck,
 Frederik Colle,
 Dominique Devriese,
 Marko van Dooren,
-Rutger Claes.
+Rutger Claes,
+Dirk Van Hertem.
 
 
 ----
