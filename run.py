@@ -240,6 +240,30 @@ def targets():
 			doc = ''
 		print(s.format(target,doc))
 
+## AUXILIARY ##
+
+def testSettings():
+	"""Verify whether we are using the expected settings."""
+	testBiblatex()
+
+
+def testBiblatex():
+	global usebiblatex
+	isusingbiblatex = False
+	pattern = re.compile(r'^\\documentclass.*biblatex*.*$')
+	with open(mainfile, 'r') as f:
+		for line in f:
+			if pattern.search(line) != None:
+				isusingbiblatex = True
+				if not usebiblatex:
+					print("Warning: It appears you are using biblatex while this setting in run.py is set to false.\n---> Continuing with biblatex set to true.\n")
+					usebiblatex = True
+					return
+	if not isusingbiblatex and usebiblatex:
+		print("Warning: It appears you are not using biblatex while this setting in run.py is set to true.\n---> Continuing with biblatex set to false.\n")
+		usebiblatex = False
+
+
 ## APPLICATION ##
 
 class App:
@@ -294,6 +318,7 @@ def main(argv=None):
 				raise Usage(help_message)
 		
 		initapplications()
+		testSettings()
 		
 		if len(args) == 0:
 			print("No targets given, using default target: compile")
