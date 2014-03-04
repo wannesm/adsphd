@@ -1,8 +1,8 @@
-%\documentclass[croppedpdf,pagebackref,showinstructions]{adsphd}
+\documentclass[pagebackref,showinstructions,showlabels,coverfontpercent=100]{adsphd}
 %\documentclass[pagebackref,showinstructions,showlabels,biblatex,biber,biblatexstyle=authoryear]{adsphd}
+%\documentclass[croppedpdf,pagebackref,showinstructions]{adsphd}
 %\documentclass[online]{adsphd}
 %\documentclass[print]{adsphd}
-\documentclass[pagebackref,showinstructions,showlabels,coverfontpercent=100]{adsphd}
 
 % To use biblatex:
 %\documentclass[biblatex,biblatexstyle=authoryear,showinstructions,showlabels]{adsphd}
@@ -46,7 +46,7 @@
 \email{first.name@dept.kuleuven.be} % Leave empty to hide
 \website{http://www.dept.cs.kuleuven.be} % Leave empty to hide
 
-\date{January 2013}
+\date{January 2014}
 %\udc{XXX.XX}            % UDC is no longer necessary.
 \depot{XXXX/XXXX/XX}     % Leave out the initial D/ (it is added
                          % automatically)
@@ -91,6 +91,9 @@
 
 % Specify the .bib file
 \bibliography{allpapers}
+% For biblatex include the extension
+%\bibliography{allpapers.bib}
+%\addbibresource{allpapers.bib}
 
 % Bibtex style
 %\bibstyle{abbrv}

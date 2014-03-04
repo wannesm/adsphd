@@ -116,6 +116,15 @@
 \ProcessKeyvalOptions{adsphd}
 
 \AtEndOfClass{%
+
+\ifadsphd@biblatex
+  \renewcommand{\bibliography}[1]{
+    \message{adsphd.cls: Setting biblatex bibliography to: #1}
+    \gdef\@bibliography{#1}
+  }
+\fi
+
+
 \AtBeginDocument{%
   % disable these options such that they cannot be used in the
   % \adsphdsetup command
@@ -148,6 +157,16 @@
     pdfsubject={\@title},%
     pdfkeywords={phd, thesis, dissertation, doctoraat, kuleuven, \@authorf~\@authorl\gitaskeyword}%
   }
+
+  \ifadsphd@biblatex
+    \ifcsname{@bibliography}\endcsname
+      \message{adsphd.cls: Loading biblatex bibliography: \@bibliography}
+      \expandafter\addbibresource{\@bibliography}
+    \else
+      \message{adsphd.cls: No bibliography defined (use the
+               bibliography or addbibresource macro)}
+    \fi
+  \fi
 }}
 
 \RequirePackage{etoolbox}
@@ -250,7 +269,10 @@
           \PassOptionsToPackage{pageref}{backref}
         \fi
         \let\orig@bibliography\bibliography
-        \renewcommand{\bibliography}[1]{\gdef\@bibliography{#1}}
+        \renewcommand{\bibliography}[1]{
+          \message{adsphd.cls: Setting bibtex bibliography to: #1}
+          \gdef\@bibliography{#1}
+        }
     \fi
 \fi
 
