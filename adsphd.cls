@@ -443,7 +443,7 @@
 \subtitle{}
 \phddegree{... Computer Science ...}
 \date{Month Year}
-\copyyear{2013}
+\copyyear{2014}
 \email{first.name@dept.kuleuven.be}
 \website{www.website.kuleuven.be}
 
