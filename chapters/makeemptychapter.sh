@@ -47,7 +47,4 @@ else
 fi
 
 echo ""
-echo "Remarks: "
-echo " 1. put chapter specific preamble in $CHAPTERNAME/defs.tex."
-echo ""
 echo "Ok, all done."
