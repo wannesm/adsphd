@@ -4,6 +4,7 @@ ADS PhD LaTeX template
 *This template is the result of a group effort. Please contribute updates and
 improvements.*
 
+
 Information
 -----------
 
@@ -17,9 +18,6 @@ Latest version of the ADS PhD template is available at
 Questions and issues can be submitted to the 
 [ADS PhD issues component](https://github.com/wannesm/adsphd/issues) 
 at Github.
-
-For a Beamer presentation template take a look at the [KU Leuven presentation
-template](http://www.kuleuven.be/communicatie/publicaties/powerpointsjablonen).
 
 
 Directory structure
@@ -42,6 +40,7 @@ The directory structure looks like this
                     NOT include the relative path, i.e.,
                     `\includegraphics{myfigure}` and not
                     `{image/myfigure}`!
+
 
 Using Latex directly
 --------------------
@@ -120,10 +119,10 @@ Options for the adsphd class
                             [frame] option), also show git version.
                             You need to run latex with '-shell-escape'
                             for this to work! (default in Makefile)
-   
+
     british               : Use British spelling in cover (i.e.
                             fulfilment instead of fulfillment)
-   
+
     biblatex              : Use biblatex instead of bibtex.
     biblatexstyle=<name>  : Change the biblatex style.
     biber                 : Use the biber backend for biblatex.
@@ -131,7 +130,7 @@ Options for the adsphd class
                             the user can load and customize the
                             bibtex environments he wants. (For
                             advanced use)
-   
+
     showinstructions      : show instructions provided by the
                             faculty. These can be included anywhere
                             in the tex by commands of the form
@@ -142,7 +141,7 @@ Options for the adsphd class
                             each article is cited.
     backref               : show in the bibliography in which section
                             each article is cited.
-   
+
     info                  : put logical page on physical A4 paper and
                             show some info (compilation time, ...)
     draft                 : show info and compile the document as a
@@ -169,7 +168,7 @@ Options for the adsphd class
     cropmarks             : identical to cam
     subfig                : load package subfig (default)
     subfigure             : load older package subfigure
-   
+
     covershowcommittee    : show the committee also on the front
                             page.
     coverfontpercent      : change the cover title font size. Should
@@ -253,11 +252,11 @@ Todos
 -----
 
 We recommend the todonotes package for annotating your text with todo
-notes. Some commands that might be useful. Note that the adsphd
-automatically disables todo notes when making the final version.
+notes. Note that the adsphd automatically disables todo notes when making
+the final version.
 
-    \todo{This is a todo}
-    \todo[inline]{This is a todo}
+    \todo{This is a todo}%
+    \todo[inline]{This is a todo}%
 
 **Remark**: to make the above commands interact as little as possible with your
 normal text, alway add a % directly after the closing bracket.
@@ -273,47 +272,6 @@ Presentation template
 A Beamer template has been created by 
 [Roland Pastorino](www.rolandpastorino.com) and is available on the [KU Leuven 
 template page](http://www.kuleuven.be/communicatie/publicaties/powerpointsjablonen).
-
-
-Tips and tricks
----------------
-
-Finetuning the backref package (when _not_ using biblatex). Add the
-   following to your preamble:
-
-    % See [http://n2.nabble.com/backref-td478438.html]:
-    % simple backref command redefinition to avoid double entries
-    \makeatletter
-    \ifadsphd@biblatex\else
-      \ifadsphd@pagebackref%
-        \renewcommand*{\backref}[1]{}
-        % redefinition of the actually used \backrefalt 
-        \renewcommand*{\backrefalt}[4]{% 
-        \ifcase #1 % 
-           % case: not cited 
-        \or 
-           % case: cited on exactly one page 
-           Cited on page~#2.
-        \else 
-           % case: cited on multiple pages 
-           Cited on pages~#2.
-        \fi}
-      \else
-        \renewcommand*{\backref}[1]{}
-        % redefinition of the actually used \backrefalt 
-        \renewcommand*{\backrefalt}[4]{% 
-        \ifcase #1 % 
-           % case: not cited 
-        \or 
-           % case: cited on exactly one page 
-           Cited in Section~#2.
-        \else 
-           % case: cited on multiple pages 
-           Cited in Sections~#2.
-        \fi}
-      \fi
-    \fi
-    \makeatother
 
 
 Contributors
