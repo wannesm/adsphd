@@ -270,7 +270,7 @@ Presentation template
 ---------------------
 
 A Beamer template has been created by 
-[Roland Pastorino](www.rolandpastorino.com) and is available on the [KU Leuven 
+[Roland Pastorino](http://www.rolandpastorino.com) and is available on the [KU Leuven 
 template page](http://www.kuleuven.be/communicatie/publicaties/powerpointsjablonen).
 
 
