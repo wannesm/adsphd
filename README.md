@@ -90,6 +90,10 @@ Some convenient Makefile targets:
 
 **In a chapter directory [`./chapters/chapterX`]**:
 
+For this to work you need to generate the chapter directory using the
+`makeemptychapter.sh` script which also generates a custom Makefile for
+the new chapter.
+
     make                       # Creates chapterX.pdf containing the
                                # TOC, the contents of only chapterX and
                                # the bibliography.
@@ -102,13 +106,16 @@ Some convenient Makefile targets:
                                  effectively used in ./chapters/chapterX/chapterX.tex
 
 
-**Other convenient scripts**:
+**Creating a chapter directory**:
   
     ./chapters/makeemptychapter.sh # Create the directory structure for a new
                                    # chapter.
 
+**Settings**:
+
 Settings for the Makefile script can be found in the `makefile.settings`
 file.
+
 
 Options for the adsphd class
 ----------------------------
