@@ -1,49 +1,22 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 #
-# Copyright (C), 2012 by Wannes Meert, KU Leuven
+# Copyright (C), 2012-2014 by Wannes Meert, KU Leuven
 #
-# Very simple compile script for the ADSPHD class. For a more extended solution
-# use the included Makefile or the latexmk or rubber applications.
+# Very naive compilation script for the ADSPHD class.
 #
 # No file dependency checks are performed (use TeXnicCenter, Texmaker, latexmk,
-# rubber, or make if you want such a feature.
+# rubber, SCons, or make if you want such a feature).
 #
 
-import getopt
 import glob
 import os
 import re
 import shlex
 import sys
+import argparse
 
 from subprocess import *
-
-help_message = '''
-Usage:
-	./run.py [options] target
-
-Options:
-	-h --help      This help
-	-v             Verbose output
-	-T --targets   Print available targets
-
-Example:
-	./run.py compile
-
-Summary:
-	Simple compilation script for the ADSPhD class. No file dependency checks
-	are performed. Use TeXnicCenter, Texmaker, latexmk, rubber, or make for 
-	such a feature.
-
-Settings:
-	Open run.py with a text editor and change values in the settings 
-	definition.
-
-Remarks:
-	This is only a simple script that runs the necessary Latex functions.
-'''
-
 
 ## SETTINGS ##
 
@@ -55,12 +28,15 @@ makeindex        = True
 makeglossary     = True
 makenomenclature = True
 
-verbose          = True
-
 usebiblatex      = False
 biblatexbackend  = 'biber' # alternative: bibtex
 
+verbose          = False
+dry              = False
+
 apps = {}
+
+### INITIALISATION ###
 
 def initapplications():
 	"""Initialize the application commands and arguments for the different
@@ -111,8 +87,16 @@ def target(targetname = None):
 ## TARGETS ##
 
 @target()
+def test():
+    """Verify the settings in run.py"""
+    allok = testSettings()
+    if allok:
+	    print("Your settings appear to be consistent.")
+
+@target()
 def compile():
-	sanitycheck()
+	"""Build thesis.pdf"""
+	testSettings()
 	latex()
 
 
@@ -147,39 +131,6 @@ def latex():
 		apps['pdflatex'].run(settings, 'Rerunning Latex failed')
 		print('#### LATEX ####')
 		apps['pdflatex'].run(settings, 'Rerunning Latex failed')
-
-
-def sanitycheck():
-	checknomenclature()
-	checkglossary()
-
-
-def checknomenclature():
-	"""Check whether the nomenclature settings are consistent."""
-	texfile = open(mainfile, 'r')
-	pattern = re.compile(r'^\s*\\usepackage.*{nomencl}.*')
-	found = False
-	for line in texfile:
-		if pattern.search(line) != None:
-			found = True
-	if not found and makenomenclature:
-		print("\nWARNING: Trying to build the nomenclature but you have not include the nomencl Latex package.\n")
-	if found and not makenomenclature:
-		print("\nWARNING: You have included the nomencl Latex package but in the run.py script this step is not activated.\n")
-
-
-def checkglossary():
-	"""Check whether the glossary settings are consistent."""
-	texfile = open(mainfile, 'r')
-	pattern = re.compile(r'^\s*\\usepackage.*{glossary.*')
-	found = False
-	for line in texfile:
-		if pattern.search(line) != None:
-			found = True
-	if not found and makeglossary:
-		print("\nWARNING: Trying to build the glossary but you have not include the glossary Latex package.\n")
-	if found and not makeglossary:
-		print("\nWARNING: You have included the glossary Latex package but in the run.py script this step is not activated.\n")
 
 
 @target()
@@ -243,12 +194,22 @@ def targets():
 ## AUXILIARY ##
 
 def testSettings():
-	"""Verify whether we are using the expected settings."""
-	testBiblatex()
+	"""Verify whether run.py is using the expected settings based on
+	   thesis.tex.
+	"""
+	allok = True
+	allok = allok and testBiblatex()
+	allok = allok and testNomenclature()
+	allok = allok and testGlossary()
+	return allok
 
 
 def testBiblatex():
+	"""Test whether the main tex file includes biblatex and if this is
+	   consistent with the settings in run.py
+	"""
 	global usebiblatex
+	allok = True
 	isusingbiblatex = False
 	pattern = re.compile(r'^\\documentclass.*biblatex*.*$')
 	with open(mainfile, 'r') as f:
@@ -257,11 +218,50 @@ def testBiblatex():
 				isusingbiblatex = True
 				if not usebiblatex:
 					print("Warning: It appears you are using biblatex while this setting in run.py is set to false.\n---> Continuing with biblatex set to true.\n")
+					allok = False
 					usebiblatex = True
-					return
+					return allok
 	if not isusingbiblatex and usebiblatex:
-		print("Warning: It appears you are not using biblatex while this setting in run.py is set to true.\n---> Continuing with biblatex set to false.\n")
+		print("WARNING: It appears you are not using biblatex while this setting in run.py is set to true.\n---> Continuing with biblatex set to false.\n")
 		usebiblatex = False
+		allok = False
+	return allok
+
+
+def testNomenclature():
+	"""Check whether the nomenclature settings are consistent."""
+	allok = True
+	texfile = open(mainfile, 'r')
+	pattern = re.compile(r'^\s*\\usepackage.*{nomencl}.*')
+	found = False
+	for line in texfile:
+		if pattern.search(line) != None:
+			found = True
+	if not found and makenomenclature:
+		print("\nWARNING: Trying to build the nomenclature but you have not include the nomencl Latex package.\n")
+		allok = False
+	if found and not makenomenclature:
+		print("\nWARNING: You have included the nomencl Latex package but in the run.py script this step is not activated.\n")
+		allok = False
+	return allok
+
+
+def testGlossary():
+	"""Check whether the glossary settings are consistent."""
+	allok = True
+	texfile = open(mainfile, 'r')
+	pattern = re.compile(r'^\s*\\usepackage.*{glossary.*')
+	found = False
+	for line in texfile:
+		if pattern.search(line) != None:
+			found = True
+	if not found and makeglossary:
+		print("\nWARNING: Trying to build the glossary but you have not include the glossary Latex package.\n")
+		allok = False
+	if found and not makeglossary:
+		print("\nWARNING: You have included the glossary Latex package but in the run.py script this step is not activated.\n")
+		allok = False
+	return allok
 
 
 ## APPLICATION ##
@@ -284,9 +284,9 @@ class App:
 		try:
 			cmd = self.options.format(**settings)
 			args = shlex.split(cmd)
-			if self.verbose:
-				print("Running: "+self.binary+" "+" ".join(args))
-			returncode = check_call([self.binary] + args)
+			print("Running: "+self.binary+" "+" ".join(args))
+			if not dry:
+				returncode = check_call([self.binary] + args)
 		except CalledProcessError as err:
 			print(sys.argv[0].split("/")[-1] + ": "+errmsg+" (exitcode "+str(err.returncode)+")", file=sys.stderr)
 		return returncode
@@ -299,42 +299,44 @@ class Usage(Exception):
 
 def main(argv=None):
 	global verbose
-	if argv is None:
-		argv = sys.argv
-	try:
-		try:
-			opts, args = getopt.getopt(argv[1:], "htT", ["help", "targets"])
-		except getopt.error as msg:
-			raise Usage(msg)
-		
-		# option processing
-		for option, value in opts:
-			if option == "-v":
-				verbose = True
-			if option in ("-T", "-t", "--targets"):
-				targets()
-				return
-			if option in ("-h", "--help"):
-				raise Usage(help_message)
-		
-		initapplications()
-		testSettings()
-		
-		if len(args) == 0:
-			print("No targets given, using default target: compile")
-			compile()
+	global dry
 
-		for target in args:
-			print("Target: "+target)
-			if target in knowntargets:
-				knowntargets[target]()
-			else:
-				print("Unknown target")
+	parser = argparse.ArgumentParser(
+		    description='''
+Naive compilation script for the ADSPhD class. No file dependency checks
+are performed. Use TeXnicCenter, Texmaker, latexmk, rubber, SCons or
+make for such a feature.''',
+		    epilog='''
+Settings: Open run.py with a text editor and change values in the settings 
+definition
+		    ''')
+	parser.add_argument('--verbose', '-v', action='count',      help='Verbose output')
+	parser.add_argument('--targets', '-T', action='store_true', help='Print available targets')
+	parser.add_argument('--dry', '-d',     action='store_true', help='Dry run to see commands without executing them')
+	parser.add_argument('target',          nargs='*',           help='Targets')
+
+	args = parser.parse_args(argv)
+
+	verbose = args.verbose
+	dry = args.dry
+
+	if args.targets:
+		targets()
+		return
+
+	initapplications()
 	
-	except Usage as err:
-		print(sys.argv[0].split("/")[-1] + ": " + str(err.msg), file=sys.stderr)
-		print("\t for help use --help", file=sys.stderr)
-		return 2
+	if len(args.target) == 0:
+		print("No targets given, using default target: compile")
+		compile()
+
+	for target in args.target:
+		print("Target: "+target)
+		if target in knowntargets:
+			knowntargets[target]()
+		else:
+			print("Unknown target")
+	
 
 
 if __name__ == "__main__":
