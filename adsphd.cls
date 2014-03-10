@@ -936,6 +936,7 @@
   \typeout{adsphd.cls: chapter `#1'}
   \cleardoublepage
   \IfFileExists{\chaptersdir/#1/#1.tex}{
+    \graphicspath{{\chaptersdir/#1/image/}}%
     \include{\chaptersdir/#1/#1}
   }{
     \chapter{#1}
