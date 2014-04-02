@@ -1257,7 +1257,8 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Provide front cover
+% Provide front cover using the 2012 (XII) layout
+% used by the Arenberg Doctoral School
 \newcommand{\frontcoverheaderXII}[1]{%
   % Use Helvetica
   \renewcommand{\sfdefault}{\helvetsfdefault}
@@ -1287,7 +1288,10 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \end{textblock*}
 }
 
-\newcommand{\frontcoverheader}[1]{%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Provide front cover using the 2010 (X) layout
+% used by the Arenberg Doctoral School
+\newcommand{\frontcoverheaderX}[1]{%
   % Use Helvetica
   \renewcommand{\sfdefault}{\helvetsfdefault}
   \thispagestyle{empty}
@@ -1329,7 +1333,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \end{textblock*}
 }
 
-\newcommand{\frontcoverfooter}[1]{%
+\newcommand{\frontcoverfooterX}[1]{%
   % Only add empty pages if asked for
   \ifthenelse{\equal{#1}{1}}
   {
@@ -1500,7 +1504,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \typeout{adsphd.cls: Using default front cover page}
   %
   % Create header
-  \frontcoverheader{#1}
+  \frontcoverheaderX{#1}
   %
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
   %
@@ -1573,7 +1577,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
   %
   % Add footer
-  \frontcoverfooter{#2}
+  \frontcoverfooterX{#2}
 
 }
 \let\orig@makefrontcovergeneral\makefrontcovergeneral
@@ -1694,8 +1698,9 @@ D/\@depot
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Provide back cover
-\newcommand{\backcoverheader}[2]{%
+% Provide back cover using the 2010 (X) layout
+% used by the Arenberg Doctoral School
+\newcommand{\backcoverheaderX}[2]{%
   \typeout{adsphd.cls: Using default back cover page}
   % Use Helvetica
   \renewcommand{\sfdefault}{\helvetsfdefault}
@@ -1743,6 +1748,9 @@ D/\@depot
   \end{textblock*}
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Provide back cover using the 2012 (XII) layout
+% used by the Arenberg Doctoral School
 \newcommand{\backcoverheaderXII}[2]{%
   \typeout{adsphd.cls: Using default XII back cover page}
   % Use Helvetica
@@ -1804,7 +1812,7 @@ D/\@depot
   \end{textblock*}
 }
 
-\newcommand{\backcoverfooter}[1]{%
+\newcommand{\backcoverfooterX}[1]{%
   % Put logo of the association at the bottom right
   \begin{textblock*}{7mm}[2.,1.](150mm+#1,231.0mm)
   \textblockcolour{}
@@ -1848,16 +1856,16 @@ D/\@depot
   \backcoverfooterXII{#1}
 }
 
-\newcommand{\makebackcover}{\makebackcovergeneral{0mm}{1}}
+\newcommand{\makebackcoverX}{\makebackcovergeneral{0mm}{1}}
 % \makebackcovergeneral{xskip}{clearpage}
 \newcommand{\makebackcovergeneral}[2]{%
 \typeout{adsphd.cls: Using default back cover page}
   %
   % Create header
-  \backcoverheader{#1}{#2}
+  \backcoverheaderX{#1}{#2}
   %
   % Add footer
-  \backcoverfooter{#1}
+  \backcoverfooterX{#1}
 }
 \let\orig@makebackcovergeneral\makebackcovergeneral
 
