@@ -104,6 +104,7 @@ the new chapter.
     make realclean             # clean + also remove {ps,pdf} files
     make figurelist            # Print out the names of all figures that are
                                  effectively used in ./chapters/chapterX/chapterX.tex
+    make cover                 # Generate a separate pdf the cover
 
 
 **Creating a chapter directory**:
@@ -240,6 +241,9 @@ Most printing services will create their own cover page based
 on the details you send them (title, name, affiliation, ...). The template
 generates only a front and back cover for the version you want to distribute online,
 not for the version you send to the printing service.
+
+However, the template has some support to create a separate cover page. Use
+`make cover` or `python run.py cover` to generate `cover.tex` and run.
 
 
 Troubleshooting

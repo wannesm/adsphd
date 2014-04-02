@@ -1212,8 +1212,11 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   }{
     \typeout{adsphd.cls: Cannot find custom cover page 
       (\@customcoverpage). Restoring default cover page.}
-    \let\makefrontcovergeneral\orig@makefrontcovergeneral
-    \let\makebackcovergeneral\orig@makebackcovergeneral
+    \let\makefrontcovergeneralX\orig@makefrontcovergeneralX
+    \let\makebackcovergeneralX\orig@makebackcovergeneralX
+
+    \let\makefrontcovergeneralXII\orig@makefrontcovergeneralXII
+    \let\makebackcovergeneralXII\orig@makebackcovergeneralXII
   }
 }{}
 
@@ -1226,19 +1229,19 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 
   \newlength{\skiplen}
 
-  \begin{textblock*}{\adsphdspinewidth+4pt}(\lbleed+\rbleed+\adsphdpaperwidth-2pt, 20mm)
-  \textblockcolour{}
-  \includegraphics[width=\adsphdspinewidth+4pt,height=20mm]{image/blue}
-  \end{textblock*}
+  %\begin{textblock*}{\adsphdspinewidth+4pt}(\lbleed+\rbleed+\adsphdpaperwidth-2pt, 20mm)
+  %\textblockcolour{}
+  %\includegraphics[width=\adsphdspinewidth+4pt,height=20mm]{image/blue}
+  %\end{textblock*}
 
   \setlength{\skiplen}{0mm+\rbleed}
-  \makebackcovergeneral{\skiplen}{0}
+  \makebackcovergeneralXII{\skiplen}{0}
 
   \setlength{\skiplen}{\lbleed+\rbleed+\adsphdpaperwidth}
-  \makespinegeneral{\skiplen}{0}{#1}{#2}
+  \makespinegeneralXII{\skiplen}{0}{#1}{#2}
 
   \setlength{\skiplen}{\rbleed+2\lbleed+\adsphdpaperwidth+\adsphdspinewidth}
-  \makefrontcovergeneral{\skiplen}{0}
+  \makefrontcovergeneralXII{\skiplen}{0}
 
   % Draw some extra crop lines
   \cropline{\rbleed}{0mm}{-1}{5}
@@ -1264,7 +1267,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \renewcommand{\sfdefault}{\helvetsfdefault}
   \thispagestyle{empty}
   % Blue bar on top
-  \begin{textblock*}{\adsphdpaperwidth}(0mm+#1,20mm)
+  \begin{textblock*}{\adsphdpaperwidth+\rbleed}(0mm+#1,20mm)
   \textblockcolour{blueXIIdark}
   %\vspace{-\parskip}
   \rule{0pt}{20mm}
@@ -1276,7 +1279,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \end{textblock*}
   %
   % Create ADS+faculty box
-  \begin{textblock*}{75mm+\rbleed}(80mm+#1,20mm)
+  \begin{textblock*}{75mm}(80mm+#1,20mm)
   \textblockcolour{}
   \vspace{-\parskip}
   %\hspace*{2mm}
@@ -1486,7 +1489,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \fi
   %
   % Bottom blue bar
-  \begin{textblock*}{\adsphdpaperwidth}(0mm+#1,234mm)
+  \begin{textblock*}{\adsphdpaperwidth+\rbleed}(0mm+#1,234mm)
   \textblockcolour{blueXIIlight}
   %\vspace{-\parskip}
   \rule{0pt}{2.1mm}
@@ -1498,9 +1501,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \frontcoverfooterXII{#2}
 }
 
-\newcommand{\makefrontcover}{\makefrontcovergeneral{0mm}{1}}
-% \makefrontcovergeneral{xskip}{}clearpage
-\newcommand{\makefrontcovergeneral}[2]{%
+\newcommand{\makefrontcoverX}{\makefrontcovergeneralX{0mm}{1}}
+% \makefrontcovergeneralX{xskip}{}clearpage
+\newcommand{\makefrontcovergeneralX}[2]{%
 \typeout{adsphd.cls: Using default front cover page}
   %
   % Create header
@@ -1580,7 +1583,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \frontcoverfooterX{#2}
 
 }
-\let\orig@makefrontcovergeneral\makefrontcovergeneral
+
+\let\orig@makefrontcovergeneralX\makefrontcovergeneralX
+\let\orig@makefrontcovergeneralXII\makefrontcovergeneralXII
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Redefine title page
@@ -1766,19 +1771,19 @@ D/\@depot
   \thispagestyle{empty}
   % Blue lines in right corner
   %
-  \begin{textblock*}{55mm}(-\rbleed+#1+97.5mm,20mm)
+  \begin{textblock*}{55mm}(#1+97.5mm,20mm)
   \textblockcolour{blueXIIlight}
   %\vspace{-\parskip}
   \rule{0pt}{2mm}
   \end{textblock*}
-  \begin{textblock*}{2mm}(-\rbleed+#1+152mm,20mm)
+  \begin{textblock*}{2mm}(#1+152mm,20mm)
   \textblockcolour{blueXIIlight}
   %\vspace{-\parskip}
   \rule{0pt}{18mm}
   \end{textblock*}
   %
   % Create gray box
-  \begin{textblock*}{137.5mm+\rbleed}(-\rbleed+#1,23mm)
+  \begin{textblock*}{137.5mm}(#1,23mm)
   \textblockcolour{}
   \vspace{-\parskip}
   %\parbox[c][20mm]{151.2mm+\rbleed}{
@@ -1825,15 +1830,9 @@ D/\@depot
 }
 
 \newcommand{\backcoverfooterXII}[1]{%
-  % Put logo of the association at the bottom right
-  %\begin{textblock*}{7mm}[2.,1.](150mm+#1,231.0mm)
-  %\textblockcolour{}
-  %\vspace{-\parskip}
-  %\includegraphics*[height=20mm]{image/ASSO_ZEGEL_ZW}
-  %\end{textblock*}
-  %
   % Bottom blue bar
-  \begin{textblock*}{\adsphdpaperwidth}(-\rbleed+#1,222mm)
+  %\begin{textblock*}{\adsphdpaperwidth}(#1,222mm)
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed}(#1-\lbleed,222mm)
   %\begin{textblock*}{\adsphdpaperwidth}(0mm+#1,234mm)
   \textblockcolour{blueXIIdark}
   %\vspace{-\parskip}
@@ -1845,7 +1844,7 @@ D/\@depot
 }
 
 \newcommand{\makebackcoverXII}{\makebackcovergeneralXII{0mm}{1}}
-% \makebackcovergeneral{xskip}{clearpage}
+% \makebackcovergeneralXII{xskip}{clearpage}
 \newcommand{\makebackcovergeneralXII}[2]{%
 \typeout{adsphd.cls: Using default back cover page}
   %
@@ -1856,9 +1855,9 @@ D/\@depot
   \backcoverfooterXII{#1}
 }
 
-\newcommand{\makebackcoverX}{\makebackcovergeneral{0mm}{1}}
-% \makebackcovergeneral{xskip}{clearpage}
-\newcommand{\makebackcovergeneral}[2]{%
+\newcommand{\makebackcoverX}{\makebackcovergeneralX{0mm}{1}}
+% \makebackcovergeneralX{xskip}{clearpage}
+\newcommand{\makebackcovergeneralX}[2]{%
 \typeout{adsphd.cls: Using default back cover page}
   %
   % Create header
@@ -1867,7 +1866,9 @@ D/\@depot
   % Add footer
   \backcoverfooterX{#1}
 }
-\let\orig@makebackcovergeneral\makebackcovergeneral
+
+\let\orig@makebackcovergeneralX\makebackcovergeneralX
+\let\orig@makebackcovergeneralXII\makebackcovergeneralXII
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Create the spine of the booklet
@@ -1877,9 +1878,9 @@ D/\@depot
 \newlength{\spinetitlewidth}
 \setlength{\spinetitlewidth}{\defaultspinetitlewidth}
 
-%\newcommand{\makespine}[2]{\makespinegeneral{xskip}{clearpage}{spinewidth}{spinetitlewidth}}
-\newcommand{\makespine}[2]{\makespinegeneral{0mm}{1}{#1}{#2}}
-\newcommand{\makespinegeneral}[4]{%
+%\newcommand{\makespine}[2]{\makespinegeneralX{xskip}{clearpage}{spinewidth}{spinetitlewidth}}
+\newcommand{\makespine}[2]{\makespinegeneralX{0mm}{1}{#1}{#2}}
+\newcommand{\makespinegeneralX}[4]{%
   % Use Helvetica
   \renewcommand{\sfdefault}{\helvetsfdefault}
   %
@@ -1907,6 +1908,78 @@ D/\@depot
   \vspace{-\parskip}
   \includegraphics[width=\adsphdspinewidth,height=20mm]{image/blue}%
   \end{textblock*}
+  %
+  \newlength{\authorlen}
+  \settowidth{\authorlen}{\large\sffamily\@authorf\ \MakeUppercase\@authorl}
+  \newlength{\authorlenpenalty}
+  \ifthenelse{\lengthtest{\authorlen>4.2cm}}{%
+      % For really really long names, move the name up a bit more
+      \typeout{adsphd.cls: Really long author name detected in %
+        generation of spine. Moving it up by 4mm.}
+      \setlength{\authorlenpenalty}{4mm}
+  }{%
+    \ifthenelse{\lengthtest{\authorlen>4.0cm}}{%
+      % For really long names, move the name up a bit
+      \typeout{adsphd.cls: Long author name detected in generation of %
+        spine. Moving it up by 3mm.}
+      \setlength{\authorlenpenalty}{3mm}
+    }{%
+    \setlength{\authorlenpenalty}{0mm}
+    }
+  }
+  %
+  \begin{textblock*}{\adsphdspinewidth}(0mm+#1,49mm-\authorlenpenalty) % 9mm whitespace 
+                                        % between blue and first letter of the author name
+                                        % (possibly less because the author name might be
+                                        % reallyreally long)
+  \textblockcolour{}
+  % Rotate the text
+  \begin{turn}{-90}
+  \makebox[\adsphdpaperheight-56mm+\authorlenpenalty][c]{% 20mm(white)+20mm(blue)+9mm(space before name)+7mm(after date)
+  %
+  % Place author
+  \parbox[c][\adsphdspinewidth]{(\authorlen)}{
+  \large\sffamily\@authorf\ \MakeUppercase\@authorl%
+  }
+  \hfill
+  %
+  % Place title
+  \parbox[c][\adsphdspinewidth]{\spinetitlewidth}{
+    \centering
+    \setstretch{.85}
+    \normalsize\sffamily\textbf{\MakeUppercase\@title}
+  }
+  %
+  % Place date
+  \hfill\large\sffamily\@date
+  }
+  \end{turn}
+  \end{textblock*}
+
+  \renewcommand{\sfdefault}{\origsfdefault}
+}
+
+\newcommand{\makespinegeneralXII}[4]{%
+  % Use Helvetica
+  \renewcommand{\sfdefault}{\helvetsfdefault}
+  %
+  % Get adsphdspinewidth as #3
+  \setlength{\adsphdspinewidth}{#3}
+  % 
+  % Get spinetitlewidth as #4
+  \ifthenelse{\equal{#4}{}}
+  {}{
+    \setlength{\spinetitlewidth}{#4}
+  }
+  %
+  % Empty pagestyle
+  \thispagestyle{empty}%
+  %
+  % Only clear page if asked for
+  \ifthenelse{\equal{#2}{1}}
+  {
+    \cleardoublepage \mbox{}%
+  }{}
   %
   \newlength{\authorlen}
   \settowidth{\authorlen}{\large\sffamily\@authorf\ \MakeUppercase\@authorl}

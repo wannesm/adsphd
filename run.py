@@ -149,6 +149,74 @@ def realclean():
 	newsettings['cleanfiles'] = 'thesis.pdf thesis.dvi thesis.ps'
 	apps['remove'].run(newsettings, 'Removing pdf files failed.')
 
+@target()
+def cover():
+    """Generate a cover.tex file and produce a standalone cover.pdf"""
+
+    content = []
+    doadd = False
+    with open(mainfile,'r') as mf:
+        for line in mf:
+            if doadd:
+                content.append(line)
+            if "%%% COVER: Settings" in line:
+                doadd = True
+            elif "%%% COVER: End" in line:
+                doadd = False
+
+    with open('cover.tex','w') as cf:
+         cf.write("""% Cover.tex
+\\documentclass[cam,cover]{adsphd}
+
+\\usepackage{printlen}
+\\uselengthunit{mm}
+""")
+         cf.write("".join(content))
+         cf.write("""
+% Compute total page width
+\\newlength{\\fullpagewidth}
+\\setlength{\\fullpagewidth}{2\\adsphdpaperwidth}
+\\addtolength{\\fullpagewidth}{2\\defaultlbleed}
+\\addtolength{\\fullpagewidth}{2\\defaultrbleed}
+\\addtolength{\\fullpagewidth}{\\adsphdspinewidth}
+
+\\geometry{
+	paperwidth=\\fullpagewidth,
+	paperheight=\\adsphdpaperheight,
+}
+
+\\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\\begin{document}
+
+\\makefullcoverpage{\\adsphdspinewidth}{}
+
+\\newlength{\\testje}
+\\setlength{\\testje}{10mm}
+
+\\mbox{}
+\\newpage
+\\subsection*{Used settings:}
+\\begin{itemize}
+	\\item Spine width: \\printlength{\\adsphdspinewidth}
+	\\item Left bleed: \\printlength{\\lbleed}
+	\\item Right bleed: \\printlength{\\rbleed}
+	\\item Paper width: \\printlength{\\adsphdpaperwidth}
+	\\item Paper height: \\printlength{\\adsphdpaperheight}
+	\\item Text width: \\printlength{\\textwidth}
+	\\item Text height: \\printlength{\\textheight}
+\\end{itemize}
+
+\\end{document}
+""")
+
+    print("Written cover to cover.tex")
+    newsettings = dict(settings)
+    newsettings['basename'] = 'cover'
+    apps['pdflatex'].run(newsettings, 'Running Latex failed')
+
 
 @target()
 def newchapter():
