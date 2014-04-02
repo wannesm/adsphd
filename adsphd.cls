@@ -234,11 +234,15 @@
 \fi
 
 
+\ifadsphd@cover
+  \PassOptionsToPackage{center}{crop}
+\else
 \ifadsphd@croppedpdf
   \typeout{adsphd.cls: Cropped pdf selected!!!}
   \adsphd@framefalse
   \PassOptionsToPackage{width=\the\adsphdpaperwidth,%
       height=\the\adsphdpaperheight}{crop}
+\fi
 \fi
 
 \ifadsphd@biblatex
