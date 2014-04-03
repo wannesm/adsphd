@@ -2000,14 +2000,14 @@ D/\@depot
     }
   }
   %
-  \begin{textblock*}{\adsphdspinewidth}(0mm+#1,49mm-\authorlenpenalty) % 9mm whitespace 
+  \begin{textblock*}{\adsphdspinewidth}(0mm+#1,20mm-\authorlenpenalty) % 9mm whitespace 
                                         % between blue and first letter of the author name
                                         % (possibly less because the author name might be
                                         % reallyreally long)
   \textblockcolour{}
   % Rotate the text
   \begin{turn}{-90}
-  \makebox[\adsphdpaperheight-56mm+\authorlenpenalty][c]{% 20mm(white)+20mm(blue)+9mm(space before name)+7mm(after date)
+  \makebox[\adsphdpaperheight-24mm+\authorlenpenalty][c]{% 20mm(white)+20mm(blue)+9mm(space before name)+7mm(after date)
   %
   % Place author
   \parbox[c][\adsphdspinewidth]{(\authorlen)}{
