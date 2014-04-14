@@ -13,6 +13,10 @@
 %% LaTeX version 1999/12/01 or later.
 %% 
 %% This file is based on engphd.cls created by Bart Vandewoestyne.
+%%
+%% Information about the ADS guidelines:
+%%
+%%    https://set.kuleuven.be/intranet-associatie/ADS/guidelines_PhDthesis.htm
 %% 
 \NeedsTeXFormat{LaTeX2e}[2009/09/24]
 \ProvidesClass{adsphd}
@@ -1456,36 +1460,61 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   %
   % Place the Examination committee text
   \ifadsphd@covershowcommittee
-  \begin{textblock*}{67.5mm}(17.5mm+#1,185mm)
-  \textblockcolour{}
-  \vspace{-\parskip}
-  \begin{minipage}[t]{67mm}
-    \coverfontsize{12}{15}\selectfont\sffamily
-    %\begin{tabular}[t]{p{6.9cm}}
-    Examination committee:\\
-    \@president, chair
-    \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
-    \\\name, supervisor
-    \ifthenelse{\equal{\affiliation}{}}{}{%
-      \\\rule{0.25cm}{0pt}(\affiliation)
-    }}
-    \DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
-    \\\name, co-supervisor
-    \ifthenelse{\equal{\affiliation}{}}{}{%
-      \\\rule{0.25cm}{0pt}(\affiliation)
-    }}
-    \\\@jury%
-    \DTLforeach{externaljury}{\name=name,\affiliation=affiliation}{%
-    \\\name \\
-    \rule{0.25cm}{0pt}(\affiliation)
-    }
-    %\@externaljurymember \\ TODO
-    %\rule{0.25cm}{0pt}(\@externalaffiliation)\\ %TODO
-    \\
-    \if\empty\@udc \else U.D.C. \@udc\fi
-  %\end{tabular}
-  \end{minipage}
-  \end{textblock*}
+    \begin{textblock*}{67.5mm}(17.5mm+#1,185mm)
+    \textblockcolour{}
+    \vspace{-\parskip}
+    \begin{minipage}[t]{67mm}
+      \coverfontsize{12}{15}\selectfont\sffamily
+      %\begin{tabular}[t]{p{6.9cm}}
+      Examination committee:\\
+      \@president, chair
+      \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
+      \\\name, supervisor
+      \ifthenelse{\equal{\affiliation}{}}{}{%
+        \\\rule{0.25cm}{0pt}(\affiliation)
+      }}
+      \DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
+      \\\name, co-supervisor
+      \ifthenelse{\equal{\affiliation}{}}{}{%
+        \\\rule{0.25cm}{0pt}(\affiliation)
+      }}
+      \\\@jury%
+      \DTLforeach{externaljury}{\name=name,\affiliation=affiliation}{%
+      \\\name \\
+      \rule{0.25cm}{0pt}(\affiliation)
+      }
+      %\@externaljurymember \\ TODO
+      %\rule{0.25cm}{0pt}(\@externalaffiliation)\\ %TODO
+      \\
+      \if\empty\@udc \else U.D.C. \@udc\fi
+    %\end{tabular}
+    \end{minipage}
+    \end{textblock*}
+  \else
+    \begin{textblock*}{67.5mm}(17.5mm+#1,185mm)
+    \textblockcolour{}
+    \vspace{-\parskip}
+    \begin{minipage}[t]{67mm}
+      \coverfontsize{12}{15}\selectfont\sffamily
+      %\begin{tabular}[t]{p{6.9cm}}
+      Supervisor:
+      \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
+      \\\name
+      \ifthenelse{\equal{\affiliation}{}}{}{%
+        \\\rule{0.25cm}{0pt}(\affiliation)
+      }}
+      \DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
+      \\\name, co-supervisor
+      \ifthenelse{\equal{\affiliation}{}}{}{%
+        \\\rule{0.25cm}{0pt}(\affiliation)
+      }}
+      %\@externaljurymember \\ TODO
+      %\rule{0.25cm}{0pt}(\@externalaffiliation)\\ %TODO
+      \\
+      \if\empty\@udc \else U.D.C. \@udc\fi
+    %\end{tabular}
+    \end{minipage}
+    \end{textblock*}
   \fi
   %
   % Bottom blue bar
