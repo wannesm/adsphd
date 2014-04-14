@@ -177,9 +177,8 @@ Options for the adsphd class
     subfig                : load package subfig (default)
     subfigure             : load older package subfigure
 
-    covershowcommittee    : show the committee also on the front
-                            page.
-    coverfontpercent      : change the cover title font size. Should
+    covershowcommittee    : show the committee also on the cover.
+    coverfontpercent=<int>: change the cover title font size. Should
                             be an integer number between 1 and 100.
 
 Most of the useful commands provided by this class can be found in the provided
