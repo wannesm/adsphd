@@ -206,7 +206,7 @@ If the chapter is an appendix, use `\includeappendix{.}`!
 The term 'special' chapters refers to the
 
 - preface                 (`preface`)
-- dutch abstract          (`prefacenl`)
+- dutch preface           (`prefacenl`)
 - abstract                (`abstract`)
 - dutch abstract          (`abstractnl`)
 - list of publications    (`publications`)
