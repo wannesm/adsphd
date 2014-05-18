@@ -909,7 +909,9 @@
   \cleardoublepage
   \phantomsection
   \addcontentsline{toc}{chapter}{\tocname}
+  \microtypesetup{protrusion=false}
   \tableofcontentsorig
+  \microtypesetup{protrusion=true}
 }
 
 \let\lstlistoflistingsorig\lstlistoflistings
