@@ -12,7 +12,7 @@
 \usepackage[english,dutch]{babel}
 
 \usepackage{nomencl}   % For nomenclature
-\usepackage[style=long,number=none]{glossary} % For list of abbreviations
+\usepackage[style=long,nonumberlist,xindy]{glossaries} % For list of abbreviations
 
 % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 % !!                                                               !!
@@ -80,7 +80,7 @@
 
 % for the list of abbreviations.
 \newcommand{\glossname}{Abbreviations}
-\makeglossary
+\makeglossaries
 
 % To avoid problems, do NOT change the layout of the following two
 % commands
@@ -131,7 +131,7 @@
 %    \makeglossary
 %    \glossary{name=MD,description=molecular dynamics}
 %    \printglossary
-\printglossary
+\printglossaries
 
 % To create a list of symbols, there are 2 options
 % 1. include a manually created nomenclature as a chapter
