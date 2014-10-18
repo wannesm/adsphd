@@ -156,7 +156,7 @@ Options for the adsphd class
                             show some info (compilation time, ...)
     draft                 : show info and compile the document as a
                             draft
-    prelim                : generate a version of the document
+    prelim               : generate a version of the document
                             suitable to send to the jury. This means
                             that the logical page is put on an A4
                             without info, frame, todos, ... 
@@ -192,13 +192,13 @@ Chapters
 
 **Inclusion of normal chapters**
 
-Use the command `\includechapter{.}`, e.g., 
+Use the command `\inputchapter{.}`, e.g., 
 
-    \includechapter{introduction}
+    \inputchapter{introduction}
 
 includes `./chapters/introduction/introduction.tex`.
 
-If the chapter is an appendix, use `\includeappendix{.}`!
+If the chapter is an appendix, use `\inputappendix{.}`!
 
 
 **Inclusion of 'special' chapters**
@@ -214,12 +214,12 @@ The term 'special' chapters refers to the
 
 To include any of the above, use the command
 
-    \includeXXX{filename}
+    \inputXXX{filename}
 
 where `XXX` stands for the name indicated in between brackets above, and filename
-is as in the \includechapter command. For instance,
+is as in the \inputchapter command. For instance,
 
-    \includeappendix{myappendix} % includes ./chapters/myappendix/myappendix.tex as an appendix
+    \inputappendix{myappendix} % includes ./chapters/myappendix/myappendix.tex as an appendix
 
 Other special chapters are
 
@@ -230,7 +230,7 @@ Other special chapters are
 
 but these different from the above as they are generated using standard
 commands (`\listoffigures`, `\listoftables`, `\tableofcontents`,
-`\includebibliography`).
+`\inputbibliography`).
 
 For typical usage, see the provided file `thesis.tex`.
 
@@ -252,9 +252,9 @@ Troubleshooting
 
 * To be able to make the chapter compilation work, you should make sure that
   the desired chapter is included in thesis.tex (e.g., using
-  `\includechapter{introduction})`!!
+  `\inputchapter{introduction})`!!
 * If you get spurious empty pages when compiling a single chapter, this is
-  probably due to the combination of `\cleardoublepage` and `\includeonly`. To
+  probably due to the combination of `\cleardoublepage` and `\inputonly`. To
   avoid it, make sure you end all included chapters (and appendices) with
   `\cleardoublepage` (if you use `makeemptychapter.sh` to generate the chapter
   skeleton this is automatically done!)
