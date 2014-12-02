@@ -156,7 +156,7 @@ Options for the adsphd class
                             show some info (compilation time, ...)
     draft                 : show info and compile the document as a
                             draft
-    prelim               : generate a version of the document
+    tothejury          : generate a version of the document
                             suitable to send to the jury. This means
                             that the logical page is put on an A4
                             without info, frame, todos, ... 
@@ -302,6 +302,7 @@ Marko van Dooren,
 Rutger Claes,
 Dirk Van Hertem,
 Anthony Van Herrewege.
+Tassos Natsakis
 
 
 ----

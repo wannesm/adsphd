@@ -221,6 +221,7 @@
   \typeout{Creating A4 output for the version to send to the jury!!!}
   \adsphd@infofalse
   \adsphd@showinstructionsfalse
+  \adsphd@framefalse
 \fi
 
 \ifadsphd@draft
