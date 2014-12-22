@@ -222,6 +222,9 @@
   \adsphd@infofalse
   \adsphd@showinstructionsfalse
   \adsphd@framefalse
+
+  %disable TODOs
+  \PassOptionsToPackage{disable}{todonotes}
 \fi
 
 \ifadsphd@draft
