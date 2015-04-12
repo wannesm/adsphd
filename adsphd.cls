@@ -446,7 +446,7 @@
 \department{Department of ....}
 \researchgroup{Research group ...}
 \address{Address ...}
-\addresscity{B-3001 Heverlee}
+\addresscity{B-3001 Leuven}
 \title{Dissertation title ...}
 \subtitle{}
 \phddegree{... Computer Science ...}
