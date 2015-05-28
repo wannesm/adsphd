@@ -439,8 +439,8 @@
 \jury{Jurylid 1\\Jurylid 2}
 \@externaljurymember{External jury member}{External affiliation}
 \udc{}
-\depot{XXXX/XXXX/XX}
-\isbn{XXX-XX-XXXX-XXX-X}
+\depot{}
+\isbn{}
 
 \faculty{Faculty of ....}
 \department{Department of ....}
@@ -1724,8 +1724,8 @@ without written permission from the publisher.
 
 \medskip
 
-ISBN \@isbn\\
-D/\@depot
+\ifthenelse{\equal{\@isbn}{}}{}{ISBN \@isbn\\}
+\ifthenelse{\equal{\@depot}{}}{}{D/\@depot}
 }
 %\vspace{1cm}
 
