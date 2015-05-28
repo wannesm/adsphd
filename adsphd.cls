@@ -1674,12 +1674,11 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     \if\empty\@udc \else U.D.C. \@udc\fi
 %  \end{tabular}
 \end{minipage}
-\begin{minipage}[t]{7cm}
+\begin{minipage}[t]{5.3cm}
 %  \begin{tabular}[t]{l}
     Dissertation presented in partial\\
     \fulfillment\ of the requirements for\\
-    the degree of Doctor \\
-    in \@phddegree
+    the degree of Doctor in \@phddegree
 %  \end{tabular}
 \end{minipage}
 
