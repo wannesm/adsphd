@@ -439,8 +439,8 @@
 \jury{Jurylid 1\\Jurylid 2}
 \@externaljurymember{External jury member}{External affiliation}
 \udc{}
-\depot{XXXX/XXXX/XX}
-\isbn{XXX-XX-XXXX-XXX-X}
+\depot{}
+\isbn{}
 
 \faculty{Faculty of ....}
 \department{Department of ....}
@@ -1674,12 +1674,11 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     \if\empty\@udc \else U.D.C. \@udc\fi
 %  \end{tabular}
 \end{minipage}
-\begin{minipage}[t]{7cm}
+\begin{minipage}[t]{5.3cm}
 %  \begin{tabular}[t]{l}
     Dissertation presented in partial\\
     \fulfillment\ of the requirements for\\
-    the degree of Doctor \\
-    in \@phddegree
+    the degree of Doctor in \@phddegree
 %  \end{tabular}
 \end{minipage}
 
@@ -1725,8 +1724,8 @@ without written permission from the publisher.
 
 \medskip
 
-ISBN \@isbn\\
-D/\@depot
+\ifthenelse{\equal{\@isbn}{}}{}{ISBN \@isbn\\}
+\ifthenelse{\equal{\@depot}{}}{}{D/\@depot}
 }
 %\vspace{1cm}
 
