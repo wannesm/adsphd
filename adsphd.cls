@@ -1628,7 +1628,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \begin{textblock}{120}(17.5,70)
 \textblockcolour{}
 \vspace{-\parskip}
+\begin{flushleft}
 \Large\sffamily\textbf{\@title}
+\end{flushleft}
 \end{textblock}
 %
 %\begin{textblock}{120}(0,47.5)
