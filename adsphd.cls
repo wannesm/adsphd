@@ -221,6 +221,10 @@
   \typeout{Creating A4 output for the version to send to the jury!!!}
   \adsphd@infofalse
   \adsphd@showinstructionsfalse
+  \adsphd@framefalse
+
+  %disable TODOs
+  \PassOptionsToPackage{disable}{todonotes}
 \fi
 
 \ifadsphd@draft
@@ -806,7 +810,7 @@
 \newlength{\@chaptitlemoveup}
 \newcommand{\chaptitlemoveup}[1]{\setlength{\@chaptitlemoveup}{#1}}
 
-\newcommand{\IncludeUnnumberedChapterIfExists}[4]{%
+\newcommand{\inputUnnumberedChapterIfExists}[4]{%
   \typeout{adsphd.cls: chapter `#1'}
   \cleardoublepage
   #4
@@ -817,7 +821,7 @@
       \global\@topnum\z@
       \@afterindentfalse
       \secdef\@nonumberchapter\@snonumberchapter}
-    \include{\chaptersdir/#1/#1}
+    \input{\chaptersdir/#1/#1}
     \let\chapter=\orig@chapter
   }{
     \chapter*{#2}
@@ -829,49 +833,49 @@
   }
 }
 
-\newcommand{\includechapter}[1]{%
+\newcommand{\inputchapter}[1]{%
   \graphicspath{{\chaptersdir/#1/image/}}%
   %\cleardoublepage%
-  \include{\chaptersdir/#1/#1}%
+  \input{\chaptersdir/#1/#1}%
 }
 
-\newcommand{\includepreface}[1]{%
-  \IncludeUnnumberedChapterIfExists{#1}{\prefname}{\instructionspreface}%
+\newcommand{\inputpreface}[1]{%
+  \inputUnnumberedChapterIfExists{#1}{\prefname}{\instructionspreface}%
       {\phantomsection}
 }
 
-\newcommand{\includeprefacenl}[1]{%
+\newcommand{\inputprefacenl}[1]{%
   \selectlanguage{dutch}
-  \IncludeUnnumberedChapterIfExists{#1}{\prefnlname}{\instructionspreface}
+  \inputUnnumberedChapterIfExists{#1}{\prefnlname}{\instructionspreface}
         {\phantomsection}
   \selectlanguage{english}
 }
 
-\newcommand{\includeabstract}[1]{%
-  \IncludeUnnumberedChapterIfExists{#1}{\abstractname}{\instructionsabstract}
+\newcommand{\inputabstract}[1]{%
+  \inputUnnumberedChapterIfExists{#1}{\abstractname}{\instructionsabstract}
         {\phantomsection}
 }
 
-\newcommand{\includeabstractnl}[1]{%
+\newcommand{\inputabstractnl}[1]{%
   \selectlanguage{dutch}
-  \IncludeUnnumberedChapterIfExists{#1}{\abstractnlname}{\instructionsabstract}
+  \inputUnnumberedChapterIfExists{#1}{\abstractnlname}{\instructionsabstract}
         {\phantomsection}
   \selectlanguage{english}
 }
 
-\newcommand{\includeabbreviations}[1]{%
+\newcommand{\inputabbreviations}[1]{%
   % Use this command when making the abbreviation manually. Using the
-  \IncludeUnnumberedChapterIfExists{#1}{Abbreviations}{\instructionslistofsymbols}{}
+  \inputUnnumberedChapterIfExists{#1}{Abbreviations}{\instructionslistofsymbols}{}
 }
 
-\newcommand{\includenomenclature}[1]{%
+\newcommand{\inputnomenclature}[1]{%
   % Use this command when making the nomenclature manually. Using the
   % nomencl package might be a better idea though...
-  \IncludeUnnumberedChapterIfExists{#1}{\nomname}{\instructionslistofsymbols}{}
+  \inputUnnumberedChapterIfExists{#1}{\nomname}{\instructionslistofsymbols}{}
 }
 
 \ifadsphd@biblatex
-  \newcommand{\includebibliography}{%
+  \newcommand{\inputbibliography}{%
     \@ifnextchar \bgroup{\ClassError{adsphd}{%
       Biblatex expects the bib-file in the preamble}{%
       Don't pass an argument to the includebibliography command
@@ -888,12 +892,12 @@
   }
 \else
   \ifadsphd@custombibtex
-    \newcommand{\includebibliography}{%
+    \newcommand{\inputbibliography}{%
       \message{adsphd.cls: includebiblography command is not defined
       because of the custombibtex setting.}
     }
   \else
-    \newcommand{\includebibliography}{%
+    \newcommand{\inputbibliography}{%
       \cleardoublepage
       \phantomsection
       \addcontentsline{toc}{chapter}{\bibname}
@@ -942,12 +946,12 @@
   \listoftablesorig
 }
 
-\newcommand{\includeappendix}[1]{%
+\newcommand{\inputappendix}[1]{%
   \typeout{adsphd.cls: chapter `#1'}
   \cleardoublepage
   \IfFileExists{\chaptersdir/#1/#1.tex}{
     \graphicspath{{\chaptersdir/#1/image/}}%
-    \include{\chaptersdir/#1/#1}
+    \input{\chaptersdir/#1/#1}
   }{
     \chapter{#1}
     {\textcolor{red}{Input file \chaptersdir/#1/#1.tex does not exist.
@@ -955,13 +959,13 @@
   }
 }
 
-\newcommand{\includecv}[1]{%
-  \IncludeUnnumberedChapterIfExists{#1}{\cvname}{\instructionscv}%
+\newcommand{\inputcv}[1]{%
+  \inputUnnumberedChapterIfExists{#1}{\cvname}{\instructionscv}%
         {\phantomsection}
 }
 
-\newcommand{\includepublications}[1]{%
-  \IncludeUnnumberedChapterIfExists{#1}{\pubname}%
+\newcommand{\inputpublications}[1]{%
+  \inputUnnumberedChapterIfExists{#1}{\pubname}%
         {\instructionslistofpublications}{\phantomsection}
 }
 

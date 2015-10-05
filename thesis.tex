@@ -12,7 +12,7 @@
 \usepackage[english,dutch]{babel}
 
 \usepackage{nomencl}   % For nomenclature
-\usepackage[style=long,number=none]{glossary} % For list of abbreviations
+\usepackage[style=long,nonumberlist,xindy]{glossaries} % For list of abbreviations
 
 % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 % !!                                                               !!
@@ -89,7 +89,7 @@
 
 % for the list of abbreviations.
 \newcommand{\glossname}{Abbreviations}
-\makeglossary
+\makeglossaries
 
 % To avoid problems, do NOT change the layout of the following two
 % commands
@@ -128,23 +128,23 @@
 
 \frontmatter % to get \pagenumbering{roman}
 
-\includepreface{preface}
-\includeabstract{abstract}
-\includeabstractnl{abstractnl}
+\inputpreface{preface}
+\inputabstract{abstract}
+\inputabstractnl{abstractnl}
 
 % To create a list of abbreviations, there are 2 options
 % 1. manual creation and inclusion of this file
-%    \includeabbreviations{abbreviations}
+%    \inputabbreviations{abbreviations}
 % 2. automatic generation via the glossary package
 %    \usepackage{glossary}
 %    \makeglossary
 %    \glossary{name=MD,description=molecular dynamics}
 %    \printglossary
-\printglossary
+\printglossaries
 
 % To create a list of symbols, there are 2 options
 % 1. include a manually created nomenclature as a chapter
-%    \includenomenclature{nomenclaturechapter}
+%    \inputnomenclature{nomenclaturechapter}
 % 2. automatic generation via the nomencl package
 %    \usepackage{nomencl}
 %    \makenomenclature
@@ -167,31 +167,31 @@
 % Show instructions on a separate page
 \instructionschapters\cleardoublepage
 
-\includechapter{introduction}
-\includechapter{manual} % Remove this chapter
+\inputchapter{introduction}
+\inputchapter{manual} % Remove this chapter
 
 % Insert here your own chapters
 % Chapters are expected to be in a tex-file with the given name dot
 % tex and in a directory with the given name in the chapters
 % directory.
 
-\includechapter{conclusion}
+\inputchapter{conclusion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \appendix
 
-\includeappendix{myappendix}
+\inputappendix{myappendix}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \backmatter
 
-\includebibliography
+\inputbibliography
 \instructionsbibliography
 
-\includecv{curriculum}
+\inputcv{curriculum}
 
-\includepublications{publications}
+\inputpublications{publications}
 
 %\makebackcoverX
 \makebackcoverXII
