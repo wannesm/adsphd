@@ -379,18 +379,18 @@
 \let\supervisor\@supervisorfirst
 
 % Allow for multiple cosupervisors
-\DTLnewdb{cosupervisor}
-\newcommand{\@cosupervisor}[2]{%
-  \DTLnewrow{cosupervisor}%
-  \DTLnewdbentry{cosupervisor}{name}{#1}%
-  \DTLnewdbentry{cosupervisor}{affiliation}{#2}%
-}
-\newcommand{\@cosupervisorfirst}[2]{%
-  \DTLforeach{cosupervisor}{}{\DTLremovecurrentrow}
-  \let\cosupervisor\@cosupervisor
-  \cosupervisor{#1}{#2}
-}
-\let\cosupervisor\@cosupervisorfirst
+%\DTLnewdb{cosupervisor}
+%\newcommand{\@cosupervisor}[2]{%
+  %\DTLnewrow{cosupervisor}%
+  %\DTLnewdbentry{cosupervisor}{name}{#1}%
+  %\DTLnewdbentry{cosupervisor}{affiliation}{#2}%
+%}
+%\newcommand{\@cosupervisorfirst}[2]{%
+  %\DTLforeach{cosupervisor}{}{\DTLremovecurrentrow}
+  %\let\cosupervisor\@cosupervisor
+  %\cosupervisor{#1}{#2}
+%}
+%\let\cosupervisor\@cosupervisorfirst
 
 % Allow for multiple external jury members
 \DTLnewdb{externaljury}
@@ -1475,11 +1475,11 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
       \ifthenelse{\equal{\affiliation}{}}{}{%
         \\\rule{0.25cm}{0pt}(\affiliation)
       }}
-      \DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
-      \\\name, co-supervisor
-      \ifthenelse{\equal{\affiliation}{}}{}{%
-        \\\rule{0.25cm}{0pt}(\affiliation)
-      }}
+      %\DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
+      %\\\name%, co-supervisor
+      %\ifthenelse{\equal{\affiliation}{}}{}{%
+        %\\\rule{0.25cm}{0pt}(\affiliation)
+      %}}
       \\\@jury%
       \DTLforeach{externaljury}{\name=name,\affiliation=affiliation}{%
       \\\name \\
@@ -1499,17 +1499,17 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     \begin{minipage}[t]{67mm}
       \coverfontsize{12}{15}\selectfont\sffamily
       %\begin{tabular}[t]{p{6.9cm}}
-      Supervisor:
+      \dtlifnumlt{\DTLrowcount{supervisor}}{2}{Supervisor:}{Supervisors:}
       \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
       \\\name
       \ifthenelse{\equal{\affiliation}{}}{}{%
         \\\rule{0.25cm}{0pt}(\affiliation)
       }}
-      \DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
-      \\\name, co-supervisor
-      \ifthenelse{\equal{\affiliation}{}}{}{%
-        \\\rule{0.25cm}{0pt}(\affiliation)
-      }}
+      %\DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
+      %\\\name%, co-supervisor
+      %\ifthenelse{\equal{\affiliation}{}}{}{%
+        %\\\rule{0.25cm}{0pt}(\affiliation)
+      %}}
       %\@externaljurymember \\ TODO
       %\rule{0.25cm}{0pt}(\@externalaffiliation)\\ %TODO
       \\
@@ -1660,11 +1660,11 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     \ifthenelse{\equal{\affiliation}{}}{}{%
       \\\rule{0.25cm}{0pt}(\affiliation)
     }}
-    \DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
-    \\\name, co-supervisor
-    \ifthenelse{\equal{\affiliation}{}}{}{%
-      \\\rule{0.25cm}{0pt}(\affiliation)
-    }}
+    %\DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
+    %\\\name%, co-supervisor
+    %\ifthenelse{\equal{\affiliation}{}}{}{%
+      %\\\rule{0.25cm}{0pt}(\affiliation)
+    %}}
     \\\@jury%
     \DTLforeach{externaljury}{\name=name,\affiliation=affiliation}{%
     \\\name \\
