@@ -6,6 +6,9 @@ improvements. If you are familiar with Git you can submit changes using a
 [GitHub pull request](https://help.github.com/articles/using-pull-requests) or a
 [Git format-patch](https://www.kernel.org/pub/software/scm/git/docs/git-format-patch.html).*
 
+If you have tips and tricks you wish to share, questions or problems. Add them
+as a [GitHub issue](https://github.com/wannesm/adsphd/issues).
+
 
 Information
 -----------
@@ -28,12 +31,10 @@ Directory structure
 The directory structure looks like this
 
 * `thesis.tex`: Main tex file for the final booklet.
-* `defs.tex`: Put your own preamble settings here.
 * `run.py`: Simple compilation script.
 * `Makefile`
 * `Makefile.settings`: This file contains file names and other
                        settings used by make.
-* `biblatex.cfg`: Biblatex settings.
 * `chapters`
     * `chapter1`: Per chapter a directory with
         * `chapter1.tex`: Tex file with *identical* name
@@ -47,7 +48,7 @@ The directory structure looks like this
 Using Latex directly
 --------------------
 
-The adsphd.cls can be used directly by latex:
+The adsphd.cls class can be used directly by latex:
 
     pdflatex thesis
     bibtex thesis
@@ -58,7 +59,8 @@ The adsphd.cls can be used directly by latex:
     pdflatex thesis
 
 Any other Latex build tool like latexmk, rubber, SCons, TeXShop or TeXWorks 
-should also work out of the box (`makeindex` might not run by default).
+should also work out of the box (`makeindex` might not run by default in which
+case you will not see the glossary).
 
 Using the simple Python compile script
 --------------------------------------
@@ -133,24 +135,11 @@ Options for the adsphd class
     british               : Use British spelling in cover (i.e.
                             fulfilment instead of fulfillment)
 
-    biblatex              : Use biblatex instead of bibtex.
-    biblatexstyle=<name>  : Change the biblatex style.
-    biber                 : Use the biber backend for biblatex.
-    custombibtex          : Don't load any bib(la)tex files. This way
-                            the user can load and customize the
-                            bibtex environments he wants. (For
-                            advanced use)
-
     showinstructions      : show instructions provided by the
                             faculty. These can be included anywhere
                             in the tex by commands of the form
                             \instructionsabstract,
                             \instructionsintroduction, ...  
-
-    pagebackref           : show in the bibliography in which page
-                            each article is cited.
-    backref               : show in the bibliography in which section
-                            each article is cited.
 
     info                  : put logical page on physical A4 paper and
                             show some info (compilation time, ...)
@@ -176,8 +165,6 @@ Options for the adsphd class
                             place the result on an A4 page
     cam                   : instead of a frame, use cropmarks
     cropmarks             : identical to cam
-    subfig                : load package subfig (default)
-    subfigure             : load older package subfigure
 
     covershowcommittee    : show the committee also on the cover.
     coverfontpercent=<int>: change the cover title font size. Should
@@ -235,6 +222,32 @@ commands (`\listoffigures`, `\listoftables`, `\tableofcontents`,
 For typical usage, see the provided file `thesis.tex`.
 
 
+Loaded packages
+---------------
+
+The following packages are loaded automatically by the adsphd.cls class:
+
+- ifpdf
+- iftex
+- xcolor
+- kvoptions
+- etoolbox
+- showlabels
+- hyperref
+- datatool
+- listings
+- framed
+- geometry
+- textpos
+- placeins
+- fancyhdr
+- babel
+- setspace
+- rotating
+- ifthen
+- calc
+
+
 Generating the cover page
 -------------------------
 
@@ -260,24 +273,6 @@ Troubleshooting
   skeleton this is automatically done!)
 
 
-Todos
------
-
-We recommend the todonotes package for annotating your text with todo
-notes. Note that the adsphd automatically disables todo notes when making
-the final version.
-
-    \todo{This is a todo}%
-    \todo[inline]{This is a todo}%
-
-**Remark**: to make the above commands interact as little as possible with your
-normal text, alway add a % directly after the closing bracket.
-
-If you want to disable todo notes explicitly, you can change the call
-`\usepackage{todonotes}` in defs.tex to
-`\usepackage[disable]{todonotes}`.
-
-
 Presentation template
 ---------------------
 
@@ -301,9 +296,6 @@ Dominique Devriese,
 Marko van Dooren,
 Rutger Claes,
 Dirk Van Hertem,
-Anthony Van Herrewege.
+Anthony Van Herrewege,
+Roel Van Beeumen.
 
-
-----
-
-vim: expandtab tw=79 ft=markdown

@@ -20,7 +20,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[2009/09/24]
 \ProvidesClass{adsphd}
-    [2013/01/10 v1.2 Standard KU Leuven Arenberg Doctoral School PhD class]
+    [2016/05/30 v1.3 Standard KU Leuven Arenberg Doctoral School PhD class]
 
 \newif\ifshellescape
 
@@ -91,21 +91,8 @@
 \DeclareBoolOption{print}{}
 \DeclareBoolOption{online}{}
 
-% bibliography
-\DeclareBoolOption{backref}
-\DeclareBoolOption{pagebackref}
-% Biblatex
-\DeclareBoolOption{biblatex}
-\DeclareBoolOption{custombibtex}
-\DeclareStringOption{biblatexstyle} % Needs to be defined at load-time
-\DeclareBoolOption{biber} % Needs to be defined at load-time
-
 % links
 \DeclareBoolOption{colorlinks}
-
-% additional packages
-\DeclareBoolOption[true]{subfig}
-\DeclareComplementaryOption{subfigure}{subfig}
 
 % Cover options
 \DeclareStringOption{coverfontpercent}
@@ -113,21 +100,13 @@
 \DeclareComplementaryOption{coverhidecommittee}{covershowcommittee}
 
 % Default values
-\setkeys{adsphd}{info=true,biblatexstyle=numeric-comp,coverfontpercent=100}
+\setkeys{adsphd}{info=true,coverfontpercent=100}
 \PassOptionsToClass{fleqn,10pt,twoside}{report}
 
 % Process global keys
 \ProcessKeyvalOptions{adsphd}
 
 \AtEndOfClass{%
-
-\ifadsphd@biblatex
-  \renewcommand{\bibliography}[1]{
-    \message{adsphd.cls: Setting biblatex bibliography to: #1}
-    \gdef\@bibliography{#1}
-  }
-\fi
-
 
 \AtBeginDocument{%
   % disable these options such that they cannot be used in the
@@ -144,12 +123,6 @@
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{croppedpdf}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{tothejury}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{final}
-  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biblatex}
-  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biblatexstyle}
-  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biber}
-  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{custombibtex}
-  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{backref}
-  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{pagebackref}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{cover}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{british}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{showlabels}
@@ -162,15 +135,6 @@
     pdfkeywords={phd, thesis, dissertation, doctoraat, kuleuven, \@authorf~\@authorl\gitaskeyword}%
   }
 
-  \ifadsphd@biblatex
-    \ifcsname{@bibliography}\endcsname
-      \message{adsphd.cls: Loading biblatex bibliography: \@bibliography}
-      \expandafter\addbibresource{\@bibliography}
-    \else
-      \message{adsphd.cls: No bibliography defined (use the
-               bibliography or addbibresource macro)}
-    \fi
-  \fi
 }}
 
 \RequirePackage{etoolbox}
@@ -212,9 +176,6 @@
   \adsphd@cropmarksfalse
   \adsphd@croppedpdftrue
   \adsphd@tothejuryfalse
-  
-  %disable TODOs
-  \PassOptionsToPackage{disable}{todonotes}
 \fi
 
 \ifadsphd@tothejury
@@ -247,41 +208,6 @@
   \PassOptionsToPackage{width=\the\adsphdpaperwidth,%
       height=\the\adsphdpaperheight}{crop}
 \fi
-\fi
-
-\ifadsphd@biblatex
-    \edef\TmpPass{%
-        \csname PassOptionsToPackage\endcsname{style=\adsphd@biblatexstyle}{biblatex}}
-    \TmpPass
-    \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{biblatex}
-    \ifadsphd@backref
-        \PassOptionsToPackage{backref}{biblatex}
-    \fi
-    \ifadsphd@pagebackref
-        \PassOptionsToPackage{backref}{biblatex}
-    \fi
-    \ifadsphd@biber
-        \PassOptionsToPackage{backend=biber}{biblatex}
-    \fi
-    \PassOptionsToPackage{backref=false}{hyperref} % Avoid loading of backref
-    %\PassOptionsToPackage{maxnames=99}{biblatex}
-    %\PassOptionsToPackage{firstinits=true}{biblatex}
-\else
-    \ifadsphd@custombibtex
-        \message{adsphd.cls: Not loading any BibTeX packages (custombibtex)}
-    \else
-        \ifadsphd@backref
-          \PassOptionsToPackage{ref}{backref}
-        \fi
-        \ifadsphd@pagebackref
-          \PassOptionsToPackage{pageref}{backref}
-        \fi
-        \let\orig@bibliography\bibliography
-        \renewcommand{\bibliography}[1]{
-          \message{adsphd.cls: Setting bibtex bibliography to: #1}
-          \gdef\@bibliography{#1}
-        }
-    \fi
 \fi
 
 \ifadsphd@cropmarks
@@ -364,6 +290,7 @@
 
 \RequirePackage{datatool}[2009/07/01]
 
+
 % Allow for multiple supervisors
 \DTLnewdb{supervisor}
 \newcommand{\@supervisor}[2]{%
@@ -378,19 +305,6 @@
 }
 \let\supervisor\@supervisorfirst
 
-% Allow for multiple cosupervisors
-%\DTLnewdb{cosupervisor}
-%\newcommand{\@cosupervisor}[2]{%
-  %\DTLnewrow{cosupervisor}%
-  %\DTLnewdbentry{cosupervisor}{name}{#1}%
-  %\DTLnewdbentry{cosupervisor}{affiliation}{#2}%
-%}
-%\newcommand{\@cosupervisorfirst}[2]{%
-  %\DTLforeach{cosupervisor}{}{\DTLremovecurrentrow}
-  %\let\cosupervisor\@cosupervisor
-  %\cosupervisor{#1}{#2}
-%}
-%\let\cosupervisor\@cosupervisorfirst
 
 % Allow for multiple external jury members
 \DTLnewdb{externaljury}
@@ -426,10 +340,6 @@
 \def\website#1{\gdef\@website{#1}}
 \def\phddegree#1{\gdef\@phddegree{#1}} % It will say "Doctor of \phddegree"
 
-% Bibtex style
-\def\bibstyle#1{%
-  \message{adsph.cls: Setting new bibliography style: #1}
-  \gdef\@bibstyle{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Default values and other settings
@@ -455,8 +365,6 @@
 \email{first.name@dept.kuleuven.be}
 \website{www.website.kuleuven.be}
 
-% Bibtex style
-\bibstyle{plain}
 
 % Default filename for custom cover page
 \newcommand{\@customcoverpage}{mycoverpage.tex}
@@ -505,39 +413,7 @@
 \RequirePackage{listings}
 \renewcommand{\lstlistlistingname}{\lolname}
 
-\ifadsphd@subfig
-    \RequirePackage{subfig}
-\else
-    \RequirePackage{subfigure}
-    \PassOptionsToPackage{subfigure}{tocloft}
-    \typeout{^^J(adsphd.cls) Info: You should consider using the new package `subfig' which is the replacement for the older package `subfigure'.^^J}
-\fi
-
 \RequirePackage{framed} % voor shaded environment
-
-
-
-\ifadsphd@biblatex
-    \typeout{adsphd.cls: Using biblatex}
-    \ifPDFTeX
-      \RequirePackage[utf8]{inputenc}
-    \fi
-    \RequirePackage{csquotes}
-    \RequirePackage[hyperref=auto]{biblatex}
-    %\RequirePackage[hyperref=auto,mincrossrefs=999]{biblatex}
-    %\setlength{\bibhang}{\orig@parindent}
-    %\setlength{\bibhang}{.5cm}
-    %\setlength{\bibitemsep}{\orig@parskip}
-    %\setlength{\bibitemsep}{.5ex}
-\else
-    \ifadsphd@backref
-        \RequirePackage{backref}
-    \fi
-    \ifadsphd@pagebackref
-        \RequirePackage{backref}
-    \fi
-\fi
-
 \RequirePackage{hyperref}
 
 % Page layout
@@ -583,19 +459,13 @@
 \setlength{\TPVertModule}{1mm}
 
 % FONTS
-\usepackage{microtype}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}  % to make pdf searchable
-\usepackage{textcomp} % nice greek alphabet
-\usepackage{pifont}   % Dingbats
-\usepackage{booktabs}
 \newcommand{\labfont}{\fontfamily{phv}\selectfont} % fonts used in labels
 \usepackage{sectsty}
 \allsectionsfont{\sffamily}
 \DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
 
 % TABLE OF CONTENTS
-\usepackage[subfigure,titles]{tocloft}
+\usepackage[titles]{tocloft}
 \renewcommand{\cftchapfont}{\sffamily\bfseries\selectfont}
 \renewcommand{\cftchappagefont}{\sffamily\bfseries\selectfont}
 
@@ -870,39 +740,11 @@
   \IncludeUnnumberedChapterIfExists{#1}{\nomname}{\instructionslistofsymbols}{}
 }
 
-\ifadsphd@biblatex
-  \newcommand{\includebibliography}{%
-    \@ifnextchar \bgroup{\ClassError{adsphd}{%
-      Biblatex expects the bib-file in the preamble}{%
-      Don't pass an argument to the includebibliography command
-      and\MessageBreak
-      add the bib-file to the preamble as follows:\MessageBreak
-      \bibliography{path/to/file.bib}.\MessageBreak}%
-    }{%
-      \cleardoublepage
-      \phantomsection
-      \addcontentsline{toc}{chapter}{\bibname}
-      %\printbibliography[maxnames=99]
-      \printbibliography
-    }
-  }
-\else
-  \ifadsphd@custombibtex
-    \newcommand{\includebibliography}{%
-      \message{adsphd.cls: includebiblography command is not defined
-      because of the custombibtex setting.}
-    }
-  \else
-    \newcommand{\includebibliography}{%
-      \cleardoublepage
-      \phantomsection
-      \addcontentsline{toc}{chapter}{\bibname}
-      \message{adsphd.cls: includebibliography with style: \@bibstyle}
-      \bibliographystyle{\@bibstyle}
-      \orig@bibliography{\@bibliography}
-    }
-  \fi
-\fi
+\newcommand{\includebibliography}{%
+  \cleardoublepage
+  \phantomsection
+  \addcontentsline{toc}{chapter}{\bibname}
+}
 
 \let\tableofcontentsorig\tableofcontents
 \renewcommand{\tableofcontents}{%
@@ -919,7 +761,6 @@
   \cleardoublepage
   \phantomsection
   %\addcontentsline{toc}{chapter}{\lolname}
-
   \let\tableofcontentsnew\tableofcontents
   \let\tableofcontents\tableofcontentsorig
   \lstlistoflistingsorig
@@ -1485,8 +1326,6 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
       \\\name \\
       \rule{0.25cm}{0pt}(\affiliation)
       }
-      %\@externaljurymember \\ TODO
-      %\rule{0.25cm}{0pt}(\@externalaffiliation)\\ %TODO
       \\
       \if\empty\@udc \else U.D.C. \@udc\fi
     %\end{tabular}
@@ -1510,8 +1349,6 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
       %\ifthenelse{\equal{\affiliation}{}}{}{%
         %\\\rule{0.25cm}{0pt}(\affiliation)
       %}}
-      %\@externaljurymember \\ TODO
-      %\rule{0.25cm}{0pt}(\@externalaffiliation)\\ %TODO
       \\
       \if\empty\@udc \else U.D.C. \@udc\fi
     %\end{tabular}
@@ -1670,8 +1507,6 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     \\\name \\
     \rule{0.25cm}{0pt}(\affiliation)
     }
-%    \@externaljurymember \\ TODO
-%    \rule{0.25cm}{0pt}(\@externalaffiliation)\\ %TODO
     \\
     \if\empty\@udc \else U.D.C. \@udc\fi
 %  \end{tabular}

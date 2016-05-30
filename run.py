@@ -31,7 +31,7 @@ makenomenclature = True
 usebiblatex      = False
 biblatexbackend  = 'biber' # alternative: bibtex
 
-verbose          = False
+verbose          = 0
 dry              = False
 
 apps = {}
@@ -66,7 +66,11 @@ def initapplications():
 
 settings = {'basename':'', 'cleanfiles':'', 'pdffile':''}
 settings['basename']   = os.path.splitext(mainfile)[0]
-settings['cleanfiles'] = " ".join([settings['basename']+ext for ext in ['.toc','.aux','.log','.bbl','.blg','.log','.lof','.lot','.ilg','.out','.glo','.gls','.nlo','.nls','.brf','.ist','.glg','.synctexgz','.tgz','.idx','.ind','-blx.bib','.fdb_latexmk','.synctex.gz','.run.xml','.bcf']])
+settings['chapters'] = [name.replace(".tex", "") for name in glob.glob('chapters/**/*.tex')]
+settings['cleanext'] = ['.tdo','.fls','.toc','.aux','.log','.bbl','.blg','.log','.lof','.lot','.ilg','.out','.glo','.gls','.nlo','.nls','.brf','.ist','.glg','.synctexgz','.tgz','.idx','.ind','-blx.bib','.fdb_latexmk','.synctex.gz','.run.xml','.bcf']
+settings['cleanfiles'] = " ".join([settings['basename']+ext for ext in settings['cleanext']])
+for chapter in settings['chapters']:
+    settings['cleanfiles'] += " "+" ".join([chapter+ext for ext in settings['cleanext']])
 settings['pdffile']    = settings['basename']+'.pdf'
 #print(settings)
 
@@ -91,7 +95,10 @@ def test():
     """Verify the settings in run.py"""
     allok = testSettings()
     if allok:
-	    print("Your settings appear to be consistent.")
+        print("Your settings appear to be consistent.")
+    if verbose > 0:
+        for k,v in settings.items():
+            print("{}: {}".format(k, v))
 
 @target()
 def compile():
@@ -146,7 +153,7 @@ def realclean():
 	global apps
 	clean()
 	newsettings = dict(settings)
-	newsettings['cleanfiles'] = 'thesis.pdf thesis.dvi thesis.ps'
+	newsettings['cleanfiles'] += 'thesis.pdf thesis.dvi thesis.ps'
 	apps['remove'].run(newsettings, 'Removing pdf files failed.')
 
 @target()
@@ -335,7 +342,7 @@ def testGlossary():
 ## APPLICATION ##
 
 class App:
-	def __init__(self, b, o, v=False):
+	def __init__(self, b, o, v=0):
 		self.binary = b
 		self.options = o
 		self.verbose = v
@@ -385,7 +392,8 @@ definition
 
 	args = parser.parse_args(argv)
 
-	verbose = args.verbose
+	if args.verbose is not None:
+	    verbose = args.verbose
 	dry = args.dry
 
 	if args.targets:

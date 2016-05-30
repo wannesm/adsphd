@@ -1,15 +1,7 @@
-\documentclass[pagebackref,showinstructions,showlabels,coverfontpercent=100]{adsphd}
-%\documentclass[pagebackref,showinstructions,showlabels,biblatex,biber,biblatexstyle=authoryear]{adsphd}
-%\documentclass[croppedpdf,pagebackref,showinstructions]{adsphd}
+\documentclass[showinstructions,showlabels,coverfontpercent=100]{adsphd}
+%\documentclass[croppedpdf,showinstructions]{adsphd}
 %\documentclass[online]{adsphd}
 %\documentclass[print]{adsphd}
-
-% To use biblatex:
-%\documentclass[biblatex,biblatexstyle=authoryear,showinstructions,showlabels]{adsphd}
-
-% Preamble {{{}{
-
-\usepackage[english,dutch]{babel}
 
 \usepackage{nomencl}   % For nomenclature
 \usepackage[style=long,number=none]{glossary} % For list of abbreviations
@@ -55,8 +47,8 @@
                               % that 'B-3001 Heverlee' is _incorrect_!!
                               % /[https://www.kuleuven.be/communicatie/marketing/intranet/huisstijl/taalgebruik.html]
 
-\date{January 2015}
-\copyyear{2015}
+\date{January 2016}
+\copyyear{2016}
 %\udc{XXX.XX}            % UDC, deposit number and ISBN are no longer necessary.
 %\depot{XXXX/XXXX/XX}    % Leave out the initial D/ (it is added
                          % automatically)
@@ -99,21 +91,28 @@
   \cleardoublepage%
   \printglossaryorig\chaptermark{\glossname}}
 
-% Specify the .bib file
-\bibliography{allpapers}
-% For biblatex include the extension
-%\bibliography{allpapers.bib}
+
+% BibLaTeX
+%\usepackage[utf8]{inputenc}
+%\usepackage{csquotes}
+%\usepackage[
+  %hyperref=auto,
+  %mincrossrefs=999,
+  %backend=biber,
+  %style=authoryear-icomp
+%]{biblatex}
 %\addbibresource{allpapers.bib}
 
-% Bibtex style
-%\bibstyle{abbrv}
-\bibstyle{acm}
-%\bibstyle{ieeetr}
+% Fonts
+\usepackage{microtype}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}  % to make pdf searchable
+\usepackage{textcomp} % nice greek alphabet
+\usepackage{pifont}   % Dingbats
+\usepackage{booktabs}
+\usepackage{amssymb,amsthm}
+\usepackage{amsmath}
 
-% Own commands
-\InputIfFileExists{defs}{}{} % defs.tex, contains own preamble settings
-
-% }{}}}  <-- Preamble
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -121,7 +120,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\makefrontcoverX
 \makefrontcoverXII
 
 \maketitle
@@ -156,10 +154,6 @@
 \listoffigures
 \listoftables
 
-% Show an overview of todos with page numbers...
-\listoftodos
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \mainmatter % to get \pagenumbering{arabic}
@@ -188,6 +182,11 @@
 
 \includebibliography
 \instructionsbibliography
+% BibTex
+\bibliographystyle{acm}
+\bibliography{allpapers}
+% BibLatex (comment out lines above and biblatex lines in preamble)
+%\printbibliography[title=\bibname]
 
 \includecv{curriculum}
 
@@ -198,4 +197,3 @@
 
 \end{document}
 
-% vim: tw=70 nocindent expandtab foldmethod=marker foldmarker={{{}{,}{}}}
