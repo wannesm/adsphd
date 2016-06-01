@@ -1,7 +1,7 @@
 %%
-%% Copyright (C) 2010 by Yves Frederix
-%% Copyright (C) 2011,2012,2013 by Wannes Meert
-%% 
+%% Copyright (C) 2009-2016 by KU Leuven
+%%               Wannes Meert, Yves Frederix, Bart Vandewoestyne, ...
+%%
 %% This file may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either
 %% version 1.2 of this license or (at your option) any later
@@ -9,11 +9,6 @@
 %% 
 %%    http://www.latex-project.org/lppl.txt
 %% 
-%% and version 1.2 or later is part of all distributions of
-%% LaTeX version 1999/12/01 or later.
-%% 
-%% This file is based on engphd.cls created by Bart Vandewoestyne.
-%%
 %% Information about the ADS guidelines:
 %%
 %%    https://set.kuleuven.be/intranet-associatie/ADS/guidelines_PhDthesis.htm
@@ -37,11 +32,30 @@
 \newlength{\adsphdpaperwidth}
 \setlength{\adsphdpaperwidth}{160mm}
 
-% When boxes touch the border of the page a 5mm bleed  is required to
-% send it to the print service. (Default on both sides making the page
-% width 170mm.
-\newlength{\adsphdpaperbleed}
-\setlength{\adsphdpaperbleed}{5mm}
+% Set default spine width
+\newlength{\adsphdspinewidth}
+\setlength{\adsphdspinewidth}{9mm}
+
+% Define bleed
+\newlength{\defaultlbleed}
+\setlength{\defaultlbleed}{3mm}
+\newlength{\defaultrbleed}
+\setlength{\defaultrbleed}{3mm}
+\newlength{\defaulttbleed}
+\setlength{\defaulttbleed}{3mm}
+\newlength{\defaultbbleed}
+\setlength{\defaultbbleed}{3mm}
+\newlength{\lbleed}
+\setlength{\lbleed}{0mm} % No bleed in normal mode
+\newlength{\rbleed}
+\setlength{\rbleed}{0mm} % No bleed in normal mode
+\newlength{\tbleed}
+\setlength{\tbleed}{0mm} % No bleed in normal mode
+\newlength{\bbleed}
+\setlength{\bbleed}{0mm} % No bleed in normal mode
+
+% Temporary var
+\newlength{\tmplength}
 
 % Colors
 \definecolor{blueXIIdark}{cmyk}{.81,.19,.12,.06}
@@ -67,6 +81,7 @@
 \DeclareBoolOption{showlabels}
 \DeclareBoolOption{cover}
 \DeclareBoolOption{british}
+\DeclareBoolOption{bleed}
 
 % font and style
 \DeclareVoidOption{10pt}{
@@ -135,6 +150,7 @@
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{faculty}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{department}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{phddegree}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{bleed}
 
   \hypersetup{%
     pdfauthor={\@authorf~\@authorl},%
@@ -166,6 +182,13 @@
 \fi
 
 % Various output options
+\ifadsphd@bleed
+  \setlength{\lbleed}{\defaultlbleed}
+  \setlength{\rbleed}{\defaultrbleed}
+  \setlength{\tbleed}{\defaulttbleed}
+  \setlength{\bbleed}{\defaultbbleed}
+\fi
+
 \ifadsphd@print
   \adsphd@colorlinksfalse
   \adsphd@finaltrue
@@ -181,7 +204,7 @@
   \adsphd@infofalse
   \adsphd@showinstructionsfalse
   \adsphd@showlabelsfalse
-  \adsphd@cropmarksfalse
+  %\adsphd@cropmarksfalse
   \adsphd@croppedpdftrue
   \adsphd@tothejuryfalse
 \fi
@@ -211,10 +234,18 @@
   \PassOptionsToPackage{center}{crop}
 \else
 \ifadsphd@croppedpdf
-  \typeout{adsphd.cls: Cropped pdf selected!!!}
   \adsphd@framefalse
-  \PassOptionsToPackage{width=\the\adsphdpaperwidth,%
-      height=\the\adsphdpaperheight}{crop}
+  \newlength{\adsphdpaperwidthtotal}
+  \setlength{\adsphdpaperwidthtotal}{\adsphdpaperwidth}
+  \addtolength{\adsphdpaperwidthtotal}{\lbleed}
+  \addtolength{\adsphdpaperwidthtotal}{\rbleed}
+  \newlength{\adsphdpaperheighttotal}
+  \setlength{\adsphdpaperheighttotal}{\adsphdpaperheight}
+  \addtolength{\adsphdpaperheighttotal}{\tbleed}
+  \addtolength{\adsphdpaperheighttotal}{\bbleed}
+  \typeout{adsphd.cls: Cropped pdf selected!!! (\the\adsphdpaperwidthtotal,\the\adsphdpaperheighttotal)}
+  \PassOptionsToPackage{width=\the\adsphdpaperwidthtotal,%
+      height=\the\adsphdpaperheighttotal}{crop}
 \fi
 \fi
 
@@ -398,23 +429,6 @@
 
 % Default filename for custom cover page
 \newcommand{\@customcoverpage}{mycoverpage.tex}
-
-% Set default spine width
-\newlength{\adsphdspinewidth}
-\setlength{\adsphdspinewidth}{9mm}
-
-% Define bleed
-\newlength{\defaultlbleed}
-\setlength{\defaultlbleed}{7mm}
-\newlength{\defaultrbleed}
-\setlength{\defaultrbleed}{7mm}
-\newlength{\lbleed}
-\setlength{\lbleed}{0mm} % No bleed in normal mode
-\newlength{\rbleed}
-\setlength{\rbleed}{0mm} % No bleed in normal mode
-
-% Temporary var
-\newlength{\tmplength}
 
 % Default title of chapter containing preface, abstract, publications,
 % cv, ...  Note that the values below are merely suggestions. In
@@ -1144,7 +1158,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \renewcommand{\sfdefault}{\helvetsfdefault}
   \thispagestyle{empty}
   % Blue bar on top
-  \begin{textblock*}{\adsphdpaperwidth+\rbleed}(0mm+#1,20mm)
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,20mm)
   \textblockcolour{blueXIIdark}
   %\vspace{-\parskip}
   \rule{0pt}{20mm}
@@ -1253,6 +1267,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 
 \newcommand{\makefrontcoverXII}{\makefrontcovergeneralXII{0mm}{1}}
 \newcommand{\makefrontcovergeneralXII}[2]{%
+  \typeout{adsphd.cls: Create cover with bleed (\the\rbleed,\the\lbleed)}
   %
   % Create header
   \frontcoverheaderXII{#1}
@@ -1387,7 +1402,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \fi
   %
   % Bottom blue bar
-  \begin{textblock*}{\adsphdpaperwidth+\rbleed}(0mm+#1,234mm)
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,234mm)
   \textblockcolour{blueXIIlight}
   %\vspace{-\parskip}
   \rule{0pt}{2.1mm}
@@ -1728,7 +1743,7 @@ without written permission from the publisher.
 \newcommand{\backcoverfooterXII}[1]{%
   % Bottom blue bar
   %\begin{textblock*}{\adsphdpaperwidth}(#1,222mm)
-  \begin{textblock*}{\adsphdpaperwidth+\lbleed}(#1-\lbleed,222mm)
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-\lbleed,222mm)
   %\begin{textblock*}{\adsphdpaperwidth}(0mm+#1,234mm)
   \textblockcolour{blueXIIdark}
   %\vspace{-\parskip}

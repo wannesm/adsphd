@@ -2,6 +2,7 @@
 %\documentclass[showinstructions,showlabels,coverfontpercent=100]{adsphd}
 %\documentclass[croppedpdf,showinstructions]{adsphd}
 %\documentclass[online]{adsphd}
+%\documentclass[print,bleed,cropmarks]{adsphd} % include bleed for the print service
 %\documentclass[print]{adsphd}
 
 \usepackage{nomencl}   % For nomenclature
@@ -173,18 +174,17 @@
 \backmatter
 
 \includebibliography
-\instructionsbibliography
 % BibTex
 \bibliographystyle{acm}
 \bibliography{allpapers}
-% BibLatex (comment out lines above and biblatex lines in preamble)
+% BibLatex (comment lines above and comment out biblatex lines in preamble)
 %\printbibliography[title=\bibname]
+\instructionsbibliography
 
 \includecv{curriculum}
 
 \includepublications{publications}
 
-%\makebackcoverX
 \makebackcoverXII
 
 \end{document}
