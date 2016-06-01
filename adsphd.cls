@@ -99,6 +99,11 @@
 \DeclareBoolOption{covershowcommittee}
 \DeclareComplementaryOption{coverhidecommittee}{covershowcommittee}
 
+% Faculty
+\DeclareStringOption{faculty}
+\DeclareStringOption{department}
+\DeclareStringOption{phddegree}
+
 % Default values
 \setkeys{adsphd}{info=true,coverfontpercent=100}
 \PassOptionsToClass{fleqn,10pt,twoside}{report}
@@ -127,6 +132,9 @@
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{british}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{showlabels}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{coverfontpercent}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{faculty}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{department}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{phddegree}
 
   \hypersetup{%
     pdfauthor={\@authorf~\@authorl},%
@@ -280,6 +288,12 @@
   \renewcommand{\fulfillment}{fulfilment}
 \fi
 
+\providecommand*\adsphd@cfgfile{adsphd.cfg}
+\ifx\adsphd@cfgfile\@empty\else
+  \InputIfFileExists\adsphd@cfgfile{}{\adsphd@error{%
+      Configuration file `\adsphd@cfgfile' is not installed}}
+\fi
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now process the options passed to the packages
 
@@ -331,15 +345,34 @@
 \gdef\@rev{}
 
 \def\copyyear#1{\gdef\@copyyear{#1}}
-\def\faculty#1{\gdef\@faculty{#1}}
-\def\department#1{\gdef\@department{#1}}
 \def\researchgroup#1{\gdef\@researchgroup{#1}}
 \def\address#1{\gdef\@address{#1}}
 \def\addresscity#1{\gdef\@addresspc{#1}}
 \def\email#1{\gdef\@email{#1}}
 \def\website#1{\gdef\@website{#1}}
-\def\phddegree#1{\gdef\@phddegree{#1}} % It will say "Doctor of \phddegree"
 
+% faculty
+\ifcsdef{adsphd@faculty@\adsphd@faculty}{}{%
+  \ClassError{adsphd}{Unsupported value '\adsphd@faculty' for class option 'faculty'}{\MessageBreak}}
+\gdef\@faculty{\expandafter\csname adsphd@faculty@\adsphd@faculty \endcsname}
+
+% department
+\ifcsdef{adsphd@department@\adsphd@department}{}{%
+  \ClassError{adsphd}{Unsupported value '\adsphd@department' for class option 'department'}{\MessageBreak}}
+\gdef\@department{\expandafter\csname adsphd@department@\adsphd@department \endcsname}
+
+% phddegree
+\ifcsdef{adsphd@faculty@\adsphd@faculty @phddegree}{%
+  \gdef\@phddegree{\expandafter\csname adsphd@faculty@\adsphd@faculty @phddegree\endcsname}}{%
+  \ifcsdef{adsphd@faculty@\adsphd@faculty @phddegree@\adsphd@phddegree}{%
+    \gdef\@phddegree{\expandafter\csname adsphd@faculty@\adsphd@faculty @phddegree@\adsphd@phddegree\endcsname}}{%
+    \if\@empty\adsphd@phddegree%
+      \ClassError{adsphd}{Required option 'phddegree' missing}{\MessageBreak}%
+    \else
+      \ClassError{adsphd}{Unsupported value '\adsphd@phddegree' for class option 'phddegree'}{\MessageBreak}
+    \fi
+  }%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Default values and other settings
@@ -352,14 +385,11 @@
 \depot{}
 \isbn{}
 
-\faculty{Faculty of ....}
-\department{Department of ....}
 \researchgroup{Research group ...}
 \address{Address ...}
 \addresscity{B-3001 Leuven}
 \title{Dissertation title ...}
 \subtitle{}
-\phddegree{... Computer Science ...}
 \date{Month Year}
 \copyyear{2014}
 \email{first.name@dept.kuleuven.be}
@@ -1284,7 +1314,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \begin{flushright}
   Dissertation presented in partial\\%
   \fulfillment\ of the requirements for the\\%
-  degree of Doctor in \@phddegree
+  degree of \@phddegree
   \end{flushright}
   }
   \end{minipage}
@@ -1434,8 +1464,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \vspace{-\parskip}
   {\small\sffamily Dissertation presented in partial\\
   \fulfillment\ of the requirements for\\
-  the degree of Doctor\\
-  in \@phddegree}
+  the degree of \@phddegree}
   \end{textblock*}
   %
   % Place date
@@ -1513,17 +1542,17 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \end{minipage}
 \begin{minipage}[t]{5.3cm}
 %  \begin{tabular}[t]{l}
-    Dissertation presented in partial\\
-    \fulfillment\ of the requirements for\\
-    the degree of Doctor in \@phddegree
+    Dissertation presented in partial
+    \fulfillment\ of the requirements for
+    the degree of \@phddegree
 %  \end{tabular}
 \end{minipage}
 
 %\begin{tabular}{p{7cm}l}
-% Jury:                                                   & Dissertation presented in partial\\
-% \@president, president                                  & fulfillment of the requirements for\\
-% \@supervisor, supervisor                                & the degree of Doctor \\
-% titles first name last name                             & in \@phddegree\\
+% Jury:                                                   & Dissertation presented in partial
+% \@president, president                                  & fulfillment of the requirements for
+% \@supervisor, supervisor                                & the degree of \@phddegree
+% titles first name last name                             & \\
 % titles first name last name                             & \\
 %   \rule{0.25cm}{0pt}(external affiliation)              & \\
 %                                                         & \\

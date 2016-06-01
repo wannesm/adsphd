@@ -125,6 +125,57 @@ file.
 Options for the adsphd class
 ----------------------------
 
+    faculty               : faculty
+                              [firw] Faculty of Engineering Science
+                              [fbiw] Faculty of Bioscience Engineering
+                              [fw]   Faculty of Science
+                              [fa]   Faculty of Architecture
+                              [fiiw] Faculty of Engineering Technology
+
+    department            : department
+                              [aow] Department of Earth and Environmental Sciences
+                              [arc] Department of Architecture
+                              [bio] Department of Biology
+                              [bsy] Department of Biosystems
+                              [bwk] Department of Civil Engineering
+                              [che] Department of Chemistry
+                              [cit] Department of Chemical Engineering
+                              [cws] Department of Computer Science
+                              [elt] Department of Electrical Engineering
+                              [mtk] Department of Materials Engineering
+                              [m2s] Department of Microbial and Molecular Systems
+                              [nat] Department of Physics and Astronomy
+                              [wtk] Department of Mechanical Engineering
+                              [wis] Department of Mathematics
+
+    phddegree             : official PhD degree on diploma (only for the
+                            faculties of Engineering Science and Science)
+
+                              faculty=firw
+                                [arc] Doctor of Engineering Science (PhD): Architecture
+                                [bwk] Doctor of Engineering Science (PhD): Civil Engineering
+                                [cit] Doctor of Engineering Science (PhD): Chemical Engineering
+                                [cws] Doctor of Engineering Science (PhD): Computer Science
+                                [elt] Doctor of Engineering Science (PhD): Electrical Engineering
+                                [mtk] Doctor of Engineering Science (PhD): Materials Engineering
+                                [wtk] Doctor of Engineering Science (PhD): Mechanical Engineering
+                                [gen] Doctor of Engineering Science (PhD)
+ 
+                              faculty=fw
+                                [ste] Doctor of Science (PhD): Astronomy and Astrophysics
+                                [bct] Doctor of Science (PhD): Biochemistry and Biotechnology
+                                [bio] Doctor of Science (PhD): Biology
+                                [bfy] Doctor of Science (PhD): Biophysics
+                                [che] Doctor of Science (PhD): Chemistry
+                                [ggr] Doctor of Science (PhD): Geography
+                                [glo] Doctor of Science (PhD): Geology
+                                [inf] Doctor of Science (PhD): Informatics
+                                [mat] Doctor of Science (PhD): Mathematics
+                                [fys] Doctor of Science (PhD): Physics
+                                [sta] Doctor of Science (PhD): Statistics
+                                [tou] Doctor of Science (PhD): Tourism
+                                [gen] Doctor of Science (PhD)
+
     10pt, 11pt, 12pt      : text point size
     oneside, twoside
     showgit               : when showing extra info (with [info] or
