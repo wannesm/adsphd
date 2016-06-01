@@ -17,12 +17,13 @@ Illustration of how to include citations \cite{Meert2011PhD} and \cite{VandenBro
 And yet another citation \cite{FrRo2010Diffusion}.
 
 % Some dummy code to get at least 1 entry in the nomenclature.
-Introducing some symbol: $\Theta$.
 \nomenclature{$\Theta$}{A nice symbol}
+Introducing some symbol: $\Theta$.
 
 % Some dummy code to get at least 1 entry in the list of
 % abbreviations.
-\glossary{name=MD,description=molecular dynamics}
+\newglossaryentry{md}{name={MD},description={molecular dynamics}}
+Introducing an acronym: \gls{md}.
 
 % Some dummy code show how to include images.
 \begin{figure}

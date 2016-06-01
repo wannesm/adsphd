@@ -196,19 +196,19 @@ Options for the adsphd class
                             show some info (compilation time, ...)
     draft                 : show info and compile the document as a
                             draft
-    prelim                : generate a version of the document
+    tothejury             : generate a version of the document
                             suitable to send to the jury. This means
                             that the logical page is put on an A4
-                            without info, frame, todos, ... 
+                            without info, frame, ... 
     final                 : generate true size (cropped!) pdf without
-                            info, frame, todos, ...
+                            info, frame, ...
     print                 : generate true size (cropped!) pdf without
-                            info, frame, todos, ... suitable for
+                            info, frame, ... suitable for
                             printing (basically equal to final, but
                             forcing uncolored links, even when this
                             option is given explicitly)
     online                : generate true size (cropped!) pdf without
-                            info, frame, todos, ... suitable for
+                            info, frame, ... suitable for
                             printing (basically equal to final, but
                             forcing colored links)
     croppedpdf            : generate true size pdf
@@ -348,5 +348,6 @@ Marko van Dooren,
 Rutger Claes,
 Dirk Van Hertem,
 Anthony Van Herrewege,
+Tassos Natsakis,
 Roel Van Beeumen.
 

@@ -47,7 +47,7 @@ def initapplications():
 	apps['pdflatex']    = App('pdflatex',  '-interaction=nonstopmode -synctex=1 -shell-escape {basename}', verbose)
 	apps['bibtex']      = App('bibtex',    '--min-crossref=100 {basename}', verbose)
 	apps['biber']       = App('biber',     '{basename}', verbose)
-	apps['glossary']    = App('makeindex', '{basename}.glo -s {basename}.ist -t {basename}.glg -o {basename}.gls', verbose)
+	apps['glossary']    = App('makeindex', '{basename}.glo -s {basename}.ist -o {basename}.gls', verbose)
 	apps['nomenclature']= App('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
 	apps['pdfviewer']   = App('acroread',  '{pdffile}', verbose)
 	apps['remove']      = App('rm',        '-f {cleanfiles}', verbose)
@@ -67,7 +67,7 @@ def initapplications():
 settings = {'basename':'', 'cleanfiles':'', 'pdffile':''}
 settings['basename']   = os.path.splitext(mainfile)[0]
 settings['chapters'] = [name.replace(".tex", "") for name in glob.glob('chapters/**/*.tex')]
-settings['cleanext'] = ['.tdo','.fls','.toc','.aux','.log','.bbl','.blg','.log','.lof','.lot','.ilg','.out','.glo','.gls','.nlo','.nls','.brf','.ist','.glg','.synctexgz','.tgz','.idx','.ind','-blx.bib','.fdb_latexmk','.synctex.gz','.run.xml','.bcf']
+settings['cleanext'] = ['.tdo','.fls','.toc','.aux','.log','.bbl','.blg','.log','.lof','.lot','.ilg','.out','.glo','.gls','.nlo','.nls','.brf','.ist','.glg','.synctexgz','.tgz','.idx','.ind','-blx.bib','.fdb_latexmk','.synctex.gz','.run.xml','.bcf','.glsdefs','.xdy']
 settings['cleanfiles'] = " ".join([settings['basename']+ext for ext in settings['cleanext']])
 for chapter in settings['chapters']:
     settings['cleanfiles'] += " "+" ".join([chapter+ext for ext in settings['cleanext']])
@@ -363,7 +363,9 @@ class App:
 			if not dry:
 				returncode = check_call([self.binary] + args)
 		except CalledProcessError as err:
+			print(err)
 			print(sys.argv[0].split("/")[-1] + ": "+errmsg+" (exitcode "+str(err.returncode)+")", file=sys.stderr)
+			sys.exit(1)
 		return returncode
 
 ## COMMAND LINE INTERFACE ##

@@ -7,7 +7,7 @@
 %\documentclass[final,faculty=firw,department=cws,phddegree=cws]{adsphd}
 
 \usepackage{nomencl}   % For nomenclature
-\usepackage[style=long,number=none]{glossary} % For list of abbreviations
+\usepackage{glossaries} % For list of abbreviations
 
 % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 % !!                                                               !!
@@ -75,7 +75,7 @@
 
 % for the list of abbreviations.
 \newcommand{\glossname}{Abbreviations}
-\makeglossary
+\makeglossaries
 
 % To avoid problems, do NOT change the layout of the following two
 % commands
@@ -83,7 +83,9 @@
 \renewcommand{\printglossary}{%
   \renewcommand{\glossaryname}{\glossname}
   \cleardoublepage%
-  \printglossaryorig\chaptermark{\glossname}}
+  \printglossaryorig[title=\glossname]
+  \chaptermark{\glossname}
+}
 
 
 % BibLaTeX
@@ -128,8 +130,8 @@
 % 1. manual creation and inclusion of this file
 %    \includeabbreviations{abbreviations}
 % 2. automatic generation via the glossary package
-%    \usepackage{glossary}
-%    \makeglossary
+%    \usepackage{glossaries}
+%    \makeglossaries
 %    \glossary{name=MD,description=molecular dynamics}
 %    \printglossary
 \printglossary
