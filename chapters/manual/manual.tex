@@ -5,6 +5,28 @@
 
 \section{Tips and Tricks}
 
+\subsection{Image on the cover page}
+
+If you want to place an image on the cover of the dissertation, you can add
+the code underneath to the template (check with your promotor whether this is
+allowed).
+
+\paragraph{Include image:}
+Search for the \texttt{\textbackslash frontcoverheaderXII} command in
+the \texttt{adsphd.cls} file and add the following lines:
+\begin{verbatim}
+   \begin{textblock*}{56mm}(10mm+#1,15mm)
+   \includegraphics[width=56mm,height=20mm]{image/filename}
+   \end{textblock*}
+\end{verbatim}
+Where 56mm is the width, 20mm the height, 10mm the x-location and 15mm the
+y-location.
+
+\paragraph{Change cover font color:}
+Add the command \texttt{\textbackslash color\{red\}} to the
+\texttt{\textbackslash frontcoverheaderXII} command or enclose specific parts.
+For example, \texttt{\{\textbackslash color\{red\}\textbackslash
+textbf\{\textbackslash @authorf\textbackslash\ \textbackslash @authorl\}}.
 
 \subsection{Full cover page}
 
