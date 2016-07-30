@@ -159,6 +159,12 @@
     pdfkeywords={phd, thesis, dissertation, doctoraat, kuleuven, \@authorf~\@authorl\gitaskeyword}%
   }
 
+  \ifcsname tikzifexternalizing\endcsname%
+    \tikzifexternalizing{
+      \typeout{Tikz externalize is running, disable cropping}
+      \crop[off]
+    }{}%
+  \fi
 }}
 
 \RequirePackage{etoolbox}
@@ -473,8 +479,8 @@
   left=20mm, % Equal margins on both sides: (paperwidth - width) / 2
 }
 
-% Load the crop package
 \ifpdf
+  \typeout{Using pdf}
   % Load the crop package
   \RequirePackage[center,pdftex]{crop}
   \RequirePackage[pdftex]{graphicx}
@@ -501,6 +507,7 @@
 % TEXTPOS options
 \setlength{\TPHorizModule}{1mm}
 \setlength{\TPVertModule}{1mm}
+\def\cleartextposbox{\global\setbox\TP@holdbox\vbox{}}
 
 % FONTS
 \newcommand{\labfont}{\fontfamily{phv}\selectfont} % fonts used in labels
@@ -1112,6 +1119,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 }{}
 
 \newcommand{\makefullcoverpage}[2]{%
+  \typeout{Making full cover page}
   % #1: spinewidth
   % #2: spinetitlewidth
   \setlength{\lbleed}{\defaultlbleed}
@@ -1251,6 +1259,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   %
   % Restore font
   \renewcommand{\sfdefault}{\origsfdefault}
+  % Empty textpos boxes (interferes with some other packages such as
+  % Tikz externalize
+  \cleartextposbox
 }
 
 \newcommand{\coverfontsize}[2]{%
