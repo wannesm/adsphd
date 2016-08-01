@@ -1622,6 +1622,7 @@ without written permission from the publisher.
 %\vspace{1cm}
 
 \cleardoublepage
+\cleartextposbox
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
