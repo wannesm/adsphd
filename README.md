@@ -278,25 +278,28 @@ Loaded packages
 
 The following packages are loaded automatically by the adsphd.cls class:
 
-- ifpdf
-- iftex
-- xcolor
-- kvoptions
-- etoolbox
-- showlabels
-- hyperref
+- babel
+- calc
 - datatool
-- listings
+- etoolbox
+- fancyhdr
+- fontenc
 - framed
 - geometry
-- textpos
-- placeins
-- fancyhdr
-- babel
-- setspace
-- rotating
+- hyperref
+- ifpdf
+- iftex
 - ifthen
-- calc
+- kvoptions
+- listings
+- lmodern
+- microtype
+- placeins
+- rotating
+- setspace
+- showlabels
+- textpos
+- xcolor
 
 
 Generating the cover page

@@ -510,6 +510,12 @@
 \def\cleartextposbox{\global\setbox\TP@holdbox\vbox{}}
 
 % FONTS
+\RequirePackage{microtype}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}  % to make pdf searchable
+%\RequirePackage{textcomp} % nice greek alphabet
+%\RequirePackage{pifont}   % Dingbats
+
 \newcommand{\labfont}{\fontfamily{phv}\selectfont} % fonts used in labels
 \usepackage{sectsty}
 \allsectionsfont{\sffamily}
