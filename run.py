@@ -15,26 +15,36 @@ import re
 import shlex
 import sys
 import argparse
+from collections import namedtuple
 
 from subprocess import *
 
 ## SETTINGS ##
 
-mainfile         = 'thesis.tex'
-chaptersdir      = 'chapters'
+given_settings = {
+  'mainfile':    'thesis.tex',
+  'chaptersdir': 'chapters',
 
-makebibliography = True
-makeindex        = True
-makeglossary     = True
-makenomenclature = True
+  'makebibliography': True,
+  'makeindex':        True,
+  'makeglossary':     True,
+  'makenomenclature': True,
 
-usebiblatex      = False
-biblatexbackend  = 'biber' # alternative: bibtex
+  'usebiblatex':      False,
+  'biblatexbackend':  'biber', # alternative: bibtex
+
+  'cleanext':         ['.tdo','.fls','.toc','.aux','.log','.bbl','.blg','.log',
+                       '.lof','.lot','.ilg','.out','.glo','.gls','.nlo','.nls',
+                       '.brf','.ist','.glg','.synctexgz','.tgz','.idx','.ind',
+                       '-blx.bib','.fdb_latexmk','.synctex.gz','.run.xml',
+                       '.bcf','.glsdefs','.xdy']
+}
+
+derived_settings = ['basename', 'chapters', 'cleanfiles', 'pdffile']
 
 verbose          = 0
 dry              = False
 
-apps = {}
 
 ### INITIALISATION ###
 
@@ -44,17 +54,17 @@ def initapplications():
 	global apps
 	# Unix and linux are the default setup
 	## *NIX ##
-	apps['pdflatex']    = App('pdflatex',  '-interaction=nonstopmode -synctex=1 -shell-escape {basename}', verbose)
-	apps['bibtex']      = App('bibtex',    '--min-crossref=100 {basename}', verbose)
-	apps['biber']       = App('biber',     '{basename}', verbose)
-	apps['glossary']    = App('makeindex', '{basename}.glo -s {basename}.ist -o {basename}.gls', verbose)
-	apps['nomenclature']= App('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
-	apps['pdfviewer']   = App('acroread',  '{pdffile}', verbose)
-	apps['remove']      = App('rm',        '-f {cleanfiles}', verbose)
+	apps.pdflatex     = App('pdflatex',  '-interaction=nonstopmode -synctex=1 -shell-escape {basename}', verbose)
+	apps.bibtex       = App('bibtex',    '--min-crossref=100 {basename}', verbose)
+	apps.biber        = App('biber',     '{basename}', verbose)
+	apps.glossary     = App('makeindex', '{basename}.glo -s {basename}.ist -o {basename}.gls', verbose)
+	apps.nomenclature = App('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
+	apps.pdfviewer    = App('acroread',  '{pdffile}', verbose)
+	apps.remove       = App('rm',        '-f {cleanfiles}', verbose)
 
 	if sys.platform == 'darwin':
 		## Mac OS X ##
-		apps['pdfviewer']   = App('open',      '{pdffile}', verbose)
+		apps.pdfviewer   = App('open',      '{pdffile}', verbose)
 
 	elif sys.platform == 'win32' or sys.platform == 'cygwin':
 		## Windows ##
@@ -64,16 +74,28 @@ def initapplications():
 
 ## DERIVED SETTINGS ##
 
-settings = {'basename':'', 'cleanfiles':'', 'pdffile':''}
-settings['basename']   = os.path.splitext(mainfile)[0]
-settings['chapters'] = [name.replace(".tex", "") for name in glob.glob('chapters/**/*.tex')]
-settings['cleanext'] = ['.tdo','.fls','.toc','.aux','.log','.bbl','.blg','.log','.lof','.lot','.ilg','.out','.glo','.gls','.nlo','.nls','.brf','.ist','.glg','.synctexgz','.tgz','.idx','.ind','-blx.bib','.fdb_latexmk','.synctex.gz','.run.xml','.bcf','.glsdefs','.xdy']
-settings['cleanfiles'] = " ".join([settings['basename']+ext for ext in settings['cleanext']])
-for chapter in settings['chapters']:
-    settings['cleanfiles'] += " "+" ".join([chapter+ext for ext in settings['cleanext']])
-settings['pdffile']    = settings['basename']+'.pdf'
-#print(settings)
+def create(*args, **kwargs):
+    class DictAsObj():
+        def __init__(self, *args, **kwargs):
+            self.__dict__ = kwargs
+            for arg in args:
+                self.__dict__[arg] = None
+        def __iter__(self):
+            return self.__dict__.items().__iter__()
+        def items(self):
+            return dict(self.__dict__.items())
+        def copy(self):
+            return DictAsObj(**self.__dict__)
+    return DictAsObj(*args, **kwargs)
 
+settings = create(*derived_settings, **given_settings)
+
+settings.basename = os.path.splitext(settings.mainfile)[0]
+settings.chapters = [name.replace(".tex", "") for name in glob.glob('chapters/**/*.tex')]
+settings.cleanfiles = " ".join([base+ext for ext in settings.cleanext for base in [settings.basename]+settings.chapters])
+settings.pdffile = settings.basename+'.pdf'
+
+apps = create('pdflatex', 'bibtex', 'biber', 'glossary', 'nomenclature', 'pdfviewer', 'remove')
 
 ## COMPILE ##
 
@@ -95,10 +117,18 @@ def test():
     """Verify the settings in run.py"""
     allok = testSettings()
     if allok:
-        print("Your settings appear to be consistent.")
+        print("Your settings appear to be consistent")
     if verbose > 0:
-        for k,v in settings.items():
-            print("{}: {}".format(k, v))
+        for k,v in settings:
+            if verbose > 1 or k not in ['cleanfiles']:
+                print("{}: {}".format(k, v))
+    else:
+        print("(use -v to inspect).")
+
+@target()
+def pdf():
+    """Alias for compile"""
+    return compile()
 
 @target()
 def compile():
@@ -111,40 +141,40 @@ def latex():
 	global apps
 	rerun = False
 	print('#### LATEX ####')
-	apps['pdflatex'].run(settings, 'Latex failed')
-	if makebibliography:
+	apps.pdflatex.run(settings, 'Latex failed')
+	if settings.makebibliography:
 		rerun = True
-		if usebiblatex and biblatexbackend == 'biber':
+		if settings.usebiblatex and settings.biblatexbackend == 'biber':
 			print('#### BIBER ####')
-			apps['biber'].run(settings, 'Biber failed')
+			apps.biber.run(settings, 'Biber failed')
 		else:
 			print('#### BIBTEX ####')
-			apps['bibtex'].run(settings, 'Bibtex failed')
-	if makeindex:
+			apps.bibtex.run(settings, 'Bibtex failed')
+	if settings.makeindex:
 		rerun = True
 		print('#### INDEX ####')
-	if makeglossary:
+	if settings.makeglossary:
 		# List of abbreviations
 		rerun = True
 		print('#### GLOSSARY ####')
-		apps['glossary'].run(settings, 'Creating glossary failed')
-	if makenomenclature:
+		apps.glossary.run(settings, 'Creating glossary failed')
+	if settings.makenomenclature:
 		# List of symbols
 		rerun = True
 		print('#### NOMENCLATURE ####')
-		apps['nomenclature'].run(settings, 'Creating glossary failed')
+		apps.nomenclature.run(settings, 'Creating glossary failed')
 	if rerun:
 		print('#### LATEX ####')
-		apps['pdflatex'].run(settings, 'Rerunning Latex failed')
+		apps.pdflatex.run(settings, 'Rerunning (1) Latex failed')
 		print('#### LATEX ####')
-		apps['pdflatex'].run(settings, 'Rerunning Latex failed')
+		apps.pdflatex.run(settings, 'Rerunning (2) Latex failed')
 
 
 @target()
 def clean():
 	"""Remove the auxiliary files created by Latex."""
 	global apps
-	apps['remove'].run(settings, 'Removing auxiliary files failed')
+	apps.remove.run(settings, 'Removing auxiliary files failed')
 
 
 @target()
@@ -152,9 +182,9 @@ def realclean():
 	"""Remove all files created by Latex."""
 	global apps
 	clean()
-	newsettings = dict(settings)
-	newsettings['cleanfiles'] += 'thesis.pdf thesis.dvi thesis.ps'
-	apps['remove'].run(newsettings, 'Removing pdf files failed.')
+	newsettings = settings.copy()
+	newsettings.cleanfiles += 'thesis.pdf thesis.dvi thesis.ps'
+	apps.remove.run(newsettings, 'Removing pdf files failed.')
 
 @target()
 def cover():
@@ -220,9 +250,9 @@ def cover():
 """)
 
     print("Written cover to cover.tex")
-    newsettings = dict(settings)
-    newsettings['basename'] = 'cover'
-    apps['pdflatex'].run(newsettings, 'Running Latex failed')
+    newsettings = settings.copy()
+    newsettings.basename = 'cover'
+    apps.pdflatex.run(newsettings, 'Running Latex failed')
 
 
 @target()
@@ -250,8 +280,8 @@ def newchapter():
 @target()
 def view():
 	"""Open the generated pdf file in a pdf viewer."""
-	print("Opening "+settings['pdffile'])
-	apps['pdfviewer'].run(settings, 'Opening pdf failed.')
+	print("Opening "+settings.pdffile)
+	apps.pdfviewer.run(settings, 'Opening pdf failed.')
 
 @target()
 def targets():
@@ -286,19 +316,20 @@ def testBiblatex():
 	global usebiblatex
 	allok = True
 	isusingbiblatex = False
-	pattern = re.compile(r'^\\documentclass.*biblatex*.*$')
-	with open(mainfile, 'r') as f:
+	# pattern = re.compile(r'^\\documentclass.*biblatex*.*$')
+	pattern = re.compile(r'^\s*[^%].*{biblatex}')
+	with open(settings.mainfile, 'r') as f:
 		for line in f:
 			if pattern.search(line) != None:
 				isusingbiblatex = True
-				if not usebiblatex:
-					print("Warning: It appears you are using biblatex while this setting in run.py is set to false.\n---> Continuing with biblatex set to true.\n")
+				if not settings.usebiblatex:
+					print("WARNING: It appears you are using biblatex while this setting in run.py is set to false.\n")
 					allok = False
-					usebiblatex = True
+					# settings.usebiblatex = True
 					return allok
-	if not isusingbiblatex and usebiblatex:
-		print("WARNING: It appears you are not using biblatex while this setting in run.py is set to true.\n---> Continuing with biblatex set to false.\n")
-		usebiblatex = False
+	if not isusingbiblatex and settings.usebiblatex:
+		print("WARNING: It appears you are not using biblatex while this setting in run.py is set to true.\n")
+		# settings.usebiblatex = False
 		allok = False
 	return allok
 
@@ -306,7 +337,7 @@ def testBiblatex():
 def testNomenclature():
 	"""Check whether the nomenclature settings are consistent."""
 	allok = True
-	texfile = open(mainfile, 'r')
+	texfile = open(settings.mainfile, 'r')
 	pattern = re.compile(r'^\s*\\usepackage.*{nomencl}.*')
 	found = False
 	for line in texfile:
@@ -315,25 +346,25 @@ def testNomenclature():
 	if not found and makenomenclature:
 		print("\nWARNING: Trying to build the nomenclature but you have not include the nomencl Latex package.\n")
 		allok = False
-	if found and not makenomenclature:
+	if found and not settings.makenomenclature:
 		print("\nWARNING: You have included the nomencl Latex package but in the run.py script this step is not activated.\n")
 		allok = False
 	return allok
 
 
 def testGlossary():
-	"""Check whether the glossary settings are consistent."""
+	"""Check whether the glossaries settings are consistent."""
 	allok = True
-	texfile = open(mainfile, 'r')
-	pattern = re.compile(r'^\s*\\usepackage.*{glossary.*')
+	texfile = open(settings.mainfile, 'r')
+	pattern = re.compile(r'^\s*\\usepackage.*{glossaries.*')
 	found = False
 	for line in texfile:
 		if pattern.search(line) != None:
 			found = True
-	if not found and makeglossary:
-		print("\nWARNING: Trying to build the glossary but you have not include the glossary Latex package.\n")
+	if not found and settings.makeglossary:
+		print("\nWARNING: Trying to build the glossary but you have not include the glossaries Latex package.\n")
 		allok = False
-	if found and not makeglossary:
+	if found and not settings.makeglossary:
 		print("\nWARNING: You have included the glossary Latex package but in the run.py script this step is not activated.\n")
 		allok = False
 	return allok
@@ -357,7 +388,7 @@ class App:
 		"""
 		returncode = 1
 		try:
-			cmd = self.options.format(**settings)
+			cmd = self.options.format(**settings.items())
 			args = shlex.split(cmd)
 			print("Running: "+self.binary+" "+" ".join(args))
 			if not dry:
