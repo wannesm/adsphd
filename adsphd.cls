@@ -82,6 +82,7 @@
 \DeclareBoolOption{cover}
 \DeclareBoolOption{british}
 \DeclareBoolOption{bleed}
+\DeclareBoolOption{nohyperref}
 
 % font and style
 \DeclareVoidOption{10pt}{
@@ -152,12 +153,14 @@
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{phddegree}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{bleed}
 
-  \hypersetup{%
-    pdfauthor={\@authorf~\@authorl},%
-    pdftitle={\@title},%
-    pdfsubject={\@title},%
-    pdfkeywords={phd, thesis, dissertation, doctoraat, kuleuven, \@authorf~\@authorl\gitaskeyword}%
-  }
+  \ifadsphd@nohyperref\else
+    \hypersetup{%
+      pdfauthor={\@authorf~\@authorl},%
+      pdftitle={\@title},%
+      pdfsubject={\@title},%
+      pdfkeywords={phd, thesis, dissertation, doctoraat, kuleuven, \@authorf~\@authorl\gitaskeyword}%
+    }
+  \fi
 
   \ifcsname tikzifexternalizing\endcsname%
     \tikzifexternalizing{
@@ -180,11 +183,12 @@
 }
 
 % Global keys (these options can only be set when calling the class)
-
-\ifpdf
-  \PassOptionsToPackage{plainpages=false,pdfpagelabels,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
-\else
-  \PassOptionsToPackage{plainpages=false,pdfpagelabels,ps2pdf,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
+\ifadsphd@nohyperref\else
+  \ifpdf
+    \PassOptionsToPackage{plainpages=false,pdfpagelabels,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
+  \else
+    \PassOptionsToPackage{plainpages=false,pdfpagelabels,ps2pdf,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
+  \fi
 \fi
 
 % Various output options
@@ -269,13 +273,14 @@
   \PassOptionsToPackage{frame}{crop}
 \fi
 
-\ifadsphd@colorlinks
-  \definecolor{darkblue}{rgb}{0,0,0.55}
-  \PassOptionsToPackage{colorlinks=true,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue}{hyperref}
-  %\PassOptionsToPackage{colorlinks=true}{hyperref}
-\else
-  \message{adsphd.cls: No colored links}
-  \PassOptionsToPackage{colorlinks=false}{hyperref}
+\ifadsphd@nohyperref\else
+  \ifadsphd@colorlinks
+    \definecolor{darkblue}{rgb}{0,0,0.55}
+    \PassOptionsToPackage{colorlinks=true,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue}{hyperref}
+  \else
+    \message{adsphd.cls: No colored links}
+    \PassOptionsToPackage{colorlinks=false}{hyperref}
+  \fi
 \fi
 
 \ifadsphd@cover
@@ -464,7 +469,10 @@
 \renewcommand{\lstlistlistingname}{\lolname}
 
 \RequirePackage{framed} % voor shaded environment
-\RequirePackage{hyperref}
+
+\ifadsphd@nohyperref\else
+  \RequirePackage{hyperref}
+\fi
 
 % Page layout
 %\RequirePackage[dvips=false,pdftex=false,vtex=false]{geometry} # Use this for older versions of geometry (e.g. on Karmic)
