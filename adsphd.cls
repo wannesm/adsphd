@@ -83,6 +83,7 @@
 \DeclareBoolOption{british}
 \DeclareBoolOption{bleed}
 \DeclareBoolOption{nohyperref}
+\DeclareBoolOption{epub}
 
 % font and style
 \DeclareVoidOption{10pt}{
@@ -152,6 +153,7 @@
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{department}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{phddegree}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{bleed}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{epub}
 
   \ifadsphd@nohyperref\else
     \hypersetup{%
@@ -192,6 +194,17 @@
 \fi
 
 % Various output options
+\ifadsphd@epub
+  \adsphd@framefalse
+  \adsphd@cropmarksfalse
+  \adsphd@camfalse
+  \adsphd@infofalse
+  \adsphd@showgitfalse
+  \adsphd@croppedpdffalse
+  %\crop[off]
+\fi
+
+
 \ifadsphd@bleed
   \setlength{\lbleed}{\defaultlbleed}
   \setlength{\rbleed}{\defaultrbleed}
@@ -477,6 +490,15 @@
 % Page layout
 %\RequirePackage[dvips=false,pdftex=false,vtex=false]{geometry} # Use this for older versions of geometry (e.g. on Karmic)
 \RequirePackage[driver=none]{geometry}
+\ifadsphd@epub
+\geometry{
+  papersize={4.5in, 6.2in},
+  width=4.13in,
+  height=5.83in,
+  %vcenter,
+  centering
+}
+\else
 \geometry{
   paperwidth=\adsphdpaperwidth,
   paperheight=\adsphdpaperheight,
@@ -486,11 +508,14 @@
 %  height=185mm, %ads
   left=20mm, % Equal margins on both sides: (paperwidth - width) / 2
 }
+\fi
 
 \ifpdf
   \typeout{Using pdf}
   % Load the crop package
+  \ifadsphd@epub\else
   \RequirePackage[center,pdftex]{crop}
+  \fi
   \RequirePackage[pdftex]{graphicx}
   \DeclareGraphicsExtensions{.pdf, .jpg, .tif, .png}
   % Use utf-8 encoding for foreign characters
@@ -1291,6 +1316,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 }
 
 \newcommand{\makefrontcoverXII}{\makefrontcovergeneralXII{0mm}{1}}
+\ifadsphd@epub
+  \renewcommand{\makefrontcoverXII}{}
+\fi
 \newcommand{\makefrontcovergeneralXII}[2]{%
   \typeout{adsphd.cls: Create cover with bleed (\the\rbleed,\the\lbleed)}
   %
@@ -1781,6 +1809,9 @@ without written permission from the publisher.
 }
 
 \newcommand{\makebackcoverXII}{\makebackcovergeneralXII{0mm}{1}}
+\ifadsphd@epub
+  \renewcommand{\makebackcoverXII}{}
+\fi
 % \makebackcovergeneralXII{xskip}{clearpage}
 \newcommand{\makebackcovergeneralXII}[2]{%
 \typeout{adsphd.cls: Using default back cover page}
