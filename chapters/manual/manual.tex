@@ -75,6 +75,23 @@ value unless you know what you are doing ;) The latter can be done by
 redefining \texttt{\\defaultlbleed} and \texttt{\\defaultrbleed} respectively.
 
 
+\subsection{Small ebook size}
+
+When you add the \texttt{epub} option to the adsphd class the dissertation is
+printed to a smaller size to read on a device such as Kindle.
+
+Environments such as tables or tikz pictures are often sized in absolute values
+and not relative to the size of the output. You can wrap them in a resizebox
+to enforce scaling:
+
+\begin{verbatim}
+  \resizebox{\textwidth}{!}{%
+    \begin{tabular}{cc}
+      ...
+    \end{tabular}
+  }
+\end{verbatim}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Keep the following \cleardoublepage at the end of this file, 
 % otherwise \includeonly includes empty pages.
