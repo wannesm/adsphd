@@ -216,6 +216,8 @@ Options for the adsphd class
                             place the result on an A4 page
     cam                   : instead of a frame, use cropmarks
     cropmarks             : identical to cam
+    epub                  : use a small page size that works better on an
+                            epub reader (e.g. Kindle)
 
     covershowcommittee    : show the committee also on the cover.
     coverfontpercent=<int>: change the cover title font size. Should
