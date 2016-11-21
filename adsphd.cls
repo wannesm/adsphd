@@ -850,7 +850,7 @@
 \renewcommand{\lstlistoflistings}{%
   \cleardoublepage
   \phantomsection
-  %\addcontentsline{toc}{chapter}{\lolname}
+  \addcontentsline{toc}{chapter}{\lolname}
   \let\tableofcontentsnew\tableofcontents
   \let\tableofcontents\tableofcontentsorig
   \lstlistoflistingsorig

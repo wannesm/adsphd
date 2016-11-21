@@ -1,8 +1,6 @@
 \chapter{Manual}\label{ch:manual}
 
 
-\ldots
-
 \section{Tips and Tricks}
 
 \subsection{Image on the cover page}
@@ -58,7 +56,7 @@ The default front and/or back cover page can be overwritten:
 
 \begin{itemize}
     \item create a file \texttt{mycoverpage.tex}
-    \item redefine the commands \texttt{\\makefrontcovergeneral} and \texttt{\\makebackcovergeneral}. For
+    \item redefine the commands \texttt{\textbackslash makefrontcovergeneral} and \texttt{\textbackslash makebackcovergeneral}. For
           an example and more information, see the provided file \texttt{mycoverpage.tex}.
 \end{itemize}
 
@@ -72,8 +70,14 @@ The cover page in the generated pdf has the following structure:
 
 The default bleed (both lbleed and rbleed) is 7mm. I suggest not changing this
 value unless you know what you are doing ;) The latter can be done by
-redefining \texttt{\\defaultlbleed} and \texttt{\\defaultrbleed} respectively.
+redefining \texttt{\textbackslash defaultlbleed} and \texttt{\textbackslash defaultrbleed} respectively.
 
+
+\subsection{Table of contents}
+
+To remove list of figures, tables and other preface chacpter from the table of
+contents, search for occurences of \texttt{\textbackslash addcontentsline} in the file
+\texttt{adsphd.cls} and comment them.
 
 \subsection{Small ebook size}
 

@@ -69,23 +69,22 @@
 \def\@printnomenclature[#1]{%
   \cleardoublepage%
   \chaptermark{\nomname}
+  \addcontentsline{toc}{chapter}{\nomname} %% comment to exclude from TOC
   \@printnomenclatureorig[#1]
 }
 \makeatother
 \makenomenclature
 
 % for the list of abbreviations.
-\newcommand{\glossname}{Abbreviations}
+\newcommand{\glossname}{List of Abbreviations}
 \makeglossaries
-
-% To avoid problems, do NOT change the layout of the following two
-% commands
 \let\printglossaryorig\printglossary
 \renewcommand{\printglossary}{%
   \renewcommand{\glossaryname}{\glossname}
   \cleardoublepage%
   \printglossaryorig[title=\glossname]
   \chaptermark{\glossname}
+  \addcontentsline{toc}{chapter}{\glossname} %% comment to exclude from TOC
 }
 
 
