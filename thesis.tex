@@ -64,9 +64,9 @@
 \renewcommand{\nomname}{List of Symbols}
 \newcommand{\myprintnomenclature}{%
   \cleardoublepage%
+  \printnomenclature%
   \chaptermark{\nomname}
   \addcontentsline{toc}{chapter}{\nomname} %% comment to exclude from TOC
-  \printnomenclature
 }
 \makenomenclature%
 
@@ -130,7 +130,7 @@
 %    \includenomenclature{nomenclaturechapter}
 % 2. automatic generation via the nomencl package
 %    \nomenclature[cB]{$c_B(\vec{x})$}{Characteristic function of $B$}
-\myprintnomenclature[1.5cm]
+\myprintnomenclature
 
 \tableofcontents
 \listoffigures
