@@ -7,9 +7,6 @@
 %\documentclass[final,faculty=firw,department=cws,phddegree=cws]{adsphd}
 %\documentclass[showinstructions,faculty=firw,department=cws,phddegree=cws,epub]{adsphd}
 
-\usepackage{nomencl}   % For nomenclature
-\usepackage{glossaries} % For list of abbreviations
-
 % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 % !!                                                               !!
 % !!  WARNING: do not remove the following lines between           !!
@@ -62,30 +59,30 @@
 
 %%% COVER: End settings %%%
 
-% for the nomenclature
+% for the nomenclature (comment out if you do not use the nomencl package
+\usepackage{nomencl}   % For nomenclature
 \renewcommand{\nomname}{List of Symbols}
 \makeatletter
-\let\@printnomenclatureorig\@printnomenclature
-\def\@printnomenclature[#1]{%
+\newcommand{\myprintnomenclature}{%
   \cleardoublepage%
   \chaptermark{\nomname}
   \addcontentsline{toc}{chapter}{\nomname} %% comment to exclude from TOC
-  \@printnomenclatureorig[#1]
+  \@printnomenclature[1.5cm]
 }
-\makeatother
-\makenomenclature
+\makeatother%
+\makenomenclature%
 
-% for the list of abbreviations.
+% for the list of abbreviations (comment out if you do not use the glossaries package
+\usepackage{glossaries} % For list of abbreviations
 \newcommand{\glossname}{List of Abbreviations}
-\makeglossaries
-\let\printglossaryorig\printglossary
-\renewcommand{\printglossary}{%
+\newcommand{\myprintglossary}{%
   \renewcommand{\glossaryname}{\glossname}
   \cleardoublepage%
-  \printglossaryorig[title=\glossname]
+  \printglossary[title=\glossname]
   \chaptermark{\glossname}
   \addcontentsline{toc}{chapter}{\glossname} %% comment to exclude from TOC
 }
+\makeglossaries%
 
 
 % BibLaTeX
@@ -124,24 +121,18 @@
 \includeabstractnl{abstractnl}
 
 % To create a list of abbreviations, there are 2 options
-% 1. manual creation and inclusion of this file
+% 1. manual creation of list of abbreviations and inclusion as a chapter
 %    \includeabbreviations{abbreviations}
 % 2. automatic generation via the glossary package
-%    \usepackage{glossaries}
-%    \makeglossaries
 %    \glossary{name=MD,description=molecular dynamics}
-%    \printglossary
-\printglossary
+\myprintglossary
 
 % To create a list of symbols, there are 2 options
 % 1. include a manually created nomenclature as a chapter
 %    \includenomenclature{nomenclaturechapter}
 % 2. automatic generation via the nomencl package
-%    \usepackage{nomencl}
-%    \makenomenclature
 %    \nomenclature[cB]{$c_B(\vec{x})$}{Characteristic function of $B$}
-%    \printnomenclature[3cm]
-\printnomenclature[1.5cm]
+\myprintnomenclature[1.5cm]
 
 \tableofcontents
 \listoffigures
