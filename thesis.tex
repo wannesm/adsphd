@@ -62,14 +62,12 @@
 % for the nomenclature (comment out if you do not use the nomencl package
 \usepackage{nomencl}   % For nomenclature
 \renewcommand{\nomname}{List of Symbols}
-\makeatletter
 \newcommand{\myprintnomenclature}{%
   \cleardoublepage%
   \chaptermark{\nomname}
   \addcontentsline{toc}{chapter}{\nomname} %% comment to exclude from TOC
-  \@printnomenclature
+  \printnomenclature
 }
-\makeatother%
 \makenomenclature%
 
 % for the list of abbreviations (comment out if you do not use the glossaries package
