@@ -1,16 +1,16 @@
 ADS PhD LaTeX template
 ======================
 
-*This template is the result of various people contributing updates and fixes. Please help each other
+*This template is the result of various people contributing updates and fixes. Please help your fellow PhD researcher
 in the Issues section and contribute updates.*
+
+If you have tips and tricks you wish to share, updates, questions or problems. Add them
+as a [GitHub issue](https://github.com/wannesm/adsphd/issues).
 
 If you are familiar with Git you can submit 
 changes using a
 [GitHub pull request](https://help.github.com/articles/using-pull-requests) or a
 [Git format-patch](https://www.kernel.org/pub/software/scm/git/docs/git-format-patch.html).
-
-If you have tips and tricks you wish to share, questions or problems. Add them
-as a [GitHub issue](https://github.com/wannesm/adsphd/issues).
 
 
 Information
@@ -330,14 +330,6 @@ Troubleshooting
   avoid it, make sure you end all included chapters (and appendices) with
   `\cleardoublepage` (if you use `makeemptychapter.sh` to generate the chapter
   skeleton this is automatically done!)
-
-
-Presentation template
----------------------
-
-A Beamer template has been created by 
-[Roland Pastorino](http://www.rolandpastorino.com) and is available on the [KU Leuven 
-template page](http://www.kuleuven.be/communicatie/publicaties/powerpointsjablonen).
 
 
 Contributors
