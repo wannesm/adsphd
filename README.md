@@ -1,16 +1,11 @@
 ADS PhD LaTeX template
 ======================
 
-*This template is the result of various people contributing updates and fixes. Please help your fellow PhD researcher
-in the Issues section and contribute updates.*
+*This template is the result of an ongoing group effort. Help your fellow PhD researcher
+in the Issues section and contribute updates if you can.*
 
-If you have tips and tricks you wish to share, updates, questions or problems. Add them
-as a [GitHub issue](https://github.com/wannesm/adsphd/issues).
-
-If you are familiar with Git you can submit 
-changes using a
-[GitHub pull request](https://help.github.com/articles/using-pull-requests) or a
-[Git format-patch](https://www.kernel.org/pub/software/scm/git/docs/git-format-patch.html).
+If you want to share tips, tricks, updates, questions or problems: add them
+as a [GitHub issue](https://github.com/wannesm/adsphd/issues) or a [GitHub pull request](https://help.github.com/articles/using-pull-requests).
 
 
 Information
