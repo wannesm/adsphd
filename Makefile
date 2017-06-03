@@ -486,7 +486,12 @@ MYCOVERPAGE=$(wildcard $(MYCOVERPAGENAME))
 cover: $(COVERPDF)
 
 $(COVERTEX): $(MAINTEX) $(MYCOVERPAGE) adsphd.cls Makefile
-	@echo "\documentclass[cam,cover]{adsphd}"                      >  $@
+	@echo "Please enter the settings for your cover (same as in thesis.tex)"
+	@echo -n "\documentclass[cam,cover"                            >  $@
+	@echo "faculty:";read FAC;echo -n ",faculty=$$FAC"             >> $@
+	@echo "department:";read DEP;echo -n ",department=$$DEP"       >> $@
+	@echo "phddegree:";read PHD;echo -n ",phddegree=$$PHD"         >> $@
+	@echo -n "]{adsphd}"                                           >> $@
 	@echo ""                                                       >> $@
 	@echo "\usepackage{printlen}"                                  >> $@
 	@echo "\uselengthunit{mm}"                                     >> $@

@@ -540,7 +540,11 @@
 % TEXTPOS options
 \setlength{\TPHorizModule}{1mm}
 \setlength{\TPVertModule}{1mm}
-\def\cleartextposbox{\global\setbox\TP@holdbox\vbox{}}
+\ifadsphd@cover%
+\def\cleartextposbox{}%
+\else%
+\def\cleartextposbox{\global\setbox\TP@holdbox\vbox{}}%
+\fi
 
 % FONTS
 \RequirePackage{microtype}
@@ -1356,6 +1360,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \fi
   %
   % Place the title and subtitle
+  %\typeout{Title position: 17.5mm+\the#1}
   \begin{textblock*}{135mm}(17.5mm+#1,100mm)
   \textblockcolour{}
   \vspace{-\parskip}
@@ -1734,6 +1739,7 @@ without written permission from the publisher.
     \newpage
   }{}
   \thispagestyle{empty}
+
   % Blue lines in right corner
   %
   \begin{textblock*}{55mm}(#1+97.5mm,20mm)

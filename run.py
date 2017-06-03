@@ -190,26 +190,44 @@ def realclean():
 def cover():
     """Generate a cover.tex file and produce a standalone cover.pdf"""
 
+    usersettings = dict()
+    doc_re = re.compile(r"^\\documentclass")
+    settings_re = [
+        ('faculty', re.compile("faculty=([a-z]+)")),
+        ('department', re.compile("department=([a-z]+)")),
+        ('phddegree', re.compile("phddegree=([a-z]+)"))
+    ]
+
     content = []
     doadd = False
-    with open(mainfile,'r') as mf:
+    with open(settings.mainfile,'r') as mf:
         for line in mf:
+            if "documentclass" in line:
+                if doc_re.match(line) is not None:
+                    for s, r in settings_re:
+                        result = r.search(line)
+                        if result is not None:
+                            usersettings[s] = result.group(1)
             if doadd:
                 content.append(line)
             if "%%% COVER: Settings" in line:
                 doadd = True
             elif "%%% COVER: End" in line:
                 doadd = False
+    if verbose > 0:
+        print('Recovered settings: ')
+        print(usersettings)
+    extra_usersettings = ','.join(['']+['{}={}'.format(k,v) for k,v in usersettings.items()])
 
     with open('cover.tex','w') as cf:
-         cf.write("""% Cover.tex
-\\documentclass[cam,cover]{adsphd}
-
+        cf.write("""% Cover.tex
+\\documentclass[cam,cover{}]{{adsphd}}""".format(extra_usersettings))
+        cf.write("""
 \\usepackage{printlen}
 \\uselengthunit{mm}
 """)
-         cf.write("".join(content))
-         cf.write("""
+        cf.write("".join(content))
+        cf.write("""
 % Compute total page width
 \\newlength{\\fullpagewidth}
 \\setlength{\\fullpagewidth}{2\\adsphdpaperwidth}
