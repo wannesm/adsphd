@@ -483,6 +483,11 @@
 
 \RequirePackage{framed} % voor shaded environment
 
+
+% To easily change line spacing
+\RequirePackage{setspace}
+
+
 \ifadsphd@nohyperref\else
   \RequirePackage{hyperref}
 \fi
@@ -683,10 +688,6 @@
   \renewcommand\listfigurename{\lofname}
   \renewcommand\listtablename{\lotname}
 }
-
-
-% To easily change line spacing
-\RequirePackage{setspace}
 
 % Conditionals
 \RequirePackage{ifthen}
