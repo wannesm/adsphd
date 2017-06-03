@@ -147,7 +147,7 @@ GLOSSFILE   = $(MAINTEX:.tex=.gls)
 
 COVERPDF = $(COVERTEX:.tex=.pdf)
 
-IGNOREINCHAPTERMODE = \(makefrontcover\|makebackcover\|maketitle\|listoffigures\|listoftables\|printnomenclature\|printglossary\|includeonly\|instructionschapters\)
+IGNOREINCHAPTERMODE = \(makefrontcover\|makebackcover\|tableofcontents\|includebibliography\|maketitle\|listoffigures\|listoftables\|printnomenclature\|printglossary\|includeonly\|instructionschapters\)
 
 IGNOREINCHAPTERMODEBARE = $(subst makefrontcover,makefrontcover\|tableofcontents,$(IGNOREINCHAPTERMODE))
 
