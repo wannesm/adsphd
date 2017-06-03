@@ -1,7 +1,8 @@
 ADS PhD LaTeX template
 ======================
 
-*This template is the result of an ongoing group effort. Help your fellow PhD researcher
+*This template is the result of an ongoing group effort by a number of
+volunteers. Help your fellow PhD researcher
 in the Issues section and contribute updates if you can.*
 
 If you want to share tips, tricks, updates, questions or problems: add them
@@ -344,5 +345,8 @@ Rutger Claes,
 Dirk Van Hertem,
 Anthony Van Herrewege,
 Tassos Natsakis,
+Till Nagel,
+Job Noormal,
+Jesper Cockx,
 Roel Van Beeumen.
 
