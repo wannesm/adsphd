@@ -489,6 +489,7 @@
 
 
 \ifadsphd@nohyperref\else
+  \PassOptionsToPackage{hyphens}{url}
   \RequirePackage{hyperref}
 \fi
 
@@ -809,7 +810,11 @@
   \selectlanguage{dutch}
   \IncludeUnnumberedChapterIfExists{#1}{\prefnlname}{\instructionspreface}
         {\phantomsection}
+  \ifadsphd@british
+  \selectlanguage{british}
+  \else
   \selectlanguage{english}
+  \fi
 }
 
 \newcommand{\includeabstract}[1]{%
@@ -821,7 +826,11 @@
   \selectlanguage{dutch}
   \IncludeUnnumberedChapterIfExists{#1}{\abstractnlname}{\instructionsabstract}
         {\phantomsection}
+  \ifadsphd@british
+  \selectlanguage{british}
+  \else
   \selectlanguage{english}
+  \fi
 }
 
 \newcommand{\includeabbreviations}[1]{%
@@ -1657,7 +1666,11 @@ of op welke andere wijze ook zonder voorafgaande schriftelijke
 toestemming van de uitgever.
 
 \medskip
+\ifadsphd@british
+\selectlanguage{british}
+\else
 \selectlanguage{english}
+\fi
 All rights reserved. No part of the publication may be reproduced
 in any form by print, photoprint, microfilm, electronic or any other means
 without written permission from the publisher.
