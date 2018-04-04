@@ -74,7 +74,7 @@ MYCOVERPAGENAME = mycoverpage.tex # If changing this (e.g., to mycover.tex),
 								  # \setcustomcoverpage{mycover.tex}
 
 CLEANEXTENSIONS = .toc .aux .log .bbl .blg .log .lof .lot .ilg .out .glo .gls .nlo .nls .brf .ist .glg .synctex.gz .tgz .idx .ind -blx.bib .fdb_latexmk .run.xml .bcf
-REALCLEANEXTENSIONS = .dvi .pdf .ps
+REALCLEANEXTENSIONS = .dvi .pdf .ps .glsdefs
 
 FORCE_REBUILD = .force_rebuild
 
@@ -660,7 +660,7 @@ clean:
 	$(RM) -f adsphd.src.tgz
 
 .PHONY: realclean 
-realclean: clean cleandefs
+realclean: clean
 	# Remove main dvi/ps/pdf
 	$(RM) $(MAINTEX:%.tex=%){$(subst $(empty) $(empty),$(comma),$(REALCLEANEXTENSIONS))}
 	# Remove cover related dvi/ps/pdf
@@ -671,9 +671,8 @@ realclean: clean cleandefs
 	# Remove .aux files in chapters
 	$(RM) $(CHAPTERSDIR)/*/*.aux
 	# Remove all separately compiled chapters
-	for i in $(CHAPTERSDIR)/*;\
+	for i in $(CHAPTERNAMES);\
 	do \
-		i=$$(basename "$$i");\
 		$(RM) $(CHAPTERSDIR)/"$$i"/"$$i"{$(subst $(empty) $(empty),$(comma),$(REALCLEANEXTENSIONS))};\
 		$(RM) $(CHAPTERSDIR)/"$$i"/"$$i"_bare{$(subst $(empty) $(empty),$(comma),$(REALCLEANEXTENSIONS))};\
 	done
@@ -683,9 +682,8 @@ damnthatsreallyclean: realclean
 	# Remove possible remaining temporary .tex files
 	$(RM) $(MAINTEX:.tex=).{_sel,_bare,_ch,_bare_ch}.tex
 	# Remove possible remaining temporary files in the chapters dirs
-	for i in $(CHAPTERSDIR)/*;\
+	for i in $(CHAPTERNAMES);\
 	do \
-		i=$$(basename "$$i");\
 		$(RM) $(CHAPTERSDIR)/"$$i"/"$$i"_{ch,bare}{$(subst $(empty) $(empty),$(comma),$(CLEANEXTENSIONS))};\
 		$(RM) $(CHAPTERSDIR)/"$$i"/"$$i"_{ch,bare}{$(subst $(empty) $(empty),$(comma),$(REALCLEANEXTENSIONS))};\
 	done
