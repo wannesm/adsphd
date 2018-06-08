@@ -374,6 +374,18 @@
 }
 \let\supervisor\@supervisorfirst
 
+\DTLnewdb{cosupervisor}
+\newcommand{\@cosupervisor}[2]{%
+  \DTLnewrow{cosupervisor}%
+  \DTLnewdbentry{cosupervisor}{name}{#1}%
+  \DTLnewdbentry{cosupervisor}{affiliation}{#2}%
+}
+\newcommand{\@cosupervisorfirst}[2]{%
+  \DTLforeach{cosupervisor}{}{\DTLremovecurrentrow}
+  \let\cosupervisor\@cosupervisor
+  \cosupervisor{#1}{#2}
+}
+\let\cosupervisor\@cosupervisorfirst
 
 % Allow for multiple external jury members
 \DTLnewdb{externaljury}
@@ -1357,16 +1369,18 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   % Place the DRAFT notifier on the front page to avoid printing a wrong
   % version
   \ifadsphd@final\else
-    \begin{textblock*}{120mm}(17.5mm+#1,50mm)
-    \textblockcolour{}
-    \vspace{-\parskip}
-    \begin{center}
-        \selectfont\LARGE\sffamily\textbf{\color{red}{
-            DRAFT\\
-            {\small To remove, add `final' to class options}
-        }}
-    \end{center}
-    \end{textblock*}
+	\ifadsphd@tothejury\else
+		\begin{textblock*}{120mm}(17.5mm+#1,50mm)
+		\textblockcolour{}
+		\vspace{-\parskip}
+		\begin{center}
+			\selectfont\LARGE\sffamily\textbf{\color{red}{
+				DRAFT\\
+				{\small To remove, add `final' to class options}
+			}}
+		\end{center}
+		\end{textblock*}
+	\fi
   \fi
   %
   % Place the title and subtitle
@@ -1429,11 +1443,11 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
       \ifthenelse{\equal{\affiliation}{}}{}{%
         \\\rule{0.25cm}{0pt}(\affiliation)
       }}
-      %\DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
-      %\\\name%, co-supervisor
-      %\ifthenelse{\equal{\affiliation}{}}{}{%
-        %\\\rule{0.25cm}{0pt}(\affiliation)
-      %}}
+      \DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
+      \\\name, co-supervisor
+      \ifthenelse{\equal{\affiliation}{}}{}{%
+        \\\rule{0.25cm}{0pt}(\affiliation)
+      }}
       \\\@jury%
       \DTLforeach{externaljury}{\name=name,\affiliation=affiliation}{%
       \\\name \\
@@ -1457,11 +1471,13 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
       \ifthenelse{\equal{\affiliation}{}}{}{%
         \\\rule{0.25cm}{0pt}(\affiliation)
       }}
-      %\DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
-      %\\\name%, co-supervisor
-      %\ifthenelse{\equal{\affiliation}{}}{}{%
-        %\\\rule{0.25cm}{0pt}(\affiliation)
-      %}}
+	  \\
+	  \dtlifnumlt{\DTLrowcount{cosupervisor}}{1}{}{\dtlifnumlt{\DTLrowcount{cosupervisor}}{2}{\\Co-supervisor:}{\\Co-supervisors:}}
+      \DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
+      \\\name%, cop-supervisor
+      \ifthenelse{\equal{\affiliation}{}}{}{%
+        \\\rule{0.25cm}{0pt}(\affiliation)
+      }}
       \\
       \if\empty\@udc \else U.D.C. \@udc\fi
     %\end{tabular}
@@ -1508,16 +1524,18 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   % Place the DRAFT notifier on the front page to avoid printing a wrong
   % version
   \ifadsphd@final\else
-    \begin{textblock*}{120mm}(17.5mm+#1,90mm)
-    \textblockcolour{}
-    \vspace{-\parskip}
-    \begin{center}
-        \selectfont\LARGE\sffamily\textbf{\color{red}{
-            DRAFT\\
-            {\small To remove, add `final' to class options}
-        }}
-    \end{center}
-    \end{textblock*}
+	\ifadsphd@tothejury\else
+		\begin{textblock*}{120mm}(17.5mm+#1,90mm)
+		\textblockcolour{}
+		\vspace{-\parskip}
+		\begin{center}
+			\selectfont\LARGE\sffamily\textbf{\color{red}{
+				DRAFT\\
+				{\small To remove, add `final' to class options}
+			}}
+		\end{center}
+		\end{textblock*}
+	\fi
   \fi
   %
   % Place the title
@@ -1609,11 +1627,11 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     \ifthenelse{\equal{\affiliation}{}}{}{%
       \\\rule{0.25cm}{0pt}(\affiliation)
     }}
-    %\DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
-    %\\\name%, co-supervisor
-    %\ifthenelse{\equal{\affiliation}{}}{}{%
-      %\\\rule{0.25cm}{0pt}(\affiliation)
-    %}}
+	\DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
+    \\\name, co-supervisor
+    \ifthenelse{\equal{\affiliation}{}}{}{%
+      \\\rule{0.25cm}{0pt}(\affiliation)
+    }}
     \\\@jury%
     \DTLforeach{externaljury}{\name=name,\affiliation=affiliation}{%
     \\\name \\
