@@ -117,6 +117,7 @@
 \DeclareComplementaryOption{coverhidecommittee}{covershowcommittee}
 
 % Faculty
+\DeclareStringOption{doctoralschool}
 \DeclareStringOption{faculty}
 \DeclareStringOption{department}
 \DeclareStringOption{phddegree}
@@ -149,6 +150,7 @@
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{british}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{showlabels}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{coverfontpercent}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{doctoralschool}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{faculty}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{department}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{phddegree}
@@ -405,6 +407,15 @@
 \def\addresscity#1{\gdef\@addresspc{#1}}
 \def\email#1{\gdef\@email{#1}}
 \def\website#1{\gdef\@website{#1}}
+
+% doctoral school
+\ifx\@empty\adsphd@doctoralschool
+\gdef\adsphd@doctoralschool{ads}
+\fi
+
+\ifcsdef{adsphd@doctoralschool@\adsphd@doctoralschool}{}{%
+  \ClassError{adsphd}{Unsupported value '\adsphd@doctoralschool' for class option 'doctoralschool'}{\MessageBreak}}
+\gdef\@doctoralschool{\expandafter\csname adsphd@doctoralschool@\adsphd@doctoralschool \endcsname}
 
 % faculty
 \ifcsdef{adsphd@faculty@\adsphd@faculty}{}{%
@@ -1237,7 +1248,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   %\hspace*{2mm}
   \begin{flushright}
   \fontsize{12}{15}\selectfont
-  {\bf \textcolor{white} {\sffamily ARENBERG DOCTORAL SCHOOL}}\\[.2mm]
+  {\bf \textcolor{white} {\sffamily \expandafter\MakeUppercase\expandafter{\@doctoralschool}}}\\[.2mm]
   {\sffamily \textcolor{white} {\@faculty}}
   \end{flushright}
   \end{textblock*}
