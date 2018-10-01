@@ -75,8 +75,8 @@ redefining \texttt{\textbackslash defaultlbleed} and \texttt{\textbackslash defa
 
 \subsection{Table of contents}
 
-To remove list of figures, tables and other preface chacpter from the table of
-contents, search for occurences of \texttt{\textbackslash addcontentsline} in the file
+To remove list of figures, tables and other preface chapters from the table of
+contents, search for occurrences of \texttt{\textbackslash addcontentsline} in the file
 \texttt{adsphd.cls} and comment them.
 
 \subsection{Small ebook size}
@@ -84,7 +84,7 @@ contents, search for occurences of \texttt{\textbackslash addcontentsline} in th
 When you add the \texttt{epub} option to the adsphd class the dissertation is
 printed to a smaller size to read on a device such as Kindle.
 
-Environments such as tables or tikz pictures are often sized in absolute values
+Environments such as tables or tikZ pictures are often sized in absolute values
 and not relative to the size of the output. You can wrap them in a resizebox
 to enforce scaling:
 
@@ -95,6 +95,46 @@ to enforce scaling:
     \end{tabular}
   }
 \end{verbatim}
+
+\section{Settings for TeXstudio}
+
+If you are working with TeXstudio or other windows latex editors you might want to adjust the editor's settings to allow a proper compilation of the table of contents and list of figures/tables.
+
+\subsection{Custom \textit{makeindex} and \textit{makeglossaries} commands}
+
+According to the \textit{README.md} the tables are indexed through two custom commands. To edit them in TeXstudio open the \textit{Commands} settings (\textit{Options $\to$ Configure TeXstudio...,  Commands} sheet), edit the following fields and press OK.
+
+\textit{Makeindex}:
+{\scriptsize
+\begin{verbatim}
+"C:/Program Files/MiKTeX 2.9/miktex/bin/x64/makeindex.exe" %.nlo -s nomencl.ist -o %.nls
+\end{verbatim}}
+
+\textit{Makeglossaries}:
+{\scriptsize
+\begin{verbatim}
+"C:/Program Files/MiKTeX 2.9/miktex/bin/x64/makeindex.exe" %.glo -s %.ist -t %.glg -o %.gls
+\end{verbatim}}
+
+Now the customized commands can be launched by using \textit{Tools $\to$ Commands $\to$ MakeIndex/Makeglossaries}. If you want to automatize it in the standard \textit{Build \& View} (F5) and \textit{Compile} (F6) commands look at the following section.
+
+\subsection{Custom Build\&View and Compile meta-commands}
+
+Open \textit{Options $\to$ Configure TeXstudio...,  Build} sheet, edit the following field and press OK.
+
+\textit{Build \& View}:
+{\footnotesize\begin{verbatim}
+	txs:///pdflatex | txs:///bibtex | txs:///makeglossaries | txs:///makeindex |
+	txs:///pdflatex  | txs:///pdflatex
+	\end{verbatim}}
+
+To view the PDF once created you have to press F7 (or \textit{Tool $\to$ View}) and the PDF will automatically update in the default viewer whan you modify it. 
+
+If you prefer to directly view the created PDF\textbf{ from the beginning }edit the field as follow:
+{\footnotesize\begin{verbatim}
+	txs:///pdflatex | txs:///bibtex | txs:///makeglossaries | txs:///makeindex |
+	txs:///pdflatex  | txs:///pdflatex | txs:///view-pdf
+	\end{verbatim}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Keep the following \cleardoublepage at the end of this file, 
