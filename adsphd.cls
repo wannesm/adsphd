@@ -1242,12 +1242,17 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \end{textblock*}
   %
   % Create ADS+faculty box
-  \begin{textblock*}{75mm}(80mm+#1,20mm)
+  \begin{textblock*}{85mm}(70mm+#1,20mm)
   \textblockcolour{}
   \vspace{-\parskip}
   %\hspace*{2mm}
   \begin{flushright}
   \fontsize{12}{15}\selectfont
+  \def\tmphss{hss}%
+  \ifx\tmphss\adsphd@doctoralschool
+  \typeout{adsphd: Cover, smaller font size to fit doctoral school name}
+  \fontsize{10}{13}\selectfont%
+  \fi
   {\bf \textcolor{white} {\sffamily \expandafter\MakeUppercase\expandafter{\@doctoralschool}}}\\[.2mm]
   {\sffamily \textcolor{white} {\@faculty}}
   \end{flushright}
