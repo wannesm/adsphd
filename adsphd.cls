@@ -533,7 +533,7 @@
   \ifadsphd@epub\else
   \RequirePackage[center,pdftex]{crop}
   \fi
-  \RequirePackage[pdftex]{graphicx}
+  \RequirePackage{graphicx}
   \DeclareGraphicsExtensions{.pdf, .jpg, .tif, .png}
   % Use utf-8 encoding for foreign characters
     \ifPDFTeX
