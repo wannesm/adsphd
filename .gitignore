@@ -1,5 +1,6 @@
 chapters/*/Makefile
 chapters/*/*.aux
+chapters/*/*.log
 defs.tex
 q.tex
 thesis.aux
@@ -20,6 +21,12 @@ thesis.glo
 thesis.glg
 thesis.gls
 thesis.ist
+thesis.bcf
+thesis.glsdefs
+thesis.idx
+thesis.ind
+thesis.run.xml
+thesis.synctex.gz
 thesis.ps
 cover.*
 s
