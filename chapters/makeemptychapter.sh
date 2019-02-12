@@ -21,6 +21,7 @@ mkdir -p $CHAPTERNAME
 
 echo "Creating $CHAPTERNAME/$CHAPTERNAME.tex..."
 f=$CHAPTERNAME/$CHAPTERNAME.tex
+echo "% !TeX root = ../../thesis.tex" > $f
 echo "\\chapter{This is $CHAPTERNAME}\\label{ch:$CHAPTERNAME}" > $f
 echo "" >> $f
 echo "\\ldots" >> $f
