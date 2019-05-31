@@ -617,12 +617,12 @@
 \renewcommand{\chaptermark}[1]{\markboth{\uppercase{#1}}{\uppercase{#1}}}
 \renewcommand{\sectionmark}[1]{\markright{\uppercase{#1}}}
 \fancyhf{}
-\fancyhead[RO]{\scriptsize\sf\rightmark\ \hrulefill\ \thepage}
-\fancyhead[RE]{\scriptsize\sf\thepage\ \hrulefill\ \leftmark}
+\fancyhead[RO]{\scriptsize\sffamily\rightmark\ \hrulefill\ \thepage}
+\fancyhead[RE]{\scriptsize\sffamily\thepage\ \hrulefill\ \leftmark}
 \renewcommand{\headrulewidth}{0pt}
 \fancypagestyle{plain}{
 \fancyhf{}
-\fancyfoot[C]{\scriptsize\sf\thepage}
+\fancyfoot[C]{\scriptsize\sffamily\thepage}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 }
@@ -1254,7 +1254,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \typeout{adsphd: Cover, smaller font size to fit doctoral school name}
   \fontsize{10}{13}\selectfont%
   \fi
-  {\bf \textcolor{white} {\sffamily \expandafter\MakeUppercase\expandafter{\@doctoralschool}}}\\[.2mm]
+  {\bfseries \textcolor{white} {\sffamily \expandafter\MakeUppercase\expandafter{\@doctoralschool}}}\\[.2mm]
   {\sffamily \textcolor{white} {\@faculty}}
   \end{flushright}
   \end{textblock*}
@@ -1285,7 +1285,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \vspace{-\parskip}
   \hspace*{2mm}
   \parbox[c][20mm]{97.92mm}{
-  {\bf \small \textcolor{white} {\sffamily Arenberg Doctoral School of Science, Engineering \& Technology}}\\[.2mm]
+  {\bfseries \small \textcolor{white} {\sffamily Arenberg Doctoral School of Science, Engineering \& Technology}}\\[.2mm]
   {\sffamily\small \textcolor{white} {\@faculty}}\\[.2mm]
   {\sffamily\small \textcolor{white} {\@department}}
   }
@@ -1727,7 +1727,7 @@ without written permission from the publisher.
   \parbox[c][20mm]{151.2mm+\rbleed}{
   \flushright
   \vspace{-3mm}
-  {\bf \scriptsize \textcolor{white} {\sffamily{}Arenberg Doctoral School of Science, Engineering \& Technology} \ \ }\\[-1mm]
+  {\bfseries \scriptsize \textcolor{white} {\sffamily{}Arenberg Doctoral School of Science, Engineering \& Technology} \ \ }\\[-1mm]
   {\scriptsize \textcolor{white} {\sffamily\@faculty\ \ }}\\[-1.2mm]
   {\scriptsize \textcolor{white} {\sffamily\@department \ \ }}\\[-1.2mm]
   {\scriptsize \textcolor{white} {\sffamily\@researchgroup\ \ }}\\[-1.2mm]

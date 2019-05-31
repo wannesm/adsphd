@@ -280,13 +280,14 @@ def newchapter():
 	validchaptername = re.compile(r'^[a-zA-Z0-9_.]+$')
 	while validchaptername.match(chaptername) == None:
 		chaptername = input("New chapter file name (only a-z, A-Z, 0-9 or _): ")
-	newdirpath = os.path.join(chaptersdir, chaptername)
+	newdirpath = os.path.join(settings.chaptersdir, chaptername)
 	print("Creating new directory: "+newdirpath)
 	if not os.path.exists(newdirpath):
 		os.makedirs(newdirpath)
 	newfilepath = os.path.join(newdirpath,chaptername+".tex")
 	print("Creating new tex-file: "+newfilepath)
 	newfile = open(newfilepath, 'w')
+	print("% !TeX root = ../../"+settings.mainfile, file=newfile)
 	print("\\chapter{This is "+chaptername+"}\\label{ch:"+chaptername+"}\n", file=newfile)
 	print("\n\\ldots\n\n\n\n\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\
