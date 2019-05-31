@@ -540,6 +540,7 @@
       \RequirePackage[utf8]{inputenc}
     \fi
 \else
+  \typeout{Using DVIPS}
   % Load the crop package
   \RequirePackage[center,dvips]{crop} % Option [a3] already passed
   \RequirePackage[dvips]{graphicx}
