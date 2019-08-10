@@ -1833,7 +1833,7 @@ without written permission from the publisher.
 \newcommand{\backcoverfooterXII}[1]{%
   % Bottom blue bar
   %\begin{textblock*}{\adsphdpaperwidth}(#1,222mm)
-  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-\lbleed,222mm)
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-\rbleed,222mm)
   %\begin{textblock*}{\adsphdpaperwidth}(0mm+#1,234mm)
   \textblockcolour{blueXIIdark}
   %\vspace{-\parskip}
