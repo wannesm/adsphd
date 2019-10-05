@@ -377,6 +377,21 @@
 \let\supervisor\@supervisorfirst
 
 
+% Allow for multiple presidents
+\DTLnewdb{president}
+\newcommand{\@president}[2]{%
+  \DTLnewrow{president}%
+  \DTLnewdbentry{president}{name}{#1}%
+  \DTLnewdbentry{president}{affiliation}{#2}%
+}
+\newcommand{\@presidentfirst}[2]{%
+  \DTLforeach{president}{}{\DTLremovecurrentrow}
+  \let\president\@president
+  \president{#1}{#2}
+}
+\let\president\@presidentfirst
+
+
 % Allow for multiple external jury members
 \DTLnewdb{externaljury}
 \newcommand{\@externaljurymember}[2]{%
@@ -393,7 +408,6 @@
 
 \def\subtitle#1{\gdef\@subtitle{#1}}
 \def\author#1#2{\gdef\@authorf{#1}\gdef\@authorl{#2}}
-\def\president#1{\gdef\@president{#1}}
 \def\jury#1{\gdef\@jury{#1}}
 \def\udc#1{\gdef\@udc{#1}}
 \def\depot#1{\gdef\@depot{#1}}
@@ -443,10 +457,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Default values and other settings
 \author{Guust}{Flater}
-\@supervisor{Prof.dr.ir.~Supervisor}{}
-\president{Mr.~De~Voorzitter}
+\@supervisor{Prof.~dr.~ir.~Supervisor}{}
+\@president{Prof.~dr.~ir.~The~Chairman}{}
 \jury{Jurylid 1\\Jurylid 2}
-\@externaljurymember{External jury member}{External affiliation}
+\@externaljurymember{Prof.~dr.~External~Jurymember}{Far Away}
 \udc{}
 \depot{}
 \isbn{}
@@ -1439,8 +1453,12 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     \begin{minipage}[t]{67mm}
       \coverfontsize{12}{15}\selectfont\sffamily
       %\begin{tabular}[t]{p{6.9cm}}
-      Examination committee:\\
-      \@president, chair
+      Examination committee:
+      \DTLforeach{president}{\name=name,\affiliation=affiliation}{%
+      \\\name, chair
+      \ifthenelse{\equal{\affiliation}{}}{}{%
+        \\\rule{0.5cm}{0pt}(\affiliation)
+      }}
       \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
       \\\name, supervisor
       \ifthenelse{\equal{\affiliation}{}}{}{%
@@ -1453,8 +1471,8 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
       %}}
       \\\@jury%
       \DTLforeach{externaljury}{\name=name,\affiliation=affiliation}{%
-      \\\name \\
-      \rule{0.25cm}{0pt}(\affiliation)
+      \\\name
+      \\\rule{0.25cm}{0pt}(\affiliation)
       }
       \\
       \if\empty\@udc \else U.D.C. \@udc\fi
@@ -1619,8 +1637,12 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \vspace{-\parskip}
 \begin{minipage}[t]{7.32cm}
 %  \begin{tabular}[t]{p{6.9cm}}
-    Examination committee:\\
-    \@president, chair
+    Examination committee:
+    \DTLforeach{president}{\name=name,\affiliation=affiliation}{%
+    \\\name, chair
+    \ifthenelse{\equal{\affiliation}{}}{}{%
+      \\\rule{0.5cm}{0pt}(\affiliation)
+    }}
     \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
     \\\name, supervisor
     \ifthenelse{\equal{\affiliation}{}}{}{%
@@ -1633,8 +1655,8 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     %}}
     \\\@jury%
     \DTLforeach{externaljury}{\name=name,\affiliation=affiliation}{%
-    \\\name \\
-    \rule{0.25cm}{0pt}(\affiliation)
+    \\\name
+    \\\rule{0.25cm}{0pt}(\affiliation)
     }
     \\
     \if\empty\@udc \else U.D.C. \@udc\fi
