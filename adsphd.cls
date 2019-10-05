@@ -392,6 +392,21 @@
 \let\president\@presidentfirst
 
 
+% Allow for multiple jury members
+\DTLnewdb{jury}
+\newcommand{\@jurymember}[2]{%
+  \DTLnewrow{jury}%
+  \DTLnewdbentry{jury}{name}{#1}%
+  \DTLnewdbentry{jury}{affiliation}{#2}%
+}
+\newcommand{\@jurymemberfirst}[2]{%
+  \DTLforeach{jury}{}{\DTLremovecurrentrow}
+  \let\jurymember\@jurymember
+  \jurymember{#1}{#2}
+}
+\let\jurymember\@jurymemberfirst
+
+
 % Allow for multiple external jury members
 \DTLnewdb{externaljury}
 \newcommand{\@externaljurymember}[2]{%
@@ -408,7 +423,6 @@
 
 \def\subtitle#1{\gdef\@subtitle{#1}}
 \def\author#1#2{\gdef\@authorf{#1}\gdef\@authorl{#2}}
-\def\jury#1{\gdef\@jury{#1}}
 \def\udc#1{\gdef\@udc{#1}}
 \def\depot#1{\gdef\@depot{#1}}
 \def\isbn#1{\gdef\@isbn{#1}}
@@ -459,7 +473,8 @@
 \author{Guust}{Flater}
 \@supervisor{Prof.~dr.~ir.~Supervisor}{}
 \@president{Prof.~dr.~ir.~The~Chairman}{}
-\jury{Jurylid 1\\Jurylid 2}
+\@jurymember{Prof.~dr.~ir.~The~One}{}
+\@jurymember{Prof.~dr.~ir.~The~Other}{}
 \@externaljurymember{Prof.~dr.~External~Jurymember}{Far Away}
 \udc{}
 \depot{}
@@ -1469,7 +1484,11 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
       %\ifthenelse{\equal{\affiliation}{}}{}{%
         %\\\rule{0.25cm}{0pt}(\affiliation)
       %}}
-      \\\@jury%
+      \DTLforeach{jury}{\name=name,\affiliation=affiliation}{%
+      \\\name
+      \ifthenelse{\equal{\affiliation}{}}{}{%
+        \\\rule{0.5cm}{0pt}(\affiliation)
+      }}
       \DTLforeach{externaljury}{\name=name,\affiliation=affiliation}{%
       \\\name
       \\\rule{0.25cm}{0pt}(\affiliation)
@@ -1653,7 +1672,11 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     %\ifthenelse{\equal{\affiliation}{}}{}{%
       %\\\rule{0.25cm}{0pt}(\affiliation)
     %}}
-    \\\@jury%
+    \DTLforeach{jury}{\name=name,\affiliation=affiliation}{%
+    \\\name
+    \ifthenelse{\equal{\affiliation}{}}{}{%
+      \rule{0.5cm}{0pt}(\affiliation)
+    }}
     \DTLforeach{externaljury}{\name=name,\affiliation=affiliation}{%
     \\\name
     \\\rule{0.25cm}{0pt}(\affiliation)
