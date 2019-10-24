@@ -58,8 +58,26 @@
 \newlength{\tmplength}
 
 % Colors
-\definecolor{blueXIIdark}{cmyk}{.81,.19,.12,.06}
-\definecolor{blueXIIlight}{cmyk}{.59,.05,.02,.00}
+\definecolor{kullightblue}{cmyk/RGB}{.59,.07,0,0/82,189,236}
+\definecolor{kulcorporateblue}{cmyk/RGB}{1,.64,0,.38/0,64,122}
+\definecolor{kulprimaryblue}{cmyk/RGB}{.65,0,0,.35/29,141,176}
+\definecolor{kulsecondaryblue}{cmyk/RGB}{.13,0,0,.07/220,231,240}
+\definecolor{kultertiarylightblue}{cmyk/RGB}{.59,.07,0,0/82,189,236}
+\definecolor{kultertiaryblue}{cmyk/RGB}{.65,0,0,.55/70,110,135}
+\definecolor{kultertiarydarkblue}{cmyk/RGB}{.65,0,0,.75/47,77,93}
+\definecolor{kultertiaryaccent1}{cmyk/RGB}{.60,0,.30,0/135,192,189}
+\definecolor{kultertiaryaccent2}{cmyk/RGB}{0,.35,.90,0/231,176,55}
+\definecolor{kultertiaryaccent3}{cmyk/RGB}{.30,0,.70,.30/156,166,90}
+\definecolor{kultertiaryaccent4}{cmyk/RGB}{.14,.05,.90,0/228,218,62}
+\definecolor{kultertiaryaccent5}{cmyk/RGB}{.31,0,.12,.10/184,208,212}
+\definecolor{kultertiaryaccent6}{cmyk/RGB}{.34,.36,.59,.0/176,159,118}
+\definecolor{kultertiaryaccent7}{cmyk/RGB}{0,.65,.50,0/212,119,110}
+\definecolor{kultertiaryaccent8}{cmyk/RGB}{0,.10,1,.23/203,182,16}
+\definecolor{kultertiaryaccent9}{cmyk/RGB}{0,.51,.20,.30/170,121,130}
+\definecolor{kultertiaryaccent10}{cmyk/RGB}{.10,.50,.10,.05/199,147,174}
+\definecolor{kultertiaryaccent11}{cmyk/RGB}{.25,0,.90,0/212,216,66}
+\definecolor{kultertiaryaccent12}{cmyk/RGB}{.03,.60,.80,.15/186,113,60}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Options that can be passed to adsphd.cls:
@@ -1232,7 +1250,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \thispagestyle{empty}
   % Blue bar on top
   \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,20mm)
-  \textblockcolour{blueXIIdark}
+  \textblockcolour{kulprimaryblue}
   %\vspace{-\parskip}
   \rule{0pt}{20mm}
   \end{textblock*}
@@ -1392,7 +1410,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \textblockcolour{}
   \vspace{-\parskip}
   \raggedright
-  \coverfontsize{30}{34}\selectfont\sffamily{\color{blueXIIdark}\@title}\\
+  \coverfontsize{30}{34}\selectfont\sffamily{\color{kulprimaryblue}\@title}\\
   \coverfontsize{20}{25}\selectfont\sffamily{\@subtitle}
   \end{textblock*}
   %
@@ -1488,7 +1506,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   %
   % Bottom blue bar
   \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,234mm)
-  \textblockcolour{blueXIIlight}
+  \textblockcolour{kullightblue}
   %\vspace{-\parskip}
   \rule{0pt}{2.1mm}
   \end{textblock*}
@@ -1774,12 +1792,12 @@ without written permission from the publisher.
   % Blue lines in right corner
   %
   \begin{textblock*}{55mm}(#1+97.5mm,20mm)
-  \textblockcolour{blueXIIlight}
+  \textblockcolour{kullightblue}
   %\vspace{-\parskip}
   \rule{0pt}{2mm}
   \end{textblock*}
   \begin{textblock*}{2mm}(#1+152mm,20mm)
-  \textblockcolour{blueXIIlight}
+  \textblockcolour{kullightblue}
   %\vspace{-\parskip}
   \rule{0pt}{18mm}
   \end{textblock*}
@@ -1836,7 +1854,7 @@ without written permission from the publisher.
   %\begin{textblock*}{\adsphdpaperwidth}(#1,222mm)
   \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-\lbleed,222mm)
   %\begin{textblock*}{\adsphdpaperwidth}(0mm+#1,234mm)
-  \textblockcolour{blueXIIdark}
+  \textblockcolour{kulprimaryblue}
   %\vspace{-\parskip}
   \rule{0pt}{15mm}
   \end{textblock*}
