@@ -58,25 +58,25 @@
 \newlength{\tmplength}
 
 % Colors
-\definecolor{kullightblue}{cmyk/RGB}{.59,.07,0,0/82,189,236}
-\definecolor{kulcorporateblue}{cmyk/RGB}{1,.64,0,.38/0,64,122}
-\definecolor{kulprimaryblue}{cmyk/RGB}{.65,0,0,.35/29,141,176}
-\definecolor{kulsecondaryblue}{cmyk/RGB}{.13,0,0,.07/220,231,240}
-\definecolor{kultertiarylightblue}{cmyk/RGB}{.59,.07,0,0/82,189,236}
-\definecolor{kultertiaryblue}{cmyk/RGB}{.65,0,0,.55/70,110,135}
-\definecolor{kultertiarydarkblue}{cmyk/RGB}{.65,0,0,.75/47,77,93}
-\definecolor{kultertiaryaccent1}{cmyk/RGB}{.60,0,.30,0/135,192,189}
-\definecolor{kultertiaryaccent2}{cmyk/RGB}{0,.35,.90,0/231,176,55}
-\definecolor{kultertiaryaccent3}{cmyk/RGB}{.30,0,.70,.30/156,166,90}
-\definecolor{kultertiaryaccent4}{cmyk/RGB}{.14,.05,.90,0/228,218,62}
-\definecolor{kultertiaryaccent5}{cmyk/RGB}{.31,0,.12,.10/184,208,212}
-\definecolor{kultertiaryaccent6}{cmyk/RGB}{.34,.36,.59,.0/176,159,118}
-\definecolor{kultertiaryaccent7}{cmyk/RGB}{0,.65,.50,0/212,119,110}
-\definecolor{kultertiaryaccent8}{cmyk/RGB}{0,.10,1,.23/203,182,16}
-\definecolor{kultertiaryaccent9}{cmyk/RGB}{0,.51,.20,.30/170,121,130}
-\definecolor{kultertiaryaccent10}{cmyk/RGB}{.10,.50,.10,.05/199,147,174}
-\definecolor{kultertiaryaccent11}{cmyk/RGB}{.25,0,.90,0/212,216,66}
-\definecolor{kultertiaryaccent12}{cmyk/RGB}{.03,.60,.80,.15/186,113,60}
+\definecolor{kullightblue}{cmyk/RGB/rgb}{.59,.07,0,0/82,189,236/.322,.741,.925}
+\definecolor{kulcorporateblue}{cmyk/RGB/rgb}{1,.64,0,.38/0,64,122/0,.251,.478}
+\definecolor{kulprimaryblue}{cmyk/RGB/rgb}{.65,0,0,.35/29,141,176/.114,.553,.690}
+\definecolor{kulsecondaryblue}{cmyk/RGB/rgb}{.13,0,0,.07/220,231,240/.863,.906,.941}
+\definecolor{kultertiarylightblue}{cmyk/RGB/rgb}{.59,.07,0,0/82,189,236/.322,.741,.925}
+\definecolor{kultertiaryblue}{cmyk/RGB/rgb}{.65,0,0,.55/70,110,135/.275,.431,.529}
+\definecolor{kultertiarydarkblue}{cmyk/RGB/rgb}{.65,0,0,.75/47,77,93/.184,.302,.365}
+\definecolor{kultertiaryaccent1}{cmyk/RGB/rgb}{.60,0,.30,0/135,192,189/.529,.753,.741}
+\definecolor{kultertiaryaccent2}{cmyk/RGB/rgb}{0,.35,.90,0/231,176,55/.906,.690,.216}
+\definecolor{kultertiaryaccent3}{cmyk/RGB/rgb}{.30,0,.70,.30/156,166,90/.612,.651,.353}
+\definecolor{kultertiaryaccent4}{cmyk/RGB/rgb}{.14,.05,.90,0/228,218,62/.894,.855,.243}
+\definecolor{kultertiaryaccent5}{cmyk/RGB/rgb}{.31,0,.12,.10/184,208,212/.722,.816,.831}
+\definecolor{kultertiaryaccent6}{cmyk/RGB/rgb}{.34,.36,.59,.0/176,159,118/.690,.624,.463}
+\definecolor{kultertiaryaccent7}{cmyk/RGB/rgb}{0,.65,.50,0/212,119,110/.831,.467,.431}
+\definecolor{kultertiaryaccent8}{cmyk/RGB/rgb}{0,.10,1,.23/203,182,16/.796,.714,.063}
+\definecolor{kultertiaryaccent9}{cmyk/RGB/rgb}{0,.51,.20,.30/170,121,130/.667,.475,.510}
+\definecolor{kultertiaryaccent10}{cmyk/RGB/rgb}{.10,.50,.10,.05/199,147,174/.780,.576,.682}
+\definecolor{kultertiaryaccent11}{cmyk/RGB/rgb}{.25,0,.90,0/212,216,66/.831,.847,.259}
+\definecolor{kultertiaryaccent12}{cmyk/RGB/rgb}{.03,.60,.80,.15/186,113,60/.729,.443,.235}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
