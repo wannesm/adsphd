@@ -130,6 +130,7 @@ Options for the adsphd class
                               [fw]   Faculty of Science
                               [fa]   Faculty of Architecture
                               [fiiw] Faculty of Engineering Technology
+			      [hiw]  Institute of Philosophy
 
     department            : department
                               [aow] Department of Earth and Environmental Sciences
@@ -146,6 +147,11 @@ Options for the adsphd class
                               [nat] Department of Physics and Astronomy
                               [wtk] Department of Mechanical Engineering
                               [wis] Department of Mathematics
+                              [cespp]   Centre for Ethics, Social and Political Philosophy
+                              [clps]    Centre for Logic and Philosophy of Science
+                              [cmprpc]  Centre for Metaphysics, Philosophy of Religion and Philosophy of Culture
+                              [dwmc]    De Wulf-Mansion Centre for Ancient, Medieaval and Renaissance Philosophy
+                              [hua]     Husserl-Archives: Centre for Phenomenology and Continental Philosophy
 
     phddegree             : official PhD degree on diploma (only for the
                             faculties of Engineering Science and Science)
