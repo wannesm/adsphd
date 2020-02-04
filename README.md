@@ -142,7 +142,7 @@ Options for the adsphd class
                               [cws] Department of Computer Science
                               [elt] Department of Electrical Engineering
                               [mtk] Department of Materials Engineering
-                              [m2s] Department of Microbial and Molecular Systems
+                              [mms] Department of Microbial and Molecular Systems
                               [nat] Department of Physics and Astronomy
                               [wtk] Department of Mechanical Engineering
                               [wis] Department of Mathematics
