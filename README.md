@@ -3,7 +3,8 @@ ADS PhD LaTeX template
 
 *This template is the result of an ongoing group effort by a number of
 volunteers. Help your fellow PhD researcher
-in the Issues section and contribute updates if you can.*
+in the Issues section and contribute updates if you can. If you are fluent
+in TeX and can help monitoring this repository, ask Wannes Meert for admin rights.*
 
 If you want to share tips, tricks, updates, questions or problems: add them
 as a [GitHub issue](https://github.com/wannesm/adsphd/issues) or a [GitHub pull request](https://help.github.com/articles/using-pull-requests).
