@@ -1793,7 +1793,7 @@ without written permission from the publisher.
   %\vspace{-3mm}
   {\scriptsize {\sffamily\MakeUppercase\@faculty}}\\[-1mm]
   {\scriptsize {\sffamily\MakeUppercase\@department}}\\[-1mm]
-  {\scriptsize {\sffamily\MakeUppercase\@researchgroup}}\\[-1mm]
+  \ifdefempty{\@researchgroup}{}{{\scriptsize {\sffamily\MakeUppercase\@researchgroup}}\\[-1mm]}
   {\scriptsize {\sffamily\@address}}\\[-1mm]
   {\scriptsize {\sffamily{}\@addresspc}}\\[-1mm]
   \ifdefempty{\@email}{}{{\scriptsize {\sffamily{}\@email}}\\[-1mm]}
