@@ -1286,6 +1286,8 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   %
   % Create logo box
   \begin{textblock*}{56mm}(10mm+#1,15mm)
+  % explicitly turn off block colour to prevent the coloured background from popping up due to misalignment of the logo
+  \textblockcolour{}
   \includegraphics[width=56mm,height=20mm]{image/KULEUVEN_LOGO_2012}
   \end{textblock*}
   %
