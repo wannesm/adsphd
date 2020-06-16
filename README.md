@@ -356,5 +356,7 @@ Till Nagel,
 Job Noormal,
 Jesper Cockx,
 Laurens Sion,
+Felipe Morales,
+Pieter Maene,
 Roel Van Beeumen.
 
