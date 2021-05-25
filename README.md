@@ -70,7 +70,7 @@ work cross-platform.
 
     python3 run.py             # Compile to pdf
     python3 run.py clean       # Clean auxiliary files
-    python3 run.py cleanall    # Clean everything
+    python3 run.py realclean   # Clean everything
     python3 run.py newchapter  # Set up files for a new chapter
     python3 run.py --help      # Help and more options
 
