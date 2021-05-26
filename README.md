@@ -62,19 +62,34 @@ Any other Latex build tool like latexmk, rubber, SCons, TeXShop or TeXWorks
 should also work out of the box (`makeindex` might not run by default in which
 case you will not see the glossary).
 
+
 Using the simple Python compile script
 --------------------------------------
 
 There is a simple and naive Python compilation script supplied which should
 work cross-platform.
+It is also available as Windows exe (`run.exe`) without the need for Python
+itself.
 
     python3 run.py             # Compile to pdf
     python3 run.py clean       # Clean auxiliary files
-    python3 run.py cleanall    # Clean everything
+    python3 run.py realclean   # Clean everything
     python3 run.py newchapter  # Set up files for a new chapter
     python3 run.py --help      # Help and more options
 
 Some settings are available at the top of the `run.py` file.
+
+TexWorks
+--------
+
+It is possible the setup the above run script as the processing tool in
+TexWorks, by going into Edit > Preferences > Typesetting.
+Under `processing tools`, click the plus sign and select the `run.py` or
+`run.exe` file by clicking "browse".
+Optionally, you can add the `--ignore-errors` argument to always do a full 
+run of LaTeX.
+Now you should be able to select and run your the tool in the TexWorks editor.
+
 
 Using make and other utility scripts
 ------------------------------------
