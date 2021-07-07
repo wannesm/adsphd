@@ -101,6 +101,21 @@
 \usepackage{amssymb,amsthm}
 \usepackage{amsmath}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%% BACKGROUND ON COVER %%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{transparent}
+\usepackage{eso-pic}
+\newcommand\BackgroundPic{
+    \put(0,0){
+    \parbox[b][\paperheight]{\paperwidth}{%
+    \vfill
+    \centering
+    {\transparent{0.2}%
+    \includegraphics[width=\paperwidth,height=\paperheight]{image/background.pdf}}%
+    \vfill
+    }}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -108,6 +123,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\AddToShipoutPictureBG*{\BackgroundPic}% uncomment if you do not want a background
 \makefrontcoverXII
 
 \maketitle
