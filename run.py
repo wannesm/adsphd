@@ -55,7 +55,7 @@ def initapplications():
 	# Unix and linux are the default setup
 	## *NIX ##
 	apps.pdflatex     = App('pdflatex',  '-interaction=nonstopmode -synctex=1 -shell-escape {basename}', verbose)
-	apps.bibtex       = App('bibtex',    '--min-crossref=100 {basename}', verbose)
+	apps.bibtex       = App('bibtex',    '-min-crossrefs=100 {basename}', verbose)
 	apps.biber        = App('biber',     '{basename}', verbose)
 	apps.glossary     = App('makeindex', '{basename}.glo -s {basename}.ist -o {basename}.gls', verbose)
 	apps.nomenclature = App('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
@@ -68,7 +68,6 @@ def initapplications():
 
 	elif sys.platform == 'win32' or sys.platform == 'cygwin':
 		## Windows ##
-		## TODO: does not yet work
 		pass
 
 
@@ -362,7 +361,7 @@ def testNomenclature():
 	for line in texfile:
 		if pattern.search(line) != None:
 			found = True
-	if not found and makenomenclature:
+	if not found and settings.makenomenclature:
 		print("\nWARNING: Trying to build the nomenclature but you have not include the nomencl Latex package.\n")
 		allok = False
 	if found and not settings.makenomenclature:
@@ -445,7 +444,7 @@ definition
 	args = parser.parse_args(argv)
 
 	if args.verbose is not None:
-	    verbose = args.verbose
+		verbose = args.verbose
 	dry = args.dry
 
 	if args.targets:
