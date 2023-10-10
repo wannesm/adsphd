@@ -9,13 +9,12 @@
 # rubber, SCons, or make if you want such a feature).
 #
 
-import glob
-import os
 import re
 import shlex
 import sys
 import argparse
 from collections import namedtuple
+from pathlib import Path
 
 from subprocess import *
 
@@ -60,7 +59,6 @@ def initapplications():
 	apps.glossary     = App('makeindex', '{basename}.glo -s {basename}.ist -o {basename}.gls', verbose)
 	apps.nomenclature = App('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
 	apps.pdfviewer    = App('acroread',  '{pdffile}', verbose)
-	apps.remove       = App('rm',        '-f {cleanfiles}', verbose)
 
 	if sys.platform == 'darwin':
 		## Mac OS X ##
@@ -89,10 +87,10 @@ def create(*args, **kwargs):
 
 settings = create(*derived_settings, **given_settings)
 
-settings.basename = os.path.splitext(settings.mainfile)[0]
-settings.chapters = [name.replace(".tex", "") for name in glob.glob('chapters/**/*.tex')]
-settings.cleanfiles = " ".join([base+ext for ext in settings.cleanext for base in [settings.basename]+settings.chapters])
-settings.pdffile = settings.basename+'.pdf'
+settings.basename = Path(settings.mainfile).with_suffix('')
+settings.chapters = [chap.with_suffix('') for chap in Path(settings.chaptersdir).glob('**/*.tex')]
+settings.cleanfiles = [base.with_name(base.stem + ext) for ext in settings.cleanext for base in [settings.basename, Path('cover')]+settings.chapters]
+settings.pdffile = settings.basename.with_suffix('.pdf')
 
 apps = create('pdflatex', 'bibtex', 'biber', 'glossary', 'nomenclature', 'pdfviewer', 'remove')
 
@@ -172,18 +170,18 @@ def latex():
 @target()
 def clean():
 	"""Remove the auxiliary files created by Latex."""
-	global apps
-	apps.remove.run(settings, 'Removing auxiliary files failed')
+	rm(settings.cleanfiles, 'Removing auxiliary files failed')
 
 
 @target()
 def realclean():
 	"""Remove all files created by Latex."""
-	global apps
 	clean()
-	newsettings = settings.copy()
-	newsettings.cleanfiles += 'thesis.pdf thesis.dvi thesis.ps'
-	apps.remove.run(newsettings, 'Removing pdf files failed.')
+	cleanfiles = [
+		Path('thesis.pdf'), Path('thesis.dvi'), Path('thesis.ps'),
+		Path('cover.pdf'), Path('cover.dvi'), Path('cover.ps')
+	]
+	rm(cleanfiles, 'Removing pdf files failed')
 
 @target()
 def cover():
@@ -279,21 +277,19 @@ def newchapter():
 	validchaptername = re.compile(r'^[a-zA-Z0-9_.]+$')
 	while validchaptername.match(chaptername) == None:
 		chaptername = input("New chapter file name (only a-z, A-Z, 0-9 or _): ")
-	newdirpath = os.path.join(settings.chaptersdir, chaptername)
-	print("Creating new directory: "+newdirpath)
-	if not os.path.exists(newdirpath):
-		os.makedirs(newdirpath)
-	newfilepath = os.path.join(newdirpath,chaptername+".tex")
-	print("Creating new tex-file: "+newfilepath)
-	newfile = open(newfilepath, 'w')
-	print("% !TeX root = ../../"+settings.mainfile, file=newfile)
-	print("\\chapter{This is "+chaptername+"}\\label{ch:"+chaptername+"}\n", file=newfile)
-	print("\n\\ldots\n\n\n\n\
+	newdir = Path(settings.chaptersdir, chaptername)
+	print(f"Creating new directory: {newdir}")
+	newdir.mkdir(parents=True, exist_ok=True)
+	newfile = newdir / f"{chaptername}.tex"
+	print(f"Creating new tex-file: {newfile}")
+	with open(newfile, 'w') as f:
+		f.write("% !TeX root = ../../"+settings.mainfile)
+		f.write("\n\\chapter{This is "+chaptername+"}\\label{ch:"+chaptername+"}\n")
+		f.write("\n\\ldots\n\n\n\n\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\
 % Keep the following \\cleardoublepage at the end of this file, \n\
 % otherwise \\includeonly includes empty pages.\n\
-\\cleardoublepage\n", file=newfile)
-	newfile.close()
+\\cleardoublepage\n")
 
 @target()
 def view():
@@ -355,12 +351,12 @@ def testBiblatex():
 def testNomenclature():
 	"""Check whether the nomenclature settings are consistent."""
 	allok = True
-	texfile = open(settings.mainfile, 'r')
 	pattern = re.compile(r'^\s*\\usepackage.*{nomencl}.*')
 	found = False
-	for line in texfile:
-		if pattern.search(line) != None:
-			found = True
+	with open(settings.mainfile, 'r') as texfile:
+		for line in texfile:
+			if pattern.search(line) != None:
+				found = True
 	if not found and settings.makenomenclature:
 		print("\nWARNING: Trying to build the nomenclature but you have not include the nomencl Latex package.\n")
 		allok = False
@@ -373,12 +369,12 @@ def testNomenclature():
 def testGlossary():
 	"""Check whether the glossaries settings are consistent."""
 	allok = True
-	texfile = open(settings.mainfile, 'r')
 	pattern = re.compile(r'^\s*\\usepackage.*{glossaries.*')
 	found = False
-	for line in texfile:
-		if pattern.search(line) != None:
-			found = True
+	with open(settings.mainfile, 'r') as texfile:
+		for line in texfile:
+			if pattern.search(line) != None:
+				found = True
 	if not found and settings.makeglossary:
 		print("\nWARNING: Trying to build the glossary but you have not include the glossaries Latex package.\n")
 		allok = False
@@ -386,6 +382,20 @@ def testGlossary():
 		print("\nWARNING: You have included the glossary Latex package but in the run.py script this step is not activated.\n")
 		allok = False
 	return allok
+
+
+def rm(files, errmsg):
+	# Cross-platform "rm -f [files]"
+	for file in files:
+		try:
+			# file.unlink(missing_ok=True)  # Python >= 3.8
+			file.unlink()
+		except FileNotFoundError:
+			pass
+		except OSError as err:
+			print(err)
+			print(sys.argv[0].split("/")[-1] + ": "+errmsg+" (exitcode "+str(err.returncode)+")", file=sys.stderr)
+			sys.exit(1)
 
 
 ## APPLICATION ##
@@ -400,17 +410,21 @@ class App:
 		""" Run the command for the given settings.
 			Required settings:
 				- basename
-				- cleanfiles
+				- pdffile
 		
 			:returns: Return code
 		"""
 		returncode = 1
 		try:
 			cmd = self.options.format(**settings.items())
-			args = shlex.split(cmd)
-			print("Running: "+self.binary+" "+" ".join(args))
+			if sys.platform == "win32":
+				args = self.binary + " " + cmd
+				print(f"Running: {args}")
+			else:
+				args = [self.binary] + shlex.split(cmd)
+				print("Running: " + " ".join(args))
 			if not dry:
-				returncode = check_call([self.binary] + args)
+				returncode = check_call(args)
 		except CalledProcessError as err:
 			print(err)
 			print(sys.argv[0].split("/")[-1] + ": "+errmsg+" (exitcode "+str(err.returncode)+")", file=sys.stderr)
