@@ -59,7 +59,6 @@ def initapplications():
 	apps.glossary     = App('makeindex', '{basename}.glo -s {basename}.ist -o {basename}.gls', verbose)
 	apps.nomenclature = App('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
 	apps.pdfviewer    = App('acroread',  '{pdffile}', verbose)
-	apps.remove       = App('rm',        '-f {cleanfiles}', verbose)
 
 	if sys.platform == 'darwin':
 		## Mac OS X ##
