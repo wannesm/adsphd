@@ -344,6 +344,7 @@
       \read1 to \gitdescribe
       \closein2
       \message{Warning: Fallback on VERSION file for print git information. (Create such a file with a git-hook)}
+      \message{Using: \gitdescribe}
     }{%
       \adsphd@showgitfalse
       \message{Warning: Also no VERSION file found. Git information will not be shown.}
@@ -640,12 +641,12 @@
 
 \ifadsphd@showgit
   \ifadsphd@info
-    \ifshellescape
+    % \ifshellescape
       %\cropdef[\cropgitinfo]\CROP@@frame\relax\relax\relax{gitinfo}
       %\crop[gitinfo]
       \let\orig@CROP@time=\CROP@time
       \renewcommand{\CROP@time}{\orig@CROP@time\x\gitdescribe}
-    \fi
+    % \fi
   \fi
 \fi
 
