@@ -1642,6 +1642,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \let\orig@makefrontcovergeneralX\makefrontcovergeneralX
 \let\orig@makefrontcovergeneralXII\makefrontcovergeneralXII
 
+\newcommand{\theUseOfGenAI}{}
+\newcommand{\useOfGenAI}[1]{\renewcommand{\theUseOfGenAI}{#1}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Redefine title page
 \renewcommand{\maketitle}{%
@@ -1762,6 +1765,21 @@ without written permission from the publisher.
 
 \ifthenelse{\equal{\@isbn}{}}{}{ISBN \@isbn\\}
 \ifthenelse{\equal{\@depot}{}}{}{D/\@depot}
+
+\textbf{Use of Generative AI}\\
+\ifthenelse{\equal{\theUseOfGenAI}{}}{%
+  \textbf{\color{red}Uncomment the appropriate sentences in the \textbackslash useOfGenAI command
+  and expand the text where needed to make it more specific and add topics if they are not covered
+  by any of the indicated topics.
+  The following sentences will be added by default:}
+}{% 
+  \theUseOfGenAI
+}%
+The text, code, and images in this thesis are my own (unless otherwise specified). Generative AI has
+only been used in accordance with the KU~Leuven guidelines and appropriate references have been added.
+I have reviewed and edited the content as needed and I take full responsibility for the content of
+the thesis.
+
 }
 %\vspace{1cm}
 
