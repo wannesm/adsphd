@@ -358,5 +358,6 @@ Jesper Cockx,
 Laurens Sion,
 Felipe Morales,
 Pieter Maene,
-Roel Van Beeumen.
+Roel Van Beeumen,
+Brent De Blaere.
 
