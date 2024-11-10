@@ -1278,15 +1278,15 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   % Use Helvetica
   \renewcommand{\sfdefault}{\helvetsfdefault}
   \thispagestyle{empty}
-  % Blue bar on top
-  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,20mm)
+  % Blue bar on top -> 18mm from top
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,18mm)
   \textblockcolour{kulprimaryblue}
   %\vspace{-\parskip}
   \rule{0pt}{20mm}
   \end{textblock*}
   %
-  % Create logo box
-  \begin{textblock*}{56mm}(10mm+#1,15mm)
+  % Create logo box = 10mm from top and left
+  \begin{textblock*}{56mm}(10mm+#1,10mm)
   % explicitly turn off block colour to prevent the coloured background from popping up due to misalignment of the logo
   \textblockcolour{}
   \includegraphics[width=56mm,height=20mm]{image/KULEUVEN_LOGO_2012}
