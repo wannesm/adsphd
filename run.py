@@ -218,7 +218,7 @@ def cover():
 
     with open('cover.tex','w') as cf:
         cf.write("""% Cover.tex
-\\documentclass[cam,cover{}]{{adsphd}}""".format(extra_usersettings))
+\\documentclass[cam,cover{},print]{{adsphd}}""".format(extra_usersettings))
         cf.write("""
 \\usepackage{printlen}
 \\uselengthunit{mm}
