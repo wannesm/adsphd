@@ -1857,19 +1857,19 @@ the thesis.
 
   % Blue lines in right corner
   %
-  \begin{textblock*}{55mm}(#1+97.5mm,10mm)
+  \begin{textblock*}{55mm}(#1+94mm,10mm)
   \textblockcolour{kullightblue}
   %\vspace{-\parskip}
   \rule{0pt}{2mm}
   \end{textblock*}
-  \begin{textblock*}{2mm}(#1+152mm,10mm)
+  \begin{textblock*}{2mm}(#1+148mm,10mm)
   \textblockcolour{kullightblue}
   %\vspace{-\parskip}
   \rule{0pt}{20mm}
   \end{textblock*}
   %
   % Create gray box
-  \begin{textblock*}{134.5mm}(#1,14mm)
+  \begin{textblock*}{130.5mm}(#1,14mm)
   \textblockcolour{}
   \vspace{-\parskip}
   %\parbox[c][20mm]{151.2mm+\rbleed}{
@@ -1896,7 +1896,7 @@ the thesis.
   %\end{textblock*}
   %
   % Put KULeuven sedes on top
-  \begin{textblock*}{7mm}(138mm+#1,14mm)
+  \begin{textblock*}{7mm}(134mm+#1,14mm)
   \textblockcolour{}
   \vspace{-\parskip}
   \includegraphics*[height=16mm]{image/sedes}%
