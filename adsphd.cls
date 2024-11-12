@@ -1278,15 +1278,15 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   % Use Helvetica
   \renewcommand{\sfdefault}{\helvetsfdefault}
   \thispagestyle{empty}
-  % Blue bar on top
-  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,20mm)
+  % Blue bar on top -> 18mm from top
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,18mm)
   \textblockcolour{kulprimaryblue}
   %\vspace{-\parskip}
   \rule{0pt}{20mm}
   \end{textblock*}
   %
-  % Create logo box
-  \begin{textblock*}{56mm}(10mm+#1,15mm)
+  % Create logo box = 10mm from top and left
+  \begin{textblock*}{56mm}(10mm+#1,10mm)
   % explicitly turn off block colour to prevent the coloured background from popping up due to misalignment of the logo
   \textblockcolour{}
   \includegraphics[width=56mm,height=20mm]{image/KULEUVEN_LOGO_2012}
@@ -1857,19 +1857,19 @@ the thesis.
 
   % Blue lines in right corner
   %
-  \begin{textblock*}{55mm}(#1+97.5mm,20mm)
+  \begin{textblock*}{55mm}(#1+94mm,10mm)
   \textblockcolour{kullightblue}
   %\vspace{-\parskip}
   \rule{0pt}{2mm}
   \end{textblock*}
-  \begin{textblock*}{2mm}(#1+152mm,20mm)
+  \begin{textblock*}{2mm}(#1+148mm,10mm)
   \textblockcolour{kullightblue}
   %\vspace{-\parskip}
-  \rule{0pt}{18mm}
+  \rule{0pt}{20mm}
   \end{textblock*}
   %
   % Create gray box
-  \begin{textblock*}{137.5mm}(#1,23mm)
+  \begin{textblock*}{130.5mm}(#1,14mm)
   \textblockcolour{}
   \vspace{-\parskip}
   %\parbox[c][20mm]{151.2mm+\rbleed}{
@@ -1896,10 +1896,10 @@ the thesis.
   %\end{textblock*}
   %
   % Put KULeuven sedes on top
-  \begin{textblock*}{7mm}(140mm+#1,24mm)
+  \begin{textblock*}{7mm}(134mm+#1,14mm)
   \textblockcolour{}
   \vspace{-\parskip}
-  \includegraphics*[height=15mm]{image/sedes}%
+  \includegraphics*[height=16mm]{image/sedes}%
   \end{textblock*}
 }
 
