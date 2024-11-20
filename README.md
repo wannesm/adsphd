@@ -10,6 +10,18 @@ If you want to share tips, tricks, updates, questions or problems: add them
 as a [GitHub issue](https://github.com/wannesm/adsphd/issues) or a [GitHub pull request](https://help.github.com/articles/using-pull-requests).
 
 
+New 2024 cover design
+---------------------
+
+The template is updated to follow the new cover used by the different 
+doctoral schools (November 2024).
+
+There is a new (experimental) option `helveticaneue` to follow the new style
+that uses Helvetica Neue (otherwise Helvetica is used). If you activate this
+option, make sure to compile using `lualatex` or `xelatex`. These compilers
+have access to the fonts on your computers.
+
+
 Information
 -----------
 

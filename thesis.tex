@@ -1,3 +1,4 @@
+%\documentclass[showinstructions,faculty=firw,department=cws,phddegree=cws,helveticaneue]{adsphd}
 \documentclass[showinstructions,faculty=firw,department=cws,phddegree=cws]{adsphd}
 %\documentclass[showinstructions,faculty=firw,department=cws,phddegree=cws,doctoralschool=ads]{adsphd}
 %\documentclass[showinstructions,showlabels,coverfontpercent=100,faculty=firw,department=cws,phddegree=cws]{adsphd}
@@ -17,7 +18,7 @@
 
 %%% COVER: Settings %%%
 \title{The Title of Your PhD Dissertation}
-%\subtitle{Multiscale computing for Dummies}
+\subtitle{From Artes to AI}
 
 \author{Your}{Name}
 
@@ -29,7 +30,7 @@
 \externaljurymember{Prof.~dr.~External~Jurymember}{Far Away}
 
 % Your research group within the department
-% e.g. iMinds-DistriNet, Scientific Computing Group, ...
+% e.g. DTAI, MICAS
 \researchgroup{XXXXX}
 \website{http://www.XXXXX.cs.kuleuven.be} % Leave empty to hide
 \email{first.last@cs.kuleuven.be} % Leave empty to hide
@@ -37,32 +38,20 @@
 \address{Celestijnenlaan 200A box 2402}
 % \addresscity{B-3001 Leuven} % This is the default value. Note
                               % that 'B-3001 Heverlee' is _incorrect_!!
-                              % /[https://www.kuleuven.be/communicatie/marketing/intranet/huisstijl/taalgebruik.html]
+                              % https://www.kuleuven.be/english/language-guide
 
-\date{January 2016}
-\copyyear{2016}
-%\udc{XXX.XX}            % UDC, deposit number and ISBN are no longer necessary.
-%\depot{XXXX/XXXX/XX}    % Leave out the initial D/ (it is added
-                         % automatically)
-%\isbn{XXX-XX-XXXX-XXX-X}
-
-% Uncomment the appropriate sentences in and expand the text where needed to make it more specific and add topics if they are not covered by any of the indicated topics.
-\useOfGenAI{%
-  % I did not use generative AI assistance tools during the research/writing process of my thesis, except for mere language assistance. % The use of GenAI tools for language assistance does not need to be further specified. (The part 'except for mere language assistance' can be left out if not applicable)
-  % I did use the generative AI assistance tools ... % specify which e.g. MS Copilot/ ChatGPT/ResearchRabbit/... Please indicate in which way(s) you were using it and replace Generative AI with the specific AI tool(s) that was/were used:
-  % Generative AI was used as a search engine to learn about a particular topic. % If yes, please specify the usage.
-  % Generative AI was used for carrying out a literature review. % If yes, please specify the usage.
-  % Generative AI was used for short-form input assistance. % If yes, please specify the usage.
-  % Generative AI was used for generating programming code. % If yes, please specify the usage.
-  % Generative AI was used to generate new research ideas. % If yes, please specify the usage.
-  % Generative AI was used to generate visuals. % If yes, please specify the usage.
-  % Other (e.g. the development of a custom chatbot/genAI tool). % Please specify.
-}
-% The final sentences: 'The text, code, and images in this thesis are my own ...' will be added automatically.
+\date{January 2024}
+\copyyear{2024}
+\copyaddress{Your place of residence}
+%\udc{XXX.XX}             % UDC, deposit number and ISBN are no longer necessary.
+%\depot{XXXX/XXXX/XX}     % Leave out the initial D/ (it is added
+%\isbn{XXX-XX-XXXX-XXX-X} % automatically)
 
 
 % Set spine width:
 \setlength{\adsphdspinewidth}{9mm}
+% This is not directly used by the printing service, they calculate this
+% themselves because it depends on the number of pages, paper types, etc.
 
 %% Set bleeds
 %\setlength{\defaultlbleed}{7mm}
@@ -122,7 +111,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\makefrontcoverXII
+\makefrontcoverXXIV
 
 \maketitle
 
@@ -180,15 +169,32 @@
 % BibTex
 \bibliographystyle{acm}
 \bibliography{allpapers}
-% BibLatex (comment lines above and comment out biblatex lines in preamble)
+% BibLatex (comment out lines above and uncomment biblatex lines in preamble)
 %\printbibliography[title=\bibname]
 \instructionsbibliography
+
+
+
+% Uncomment the appropriate sentences in and expand the text where needed to make it more specific and add topics if they are not covered by any of the indicated topics.
+\useOfGenAI{%
+  % I did not use generative AI assistance tools during the research/writing process of my thesis, except for mere language assistance. % The use of GenAI tools for language assistance does not need to be further specified. (The part 'except for mere language assistance' can be left out if not applicable)
+  % I did use the generative AI assistance tools ... % specify which e.g. MS Copilot/ ChatGPT/ResearchRabbit/... Please indicate in which way(s) you were using it and replace Generative AI with the specific AI tool(s) that was/were used:
+  % Generative AI was used as a search engine to learn about a particular topic. % If yes, please specify the usage.
+  % Generative AI was used for carrying out a literature review. % If yes, please specify the usage.
+  % Generative AI was used for short-form input assistance. % If yes, please specify the usage.
+  % Generative AI was used for generating programming code. % If yes, please specify the usage.
+  % Generative AI was used to generate new research ideas. % If yes, please specify the usage.
+  % Generative AI was used to generate visuals. % If yes, please specify the usage.
+  % Other (e.g. the development of a custom chatbot/genAI tool). % Please specify.
+}
+\includegenai{}
+
 
 \includecv{curriculum}
 
 \includepublications{publications}
 
-\makebackcoverXII
+\makebackcoverXXIV
 
 \end{document}
 
