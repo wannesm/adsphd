@@ -780,15 +780,24 @@
 % Helvetica font for the front cover
 \ifadsphd@helveticaneue
 \typeout{adsphd: Using Helvetica Neue, make sure to compile via
-LuaLatex or XeTeX}
+LuaLaTeX or XeTeX}
 \RequirePackage{fontspec}
 \let\origsfdefault\sfdefault
-\setsansfont[BoldFont=HelveticaNeue]{HelveticaNeueLight}
+\newfontfamily\hnlcoverfont{HelveticaNeueLight}[BoldFont=HelveticaNeueMedium]
+\newfontfamily\hncoverfont{HelveticaNeue}[BoldFont=HelveticaNeueBold]
+\newcommand{\coverfont}{\hnlcoverfont}
+\newcommand{\coverfontlight}{\hnlcoverfont}
+\newcommand{\titlepagefont}{\sffamily}
+% Change font everywhere
+% \setsansfont[BoldFont=HelveticaNeue]{HelveticaNeueLight}
 \else
 \let\origsfdefault\sfdefault
 \RequirePackage[scaled]{helvet}
 \let\helvetsfdefault\sfdefault
 \renewcommand{\sfdefault}{\origsfdefault}
+\newcommand{\coverfont}{\sffamily}
+\newcommand{\coverfontlight}{\sffamily}
+\newcommand{\titlepagefont}{\sffamily}
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1330,11 +1339,6 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 % used by the Arenberg Doctoral School
 \newcommand{\frontcoverheaderXXIV}[1]{%
   \thispagestyle{empty}
-  % Use Helvetica
-  \ifadsphd@helveticaneue
-  \else
-  \renewcommand{\sfdefault}{\helvetsfdefault}
-  \fi
   % Blue bar on top
   \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,23mm)
   \textblockcolour{kulprimaryblue}
@@ -1353,6 +1357,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \begin{textblock*}{85mm}(16mm+#1,40mm)
   \textblockcolour{}
   \vspace{-2\parskip}
+  \coverfont
   %\hspace*{2mm}
   \begin{flushleft}
   \fontsize{10}{11}\selectfont%
@@ -1361,8 +1366,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \typeout{adsphd: Cover, smaller font size to fit doctoral school name}
   \fontsize{10}{11}\selectfont%
   \fi
-  {\bfseries \textcolor{white} {\sffamily \expandafter{\@doctoralschool}}}\\[.2mm]
-  {\sffamily \textcolor{white} {\@faculty}}
+  {\textcolor{white} 
+  {\textbf{\@doctoralschool}\\[.2mm]
+   \@faculty}}
   \end{flushleft}
   \end{textblock*}
 }
@@ -1654,6 +1660,12 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \fi
 \newcommand{\makefrontcovergeneralXXIV}[2]{%
   \typeout{adsphd.cls: Create cover using bleed = (\the\rbleed,\the\lbleed)}
+  % Use Helvetica
+  \ifadsphd@helveticaneue
+  \coverfont
+  \else
+  \renewcommand{\sfdefault}{\helvetsfdefault}
+  \fi
   %
   % Create header
   \frontcoverheaderXXIV{#1}
@@ -1679,7 +1691,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     \textblockcolour{}
     \vspace{-\parskip}
     \begin{center}
-        \selectfont\LARGE\sffamily\textbf{\color{red}{
+        \selectfont\LARGE\coverfont\textbf{\color{red}{
             DRAFT\\
             {\small To remove, add `final' to class options}
         }}
@@ -1693,15 +1705,15 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \textblockcolour{}
   \vspace{-\parskip}
   \raggedright
-  \coverfontsize{32}{38}\selectfont\sffamily{\color{kulprimaryblue}\@title}\\[1ex]
-  \coverfontsize{20}{25}\selectfont\sffamily{\@subtitle}
+  \coverfontsize{32}{38}\selectfont\coverfontlight{\color{kulprimaryblue}\@title}\\[1ex]
+  \coverfontsize{20}{25}\selectfont\coverfontlight{\@subtitle}
   \end{textblock*}
   %
   \begin{textblock*}{160mm}(17.5mm+#1,176mm)
     \textblockcolour{}
     \vspace{-\parskip}
     \begin{minipage}[b][50mm][b]{60mm}
-      \fontsize{9}{11}\selectfont\sffamily
+      \fontsize{9}{11}\selectfont\coverfontlight
       \ifadsphd@covershowcommittee
         % NOT SUPPORTED
         \typeout{ERROR: Show full committee on front page not supported}
@@ -1723,16 +1735,16 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
     \begin{minipage}[b][50mm][b]{60mm}
       \textblockcolour{}
       \begin{flushright}
-        {\fontsize{12}{14}\selectfont\sffamily\textbf{\@authorf\
+        {\fontsize{12}{14}\selectfont\coverfontlight\textbf{\@authorf\
         \@authorl}}
         \\[1em]
-        {\fontsize{9}{11}\selectfont\sffamily%
+        {\fontsize{9}{11}\selectfont\coverfontlight%
           Dissertation presented in partial \fulfillment\\%
           of the requirements for the degree of\\%
           \@phddegree
         }
         \\[1em]
-        {\fontsize{9}{11}\selectfont\sffamily\@date}
+        {\fontsize{9}{11}\selectfont\coverfontlight\@date}
       \end{flushright}
     \end{minipage}
   \end{textblock*}
@@ -2046,8 +2058,8 @@ without written permission from the publisher.
 \textblockcolour{}
 \vspace{-\parskip}
 \begin{flushleft}
-  \coverfontsize{20}{22}\sffamily\textbf{\MakeUppercase\@title}\\[1ex]
-  \coverfontsize{14}{16}\sffamily{\MakeUppercase\@subtitle}
+  \coverfontsize{20}{22}\titlepagefont\textbf{\MakeUppercase\@title}\\[1ex]
+  \coverfontsize{14}{16}\titlepagefont{\MakeUppercase\@subtitle}
 \end{flushleft}
 \end{textblock}
 %
@@ -2055,7 +2067,7 @@ without written permission from the publisher.
 \begin{textblock}{120}(17.5,105)
   \textblockcolour{}
   \vspace{-\parskip}
-  \fontsize{12}{14}\sffamily{\@authorf\ \MakeUppercase\@authorl}
+  \fontsize{12}{14}\titlepagefont{\@authorf\ \MakeUppercase\@authorl}
 \end{textblock}
 %
 % Committee block
@@ -2063,7 +2075,7 @@ without written permission from the publisher.
   \textblockcolour{}
   \vspace{-\parskip}
   \begin{minipage}[b][60mm][b]{7.32cm}
-    \fontsize{10}{11}\selectfont\sffamily
+    \fontsize{10}{11}\selectfont\titlepagefont
     \dtlifnumlt{\DTLrowcount{supervisor}}{2}{Supervisor:}{Supervisors:}
     \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
     \\\name
@@ -2090,7 +2102,7 @@ without written permission from the publisher.
     \if\empty\@udc \else \\U.D.C. \@udc\fi
   \end{minipage}
   \begin{minipage}[b][60mm][b]{5.3cm}
-    \fontsize{10}{11}\selectfont\sffamily
+    \fontsize{10}{11}\selectfont\titlepagefont
     Dissertation presented in partial
     \fulfillment\ of the requirements for
     the degree of \@phddegree
@@ -2100,7 +2112,7 @@ without written permission from the publisher.
 % Date block
 \begin{textblock}{160}(0,210.0)
   \textblockcolour{}
-  \fontsize{10}{11}\selectfont\sffamily
+  \fontsize{10}{11}\selectfont\titlepagefont
   \vspace{-\parskip}
   \begin{center} \@date \end{center}
 \end{textblock}
@@ -2380,7 +2392,7 @@ without written permission from the publisher.
   \vspace{-\parskip}
   %\parbox[c][20mm]{151.2mm+\rbleed}{
   \begin{flushright}
-    \fontsize{7}{10}\sffamily\color{white}
+    \fontsize{7}{10}\coverfont\color{white}
     \MakeUppercase\@faculty\\[-1mm]
     \MakeUppercase\@department\\[-1mm]
     % \ifdefempty{\@researchgroup}{}{{\MakeUppercase\@researchgroup}}\\[-1mm]
