@@ -523,6 +523,8 @@
 % included tex file will be used!
 \newcommand{\prefname}{Preface}
 \newcommand{\prefnlname}{Dankwoord}
+\newcommand{\popabstname}{Popularized Abstract}
+\newcommand{\popabstnlname}{Gepopulariseerde Samenvatting}
 \newcommand{\abstname}{Abstract}
 \newcommand{\abstnlname}{Beknopte samenvatting}
 \newcommand{\tocname}{Contents}
@@ -899,14 +901,30 @@ LuaLaTeX or XeTeX}
   \fi
 }
 
+\newcommand{\includepopabstract}[1]{%
+  \IncludeUnnumberedChapterIfExists{#1}{\popabstname}{\instructionspopabstract}
+        {\phantomsection}
+}
+
+\newcommand{\includepopabstractnl}[1]{%
+  \selectlanguage{dutch}
+  \IncludeUnnumberedChapterIfExists{#1}{\popabstnlname}{\instructionspopabstract}
+        {\phantomsection}
+  \ifadsphd@british
+  \selectlanguage{british}
+  \else
+  \selectlanguage{english}
+  \fi
+}
+
 \newcommand{\includeabstract}[1]{%
-  \IncludeUnnumberedChapterIfExists{#1}{\abstractname}{\instructionsabstract}
+  \IncludeUnnumberedChapterIfExists{#1}{\abstname}{\instructionsabstract}
         {\phantomsection}
 }
 
 \newcommand{\includeabstractnl}[1]{%
   \selectlanguage{dutch}
-  \IncludeUnnumberedChapterIfExists{#1}{\abstractnlname}{\instructionsabstract}
+  \IncludeUnnumberedChapterIfExists{#1}{\abstnlname}{\instructionsabstract}
         {\phantomsection}
   \ifadsphd@british
   \selectlanguage{british}
@@ -1037,6 +1055,15 @@ Steeds wordt de supervisor(en) vermeld, de verantwoordelijke en eventueel de
 personen die rechtstreeks geholpen hebben bv.\ door het ter beschikking stelling
 van meetresultaten, faciliteiten.  Ook de instantie die eventueel een
 doctoraatsbeurs heeft toegekend wordt bedankt (bv.\ FWO, IWT, \ldots).
+\end{ftw_instructions}
+  \else
+  \fi
+}
+
+\newcommand{\instructionspopabstract}{
+  \ifadsphd@showinstructions
+\begin{ftw_instructions}
+  The popularized abstract should be approximately 1 page long with contents and language that's suited to a wider circle of readers (not experts in your field). It should be easy to understand and enjoyable to read. Look at it as an advertisement for your PhD project. 
 \end{ftw_instructions}
   \else
   \fi
