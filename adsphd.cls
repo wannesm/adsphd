@@ -1642,7 +1642,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
         \\[1em]
         {\fontsize{9}{11}\selectfont\coverfontlight%
           Dissertation presented in partial \fulfillment\\%
-          of the requirements for the degrees of\\%
+          of the requirements for the degree of\\%
           \@phddegree
         }
         \\[1em]
