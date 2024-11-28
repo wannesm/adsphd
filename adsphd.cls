@@ -102,7 +102,6 @@
 \DeclareBoolOption{bleed}
 \DeclareBoolOption{nohyperref}
 \DeclareBoolOption{epub}
-\DeclareBoolOption{helveticaneue}
 
 % font and style
 \DeclareVoidOption{10pt}{
@@ -131,6 +130,8 @@
 \DeclareBoolOption{colorlinks}
 
 % Cover options
+\DeclareBoolOption{helveticaneue}
+\DeclareBoolOption{joint}
 \DeclareStringOption{coverfontpercent}
 \DeclareBoolOption{covershowcommittee}
 \DeclareComplementaryOption{coverhidecommittee}{covershowcommittee}
@@ -176,6 +177,7 @@
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{bleed}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{epub}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{helveticaneue}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{joint}
 
   \ifadsphd@nohyperref\else
     \hypersetup{%
@@ -1301,7 +1303,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   %\end{textblock*}
 
   \setlength{\skiplen}{0mm+\rbleed}
-  \makebackcovergeneralXXIV{\skiplen}{0}
+  \makebackcovergeneralXXIV{}{}{\skiplen}{0}
 
   \setlength{\skiplen}{\lbleed+\rbleed+\adsphdpaperwidth}
   \makespinegeneralXXIV{\skiplen}{0}{#1}{#2}
@@ -1367,9 +1369,6 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \end{textblock*}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Provide front cover using the 2024 (XXIV) layout
-% used by the Arenberg Doctoral School for joint PhDs
 \newcommand{\frontcoverheaderXXIVjoint}[1]{%
   \thispagestyle{empty}
   % Use Helvetica
@@ -1381,45 +1380,41 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,0mm)
   \textblockcolour{kulprimaryblue}
   %\vspace{-\parskip}
-  \rule{0pt}{17mm}
+  \rule{0pt}{18mm}
   \end{textblock*}
   %
   % Blue bar below logos
-  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,40mm)
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,38mm)
   \textblockcolour{kulprimaryblue}
   %\vspace{-\parskip}
-  \rule{0pt}{17mm}
+  \rule{0pt}{18mm}
   \end{textblock*}
   %
   % Create logo box KU Leuven
-  \begin{textblock*}{34mm}(10mm+#1,22mm)
+  \begin{textblock*}{34mm}(16mm+#1,21mm)
   % explicitly turn off block colour to prevent the coloured background from popping up due to misalignment of the logo
   \textblockcolour{}
   \includegraphics[width=34mm,height=12mm]{image/KULEUVEN_LOGO_2012}
   \end{textblock*}
   %
   % Create logo box partner university
-  \begin{textblock*}{34mm}(\adsphdpaperwidth+#1-34mm-10mm,22mm)
+  \begin{textblock*}{34mm}(\adsphdpaperwidth+#1-34mm-16mm,21mm)
   % explicitly turn off block colour to prevent the coloured background from popping up due to misalignment of the logo
   \textblockcolour{}
   \includegraphics[width=34mm,height=12mm]{image/PARTNER_LOGO}
   \end{textblock*}
   %
-  % Create ADS+faculty box KU Leuven
-  \begin{textblock*}{85mm}(14mm+#1,45mm)
+  % Create ADS + faculty box KU Leuven
+  \begin{textblock*}{85mm}(16mm+#1,43mm)
   \textblockcolour{}
-  \vspace{-2\parskip}
-  %\hspace*{2mm}
-  \begin{flushleft}
   \fontsize{10}{11}\selectfont%
   \def\tmphss{hss}%
   \ifx\tmphss\adsphd@doctoralschool
   \typeout{adsphd: Cover, smaller font size to fit doctoral school name}
   \fontsize{10}{11}\selectfont%
   \fi
-  {\textcolor{white} {\sffamily \expandafter{\MakeUppercase{\@doctoralschool}}}}\\[.2mm]
-  {\sffamily \textcolor{white} {\MakeUppercase{\@faculty}}}
-  \end{flushleft}
+{\bfseries \textcolor{white} {\sffamily \expandafter\MakeUppercase\expandafter{\@doctoralschool}}}\\[.2mm]
+{\sffamily \textcolor{white} \@faculty}
   \end{textblock*}
 }
 
@@ -1549,103 +1544,6 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \fontsize{\the\count1}{\the\count2}
 }
 
-\newcommand{\makefrontcoverXXIVjoint}{\makefrontcovergeneralXXIVjoint{0mm}{1}}
-\ifadsphd@epub
-  % The cover uses absolute positioning and does not scale automatically
-  % to smaller page sizes, thus leave out
-  \renewcommand{\makefrontcoverXXIVjoint}{}
-\fi
-\newcommand{\makefrontcovergeneralXXIVjoint}[2]{%
-  \typeout{adsphd.cls: Create cover using bleed = (\the\rbleed,\the\lbleed)}
-  %
-  % Create header
-  \frontcoverheaderXXIVjoint{#1}
-  %
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-  %
-  % Title, subtitle, authorname, text and date can be moved around.
-  % Change the textblock* commands below. 
-  %
-  % Syntax of textblock environment:
-  % 
-  %   \begin{textblock*}{width}(xpos,ypos)
-  %     ...
-  %   \end{textblock*}
-  % 
-  % !! Make sure not to remove the '+#1' part!!!
-  %
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-  %
-  % Put a DRAFT notifier on the front page to avoid printing a wrong version
-  \ifadsphd@final\else
-    \begin{textblock*}{120mm}(17.5mm+#1,120mm)
-    \textblockcolour{}
-    \vspace{-\parskip}
-    \begin{center}
-        \selectfont\LARGE\sffamily\textbf{\color{red}{
-            DRAFT\\
-            {\small To remove, add `final' to class options}
-        }}
-    \end{center}
-    \end{textblock*}
-  \fi
-  %
-  % Place the title and subtitle
-  %\typeout{Title position: 17.5mm+\the#1}
-  \begin{textblock*}{135mm}(16mm+#1,77mm)
-  \textblockcolour{}
-  \vspace{-\parskip}
-  \raggedright
-  \coverfontsize{32}{38}\selectfont\sffamily{\color{kulprimaryblue}\@title}\\[1ex]
-  \coverfontsize{20}{25}\selectfont\sffamily{\@subtitle}
-  \end{textblock*}
-  %
-  \begin{textblock*}{160mm}(17.5mm+#1,176mm)
-    \textblockcolour{}
-    \vspace{-\parskip}
-    \begin{minipage}[b][50mm][b]{60mm}
-      \fontsize{9}{11}\selectfont\sffamily
-      \ifadsphd@covershowcommittee
-        % NOT SUPPORTED
-        \typeout{ERROR: Show full committee on front page not supported}
-      \fi
-      \dtlifnumlt{\DTLrowcount{supervisor}}{2}{Supervisor:}{Supervisors:}
-      \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
-        \\\name
-        \ifthenelse{\equal{\affiliation}{}}{}{%
-          \\\rule{0.25cm}{0pt}(\affiliation)
-      }}
-      % Deprecated: Everybody is supervisor
-      %\DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
-      %\\\name%, co-supervisor
-      %\ifthenelse{\equal{\affiliation}{}}{}{%
-      %\\\rule{0.25cm}{0pt}(\affiliation)
-      %}}
-      \if\empty\@udc \else \\U.D.C. \@udc\fi
-    \end{minipage}
-    \begin{minipage}[b][50mm][b]{60mm}
-      \textblockcolour{}
-      \begin{flushright}
-        {\fontsize{12}{14}\selectfont\sffamily\textbf{\@authorf\
-        \@authorl}}
-        \\[1em]
-        {\fontsize{9}{11}\selectfont\sffamily%
-          Dissertation presented in partial \fulfillment\\%
-          of the requirements for the degree of\\%
-          \@phddegree
-        }
-        \\[1em]
-        {\fontsize{9}{11}\selectfont\sffamily\@date}
-      \end{flushright}
-    \end{minipage}
-  \end{textblock*}
-  %
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-  %
-  % Add footer
-  \frontcoverfooterXII{#2}
-}
-
 \newcommand{\makefrontcoverXXIV}{\makefrontcovergeneralXXIV{0mm}{1}}
 \ifadsphd@epub
   % The cover uses absolute positioning and does not scale automatically
@@ -1656,7 +1554,11 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \typeout{adsphd.cls: Create cover using bleed = (\the\rbleed,\the\lbleed)}
   %
   % Create header
+  \ifadsphd@joint
+  \frontcoverheaderXXIVjoint{#1}
+  \else
   \frontcoverheaderXXIV{#1}
+  \fi
   %
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
   %
@@ -1728,7 +1630,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
         \\[1em]
         {\fontsize{9}{11}\selectfont\sffamily%
           Dissertation presented in partial \fulfillment\\%
-          of the requirements for the degree of\\%
+          of the requirements for the degrees of\\%
           \@phddegree
         }
         \\[1em]
@@ -2343,11 +2245,16 @@ without written permission from the publisher.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Provide back cover using the 2024 (XXIV) layout
 % used by the Arenberg Doctoral School
-\newcommand{\makebackcoverXXIV}{\makebackcovergeneralXXIV{0mm}{1}}
+\newcommand{\makebackcoverXXIV}{
+    \ifadsphd@joint
+    \makebackcovergeneralXXIVjoint{0mm}{1}
+    \else
+    \makebackcovergeneralXXIV{0mm}{1}
+    \fi
+}
 \ifadsphd@epub
   \renewcommand{\makebackcoverXXIV}{}
 \fi
-% \makebackcovergeneralXII{xskip}{clearpage}
 \newcommand{\makebackcovergeneralXXIV}[2]{%
   \typeout{adsphd.cls: Using default back cover page}
   %
@@ -2436,15 +2343,8 @@ without written permission from the publisher.
 
 \let\orig@makebackcovergeneralX\makebackcovergeneralX
 \let\orig@makebackcovergeneralXII\makebackcovergeneralXII
+\let\orig@makebackcovergeneralXXIV\makebackcovergeneralXXIV
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Provide back cover using the 2024 (XXIV) layout
-% used by the Arenberg Doctoral School for joint PhDs
-\newcommand{\makebackcoverXXIVjoint}{\makebackcovergeneralXXIVjoint{0mm}{1}}
-\ifadsphd@epub
-  \renewcommand{\makebackcoverXXIVjoint}{}
-\fi
-% \makebackcovergeneralXII{xskip}{clearpage}
 \newcommand{\makebackcovergeneralXXIVjoint}[2]{%
   \typeout{adsphd.cls: Using default back cover page}
   %
@@ -2466,32 +2366,30 @@ without written permission from the publisher.
   % Blue bar on top
   \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-\rbleed,0mm)
   \textblockcolour{kulprimaryblue}
-  \rule{0mm}{17mm}
+  \rule{0mm}{18mm}
   \end{textblock*}
   %
   % Blue bar below logos
-  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-\rbleed,40mm)
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-\rbleed,38mm)
   \textblockcolour{kulprimaryblue}
-  \rule{0mm}{17mm}
+  \rule{0mm}{18mm}
   \end{textblock*}
   %
   % Text box with address KU Leuven
-  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-10mm, 22mm)
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-16mm, 21mm)
   \textblockcolour{}
-  \vspace{-5mm}
-  \begin{flushright}
     \fontsize{7}{10}\sffamily
+      \raggedleft
     \MakeUppercase\@faculty\\[-1mm]
     \MakeUppercase\@department\\[-1mm]
     {\@address}\\[-1mm]
     {\@addresspc}\\[-1mm]
     \ifdefempty{\@email}{}{\@email\\[-1mm]}
     \ifdefempty{\@website}{}{\@website\\[-1mm]}
-  \end{flushright}
   \end{textblock*}
   % 
   % Text box with address partner university
-  \begin{textblock*}{100mm}(10mm, 22mm)
+  \begin{textblock*}{100mm}(#1+16mm, 21mm)
   \textblockcolour{}
     \fontsize{7}{10}\sffamily
     \MakeUppercase\@facultypartner\\[-1mm]

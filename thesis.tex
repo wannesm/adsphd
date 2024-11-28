@@ -1,5 +1,6 @@
 %\documentclass[showinstructions,faculty=firw,department=cws,phddegree=cws,helveticaneue]{adsphd}
-\documentclass[showinstructions,faculty=firw,department=cws,phddegree=cws]{adsphd}
+% \documentclass[showinstructions,faculty=firw,department=cws,phddegree=cws]{adsphd}
+\documentclass[showinstructions,faculty=firw,department=cws,phddegree=cws,joint]{adsphd}
 %\documentclass[showinstructions,faculty=firw,department=cws,phddegree=cws,doctoralschool=ads]{adsphd}
 %\documentclass[showinstructions,showlabels,coverfontpercent=100,faculty=firw,department=cws,phddegree=cws]{adsphd}
 %\documentclass[croppedpdf,showinstructions,faculty=firw,department=cws,phddegree=cws]{adsphd}
@@ -40,15 +41,15 @@
                               % that 'B-3001 Heverlee' is _incorrect_!!
                               % https://www.kuleuven.be/english/language-guide
 
-%%%%%%%%%%%%% For joint PhDs only %%%%%%%%%%%%%%%%%%%%%%
-% % Change "PARTNER_LOGO.eps" in image folder!
-% \facultypartner{Faculty Partner}
-% \departmentpartner{Department Partner}
-% \addresspartner{Address Partner}
-% \addresscitypartner{City Partner}
-% \emailpartner{} % Leave empty to hide
-% \websitepartner{} % Leave empty to hide
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% For joint PhDs only %%%%%%%%%%%%%%%%%%%%%%
+% Change "PARTNER_LOGO.eps" in image folder!
+\facultypartner{Faculty Partner}
+\departmentpartner{Department Partner}
+\addresspartner{Address Partner}
+\addresscitypartner{City Partner}
+\emailpartner{} % Leave empty to hide
+\websitepartner{} % Leave empty to hide
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \date{January 2024}
 \copyyear{2024}
@@ -121,7 +122,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\makefrontcoverXXIV % or \makefrontcoverXXIVjoint for joint PhDs 
+\makefrontcoverXXIV
 
 \maketitle
 
@@ -204,7 +205,7 @@
 
 \includepublications{publications}
 
-\makebackcoverXXIV % or \makebackcoverXXIVjoint for joint PhDs
+\makebackcoverXXIV
 
 \end{document}
 
