@@ -143,7 +143,7 @@ Options for the adsphd class
                               [fw]   Faculty of Science
                               [fa]   Faculty of Architecture
                               [fiiw] Faculty of Engineering Technology
-			      [hiw]  Institute of Philosophy
+                              [hiw]  Institute of Philosophy
 
     department            : department
                               [aow] Department of Earth and Environmental Sciences
@@ -237,9 +237,14 @@ Options for the adsphd class
     epub                  : use a small page size that works better on an
                             epub reader (e.g. Kindle)
 
-    covershowcommittee    : show the committee also on the cover.
     coverfontpercent=<int>: change the cover title font size. Should
                             be an integer number between 1 and 100.
+    helveticaneue         : Use the Helvetica Neue font instead of Helvetica.
+                            Helvetica Neueu is the font used by KU Leuven but
+                            requires LuaLaTeX or XeLaTex instead of pdflatex.
+    joint                 : Change the cover to the cover for a joint
+                            PhD dissertation.
+
 
 Most of the useful commands provided by this class can be found in the provided
 example file `thesis.tex`.

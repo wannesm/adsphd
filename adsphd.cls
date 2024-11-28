@@ -1385,10 +1385,8 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   % Create ADS+faculty box
   \begin{textblock*}{85mm}(16mm+#1,40mm)
   \textblockcolour{}
-  \vspace{-2\parskip}
   \coverfont
-  %\hspace*{2mm}
-  \begin{flushleft}
+  \raggedright
   \fontsize{10}{11}\selectfont%
   \def\tmphss{hss}%
   \ifx\tmphss\adsphd@doctoralschool
@@ -1396,9 +1394,8 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \fontsize{10}{11}\selectfont%
   \fi
   {\textcolor{white} 
-  {\textbf{\@doctoralschool}\\[.2mm]
+  {\textbf{\expandafter\MakeUppercase\expandafter\@doctoralschool}\\[.2mm]
    \@faculty}}
-  \end{flushleft}
   \end{textblock*}
 }
 
@@ -1440,14 +1437,17 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   % Create ADS + faculty box KU Leuven
   \begin{textblock*}{85mm}(16mm+#1,43mm)
   \textblockcolour{}
+  \coverfont
+  \raggedright
   \fontsize{10}{11}\selectfont%
   \def\tmphss{hss}%
   \ifx\tmphss\adsphd@doctoralschool
   \typeout{adsphd: Cover, smaller font size to fit doctoral school name}
   \fontsize{10}{11}\selectfont%
   \fi
-{\bfseries \textcolor{white} {\sffamily \expandafter\MakeUppercase\expandafter{\@doctoralschool}}}\\[.2mm]
-{\sffamily \textcolor{white} \@faculty}
+  {\textcolor{white} 
+  {\textbf{\expandafter\MakeUppercase\expandafter\@doctoralschool}\\[.2mm]
+   \@faculty}}
   \end{textblock*}
 }
 
@@ -2417,7 +2417,7 @@ without written permission from the publisher.
   % Text box with address KU Leuven
   \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-16mm, 21mm)
   \textblockcolour{}
-    \fontsize{7}{10}\sffamily
+    \fontsize{7}{10}\coverfont
       \raggedleft
     \MakeUppercase\@faculty\\[-1mm]
     \MakeUppercase\@department\\[-1mm]
@@ -2430,7 +2430,7 @@ without written permission from the publisher.
   % Text box with address partner university
   \begin{textblock*}{100mm}(#1+16mm, 21mm)
   \textblockcolour{}
-    \fontsize{7}{10}\sffamily
+    \fontsize{7}{10}\coverfont
     \MakeUppercase\@facultypartner\\[-1mm]
     \MakeUppercase\@departmentpartner\\[-1mm]
     {\@addresspartner}\\[-1mm]
