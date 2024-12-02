@@ -1,0 +1,795 @@
+%% Old covers provided in 2012 (XII) and 2010 (X).
+%% The 2012 cover was replaced in 2024.
+%% The 2010 cover was in use before this class was created in 2010 and served
+%% until 2012.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Provide front cover using the 2012 (XII) layout
+% used by the Arenberg Doctoral School
+\newcommand{\frontcoverheaderXII}[1]{%
+  % Use Helvetica
+  \renewcommand{\sfdefault}{\helvetsfdefault}
+  \thispagestyle{empty}
+  % Blue bar on top
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,20mm)
+  \textblockcolour{kulprimaryblue}
+  %\vspace{-\parskip}
+  \rule{0pt}{20mm}
+  \end{textblock*}
+  %
+  % Create logo box
+  \begin{textblock*}{56mm}(10mm+#1,15mm)
+  % explicitly turn off block colour to prevent the coloured background from popping up due to misalignment of the logo
+  \textblockcolour{}
+  \includegraphics[width=56mm,height=20mm]{image/KULEUVEN_LOGO_2012}
+  \end{textblock*}
+  %
+  % Create ADS+faculty box
+  \begin{textblock*}{85mm}(70mm+#1,20mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  %\hspace*{2mm}
+  \begin{flushright}
+  \fontsize{12}{15}\selectfont
+  \def\tmphss{hss}%
+  \ifx\tmphss\adsphd@doctoralschool
+  \typeout{adsphd: Cover, smaller font size to fit doctoral school name}
+  \fontsize{10}{13}\selectfont%
+  \fi
+  {\bfseries \textcolor{white} {\sffamily \expandafter\MakeUppercase\expandafter{\@doctoralschool}}}\\[.2mm]
+  {\sffamily \textcolor{white} {\@faculty}}
+  \end{flushright}
+  \end{textblock*}
+}
+
+\newcommand{\frontcoverfooterXII}[1]{%
+  % Only add empty pages if asked for
+  \ifthenelse{\equal{#1}{1}}
+  {
+    \newpage
+    \thispagestyle{empty} \mbox{}
+    \newpage
+  }{}
+  %
+  % Restore font
+  \renewcommand{\sfdefault}{\origsfdefault}
+  % Empty textpos boxes (interferes with some other packages such as
+  % Tikz externalize
+  \cleartextposbox
+}
+
+\newcommand{\makefrontcoverXII}{\makefrontcovergeneralXII{0mm}{1}}
+\ifadsphd@epub
+  \renewcommand{\makefrontcoverXII}{}
+\fi
+\newcommand{\makefrontcovergeneralXII}[2]{%
+  \typeout{adsphd.cls: Create cover with bleed (\the\rbleed,\the\lbleed)}
+  %
+  % Create header
+  \frontcoverheaderXII{#1}
+  %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %
+  % Title, subtitle, authorname, text and date can be moved around.
+  % Change the textblock* commands below. 
+  %
+  % Syntax of textblock environment:
+  % 
+  %   \begin{textblock*}{width}(xpos,ypos)
+  %     ...
+  %   \end{textblock*}
+  % 
+  % !! Make sure not to remove the '+#1' part!!!
+  %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %
+  % Place the DRAFT notifier on the front page to avoid printing a wrong
+  % version
+  \ifadsphd@final\else
+    \begin{textblock*}{120mm}(17.5mm+#1,50mm)
+    \textblockcolour{}
+    \vspace{-\parskip}
+    \begin{center}
+        \selectfont\LARGE\sffamily\textbf{\color{red}{
+            DRAFT\\
+            {\small To remove, add `final' to class options}
+        }}
+    \end{center}
+    \end{textblock*}
+  \fi
+  %
+  % Place the title and subtitle
+  %\typeout{Title position: 17.5mm+\the#1}
+  \begin{textblock*}{135mm}(17.5mm+#1,100mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \raggedright
+  \coverfontsize{30}{34}\selectfont\sffamily{\color{kulprimaryblue}\@title}\\
+  \coverfontsize{20}{25}\selectfont\sffamily{\@subtitle}
+  \end{textblock*}
+  %
+  % Place the author name
+  \begin{textblock*}{135mm}(17.5mm+#1,170mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \begin{flushright}
+  \coverfontsize{14}{19}\selectfont\sffamily\textbf{\@authorf\ \@authorl}
+  \end{flushright}
+  \end{textblock*}
+  %
+  % Place the fullfilment text
+  \begin{textblock*}{67.5mm}(85mm+#1,185mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \begin{minipage}[t]{67mm}
+  {\coverfontsize{12}{15}\selectfont\sffamily%
+  \begin{flushright}
+  Dissertation presented in partial\\%
+  \fulfillment\ of the requirements for the\\%
+  degree of \@phddegree
+  \end{flushright}
+  }
+  \end{minipage}
+  \end{textblock*}
+  %
+  % Place the date text
+  \begin{textblock*}{67.5mm}(85mm+#1,220mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \begin{minipage}[t]{67mm}
+  \begin{flushright}
+  {\coverfontsize{12}{15}\selectfont\sffamily\@date}
+  \end{flushright}
+  \end{minipage}
+  \end{textblock*}
+  %
+  % Place the Examination committee text
+  \ifadsphd@covershowcommittee
+    \begin{textblock*}{67.5mm}(17.5mm+#1,185mm)
+    \textblockcolour{}
+    \vspace{-\parskip}
+    \begin{minipage}[t]{67mm}
+      \coverfontsize{12}{15}\selectfont\sffamily
+      %\begin{tabular}[t]{p{6.9cm}}
+      Examination committee:
+      \DTLforeach{president}{\name=name,\affiliation=affiliation}{%
+      \\\name, chair
+      \ifthenelse{\equal{\affiliation}{}}{}{%
+        \\\rule{0.5cm}{0pt}(\affiliation)
+      }}
+      \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
+      \\\name, supervisor
+      \ifthenelse{\equal{\affiliation}{}}{}{%
+        \\\rule{0.25cm}{0pt}(\affiliation)
+      }}
+      %\DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
+      %\\\name%, co-supervisor
+      %\ifthenelse{\equal{\affiliation}{}}{}{%
+        %\\\rule{0.25cm}{0pt}(\affiliation)
+      %}}
+      \DTLforeach{jury}{\name=name,\affiliation=affiliation}{%
+      \\\name
+      \ifthenelse{\equal{\affiliation}{}}{}{%
+        \\\rule{0.5cm}{0pt}(\affiliation)
+      }}
+      \DTLforeach{externaljury}{\name=name,\affiliation=affiliation}{%
+      \\\name
+      \\\rule{0.25cm}{0pt}(\affiliation)
+      }
+      \\
+      \if\empty\@udc \else U.D.C. \@udc\fi
+    %\end{tabular}
+    \end{minipage}
+    \end{textblock*}
+  \else
+    \begin{textblock*}{67.5mm}(17.5mm+#1,185mm)
+    \textblockcolour{}
+    \vspace{-\parskip}
+    \begin{minipage}[t]{67mm}
+      \coverfontsize{12}{15}\selectfont\sffamily
+      %\begin{tabular}[t]{p{6.9cm}}
+      \dtlifnumlt{\DTLrowcount{supervisor}}{2}{Supervisor:}{Supervisors:}
+      \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
+      \\\name
+      \ifthenelse{\equal{\affiliation}{}}{}{%
+        \\\rule{0.25cm}{0pt}(\affiliation)
+      }}
+      %\DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
+      %\\\name%, co-supervisor
+      %\ifthenelse{\equal{\affiliation}{}}{}{%
+        %\\\rule{0.25cm}{0pt}(\affiliation)
+      %}}
+      \\
+      \if\empty\@udc \else U.D.C. \@udc\fi
+    %\end{tabular}
+    \end{minipage}
+    \end{textblock*}
+  \fi
+  %
+  % Bottom blue bar
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,234mm)
+  \textblockcolour{kullightblue}
+  %\vspace{-\parskip}
+  \rule{0pt}{2.1mm}
+  \end{textblock*}
+  %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %
+  % Add footer
+  \frontcoverfooterXII{#2}
+}
+
+\let\orig@makefrontcovergeneralXII\makefrontcovergeneralXII
+
+\newcommand{\titlepageXII}{%
+%
+%\begin{textblock}{120}(0,37.5)
+\begin{textblock}{120}(17.5,70)
+\textblockcolour{}
+\vspace{-\parskip}
+\begin{flushleft}
+\Large\sffamily\textbf{\@title}
+\end{flushleft}
+\end{textblock}
+%
+%\begin{textblock}{120}(0,47.5)
+\begin{textblock}{120}(17.5,85.0)
+\textblockcolour{}
+\vspace{-\parskip}
+\large\sffamily{\@subtitle}
+\end{textblock}
+%
+%\begin{textblock}{120}(0,72.5)
+\begin{textblock}{120}(17.5,105)
+\textblockcolour{}
+\vspace{-\parskip}
+\large\sffamily\textbf{\@authorf\ \MakeUppercase\@authorl}
+\end{textblock}
+%
+%\begin{textblock}{120}(0,125)
+\begin{textblock}{160}(17.5,157.5)
+\textblockcolour{}
+\vspace{-\parskip}
+\begin{minipage}[t]{7.32cm}
+%  \begin{tabular}[t]{p{6.9cm}}
+    Examination committee:
+    \DTLforeach{president}{\name=name,\affiliation=affiliation}{%
+    \\\name, chair
+    \ifthenelse{\equal{\affiliation}{}}{}{%
+      \\\rule{0.5cm}{0pt}(\affiliation)
+    }}
+    \DTLforeach{supervisor}{\name=name,\affiliation=affiliation}{%
+    \\\name, supervisor
+    \ifthenelse{\equal{\affiliation}{}}{}{%
+      \\\rule{0.25cm}{0pt}(\affiliation)
+    }}
+    %\DTLforeach{cosupervisor}{\name=name,\affiliation=affiliation}{%
+    %\\\name%, co-supervisor
+    %\ifthenelse{\equal{\affiliation}{}}{}{%
+      %\\\rule{0.25cm}{0pt}(\affiliation)
+    %}}
+    \DTLforeach{jury}{\name=name,\affiliation=affiliation}{%
+    \\\name
+    \ifthenelse{\equal{\affiliation}{}}{}{%
+      \rule{0.5cm}{0pt}(\affiliation)
+    }}
+    \DTLforeach{externaljury}{\name=name,\affiliation=affiliation}{%
+    \\\name
+    \\\rule{0.25cm}{0pt}(\affiliation)
+    }
+    \\
+    \if\empty\@udc \else U.D.C. \@udc\fi
+%  \end{tabular}
+\end{minipage}
+\begin{minipage}[t]{5.3cm}
+%  \begin{tabular}[t]{l}
+    Dissertation presented in partial
+    \fulfillment\ of the requirements for
+    the degree of \@phddegree
+%  \end{tabular}
+\end{minipage}
+
+%\begin{tabular}{p{7cm}l}
+% Jury:                                                   & Dissertation presented in partial
+% \@president, president                                  & fulfillment of the requirements for
+% \@supervisor, supervisor                                & the degree of \@phddegree
+% titles first name last name                             & \\
+% titles first name last name                             & \\
+%   \rule{0.25cm}{0pt}(external affiliation)              & \\
+%                                                         & \\
+% U.D.C. \@udc
+%\end{tabular}
+\end{textblock}
+%\vfill
+%\begin{center} {\@date} \end{center}
+\begin{textblock}{160}(0,210.0)
+\textblockcolour{}
+\vspace{-\parskip}
+\begin{center} \@date \end{center}
+\end{textblock}
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Provide back cover using the 2012 (XII) layout
+% used by the Arenberg Doctoral School
+\newcommand{\backcoverheaderXII}[2]{%
+  \typeout{adsphd.cls: Using default XII back cover page}
+  % Use Helvetica
+  \renewcommand{\sfdefault}{\helvetsfdefault}
+  %
+  % Only add empty pages if asked for
+  \ifthenelse{\equal{#2}{1}}
+  {
+    \cleardoublepage \mbox{}
+    \thispagestyle{empty}
+    \newpage
+  }{}
+  \thispagestyle{empty}
+
+  % Blue lines in right corner
+  %
+  \begin{textblock*}{55mm}(#1+97.5mm,20mm)
+  \textblockcolour{kullightblue}
+  %\vspace{-\parskip}
+  \rule{0pt}{2mm}
+  \end{textblock*}
+  \begin{textblock*}{2mm}(#1+152mm,20mm)
+  \textblockcolour{kullightblue}
+  %\vspace{-\parskip}
+  \rule{0pt}{18mm}
+  \end{textblock*}
+  %
+  % Create gray box
+  \begin{textblock*}{137.5mm}(#1,23mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  %\parbox[c][20mm]{151.2mm+\rbleed}{
+  \flushright
+  %\vspace{-3mm}
+  {\scriptsize {\sffamily\MakeUppercase\@faculty}}\\[-1mm]
+  {\scriptsize {\sffamily\MakeUppercase\@department}}\\[-1mm]
+  \ifdefempty{\@researchgroup}{}{{\scriptsize {\sffamily\MakeUppercase\@researchgroup}}\\[-1mm]}
+  {\scriptsize {\sffamily\@address}}\\[-1mm]
+  {\scriptsize {\sffamily{}\@addresspc}}\\[-1mm]
+  \ifdefempty{\@email}{}{{\scriptsize {\sffamily{}\@email}}\\[-1mm]}
+  \ifdefempty{\@website}{}{{\scriptsize {\sffamily{}\@website}}}
+  %}
+  \end{textblock*}
+  %
+  %
+  % Create blue background
+  %\setlength{\tmplength}{\adsphdpaperwidth}
+  %\addtolength{\tmplength}{-152mm}
+  %\addtolength{\tmplength}{\rbleed}
+  %\begin{textblock*}{\tmplength}(152.0mm+#1,20mm)
+  %\textblockcolour{}
+  %\includegraphics[width=\tmplength,height=20mm]{image/blue}%
+  %\end{textblock*}
+  %
+  % Put KULeuven sedes on top
+  \begin{textblock*}{7mm}(140mm+#1,24mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \includegraphics*[height=15mm]{image/sedes}%
+  \end{textblock*}
+}
+
+\newcommand{\backcoverfooterXII}[1]{%
+  % Bottom blue bar
+  %\begin{textblock*}{\adsphdpaperwidth}(#1,222mm)
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-\rbleed,222mm)
+  %\begin{textblock*}{\adsphdpaperwidth}(0mm+#1,234mm)
+  \textblockcolour{kulprimaryblue}
+  %\vspace{-\parskip}
+  \rule{0pt}{15mm}
+  \end{textblock*}
+  %
+  % Restore font
+  \renewcommand{\sfdefault}{\origsfdefault}
+}
+
+\newcommand{\makebackcoverXII}{\makebackcovergeneralXII{0mm}{1}}
+\ifadsphd@epub
+  \renewcommand{\makebackcoverXII}{}
+\fi
+% \makebackcovergeneralXII{xskip}{clearpage}
+\newcommand{\makebackcovergeneralXII}[2]{%
+\typeout{adsphd.cls: Using default back cover page}
+  %
+  % Create header
+  \backcoverheaderXII{#1}{#2}
+  %
+  % Add footer
+  \backcoverfooterXII{#1}
+}
+
+\let\orig@makebackcovergeneralXII\makebackcovergeneralXII
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Provide spine using the 2012 (XII) layout
+% used by the Arenberg Doctoral School
+
+\newcommand{\makespinegeneralXII}[4]{%
+  % Use Helvetica
+  \renewcommand{\sfdefault}{\helvetsfdefault}
+  %
+  % Get adsphdspinewidth as #3
+  \setlength{\adsphdspinewidth}{#3}
+  % 
+  % Get spinetitlewidth as #4
+  \ifthenelse{\equal{#4}{}}
+  {}{
+    \setlength{\spinetitlewidth}{#4}
+  }
+  %
+  % Empty pagestyle
+  \thispagestyle{empty}%
+  %
+  % Only clear page if asked for
+  \ifthenelse{\equal{#2}{1}}
+  {
+    \cleardoublepage \mbox{}%
+  }{}
+  %
+  \newlength{\authorlen}
+  \settowidth{\authorlen}{\large\sffamily\@authorf\ \MakeUppercase\@authorl}
+  \newlength{\authorlenpenalty}
+  \ifthenelse{\lengthtest{\authorlen>4.2cm}}{%
+      % For really really long names, move the name up a bit more
+      \typeout{adsphd.cls: Really long author name detected in %
+        generation of spine. Moving it up by 4mm.}
+      \setlength{\authorlenpenalty}{4mm}
+  }{%
+    \ifthenelse{\lengthtest{\authorlen>4.0cm}}{%
+      % For really long names, move the name up a bit
+      \typeout{adsphd.cls: Long author name detected in generation of %
+        spine. Moving it up by 3mm.}
+      \setlength{\authorlenpenalty}{3mm}
+    }{%
+    \setlength{\authorlenpenalty}{0mm}
+    }
+  }
+  %
+  \begin{textblock*}{\adsphdspinewidth}(0mm+#1,20mm-\authorlenpenalty) % 9mm whitespace 
+                                        % between blue and first letter of the author name
+                                        % (possibly less because the author name might be
+                                        % reallyreally long)
+  \textblockcolour{}
+  % Rotate the text
+  \begin{turn}{-90}
+  \makebox[\adsphdpaperheight-24mm+\authorlenpenalty][c]{% 20mm(white)+20mm(blue)+9mm(space before name)+7mm(after date)
+  %
+  % Place author
+  \parbox[c][\adsphdspinewidth]{(\authorlen)}{
+  \large\sffamily\@authorf\ \MakeUppercase\@authorl%
+  }
+  \hfill
+  %
+  % Place title
+  \parbox[c][\adsphdspinewidth]{\spinetitlewidth}{
+    \centering
+    \setstretch{.85}
+    \normalsize\sffamily\textbf{\MakeUppercase\@title}
+  }
+  %
+  % Place date
+  \hfill\large\sffamily\@date
+  }
+  \end{turn}
+  \end{textblock*}
+
+  \renewcommand{\sfdefault}{\origsfdefault}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Provide front cover using the 2010 (X) layout
+% used by the Arenberg Doctoral School
+\newcommand{\frontcoverheaderX}[1]{%
+  % Use Helvetica
+  \renewcommand{\sfdefault}{\helvetsfdefault}
+  \thispagestyle{empty}
+  % Now using \usepackage[absolute]{textpos}. The positioning become a lot
+  % robuster this way wrt changes in margins etc.
+  %
+  % Put sedes at top center
+  \begin{textblock*}{\adsphdpaperwidth}(0mm+#1,0mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \begin{center}
+  \includegraphics[width=8mm]{image/sedes}
+  \end{center}
+  \end{textblock*}
+  %
+  % Create gray box
+  \begin{textblock*}{100mm+\rbleed}(60mm+#1,20mm)
+  \textblockcolour{gray}
+  \vspace{-\parskip}
+  \hspace*{2mm}
+  \parbox[c][20mm]{97.92mm}{
+  {\bfseries \small \textcolor{white} {\sffamily Arenberg Doctoral School of Science, Engineering \& Technology}}\\[.2mm]
+  {\sffamily\small \textcolor{white} {\@faculty}}\\[.2mm]
+  {\sffamily\small \textcolor{white} {\@department}}
+  }
+  \end{textblock*}
+  %
+  % Create blue background 
+  \begin{textblock*}{60mm+\lbleed}(0mm-\lbleed+#1, 20mm)
+  \textblockcolour{}
+  \includegraphics[width=60mm+\lbleed,height=20mm]{image/blue}
+  \end{textblock*}
+  %
+  % Put KULeuven logo on top of the blue background
+  \begin{textblock*}{60mm}(0mm+#1, 20mm)
+  \textblockcolour{}
+  %\vspace{-\parskip}
+  \includegraphics*[height=20mm]{image/kullogo2}
+  \end{textblock*}
+}
+
+\newcommand{\frontcoverfooterX}[1]{%
+  % Only add empty pages if asked for
+  \ifthenelse{\equal{#1}{1}}
+  {
+    \newpage
+    \thispagestyle{empty} \mbox{}
+    \newpage
+  }{}
+  %
+  % Restore font
+  \renewcommand{\sfdefault}{\origsfdefault}
+}
+
+\newcommand{\makefrontcoverX}{\makefrontcovergeneralX{0mm}{1}}
+% \makefrontcovergeneralX{xskip}{}clearpage
+\newcommand{\makefrontcovergeneralX}[2]{%
+\typeout{adsphd.cls: Using default front cover page}
+  %
+  % Create header
+  \frontcoverheaderX{#1}
+  %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %
+  % Title, subtitle, authorname, text and date can be moved around.
+  % Change the textblock* commands below. 
+  %
+  % Syntax of textblock environment:
+  % 
+  %   \begin{textblock*}{width}(xpos,ypos)
+  %     ...
+  %   \end{textblock*}
+  % 
+  % !! Make sure not to remove the '+#1' part!!!
+  %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %
+  % Place the DRAFT notifier on the front page to avoid printing a wrong
+  % version
+  \ifadsphd@final\else
+    \begin{textblock*}{120mm}(17.5mm+#1,90mm)
+    \textblockcolour{}
+    \vspace{-\parskip}
+    \begin{center}
+        \selectfont\LARGE\sffamily\textbf{\color{red}{
+            DRAFT\\
+            {\small To remove, add `final' to class options}
+        }}
+    \end{center}
+    \end{textblock*}
+  \fi
+  %
+  % Place the title
+  \begin{textblock*}{120mm}(17.5mm+#1,112.5mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \raggedright\selectfont\LARGE\sffamily\textbf{\@title}
+  \end{textblock*}
+  %
+  % Place the subtitle
+  \begin{textblock*}{120mm}(17.5mm+#1,132mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \Large\sffamily{\@subtitle}
+  \end{textblock*}
+  %
+  % Place the author name
+  \begin{textblock*}{120mm}(17.5mm+#1,147.5mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \Large\sffamily\@authorf\ \MakeUppercase\@authorl
+  \end{textblock*}
+  %
+  % Place the misc text
+  \begin{textblock*}{60mm}(97.5mm+#1,192.5mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  {\small\sffamily Dissertation presented in partial\\
+  \fulfillment\ of the requirements for\\
+  the degree of \@phddegree}
+  \end{textblock*}
+  %
+  % Place date
+  \begin{textblock*}{\adsphdpaperwidth}(0mm+#1,221.5mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \begin{center} {\small\sffamily\@date }\end{center}
+  \end{textblock*}
+  %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %
+  % Add footer
+  \frontcoverfooterX{#2}
+
+}
+
+\let\orig@makefrontcovergeneralX\makefrontcovergeneralX
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Provide spine using the 2010 (X) layout
+% used by the Arenberg Doctoral School
+
+\newcommand{\makespinegeneralX}[4]{%
+  % Use Helvetica
+  \renewcommand{\sfdefault}{\helvetsfdefault}
+  %
+  % Get adsphdspinewidth as #3
+  \setlength{\adsphdspinewidth}{#3}
+  % 
+  % Get spinetitlewidth as #4
+  \ifthenelse{\equal{#4}{}}
+  {}{
+    \setlength{\spinetitlewidth}{#4}
+  }
+  %
+  % Empty pagestyle
+  \thispagestyle{empty}%
+  %
+  % Only clear page if asked for
+  \ifthenelse{\equal{#2}{1}}
+  {
+    \cleardoublepage \mbox{}%
+  }{}
+  %
+  % Create blue box
+  \begin{textblock*}{\adsphdspinewidth}(0mm+#1,20mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \includegraphics[width=\adsphdspinewidth,height=20mm]{image/blue}%
+  \end{textblock*}
+  %
+  \newlength{\authorlen}
+  \settowidth{\authorlen}{\large\sffamily\@authorf\ \MakeUppercase\@authorl}
+  \newlength{\authorlenpenalty}
+  \ifthenelse{\lengthtest{\authorlen>4.2cm}}{%
+      % For really really long names, move the name up a bit more
+      \typeout{adsphd.cls: Really long author name detected in %
+        generation of spine. Moving it up by 4mm.}
+      \setlength{\authorlenpenalty}{4mm}
+  }{%
+    \ifthenelse{\lengthtest{\authorlen>4.0cm}}{%
+      % For really long names, move the name up a bit
+      \typeout{adsphd.cls: Long author name detected in generation of %
+        spine. Moving it up by 3mm.}
+      \setlength{\authorlenpenalty}{3mm}
+    }{%
+    \setlength{\authorlenpenalty}{0mm}
+    }
+  }
+  %
+  \begin{textblock*}{\adsphdspinewidth}(0mm+#1,49mm-\authorlenpenalty) % 9mm whitespace 
+                                        % between blue and first letter of the author name
+                                        % (possibly less because the author name might be
+                                        % reallyreally long)
+  \textblockcolour{}
+  % Rotate the text
+  \begin{turn}{-90}
+  \makebox[\adsphdpaperheight-56mm+\authorlenpenalty][c]{% 20mm(white)+20mm(blue)+9mm(space before name)+7mm(after date)
+  %
+  % Place author
+  \parbox[c][\adsphdspinewidth]{(\authorlen)}{
+  \large\sffamily\@authorf\ \MakeUppercase\@authorl%
+  }
+  \hfill
+  %
+  % Place title
+  \parbox[c][\adsphdspinewidth]{\spinetitlewidth}{
+    \centering
+    \setstretch{.85}
+    \normalsize\sffamily\textbf{\MakeUppercase\@title}
+  }
+  %
+  % Place date
+  \hfill\large\sffamily\@date
+  }
+  \end{turn}
+  \end{textblock*}
+
+  \renewcommand{\sfdefault}{\origsfdefault}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Provide back cover using the 2010 (X) layout
+% used by the Arenberg Doctoral School
+\newcommand{\backcoverheaderX}[2]{%
+  \typeout{adsphd.cls: Using default back cover page}
+  % Use Helvetica
+  \renewcommand{\sfdefault}{\helvetsfdefault}
+  %
+  % Only add empty pages if asked for
+  \ifthenelse{\equal{#2}{1}}
+  {
+    \cleardoublepage \mbox{}
+    \thispagestyle{empty}
+    \newpage
+  }{}
+  \thispagestyle{empty}
+  %
+  % Create gray box
+  \begin{textblock*}{152.5mm+\rbleed}(-\rbleed+#1,20mm)
+  \textblockcolour{gray}
+  \vspace{-\parskip}
+  \parbox[c][20mm]{151.2mm+\rbleed}{
+  \flushright
+  \vspace{-3mm}
+  {\bfseries \scriptsize \textcolor{white} {\sffamily{}Arenberg Doctoral School of Science, Engineering \& Technology} \ \ }\\[-1mm]
+  {\scriptsize \textcolor{white} {\sffamily\@faculty\ \ }}\\[-1.2mm]
+  {\scriptsize \textcolor{white} {\sffamily\@department \ \ }}\\[-1.2mm]
+  {\scriptsize \textcolor{white} {\sffamily\@researchgroup\ \ }}\\[-1.2mm]
+  {\scriptsize \textcolor{white} {\sffamily\@address\ \ }}\\[-1.2mm]
+  {\scriptsize \textcolor{white} {\sffamily{}\@addresspc\ \ }}
+  }
+  \end{textblock*}
+  %
+  %
+  % Create blue background
+  \setlength{\tmplength}{\adsphdpaperwidth}
+  \addtolength{\tmplength}{-152mm}
+  \addtolength{\tmplength}{\rbleed}
+  \begin{textblock*}{\tmplength}(152.0mm+#1,20mm)
+  \textblockcolour{}
+  \includegraphics[width=\tmplength,height=20mm]{image/blue}%
+  \end{textblock*}
+  %
+  % Put KULeuven logo on top
+  \begin{textblock*}{7mm}(153.37mm+#1,20mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \includegraphics*[angle=90,height=20mm]{image/kullogo2}%
+  \end{textblock*}
+}
+
+
+\newcommand{\backcoverfooterX}[1]{%
+  % Put logo of the association at the bottom right
+  \begin{textblock*}{7mm}[2.,1.](150mm+#1,231.0mm)
+  \textblockcolour{}
+  \vspace{-\parskip}
+  \includegraphics*[height=20mm]{image/ASSO_ZEGEL_ZW}
+  \end{textblock*}
+  %
+  % Restore font
+  \renewcommand{\sfdefault}{\origsfdefault}
+}
+
+\newcommand{\makebackcoverX}{\makebackcovergeneralX{0mm}{1}}
+% \makebackcovergeneralX{xskip}{clearpage}
+\newcommand{\makebackcovergeneralX}[2]{%
+\typeout{adsphd.cls: Using default back cover page}
+  %
+  % Create header
+  \backcoverheaderX{#1}{#2}
+  %
+  % Add footer
+  \backcoverfooterX{#1}
+}
+
+\let\orig@makebackcovergeneralX\makebackcovergeneralX
+
+
+

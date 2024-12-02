@@ -3,11 +3,11 @@ ADS PhD LaTeX template
 
 *This template is the result of an ongoing group effort by a number of
 volunteers. Help your fellow PhD researcher
-in the Issues section and contribute updates if you can. If you are fluent
-in TeX and can help monitoring this repository, ask Wannes Meert for admin rights.*
+in the Issues section and contribute updates via a pull request.*
 
 If you want to share tips, tricks, updates, questions or problems: add them
-as a [GitHub issue](https://github.com/wannesm/adsphd/issues) or a [GitHub pull request](https://help.github.com/articles/using-pull-requests).
+as a [GitHub issue](https://github.com/wannesm/adsphd/issues) or a 
+[GitHub pull request](https://help.github.com/articles/using-pull-requests).
 
 
 New 2024 cover design
@@ -43,6 +43,7 @@ Directory structure
 The directory structure looks like this
 
 * `thesis.tex`: Main tex file for the final booklet.
+* `adsphd.cls`, `adsphd.cfg`: The thesis class and configuration.
 * `run.py`: Simple compilation script.
 * `Makefile`
 * `Makefile.settings`: This file contains file names and other
@@ -63,8 +64,8 @@ Using Latex directly
 The adsphd.cls class can be used directly by latex:
 
     pdflatex thesis
-    bibtex thesis
-    # biber thesis
+    bibtex thesis # if you use bibtex
+    # biber thesis # if you use biblatex
     makeindex thesis.glo -s thesis.ist -t thesis.glg -o thesis.gls
     makeindex thesis.nlo -s nomencl.ist -o thesis.nls
     pdflatex thesis
@@ -375,5 +376,7 @@ Jesper Cockx,
 Laurens Sion,
 Felipe Morales,
 Pieter Maene,
+Gianluca Scopelliti,
+Brent De Blaere,
 Roel Van Beeumen.
 
