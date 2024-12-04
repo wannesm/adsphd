@@ -1761,7 +1761,7 @@ without written permission from the publisher.
     % \ifdefempty{\@researchgroup}{}{{\MakeUppercase\@researchgroup}}\\[-1mm]
     {\@address}\\[-1mm]
     {\@addresspc}\\[-1mm]
-    \ifdefempty{\@email}{}{\@email}\\[-1mm]
+    \ifdefempty{\@email}{}{\@email\\[-1mm]}
     \ifdefempty{\@website}{}{\@website}
   \end{flushright}
   %}
