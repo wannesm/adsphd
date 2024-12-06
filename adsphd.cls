@@ -1382,6 +1382,15 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Provide front cover using the 2024 (XXIV) layout
 % used by the Arenberg Doctoral School
+%
+% Huisstijl is followed with:
+% Logo: X=20mm, Y=56mm
+% X/2=10mm, a=2mm, b=6m
+% Pagesize: Publicaties >=A5 <A3
+% Bar on top: X/2+a+b = 18mm
+% Logo wrt side: X/2 = 10mm
+% Text wrt side: X/2+b = 16mm
+% Text wrt bottom: X/2+b = 16mm
 \newcommand{\frontcoverheaderXXIV}[1]{%
   \thispagestyle{empty}
   % Blue bar on top
@@ -1535,7 +1544,6 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \fi
   %
   % Place the title and subtitle
-  %\typeout{Title position: 17.5mm+\the#1}
   \begin{textblock*}{135mm}(16mm+#1,77mm)
   \textblockcolour{}
   \vspace{-\parskip}
@@ -1544,9 +1552,10 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \coverfontsize{20}{25}\selectfont\coverfontlight{\@subtitle}
   \end{textblock*}
   %
-  \begin{textblock*}{160mm}(17.5mm+#1,176mm)
-    \textblockcolour{}
-    \vspace{-\parskip}
+  \begin{textblock*}{160mm}(16mm+#1,174mm)  % {hsize}(hpos,vpos)
+    \textblockcolour{}%
+    \setlength{\fboxsep}{0pt}%
+    {%
     \begin{minipage}[b][50mm][b]{60mm}
       \fontsize{9}{11}\selectfont\coverfontlight
       \ifadsphd@covershowcommittee
@@ -1567,6 +1576,8 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
       %}}
       \if\empty\@udc \else \\U.D.C. \@udc\fi
     \end{minipage}
+    }
+  {%
     \begin{minipage}[b][50mm][b]{60mm}
       \textblockcolour{}
       \begin{flushright}
@@ -1582,6 +1593,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
         {\fontsize{9}{11}\selectfont\coverfontlight\@date}
       \end{flushright}
     \end{minipage}
+  }
   \end{textblock*}
   %
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -1644,7 +1656,7 @@ without written permission from the publisher.
 \newcommand{\titlepageXXIV}{%
 %
 % Title block
-\begin{textblock}{120}(17.5,70)
+\begin{textblock}{120}(16,70)  % {hsize}(hpos,vpos)
 \textblockcolour{}
 \vspace{-\parskip}
 \begin{flushleft}
@@ -1654,14 +1666,14 @@ without written permission from the publisher.
 \end{textblock}
 %
 % Author block
-\begin{textblock}{120}(17.5,105)
+\begin{textblock}{120}(16,105)
   \textblockcolour{}
   \vspace{-\parskip}
   \fontsize{12}{14}\titlepagefont{\@authorf\ \MakeUppercase\@authorl}
 \end{textblock}
 %
 % Committee block
-\begin{textblock}{160}(17.5,125)
+\begin{textblock}{160}(16,125)
   \textblockcolour{}
   \vspace{-\parskip}
   \begin{minipage}[b][60mm][b]{7.32cm}
@@ -1877,7 +1889,7 @@ gg      \raggedleft
   }{}
   %
   \newlength{\authorlen}
-  \settowidth{\authorlen}{\large\sffamily\@authorf\ \@authorl}
+  \settowidth{\authorlen}{\fontsize{9}{11}\coverfont\@authorf\ \@authorl}
   \newlength{\authorlenpenalty}
   \ifthenelse{\lengthtest{\authorlen>4.2cm}}{%
       % For really really long names, move the name up a bit more
@@ -1895,18 +1907,18 @@ gg      \raggedleft
     }
   }
   %
-  \begin{textblock*}{\adsphdspinewidth}(0mm+#1,20mm-\authorlenpenalty) % 9mm whitespace 
+  \begin{textblock*}{\adsphdspinewidth}(0mm+#1,18mm-\authorlenpenalty) % 9mm whitespace 
                                         % between blue and first letter of the author name
                                         % (possibly less because the author name might be
                                         % reallyreally long)
   \textblockcolour{}
   % Rotate the text
   \begin{turn}{-90}
-  \makebox[\adsphdpaperheight-24mm+\authorlenpenalty][c]{% 20mm(white)+20mm(blue)+9mm(space before name)+7mm(after date)
+  \makebox[\adsphdpaperheight-34mm+\authorlenpenalty][c]{% 20mm(white)+20mm(blue)+9mm(space before name)+7mm(after date)
   %
   % Place author
   \parbox[c][\adsphdspinewidth]{(\authorlen)}{
-  \large\sffamily\@authorf\ \@authorl%
+  \fontsize{9}{11}\coverfont\@authorf\ \@authorl%
   }
   \hfill
   %
@@ -1914,11 +1926,11 @@ gg      \raggedleft
   \parbox[c][\adsphdspinewidth]{\spinetitlewidth}{
     \centering
     \setstretch{.85}
-    \normalsize\sffamily\textbf{\@title}
+    \fontsize{9}{11}\coverfont{\@title}
   }
   %
   % Place date
-  \hfill\large\sffamily\@date
+  \hfill\fontsize{9}{11}\coverfont\@date
   }
   \end{turn}
   \end{textblock*}
