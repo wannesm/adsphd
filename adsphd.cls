@@ -1340,7 +1340,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   %\end{textblock*}
 
   \setlength{\skiplen}{0mm+\rbleed}
-  \makebackcovergeneralXXIV{}{}{\skiplen}{0}
+  \makebackcovergeneralXXIV{\skiplen}{0}
 
   \setlength{\skiplen}{\lbleed+\rbleed+\adsphdpaperwidth}
   \makespinegeneralXXIV{\skiplen}{0}{#1}{#2}
