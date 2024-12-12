@@ -1830,7 +1830,7 @@ without written permission from the publisher.
   \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-16mm, 21mm)
   \textblockcolour{}
     \fontsize{7}{10}\coverfont
-gg      \raggedleft
+    \raggedleft
     \MakeUppercase\@faculty\\[-1mm]
     \MakeUppercase\@department\\[-1mm]
     {\@address}\\[-1mm]
