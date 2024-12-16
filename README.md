@@ -18,8 +18,9 @@ doctoral schools (November 2024).
 
 There is a new (experimental) option `helveticaneue` to follow the new style
 that uses Helvetica Neue (otherwise Helvetica is used). If you activate this
-option, make sure to compile using `lualatex` or `xelatex`. These compilers
-have access to the fonts on your computers.
+option, make sure to install the Helvetica Neue font and compile using
+`lualatex` or `xelatex`. These compilers have access to the fonts on your
+computers.
 
 
 Information
@@ -44,7 +45,7 @@ The directory structure looks like this
 
 * `thesis.tex`: Main tex file for the final booklet.
 * `adsphd.cls`, `adsphd.cfg`: The thesis class and configuration.
-* `run.py`: Simple compilation script.
+* `run.py`: Simple compilation script (alternative to make).
 * `Makefile`
 * `Makefile.settings`: This file contains file names and other
                        settings used by make.

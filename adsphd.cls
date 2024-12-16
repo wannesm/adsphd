@@ -1,5 +1,5 @@
 %%
-%% Copyright (C) 2009-2024 by KU Leuven
+%% Copyright (C) 2009-2025 by KU Leuven
 %%               Wannes Meert, Yves Frederix, Bart Vandewoestyne, ...
 %%
 %% This file may be distributed and/or modified under the
@@ -15,7 +15,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[2009/09/24]
 \ProvidesClass{adsphd}
-    [2024/11/14 v1.4 Standard KU Leuven Arenberg Doctoral School PhD class]
+    [2024/12/16 v2.0 Standard KU Leuven Arenberg Doctoral School PhD class]
 
 \newif\ifshellescape
 

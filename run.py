@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 #
-# Copyright (C), 2012-2014 by Wannes Meert, KU Leuven
+# Copyright (C), 2012-2025 by Wannes Meert, KU Leuven
 #
 # Very naive compilation script for the ADSPHD class.
 #
