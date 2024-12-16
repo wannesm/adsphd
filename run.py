@@ -255,6 +255,8 @@ def cover():
 	\\item Spine width: \\printlength{\\adsphdspinewidth}
 	\\item Left bleed: \\printlength{\\lbleed}
 	\\item Right bleed: \\printlength{\\rbleed}
+	\\item Top bleed: \\printlength{\\tbleed}
+	\\item Bottom bleed: \\printlength{\\bbleed}
 	\\item Paper width: \\printlength{\\adsphdpaperwidth}
 	\\item Paper height: \\printlength{\\adsphdpaperheight}
 	\\item Text width: \\printlength{\\textwidth}

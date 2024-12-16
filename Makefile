@@ -528,6 +528,8 @@ $(COVERTEX): $(MAINTEX) $(MYCOVERPAGE) adsphd.cls Makefile
 	@echo "	\item Spine width: \printlength{\adsphdspinewidth}"    >> $@
 	@echo "	\item Left bleed: \printlength{\lbleed}"               >> $@
 	@echo "	\item Right bleed: \printlength{\rbleed}"              >> $@
+	@echo "	\item Top bleed: \printlength{\tbleed}"                >> $@
+	@echo "	\item Bottom bleed: \printlength{\bbleed}"             >> $@
 	@echo "	\item Paper width: \printlength{\adsphdpaperwidth}"    >> $@
 	@echo "	\item Paper height: \printlength{\adsphdpaperheight}"  >> $@
 	@echo "	\item Text width: \printlength{\textwidth}"            >> $@
