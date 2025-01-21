@@ -1620,7 +1620,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
 \thispagestyle{empty}
 \mbox{}
 \vfill
-{\scriptsize\sffamily{\setlength{\parindent}{0ex}\copyright{}~\@copyyear~KU Leuven -- \@faculty \\
+{\scriptsize\sffamily{\setlength{\parindent}{0ex}\copyright{}~\@copyyear~\@authorf~\@authorl \\
 Uitgegeven in eigen beheer, \@authorf~\@authorl, \@copyaddress{} (Belgium)}
 
 \bigskip
