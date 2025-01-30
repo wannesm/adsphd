@@ -991,7 +991,9 @@ LuaLaTeX or XeTeX}
   \cleardoublepage
   \phantomsection
   \addcontentsline{toc}{chapter}{\listfigurename}
+  \microtypesetup{protrusion=false}
   \listoffiguresorig
+  \microtypesetup{protrusion=true}
 }
 
 \let\listoftablesorig\listoftables
@@ -999,7 +1001,9 @@ LuaLaTeX or XeTeX}
   \cleardoublepage
   \phantomsection
   \addcontentsline{toc}{chapter}{\lotname}
+  \microtypesetup{protrusion=false}
   \listoftablesorig
+  \microtypesetup{protrusion=true}
 }
 
 \newcommand{\includeappendix}[1]{%
