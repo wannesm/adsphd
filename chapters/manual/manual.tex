@@ -40,6 +40,7 @@ To remove list of figures, tables and other preface chapters from the table of
 contents, search for occurrences of \texttt{\textbackslash addcontentsline} in the file
 \texttt{adsphd.cls} and comment them.
 
+
 \subsection{Small ebook size}
 
 When you add the \texttt{epub} option to the adsphd class the dissertation is
@@ -60,6 +61,21 @@ to enforce scaling:
 \section{Settings for TeXstudio}
 
 If you are working with TeXstudio or other windows latex editors you might want to adjust the editor's settings to allow a proper compilation of the table of contents and list of figures/tables.
+
+
+\subsection{Support for TeXstudio structure panel}
+
+The chapters do not show up in the TeXstudio structure panel because the
+\texttt{includechapter} is not recognized. You can replace this command 
+with the following two lines in \texttt{thesis.tex} (replace \texttt{manual}
+with the chapter name):
+
+\begin{verbatim}
+% \includechapter{manual}
+\graphicspath{{\chaptersdir/manual/image/}}%
+\include{\chaptersdir/manual/manual}%
+\end{verbatim}
+
 
 \subsection{Custom \textit{makeindex} and \textit{makeglossaries} commands}
 
@@ -98,7 +114,7 @@ If you prefer to directly view the created PDF\textbf{ from the beginning }edit 
 	\end{verbatim}}
 
 
-\subsection{Full cover page}
+\section{Full cover page}
 
 \textbf{Important}: most printing services will create their own cover page based
 on the details you send them (title, name, affiliation, ...) and do not supply
