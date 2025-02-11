@@ -1054,7 +1054,7 @@ LuaLaTeX or XeTeX}
 \newenvironment{ftw_instructions}{
   \definecolor{shadecolor}{gray}{0.85}
   \begin{shaded}
-  \textbf{Instructies van de faculteit:} 
+  \textbf{Instructions by the Arenberg Doctoral School:} 
   
   }%
   {
@@ -1064,16 +1064,13 @@ LuaLaTeX or XeTeX}
 \newcommand{\instructionspreface}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-In het voorwoord wordt de algemene doelstelling van het werk samengevat in
-enkele regels en worden personen, diensten of firma's bedankt voor hun
-medewerking bij het tot stand komen van het werk.
-
-De naam van firma's en personen uit deze firma's mogen slechts worden vermeld
-mits hun uitdrukkelijke toelating \'en na overleg met de supervisor(en)!
-Steeds wordt de supervisor(en) vermeld, de verantwoordelijke en eventueel de
-personen die rechtstreeks geholpen hebben bv.\ door het ter beschikking stelling
-van meetresultaten, faciliteiten.  Ook de instantie die eventueel een
-doctoraatsbeurs heeft toegekend wordt bedankt (bv.\ FWO, IWT, \ldots).
+Preface- Acknowledgements:
+The preface should summarise the general aim of the work. People,
+offices, companies and agencies who have awarded a doctoral
+scholarship (e.g., FWO, VLAIO, EC) should be thanked for their support.
+However, the names of these people, offices, companies and agencies
+may only be mentioned with their explicit consent and after
+consultation with the supervisor.
 \end{ftw_instructions}
   \else
   \fi
@@ -1082,7 +1079,10 @@ doctoraatsbeurs heeft toegekend wordt bedankt (bv.\ FWO, IWT, \ldots).
 \newcommand{\instructionspopabstract}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-  The popularized abstract should be approximately 1 page long with contents and language that's suited to a wider circle of readers (not experts in your field). It should be easy to understand and enjoyable to read. Look at it as an advertisement for your PhD project. 
+The popularized abstract should be approximately 1 page long with
+contents and language that's suited to a wider circle of readers (not
+experts in your field). It should be easy to understand and enjoyable
+to read. Look at it as an advertisement for your PhD project. 
 \end{ftw_instructions}
   \else
   \fi
@@ -1091,10 +1091,8 @@ doctoraatsbeurs heeft toegekend wordt bedankt (bv.\ FWO, IWT, \ldots).
 \newcommand{\instructionsabstract}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-In een beknopte tekst van maximum 2 pagina's worden de belangrijkste
-doelstellingen en besluiten geformuleerd, zowel in het Nederlands als in het
-Engels.  Zulke samenvattingen kunnen worden gebruikt in wetenschappelijke
-verslagen van het departement of de faculteit.  Het Engels moet vlekkeloos zijn.
+The scientific abstract should present the most important aims and
+conclusions of the dissertation in a brief text of ca. 2 pages.
 \end{ftw_instructions}
   \else
   \fi
@@ -1115,9 +1113,9 @@ Nederlandse samenvatting draagt een Nederlandse titel.
 \newcommand{\instructionslistofsymbols}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-Lijst van gebruikte symbolen:
-omvat de lijst van de belangrijkste gebruikte symbolen met indices, betekenis
-en gebruikte eenheden.
+List of abbreviations and list of symbols:
+These are lists of the most important abbreviations and symbols used
+in the work, mentioning indices, meaning and measures used.
 \end{ftw_instructions}
   \else
   \fi
@@ -1126,8 +1124,12 @@ en gebruikte eenheden.
 \newcommand{\instructionstableofcontents}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-Inhoudstafel: de inhoudstafel omvat de titels van hoofdstukken en paragrafen
-met verwijzing naar de bladzijden.
+Table of contents: 
+The table of contents should be arranged neatly and must refer to the
+pages of the different sections (maximum three levels). Preceding
+chapter one, Roman numerals (I, II, \ldots) should be used for the page
+numbering. From chapter one onwards, Western Arabic numerals (1, 2,
+\ldots) should be used.
 \end{ftw_instructions}
   \else
   \fi
@@ -1136,10 +1138,10 @@ met verwijzing naar de bladzijden.
 \newcommand{\instructionsintroduction}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-De inleiding situeert de problematiek, beschrijft de stand van de huidige
-kennis terzake, omschrijft de voornaamste doelstelligen van het werk, samen
-met de beperkende randvoorwaarden en de ter beschikking gestelde middelen en
-poneert de belangrijkste stellingen.
+An in-depth introduction outlining the research in a broader context:
+Starting from a description of the state of the art in the domain,
+additionally, the research questions and objectives  are formulated.
+Furthermore, this includes the global approach and research methods.
 \end{ftw_instructions}
   \else
   \fi
@@ -1148,16 +1150,25 @@ poneert de belangrijkste stellingen.
 \newcommand{\instructionschapters}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-De hoofdstukken: Elk hoofdstuk is ingelast met een bepaald doel voor ogen.
-Dit doel wordt vermeld in de eerste paragraaf van elk hoofdstuk.
-Naargelang de aard van de tekst (experiment, uitvoering, theoretische
-ontwikkeling, \ldots) volgen de paragrafen elkaar op.  Beweringen worden altijd
-gestaafd, hetzij door eigen experimenten, hetzij door een theoretische
-afleiding, hetzij door verwijzingen naar de literatuur.
-Elk hoofdstuk eindigt met een kort samenvattend besluit waarbij nagegaan wordt
-in hoeverre de doelstelling van het betrokken hoofdstuk verwezenlijkt is.  De
-deelbesluiten moeten de lezer automatisch leiden naar het algemeen besluit aan
-het einde van het werk.
+Report and discussion of the research in different chapters:   These
+chapters, reporting and discussing research results, can be based on
+text that has already been published or accepted or submitted to
+journals or conferences. In that case, the bibliographic reference of
+the publication should be mentioned on the first page of the chapter.
+If there are multiple authors, the PhD researcher must clarify the own
+scientific contribution after that bibliographic reference on the
+first page of the chapter. There is no problem in editing or rewriting
+a text that has already been published or accepted for publication,
+for example to reach consistency and coherence in writing style and
+formatting, to add details that were left out from publication, to
+meet comments of the Examination Committee, etc;
+The doctoral candidate must determine whether the publisher allows
+public availability of the publications and in which form via the
+webpage Romeo/Sherpa.
+
+Consistency in layout is required for the entire manuscript!
+References to figures, tables, appendices, and similar structures need
+to be consistent.
 \end{ftw_instructions}
   \else
   \fi
@@ -1166,13 +1177,9 @@ het einde van het werk.
 \newcommand{\instructionsconclusions}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-Algemene besluiten:
-Verwijzend naar de inleiding en naar de besluiten van de afzonderlijke
-hoofdstukken worden op het einde van het proefschrift de voornaamste besluiten
-gebundeld.  Hier wordt de nadruk gelegd op de eigen inbreng, de verworven
-resultaten, de `stellingen' van het proefschrift en de originele bijdragen tot
-het onderzoeksdomein.  De onopgeloste problemen worden aangestipt en
-suggesties voor eventueel verder onderzoek worden gemaakt.
+An extensive conclusion, including a global discussion of the
+research results, a discussion of the implications of the PhD research
+and future perspectives in regards to follow-up research.
 \end{ftw_instructions}
   \else
   \fi
@@ -1181,8 +1188,15 @@ suggesties voor eventueel verder onderzoek worden gemaakt.
 \newcommand{\instructionsbibliography}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-De bibliografie.
-Departementale richtlijnen terzake te volgen.
+Bibliography:
+Should be arranged according to the guidelines generally accepted in
+the relevant research domain.
+
+The thesis needs to be consistent in relation to bibliographic and
+other references. Either a global list of bibliographic references is
+provided at the end of the thesis, or each chapter contains
+bibliographic references at the end, but there cannot be a combination
+of these two methods of referencing.
 \end{ftw_instructions}
   \else
   \fi
@@ -1191,7 +1205,10 @@ Departementale richtlijnen terzake te volgen.
 \newcommand{\instructionslistofpublications}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-Lijst van de publicaties door de doctorandus/a (auteur of co-auteur).
+List of scientific publications with a clear DOI (digital object
+identifier) number mentioned:(optional): The list of scientific
+publications by the doctoral researcher should be arranged according
+to the guidelines generally accepted in the relevant research domain.
 \end{ftw_instructions}
   \else
   \fi
@@ -1200,7 +1217,7 @@ Lijst van de publicaties door de doctorandus/a (auteur of co-auteur).
 \newcommand{\instructionscv}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-Beknopt CV van de doctorandus.
+Curriculum vitae: Short CV of the PhD candidate.
 \end{ftw_instructions}
   \else
   \fi
@@ -1224,13 +1241,10 @@ on the use of Generative AI' in your manuscript.
 \newcommand{\instructionsappendices}{
   \ifadsphd@showinstructions
 \begin{ftw_instructions}
-De appendices:
-ze omvatten alle gedeelten uit de tekst die weliswaar essentieel zijn voor het
-proefschrift, maar waarvan de inlassing in de tekst de leesbaarheid ervan
-nadelig zouden be\"invloeden bv. omwille van hun lengte. Zo kunnen bv. de brute
-meetresultaten of een computerprogramma met zijn bron, commentaar en
-voorbeelden beter thuishoren in een appendix dan in de tekst zelf.
-De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
+Appendices: The appendices should include parts of the research
+which are essential for the work, but which may hamper the readability
+of the text, e.g. because of their length (mathematical deductions,
+experimental data, examples, figures, etc.).
 \end{ftw_instructions}
   \else
   \fi
@@ -1959,3 +1973,4 @@ without written permission from the publisher.
 %%
 %% End of file `adsphd.cls'.
 %% vim: tw=70 expandtab
+
