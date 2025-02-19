@@ -495,14 +495,15 @@ $(COVERTEX): $(MAINTEX) $(MYCOVERPAGE) adsphd.cls Makefile
 	@echo ""                                                       >> $@
 	@echo "\usepackage{printlen}"                                  >> $@
 	@echo "\uselengthunit{mm}"                                     >> $@
+	@echo "\IfFileExists{tikz}{\usepackage{tikz}\usetikzlibrary {arrows.meta}}{}" >> $@
 	@echo ""                                                       >> $@
 	@sed -n -e '/^%%% COVER: Settings/,/^%%% COVER: End/p' $<      >> $@
 	@echo ""                                                       >> $@
 	@echo "% Compute total page width"                             >> $@
 	@echo "\newlength{\fullpagewidth}"                             >> $@
 	@echo "\setlength{\fullpagewidth}{2\adsphdpaperwidth}"         >> $@
-	@echo "\addtolength{\fullpagewidth}{2\defaultlbleed}"           >> $@
-	@echo "\addtolength{\fullpagewidth}{2\defaultrbleed}"           >> $@
+	@echo "\addtolength{\fullpagewidth}{2\defaultlbleed}"          >> $@
+	@echo "\addtolength{\fullpagewidth}{2\defaultrbleed}"          >> $@
 	@echo "\addtolength{\fullpagewidth}{\adsphdspinewidth}"        >> $@
 	@echo ""                                                       >> $@
 	@echo "\geometry{"                                             >> $@
@@ -514,9 +515,9 @@ $(COVERTEX): $(MAINTEX) $(MYCOVERPAGE) adsphd.cls Makefile
 	@echo ""                                                       >> $@
 	@echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" >> $@
 	@echo ""                                                       >> $@
-	@echo "\begin{document}" 									                     >> $@
+	@echo "\begin{document}"                                       >> $@
 	@echo ""                                                       >> $@
-	@echo "\makefullcoverpage{\adsphdspinewidth}{}"  							 >> $@
+	@echo "\makefullcoverpage{\adsphdspinewidth}{}"                >> $@
 	@echo ""                                                       >> $@
 	@echo "\newlength{\testje}"                                    >> $@
 	@echo "\setlength{\testje}{10mm}"                              >> $@
@@ -526,8 +527,8 @@ $(COVERTEX): $(MAINTEX) $(MYCOVERPAGE) adsphd.cls Makefile
 	@echo "\subsection*{Used settings:}"                           >> $@
 	@echo "\begin{itemize}"                                        >> $@
 	@echo "	\item Spine width: \printlength{\adsphdspinewidth}"    >> $@
-	@echo "	\item Left bleed: \printlength{\lbleed}"               >> $@
-	@echo "	\item Right bleed: \printlength{\rbleed}"              >> $@
+	@echo "	\item Left bleed: \printlength{\lbleed}  (bleed into spine)" >> $@
+	@echo "	\item Right bleed: \printlength{\rbleed} (bleed over edge of paper)" >> $@
 	@echo "	\item Top bleed: \printlength{\tbleed}"                >> $@
 	@echo "	\item Bottom bleed: \printlength{\bbleed}"             >> $@
 	@echo "	\item Paper width: \printlength{\adsphdpaperwidth}"    >> $@
@@ -535,6 +536,9 @@ $(COVERTEX): $(MAINTEX) $(MYCOVERPAGE) adsphd.cls Makefile
 	@echo "	\item Text width: \printlength{\textwidth}"            >> $@
 	@echo "	\item Text height: \printlength{\textheight}"          >> $@
 	@echo "\end{itemize}"                                          >> $@
+	@echo ""                                                       >> $@
+	@echo "\drawextracroplines"                                    >> $@
+	@echo "\drawextracroplinesexplanation"                         >> $@
 	@echo ""                                                       >> $@
 	@echo "\end{document}"                                         >> $@
 

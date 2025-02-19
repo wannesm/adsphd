@@ -38,9 +38,9 @@
 
 % Define bleed
 \newlength{\defaultlbleed}
-\setlength{\defaultlbleed}{3mm}
+\setlength{\defaultlbleed}{0mm}
 \newlength{\defaultrbleed}
-\setlength{\defaultrbleed}{3mm}
+\setlength{\defaultrbleed}{5mm}
 \newlength{\defaulttbleed}
 \setlength{\defaulttbleed}{3mm}
 \newlength{\defaultbbleed}
@@ -1316,7 +1316,7 @@ experimental data, examples, figures, etc.).
   \linethickness{.5pt}
   \setlength{\tmplength}{2mm}
   \setlength{\tmplength}{#3\tmplength}
-  \typeout{the tmplenght \the\tmplength}
+  % \typeout{the tmplenght \the\tmplength}
   \begin{textblock*}{0mm}(#1,#2+\tmplength)
   \ifthenelse{\equal{#3}{1}}{
     \begin{picture}(1,#4)(0,0)
@@ -1366,6 +1366,10 @@ experimental data, examples, figures, etc.).
   \setlength{\skiplen}{\rbleed+2\lbleed+\adsphdpaperwidth+\adsphdspinewidth}
   \makefrontcovergeneralXXIV{\skiplen}{0}
 
+  \drawextracroplines
+}
+
+\newcommand{\drawextracroplines}{%
   % Draw some extra crop lines
   \cropline{\rbleed}{0mm}{-1}{5}
   \cropline{\rbleed+\adsphdpaperwidth}{0mm}{-1}{5}
@@ -1379,7 +1383,31 @@ experimental data, examples, figures, etc.).
   \cropline{\rbleed+\lbleed+\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{10}
   \cropline{\rbleed+2\lbleed+\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{5}
   \cropline{\rbleed+2\lbleed+2\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{5}
+}
 
+\newcommand{\drawextracroplinesexplanation}{%
+  \@ifpackageloaded{tikz}{%
+  \begin{textblock*}{2cm}(\rbleed+2\lbleed+2\adsphdpaperwidth+\adsphdspinewidth-2cm,0mm)
+    \textblockcolour{}%
+    \resizebox{2cm}{!}{%
+    \begin{tikzpicture}
+      \draw[->] (0,0) to[bend right] (0.5,1);
+      \node[anchor=east] at (0,0) {cropmark(R)};
+    \end{tikzpicture}%
+    }%
+  \end{textblock*}
+  \begin{textblock*}{2cm}(\rbleed+2\lbleed+\adsphdpaperwidth+\adsphdspinewidth,0mm)
+    \textblockcolour{}%
+    \resizebox{2cm}{!}{%
+    \begin{tikzpicture}
+      \draw[->] (0.5,0) to[bend left] (0,1);
+      \node[anchor=west] at (0.5,0) {cropmark(L)};
+    \end{tikzpicture}%
+    }%
+  \end{textblock*}
+  }{%
+    \typeout{Tikz not found}
+  }
 }
 
 \let\makefrontcover\makefrontcoverXXIV

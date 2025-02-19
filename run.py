@@ -222,6 +222,7 @@ def cover():
         cf.write("""
 \\usepackage{printlen}
 \\uselengthunit{mm}
+\\IfFileExists{tikz}{\\usepackage{tikz}\\usetikzlibrary {arrows.meta}}{}
 """)
         cf.write("".join(content))
         cf.write("""
@@ -245,16 +246,13 @@ def cover():
 
 \\makefullcoverpage{\\adsphdspinewidth}{}
 
-\\newlength{\\testje}
-\\setlength{\\testje}{10mm}
-
 \\mbox{}
 \\newpage
 \\subsection*{Used settings:}
 \\begin{itemize}
 	\\item Spine width: \\printlength{\\adsphdspinewidth}
-	\\item Left bleed: \\printlength{\\lbleed}
-	\\item Right bleed: \\printlength{\\rbleed}
+	\\item Left bleed: \\printlength{\\lbleed} (bleed into spine)
+	\\item Right bleed: \\printlength{\\rbleed} (bleed over edge of paper)
 	\\item Top bleed: \\printlength{\\tbleed}
 	\\item Bottom bleed: \\printlength{\\bbleed}
 	\\item Paper width: \\printlength{\\adsphdpaperwidth}
@@ -262,6 +260,9 @@ def cover():
 	\\item Text width: \\printlength{\\textwidth}
 	\\item Text height: \\printlength{\\textheight}
 \\end{itemize}
+
+\\drawextracroplines
+\\drawextracroplinesexplanation
 
 \\end{document}
 """)
