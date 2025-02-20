@@ -505,10 +505,15 @@ $(COVERTEX): $(MAINTEX) $(MYCOVERPAGE) adsphd.cls Makefile
 	@echo "\addtolength{\fullpagewidth}{2\defaultlbleed}"          >> $@
 	@echo "\addtolength{\fullpagewidth}{2\defaultrbleed}"          >> $@
 	@echo "\addtolength{\fullpagewidth}{\adsphdspinewidth}"        >> $@
+	@echo "% Compute total page height"                            >> $@
+	@echo "\newlength{\fullpageheight}"                            >> $@
+	@echo "\setlength{\fullpageheight}{\adsphdpaperheight}"        >> $@
+	@echo "\addtolength{\fullpageheight}{\defaulttbleed}"          >> $@
+	@echo "\addtolength{\fullpageheight}{\defaultbbleed}"          >> $@
 	@echo ""                                                       >> $@
 	@echo "\geometry{"                                             >> $@
 	@echo "	paperwidth=\fullpagewidth,"                            >> $@
-	@echo "	paperheight=\adsphdpaperheight,"                       >> $@
+	@echo "	paperheight=\fullpageheight,"                       >> $@
 	@echo "}"                                                      >> $@
 	@echo ""                                                       >> $@
 	@echo "\pagestyle{empty}"                                      >> $@

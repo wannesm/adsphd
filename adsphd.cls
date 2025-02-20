@@ -42,9 +42,9 @@
 \newlength{\defaultrbleed}
 \setlength{\defaultrbleed}{5mm}
 \newlength{\defaulttbleed}
-\setlength{\defaulttbleed}{3mm}
+\setlength{\defaulttbleed}{0mm}
 \newlength{\defaultbbleed}
-\setlength{\defaultbbleed}{3mm}
+\setlength{\defaultbbleed}{0mm}
 \newlength{\lbleed}
 \setlength{\lbleed}{0mm} % No bleed in normal mode
 \newlength{\rbleed}
@@ -1330,6 +1330,25 @@ experimental data, examples, figures, etc.).
  \end{textblock*}
 }
 
+\newcommand{\croplineh}[4]{%
+  \setlength{\unitlength}{1mm}
+  \linethickness{.5pt}
+  \setlength{\tmplength}{2mm}
+  \setlength{\tmplength}{#3\tmplength}
+  % \typeout{the tmplenght \the\tmplength}
+  \begin{textblock*}{0mm}(#1+\tmplength,#2)%
+  \ifthenelse{\equal{#3}{1}}{
+    \begin{picture}(#4,1)(0,-1)
+      \put(0,0){\line(1,0){#4}}
+    \end{picture}
+  }{ % #3 == -1
+    \begin{picture}(-#4,1)(0,-1)
+      \put(0,0){\line(-1,0){#4}}
+    \end{picture}
+  }
+ \end{textblock*}
+}
+
 \newcommand{\useCustomCoverpageIfExists}{%
   \IfFileExists{\@customcoverpage}{%
     \typeout{adsphd.cls: Using custom cover page (\@customcoverpage)}
@@ -1348,6 +1367,8 @@ experimental data, examples, figures, etc.).
   % #2: spinetitlewidth
   \setlength{\lbleed}{\defaultlbleed}
   \setlength{\rbleed}{\defaultrbleed}
+  \setlength{\tbleed}{\defaulttbleed}
+  \setlength{\bbleed}{\defaultbbleed}
   \setlength{\adsphdspinewidth}{#1}
 
   \newlength{\skiplen}
@@ -1371,18 +1392,27 @@ experimental data, examples, figures, etc.).
 
 \newcommand{\drawextracroplines}{%
   % Draw some extra crop lines
+  % Croplines on top
   \cropline{\rbleed}{0mm}{-1}{5}
   \cropline{\rbleed+\adsphdpaperwidth}{0mm}{-1}{5}
   \cropline{\rbleed+\lbleed+\adsphdpaperwidth}{0mm}{-1}{10}
   \cropline{\rbleed+\lbleed+\adsphdpaperwidth+\adsphdspinewidth}{0mm}{-1}{10}
   \cropline{\rbleed+2\lbleed+\adsphdpaperwidth+\adsphdspinewidth}{0mm}{-1}{5}
   \cropline{\rbleed+2\lbleed+2\adsphdpaperwidth+\adsphdspinewidth}{0mm}{-1}{5}
-  \cropline{\rbleed}{\adsphdpaperheight}{1}{5}
-  \cropline{\rbleed+\adsphdpaperwidth}{\adsphdpaperheight}{1}{5}
-  \cropline{\rbleed+\lbleed+\adsphdpaperwidth}{\adsphdpaperheight}{1}{10}
-  \cropline{\rbleed+\lbleed+\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{10}
-  \cropline{\rbleed+2\lbleed+\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{5}
-  \cropline{\rbleed+2\lbleed+2\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight}{1}{5}
+  % Croplines on bottom
+  \cropline{\rbleed}{\adsphdpaperheight+\defaulttbleed+\defaultbbleed}{1}{5}
+  \cropline{\rbleed+\adsphdpaperwidth}{\adsphdpaperheight+\defaulttbleed+\defaultbbleed}{1}{5}
+  \cropline{\rbleed+\lbleed+\adsphdpaperwidth}{\adsphdpaperheight+\defaulttbleed+\defaultbbleed}{1}{10}
+  \cropline{\rbleed+\lbleed+\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight+\defaulttbleed+\defaultbbleed}{1}{10}
+  \cropline{\rbleed+2\lbleed+\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight+\defaulttbleed+\defaultbbleed}{1}{5}
+  \cropline{\rbleed+2\lbleed+2\adsphdpaperwidth+\adsphdspinewidth}{\adsphdpaperheight+\defaulttbleed+\defaultbbleed}{1}{5}
+  % Croplines on left
+  \croplineh{0mm}{\tbleed}{-1}{5}
+  \croplineh{0mm}{\tbleed+\adsphdpaperheight}{-1}{5}
+  % Croplines on right
+  \croplineh{2\rbleed+2\lbleed+2\adsphdpaperwidth+\adsphdspinewidth}{\tbleed}{1}{5}
+  \croplineh{2\rbleed+2\lbleed+2\adsphdpaperwidth+\adsphdspinewidth}{\tbleed+\adsphdpaperheight}{1}{5}
+
 }
 
 \newcommand{\drawextracroplinesexplanation}{%
@@ -1440,21 +1470,21 @@ experimental data, examples, figures, etc.).
 \newcommand{\frontcoverheaderXXIV}[1]{%
   \thispagestyle{empty}
   % Blue bar on top
-  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,18mm)
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,18mm+\tbleed)
   \textblockcolour{kulprimaryblue}
   %\vspace{-\parskip}
   \rule{0pt}{34mm}
   \end{textblock*}
   %
   % Create logo box
-  \begin{textblock*}{56mm}(10mm+#1,10mm)
+  \begin{textblock*}{56mm}(10mm+#1,10mm+\tbleed)
   % explicitly turn off block colour to prevent the coloured background from popping up due to misalignment of the logo
   \textblockcolour{}
   \includegraphics[width=56mm,height=20mm]{image/KULEUVEN_LOGO_2012}
   \end{textblock*}
   %
   % Create ADS+faculty box
-  \begin{textblock*}{85mm}(16mm+#1,35mm)
+  \begin{textblock*}{85mm}(16mm+#1,35mm+\tbleed)
   \textblockcolour{}
   \coverfont
   \raggedright
@@ -1481,32 +1511,32 @@ experimental data, examples, figures, etc.).
   \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,0mm)
   \textblockcolour{kulprimaryblue}
   %\vspace{-\parskip}
-  \rule{0pt}{18mm}
+  \rule{0pt}{18mm+\tbleed}
   \end{textblock*}
   %
   % Blue bar below logos
-  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,38mm)
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(0mm-\lbleed+#1,38mm+\tbleed)
   \textblockcolour{kulprimaryblue}
   %\vspace{-\parskip}
   \rule{0pt}{18mm}
   \end{textblock*}
   %
   % Create logo box KU Leuven
-  \begin{textblock*}{34mm}(16mm+#1,21mm)
+  \begin{textblock*}{34mm}(16mm+#1,21mm+\tbleed)
   % explicitly turn off block colour to prevent the coloured background from popping up due to misalignment of the logo
   \textblockcolour{}
   \includegraphics[width=34mm,height=12mm]{image/KULEUVEN_LOGO_2012}
   \end{textblock*}
   %
   % Create logo box partner university
-  \begin{textblock*}{34mm}(\adsphdpaperwidth+#1-34mm-16mm,21mm)
+  \begin{textblock*}{34mm}(\adsphdpaperwidth+#1-34mm-16mm,21mm+\tbleed)
   % explicitly turn off block colour to prevent the coloured background from popping up due to misalignment of the logo
   \textblockcolour{}
   \includegraphics[width=34mm,height=12mm]{image/PARTNER_LOGO}
   \end{textblock*}
   %
   % Create ADS + faculty box KU Leuven
-  \begin{textblock*}{85mm}(16mm+#1,43mm)
+  \begin{textblock*}{85mm}(16mm+#1,43mm+\tbleed)
   \textblockcolour{}
   \coverfont
   \raggedright
@@ -1545,7 +1575,7 @@ experimental data, examples, figures, etc.).
   \renewcommand{\makefrontcoverXXIV}{}
 \fi
 \newcommand{\makefrontcovergeneralXXIV}[2]{%
-  \typeout{adsphd.cls: Create cover using bleed = (\the\rbleed,\the\lbleed)}
+  \typeout{adsphd.cls: Create cover using bleed = (\the\rbleed,\the\lbleed,\the\tbleed,\the\bbleed)}
   % Use Helvetica
   \ifadsphd@helveticaneue
   \coverfont
@@ -1577,7 +1607,7 @@ experimental data, examples, figures, etc.).
   %
   % Put a DRAFT notifier on the front page to avoid printing a wrong version
   \ifadsphd@final\else
-    \begin{textblock*}{120mm}(17.5mm+#1,120mm)
+    \begin{textblock*}{120mm}(17.5mm+#1,120mm+\tbleed)
     \textblockcolour{}
     \vspace{-\parskip}
     \begin{center}
@@ -1590,7 +1620,7 @@ experimental data, examples, figures, etc.).
   \fi
   %
   % Place the title and subtitle
-  \begin{textblock*}{135mm}(16mm+#1,77mm)
+  \begin{textblock*}{135mm}(16mm+#1,77mm+\tbleed)
   \textblockcolour{}
   \vspace{-\parskip}
   \raggedright
@@ -1598,7 +1628,7 @@ experimental data, examples, figures, etc.).
   \coverfontsize{20}{25}\selectfont\coverfontlight{\@subtitle}
   \end{textblock*}
   %
-  \begin{textblock*}{160mm}(16mm+#1,174mm)  % {hsize}(hpos,vpos)
+  \begin{textblock*}{160mm}(16mm+#1,174mm+\tbleed)  % {hsize}(hpos,vpos)
     \textblockcolour{}%
     \setlength{\fboxsep}{0pt}%
     {%
@@ -1800,7 +1830,7 @@ without written permission from the publisher.
   \thispagestyle{empty}
   %
   % Background colored block
-  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-\rbleed,18mm)
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-\rbleed,18mm+\tbleed)
   %\begin{textblock*}{\adsphdpaperwidth}(0mm+#1,234mm)
   \textblockcolour{kulprimaryblue}
   %\vspace{-\parskip}
@@ -1808,7 +1838,7 @@ without written permission from the publisher.
   \end{textblock*}
   %
   % Text box with address
-  \begin{textblock*}{124.5mm}(#1,24.5mm)
+  \begin{textblock*}{124.5mm}(#1,24.5mm+\tbleed)
   \textblockcolour{}
   \vspace{-\parskip}
   %\parbox[c][20mm]{151.2mm+\rbleed}{
@@ -1826,14 +1856,14 @@ without written permission from the publisher.
   \end{textblock*}
   %
   % Blue vertical line
-  \begin{textblock*}{1.5mm}(#1+129mm,27.5mm)
+  \begin{textblock*}{1.5mm}(#1+129mm,27.5mm+\tbleed)
   \textblockcolour{kullightblue}
   %\vspace{-\parskip}
   \rule{0pt}{15mm}
   \end{textblock*}
   %
   % Put KULeuven sedes on top
-  \begin{textblock*}{7mm}(135mm+#1,26.9mm)
+  \begin{textblock*}{7mm}(135mm+#1,26.9mm+\tbleed)
   \textblockcolour{}
   \vspace{-\parskip}
   \includegraphics*[height=16.3mm]{image/sedes.png}%
@@ -1863,17 +1893,17 @@ without written permission from the publisher.
   % Blue bar on top
   \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-\rbleed,0mm)
   \textblockcolour{kulprimaryblue}
-  \rule{0mm}{18mm}
+  \rule{0mm}{18mm+\tbleed}
   \end{textblock*}
   %
   % Blue bar below logos
-  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-\rbleed,38mm)
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-\rbleed,38mm+\tbleed)
   \textblockcolour{kulprimaryblue}
   \rule{0mm}{18mm}
   \end{textblock*}
   %
   % Text box with address KU Leuven
-  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-16mm, 21mm)
+  \begin{textblock*}{\adsphdpaperwidth+\lbleed+\rbleed}(#1-16mm, 21mm+\tbleed)
   \textblockcolour{}
     \fontsize{7}{10}\coverfont
     \raggedleft
@@ -1886,7 +1916,7 @@ without written permission from the publisher.
   \end{textblock*}
   % 
   % Text box with address partner university
-  \begin{textblock*}{100mm}(#1+16mm, 21mm)
+  \begin{textblock*}{100mm}(#1+16mm, 21mm+\tbleed)
   \textblockcolour{}
     \fontsize{7}{10}\coverfont
     \MakeUppercase\@facultypartner\\[-1mm]
@@ -1953,7 +1983,7 @@ without written permission from the publisher.
     }
   }
   %
-  \begin{textblock*}{\adsphdspinewidth}(0mm+#1,18mm-\authorlenpenalty) % 9mm whitespace 
+  \begin{textblock*}{\adsphdspinewidth}(0mm+#1,18mm-\authorlenpenalty+\tbleed) % 9mm whitespace 
                                         % between blue and first letter of the author name
                                         % (possibly less because the author name might be
                                         % reallyreally long)

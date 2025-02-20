@@ -232,10 +232,15 @@ def cover():
 \\addtolength{\\fullpagewidth}{2\\defaultlbleed}
 \\addtolength{\\fullpagewidth}{2\\defaultrbleed}
 \\addtolength{\\fullpagewidth}{\\adsphdspinewidth}
+% Compute total page height
+\\newlength{\\fullpageheight}
+\\setlength{\\fullpageheight}{\\adsphdpaperheight}
+\\addtolength{\\fullpageheight}{\\defaulttbleed}
+\\addtolength{\\fullpageheight}{\\defaultbbleed}
 
 \\geometry{
 	paperwidth=\\fullpagewidth,
-	paperheight=\\adsphdpaperheight,
+	paperheight=\\fullpageheight,
 }
 
 \\pagestyle{empty}
