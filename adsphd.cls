@@ -1426,12 +1426,12 @@ experimental data, examples, figures, etc.).
     \end{tikzpicture}%
     }%
   \end{textblock*}
-  \begin{textblock*}{2cm}(\rbleed+2\lbleed+\adsphdpaperwidth+\adsphdspinewidth,0mm)
+  \begin{textblock*}{4cm}(\rbleed+2\lbleed+\adsphdpaperwidth+\adsphdspinewidth,0mm)
     \textblockcolour{}%
-    \resizebox{2cm}{!}{%
+    \resizebox{4cm}{!}{%
     \begin{tikzpicture}
       \draw[->] (0.5,0) to[bend left] (0,1);
-      \node[anchor=west] at (0.5,0) {cropmark(L)};
+      \node[anchor=west] at (0.5,0) {cropmark(L) / spine fold line};
     \end{tikzpicture}%
     }%
   \end{textblock*}
