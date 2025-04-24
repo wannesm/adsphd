@@ -141,8 +141,10 @@
 % To create a list of abbreviations, there are 2 options
 % 1. manual creation of list of abbreviations and inclusion as a chapter
 %    \includeabbreviations{abbreviations}
-% 2. automatic generation via the glossary package
-%    \glossary{name=MD,description=molecular dynamics}
+% 2. automatic generation via the glossaries package
+%    define and reference terms to create the list of abbreviations
+%    \newglossaryentry{md}{name={MD},description={molecular dynamics}}
+%    This is an acronym \gls{md}.
 \myprintglossary
 
 % To create a list of symbols, there are 2 options
