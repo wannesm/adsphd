@@ -1632,7 +1632,7 @@ experimental data, examples, figures, etc.).
     \textblockcolour{}%
     \setlength{\fboxsep}{0pt}%
     {%
-    \begin{minipage}[b][50mm][b]{60mm}
+    \begin{minipage}[b][50mm][b]{68mm}
       \fontsize{9}{11}\selectfont\coverfontlight
       \ifadsphd@covershowcommittee
         % NOT SUPPORTED
@@ -1651,8 +1651,8 @@ experimental data, examples, figures, etc.).
       %\\\rule{0.25cm}{0pt}(\affiliation)
       %}}
       \if\empty\@udc \else \\U.D.C. \@udc\fi
-    \end{minipage}
-    }
+    \end{minipage}%
+    }%
   {%
     \begin{minipage}[b][50mm][b]{60mm}
       \textblockcolour{}
@@ -1668,8 +1668,8 @@ experimental data, examples, figures, etc.).
         \\[1em]
         {\fontsize{9}{11}\selectfont\coverfontlight\@date}
       \end{flushright}
-    \end{minipage}
-  }
+    \end{minipage}%
+  }%
   \end{textblock*}
   %
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
