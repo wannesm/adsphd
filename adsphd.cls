@@ -213,7 +213,12 @@
   \ifpdf
     \PassOptionsToPackage{plainpages=false,pdfpagelabels,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
   \else
-    \PassOptionsToPackage{plainpages=false,pdfpagelabels,ps2pdf,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
+    % XeTeX can generate .xdv files, which do not trigger the \ifpdf flag, but ps2pdf must not be set in that case
+    \ifXeTeX
+      \PassOptionsToPackage{plainpages=false,pdfpagelabels,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
+    \else
+      \PassOptionsToPackage{plainpages=false,pdfpagelabels,ps2pdf,bookmarks,breaklinks,pdfborder={0 0 0}}{hyperref}
+    \fi
   \fi
 \fi
 
