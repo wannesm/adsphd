@@ -7,6 +7,7 @@ thesis.aux
 thesis.bbl
 thesis.blg
 thesis.dvi
+thesis.xdv
 thesis.lof
 thesis.log
 thesis.lot
@@ -28,6 +29,8 @@ thesis.ind
 thesis.run.xml
 thesis.synctex.gz
 thesis.ps
+thesis.fdb_latexmk
+*.fls
 cover.*
 s
 .force_rebuild
