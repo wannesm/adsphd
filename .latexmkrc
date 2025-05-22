@@ -11,6 +11,8 @@ $pdf_mode = 4;
 $dvi_mode = 0;
 $postscript_mode = 0;
 
+# Modify this line to change which file to build
+# Remove if you want to build all .tex files
 @default_files = ("thesis");
 
 # Custom dependency and function for glossaries package 
