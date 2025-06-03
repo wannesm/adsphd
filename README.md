@@ -76,14 +76,6 @@ Any other Latex build tool like rubber, SCons, TeXShop or TeXWorks
 should also work out of the box (`makeindex` might not run by default in which
 case you will not see the glossary).
 
-Using latexmk
---------------
-
-A `.latexmkrc`file is provided which adds support for the `nomencl` and `glossaries` packages.
-By default `thesis.tex` will be built with LuaLaTeX (other files will be ignored).
-This behavior can be changed by modifying the `$pdf_mode` and `@default_files` variables in `.latexmkrc`.
-
-In VSCode you can use the `latexmk` recipe of the `LaTeX Workshop` extension.
 
 Using the simple Python compile script
 --------------------------------------
@@ -98,6 +90,17 @@ work cross-platform.
     python3 run.py --help      # Help and more options
 
 Some settings are available at the top of the `run.py` file.
+
+
+Using latexmk
+--------------
+
+A `.latexmkrc`file is provided which adds support for the `nomencl` and `glossaries` packages.
+By default `thesis.tex` will be built with LuaLaTeX (other files will be ignored).
+This behavior can be changed by modifying the `$pdf_mode` and `@default_files` variables in `.latexmkrc`.
+
+In VSCode you can use the `latexmk` recipe of the `LaTeX Workshop` extension.
+
 
 Using make and other utility scripts
 ------------------------------------
