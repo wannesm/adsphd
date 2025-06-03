@@ -1731,22 +1731,17 @@ without written permission from the publisher.
 
 \newcommand{\titlepageXXIV}{%
 %
-% Title block
+% Title + Author block
 \begin{textblock}{120}(16,70)  % {hsize}(hpos,vpos)
 \textblockcolour{}
 \vspace{-\parskip}
 \begin{flushleft}
   \coverfontsize{20}{22}\titlepagefont\textbf{\MakeUppercase\@title}\\[1ex]
-  \coverfontsize{14}{16}\titlepagefont{\MakeUppercase\@subtitle}
+  \coverfontsize{14}{16}\titlepagefont{\MakeUppercase\@subtitle}\\[3ex]
+  \fontsize{12}{14}\titlepagefont{\@authorf\ \MakeUppercase\@authorl}
 \end{flushleft}
 \end{textblock}
 %
-% Author block
-\begin{textblock}{120}(16,105)
-  \textblockcolour{}
-  \vspace{-\parskip}
-  \fontsize{12}{14}\titlepagefont{\@authorf\ \MakeUppercase\@authorl}
-\end{textblock}
 %
 % Committee block
 \begin{textblock}{160}(16,125)

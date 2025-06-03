@@ -47,7 +47,7 @@ dry              = False
 
 ### INITIALISATION ###
 
-def initapplications():
+def initapplications(use_lualatex=False):
 	"""Initialize the application commands and arguments for the different
 	   platforms."""
 	global apps
@@ -67,6 +67,9 @@ def initapplications():
 	elif sys.platform == 'win32' or sys.platform == 'cygwin':
 		## Windows ##
 		pass
+
+	if use_lualatex:
+		apps.pdflatex = App('lualatex',  '-interaction=nonstopmode -synctex=1 -shell-escape {basename}', verbose)
 
 
 ## DERIVED SETTINGS ##
@@ -461,6 +464,7 @@ definition
 	parser.add_argument('--verbose', '-v', action='count',      help='Verbose output')
 	parser.add_argument('--targets', '-T', action='store_true', help='Print available targets')
 	parser.add_argument('--dry', '-d',     action='store_true', help='Dry run to see commands without executing them')
+	parser.add_argument('--lua',           action='store_true', help='Use LuaLaTeX instead of pdflatex')
 	parser.add_argument('target',          nargs='*',           help='Targets')
 
 	args = parser.parse_args(argv)
@@ -473,7 +477,7 @@ definition
 		targets()
 		return
 
-	initapplications()
+	initapplications(use_lualatex=args.lua)
 	
 	if len(args.target) == 0:
 		print("No targets given, using default target: compile")
