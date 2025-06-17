@@ -194,8 +194,13 @@ def cover():
     doc_re = re.compile(r"^\\documentclass")
     settings_re = [
         ('faculty', re.compile("faculty=([a-z]+)")),
+        ('doctoralschool', re.compile("doctoralschool=([a-z]+)")),
         ('department', re.compile("department=([a-z]+)")),
-        ('phddegree', re.compile("phddegree=([a-z]+)"))
+        ('phddegree', re.compile("phddegree=([a-z]+)")),
+        ('coverfontpercent', re.compile("coverfontpercent=([a-z]+)")),
+        ('british', re.compile("british")),
+        ('helveticaneue', re.compile("helveticaneue")),
+        ('joint', re.compile("joint")),
     ]
 
     content = []
@@ -207,7 +212,10 @@ def cover():
                     for s, r in settings_re:
                         result = r.search(line)
                         if result is not None:
-                            usersettings[s] = result.group(1)
+                            if len(result.groups()) > 0:
+                                usersettings[s] = result.group(1)
+                            else:
+                                usersettings[s] = None
             if doadd:
                 content.append(line)
             if "%%% COVER: Settings" in line:
@@ -217,7 +225,13 @@ def cover():
     if verbose > 0:
         print('Recovered settings: ')
         print(usersettings)
-    extra_usersettings = ','.join(['']+['{}={}'.format(k,v) for k,v in usersettings.items()])
+    extra_usersettings = []
+    for k,v in usersettings.items():
+        if v is None:
+            extra_usersettings.append(k)
+        else:
+            extra_usersettings.append('{}={}'.format(k,v))
+    extra_usersettings = ','.join(['']+extra_usersettings)
 
     with open('cover.tex','w') as cf:
         cf.write("""% Cover.tex
