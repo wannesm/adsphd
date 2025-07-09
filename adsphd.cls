@@ -1630,7 +1630,9 @@ experimental data, examples, figures, etc.).
   \vspace{-\parskip}
   \raggedright
   \coverfontsize{32}{38}\selectfont\coverfontlight{\color{kulprimaryblue}\@title}\\[1ex]
-  \coverfontsize{20}{25}\selectfont\coverfontlight{\@subtitle}
+  \if\empty\@subtitle \else
+    \coverfontsize{20}{25}\selectfont\coverfontlight{\@subtitle}
+  \fi
   \end{textblock*}
   %
   \begin{textblock*}{160mm}(16mm+#1,174mm+\tbleed)  % {hsize}(hpos,vpos)
@@ -1742,7 +1744,9 @@ without written permission from the publisher.
 \vspace{-\parskip}
 \begin{flushleft}
   \coverfontsize{20}{22}\titlepagefont\textbf{\MakeUppercase\@title}\\[1ex]
-  \coverfontsize{14}{16}\titlepagefont{\MakeUppercase\@subtitle}\\[3ex]
+  \if\empty\@subtitle \else
+    \coverfontsize{14}{16}\titlepagefont{\MakeUppercase\@subtitle}\\[3ex]
+  \fi
   \fontsize{12}{14}\titlepagefont{\@authorf\ \MakeUppercase\@authorl}
 \end{flushleft}
 \end{textblock}
