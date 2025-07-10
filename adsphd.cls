@@ -1743,8 +1743,10 @@ without written permission from the publisher.
 \textblockcolour{}
 \vspace{-\parskip}
 \begin{flushleft}
-  \coverfontsize{20}{22}\titlepagefont\textbf{\MakeUppercase\@title}\\[1ex]
-  \if\empty\@subtitle \else
+  \if\empty\@subtitle
+    \coverfontsize{20}{22}\titlepagefont\textbf{\MakeUppercase\@title}\\[3ex]
+  \else
+    \coverfontsize{20}{22}\titlepagefont\textbf{\MakeUppercase\@title}\\[1ex]
     \coverfontsize{14}{16}\titlepagefont{\MakeUppercase\@subtitle}\\[3ex]
   \fi
   \fontsize{12}{14}\titlepagefont{\@authorf\ \MakeUppercase\@authorl}
