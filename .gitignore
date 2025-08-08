@@ -38,3 +38,6 @@ s
 *.blg
 *.tgz
 VERSION
+thesis_diff.*
+diffchapters
+adsphd_diff.cls
