@@ -353,6 +353,13 @@ However, the template has some support to create a separate cover page. Use
 `make cover` or `python run.py cover` to generate `cover.tex` and run.
 
 
+Generating a diff-version
+---------------
+
+In the script `make_diff.sh`, a function is provided that generates a (pdf) diff-version
+with respect to an older (git) version.
+
+
 Troubleshooting
 ---------------
 
