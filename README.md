@@ -356,7 +356,7 @@ However, the template has some support to create a separate cover page. Use
 Generating a diff-version
 ---------------
 
-In the script make_diff.sh, a function is provided that generates a (pdf) diff-version
+In the script `make_diff.sh`, a function is provided that generates a (pdf) diff-version
 with respect to an older (git) version.
 
 
