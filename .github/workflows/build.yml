@@ -1,10 +1,9 @@
 # CI voor de ADS PhD template (adsphd)
 #
-#
-# Drie groepen waaruit we opties kiezen:
-#   - besturingssysteem : Linux (make) en Windows (run.py)
-#   - distributie       : TeX Live overal, MiKTeX extra op Windows
-#   - documentclass     : final, tothejury en print+bleed+cropmarks
+#Every push builds `thesis.tex` on GitHub Actions with `make`, for the class
+#options `final`, `tothejury` and `print,bleed,cropmarks`; pull requests also
+#build on Windows and with MiKTeX. Each job keeps the PDF and the LaTeX log as
+#an artifact for two weeks.
 #
 name: build
 
@@ -24,52 +23,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: ${{ matrix.distro }} / ${{ matrix.variant }} / ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 5
+  linux:
+    name: texlive / ${{ matrix.variant }} / linux
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container:
+      image: texlive/texlive:latest
 
     strategy:
-      # Een kapotte combinatie mag de andere niet verbergen.
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        distro: [texlive, miktex]
         variant: [final, tothejury, print]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Python opzetten
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-
-      - name: TeX Live installeren
-        if: matrix.distro == 'texlive'
-        uses: TeX-Live/setup-texlive-action@v4
-        with:
-          packages: scheme-full
-
-      - name: MiKTeX installeren
-        if: matrix.distro == 'miktex'
-        shell: pwsh
-        run: |
-          choco install miktex --no-progress -y
-          "C:\Program Files\MiKTeX\miktex\bin\x64" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
-      - name: MiKTeX pakketten automatisch laten ophalen
-        if: matrix.distro == 'miktex'
-        shell: pwsh
-        run: initexmf --admin --set-config-value "[MPM]AutoInstall=1"
+      - name: make aanwezig maken
+        shell: bash
+        run: command -v make >/dev/null || (apt-get update -qq && apt-get install -y -qq make)
 
       - name: Versies tonen
         shell: bash
         run: |
-          python --version
-          latexmk --version | head -n 1
-          pdflatex --version | head -n 1
+          make --version
+          latexmk --version
+          pdflatex --version
 
       - name: Variant activeren
         shell: bash
@@ -85,40 +64,160 @@ jobs:
           grep -n '^\\documentclass' thesis.tex
 
       - name: Bouwen met make
-        if: runner.os == 'Linux'
         shell: bash
         run: make
 
       - name: Een enkel hoofdstuk apart bouwen
-        if: runner.os == 'Linux' && matrix.variant == 'final'
+        if: matrix.variant == 'final'
         shell: bash
         run: |
           make chaptermakefiles
           make chapters/introduction_ch.pdf
 
+      - name: Log bewaren
+        if: always()
+        shell: bash
+        run: cp thesis.log "thesis-linux-${{ matrix.variant }}.log" || true
+
+      - name: Artifacts uploaden
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: texlive-linux-${{ matrix.variant }}
+          path: |
+            thesis.pdf
+            chapters/introduction_ch.pdf
+            thesis-linux-${{ matrix.variant }}.log
+          if-no-files-found: warn
+          retention-days: 14
+
+  windows:
+    name: texlive / ${{ matrix.variant }} / windows
+    runs-on: windows-latest
+    timeout-minutes: 90
+    if: github.event_name != 'push' || github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
+
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [final, tothejury, print]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python opzetten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: TeX Live installeren
+        uses: TeX-Live/setup-texlive-action@v4
+        with:
+          packages: scheme-full
+
+      - name: Versies tonen
+        id: toolchain
+        shell: bash
+        run: |
+          python --version
+          latexmk --version
+          pdflatex --version
+
+      - name: Variant activeren
+        shell: bash
+        run: |
+          case "${{ matrix.variant }}" in
+            final)     OPTS="final,faculty=firw,department=cws,phddegree=cws" ;;
+            tothejury) OPTS="tothejury,faculty=firw,department=cws,phddegree=cws" ;;
+            print)     OPTS="print,bleed,cropmarks,faculty=firw,department=cws,phddegree=cws" ;;
+            *) echo "Onbekende variant: ${{ matrix.variant }}"; exit 1 ;;
+          esac
+          sed -i "s#^\\\\documentclass.*#\\\\documentclass[$OPTS]{adsphd}#" thesis.tex
+          echo "Actieve regel:"
+          grep -n '^\\documentclass' thesis.tex
+
       - name: Bouwen met run.py
-        if: runner.os == 'Windows'
         shell: bash
         run: python run.py
 
       - name: Bouwen met latexmk
-        if: always() && runner.os == 'Windows'
+        if: always() && steps.toolchain.outcome == 'success'
         shell: bash
         run: latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error thesis.tex
 
       - name: Log bewaren
         if: always()
         shell: bash
-        run: cp thesis.log "thesis-${{ matrix.os }}-${{ matrix.distro }}-${{ matrix.variant }}.log" || true
+        run: cp thesis.log "thesis-windows-${{ matrix.variant }}.log" || true
 
       - name: Artifacts uploaden
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ${{ matrix.os }}-${{ matrix.distro }}-${{ matrix.variant }}
+          name: texlive-windows-${{ matrix.variant }}
           path: |
             thesis.pdf
-            chapters/introduction_ch.pdf
-            thesis-${{ matrix.os }}-${{ matrix.distro }}-${{ matrix.variant }}.log
+            thesis-windows-${{ matrix.variant }}.log
+          if-no-files-found: warn
+          retention-days: 14
+
+  miktex:
+    name: miktex / ${{ matrix.variant }} / linux
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    if: github.event_name != 'push' || github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
+    container:
+      image: miktex/miktex:latest
+      options: --user root
+
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [final, tothejury, print]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Variant activeren
+        shell: bash
+        run: |
+          case "${{ matrix.variant }}" in
+            final)     OPTS="final,faculty=firw,department=cws,phddegree=cws" ;;
+            tothejury) OPTS="tothejury,faculty=firw,department=cws,phddegree=cws" ;;
+            print)     OPTS="print,bleed,cropmarks,faculty=firw,department=cws,phddegree=cws" ;;
+            *) echo "Onbekende variant: ${{ matrix.variant }}"; exit 1 ;;
+          esac
+          sed -i "s#^\\\\documentclass.*#\\\\documentclass[$OPTS]{adsphd}#" thesis.tex
+          echo "Actieve regel:"
+          grep -n '^\\documentclass' thesis.tex
+
+      - name: MiKTeX voorbereiden
+        shell: bash
+        run: |
+          chown -R miktex:miktex "$GITHUB_WORKSPACE"
+          gosu miktex initexmf --set-config-value=[MPM]AutoInstall=1
+          gosu miktex miktex packages update-package-database
+          gosu miktex miktex packages update || true
+          gosu miktex miktex packages install xkeyval || true
+
+      - name: Bouwen met latexmk
+        shell: bash
+        run: gosu miktex latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error thesis.tex
+
+      - name: Log bewaren
+        if: always()
+        shell: bash
+        run: cp thesis.log "thesis-miktex-${{ matrix.variant }}.log" || true
+
+      - name: Artifacts uploaden
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: miktex-linux-${{ matrix.variant }}
+          path: |
+            thesis.pdf
+            thesis-miktex-${{ matrix.variant }}.log
           if-no-files-found: warn
           retention-days: 14
