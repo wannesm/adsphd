@@ -1,0 +1,86 @@
+# CI voor de ADS PhD template (adsphd)
+# Doel: elke push en elke pull request compileert thesis.tex opnieuw, met
+# meerdere TeX-engines. Faalt de compilatie, dan faalt de workflow en zit de
+# .log in de artifacts.
+#
+# Bewust dicht bij .gitlab-ci.yml gehouden: als de template naar
+# gitlab.kuleuven.be verhuist, is dit bijna 1-op-1 om te zetten.
+
+name: build
+
+on:
+  push:
+    branches: ["**"]
+    tags: ["*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Nieuwe push op dezelfde branch annuleert de vorige run.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    # Volledige TeX Live: bevat latexmk, makeglossaries, makeindex, bibtex,
+    # biber, lmodern en babel-dutch. Een 'small'/'basic' scheme volstaat NIET.
+    container:
+      image: texlive/texlive:latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - engine: pdflatex
+            flag: "-pdf"
+          - engine: lualatex
+            flag: "-pdflua"
+          # xelatex aanzetten? onderstaande twee regels uncommenten:
+          # - engine: xelatex
+          #   flag: "-pdfxe"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Versies tonen
+        run: |
+          latexmk --version
+          ${{ matrix.engine }} --version | head -n 1
+
+      - name: Ingecheckte thesis.pdf weggooien
+        # thesis.pdf zit vandaag nog in git. Weghalen zodat een artifact nooit
+        # de ingecheckte PDF kan zijn in plaats van een verse build.
+        # Deze stap mag weg zodra de PDFs uit git zijn.
+        run: rm -f thesis.pdf
+
+      - name: Compileren
+        # latexmk leest .latexmkrc (glossaries + nomencl cus-deps zitten daar
+        # al in); de vlag hieronder overschrijft de $pdf_mode = 4 uit dat
+        # bestand.
+        run: |
+          latexmk ${{ matrix.flag }} \
+            -interaction=nonstopmode -halt-on-error -file-line-error \
+            thesis.tex
+          cp thesis.pdf thesis-${{ matrix.engine }}.pdf
+
+      - name: Log bewaren
+        if: always()
+        run: cp thesis.log thesis-${{ matrix.engine }}.log || true
+
+      - name: Artifacts uploaden
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: thesis-${{ matrix.engine }}
+          path: |
+            thesis-${{ matrix.engine }}.pdf
+            thesis-${{ matrix.engine }}.log
+          if-no-files-found: warn
+          retention-days: 14
