@@ -13,31 +13,31 @@ on:
     tags: ["*"]
   pull_request:
   workflow_dispatch:
-
+    inputs:
+      pr:
+        description: "PR-nummer om te testen (leeg = deze branch)"
+        required: false
 
 permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.pr }}
   cancel-in-progress: true
 
 jobs:
   linux:
-    name: texlive / ${{ matrix.variant }} / linux
+    name: texlive / linux
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     container:
       image: texlive/texlive:latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        variant: [final, tothejury, print]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.pr && format('refs/pull/{0}/merge', inputs.pr) || github.ref }}
 
       - name: make aanwezig maken
         shell: bash
@@ -50,61 +50,64 @@ jobs:
           latexmk --version
           pdflatex --version
 
-      - name: Variant activeren
+      - name: Alle varianten bouwen
         shell: bash
         run: |
-          case "${{ matrix.variant }}" in
-            final)     OPTS="final,faculty=firw,department=cws,phddegree=cws" ;;
-            tothejury) OPTS="tothejury,faculty=firw,department=cws,phddegree=cws" ;;
-            print)     OPTS="print,bleed,cropmarks,faculty=firw,department=cws,phddegree=cws" ;;
-            *) echo "Onbekende variant: ${{ matrix.variant }}"; exit 1 ;;
-          esac
-          sed -i "s#^\\\\documentclass.*#\\\\documentclass[$OPTS]{adsphd}#" thesis.tex
-          echo "Actieve regel:"
-          grep -n '^\\documentclass' thesis.tex
-
-      - name: Bouwen met make
-        shell: bash
-        run: make
+          mkdir -p out
+          cp thesis.tex thesis.tex.orig
+          fail=0
+          for v in final tothejury print; do
+            case "$v" in
+              final)     OPTS="final,faculty=firw,department=cws,phddegree=cws" ;;
+              tothejury) OPTS="tothejury,faculty=firw,department=cws,phddegree=cws" ;;
+              print)     OPTS="print,bleed,cropmarks,faculty=firw,department=cws,phddegree=cws" ;;
+            esac
+            echo "::group::$v"
+            make clean >/dev/null 2>&1 || true
+            cp thesis.tex.orig thesis.tex
+            sed -i "s#^\\\\documentclass.*#\\\\documentclass[$OPTS]{adsphd}#" thesis.tex
+            grep -n '^\\documentclass' thesis.tex
+            if make; then
+              cp thesis.pdf "out/thesis-$v.pdf"
+              echo "$v: ok"
+            else
+              fail=1
+              echo "$v: MISLUKT"
+            fi
+            cp thesis.log "out/thesis-$v.log" 2>/dev/null || true
+            echo "::endgroup::"
+          done
+          cp thesis.tex.orig thesis.tex
+          exit $fail
 
       - name: Een enkel hoofdstuk apart bouwen
-        if: matrix.variant == 'final'
         shell: bash
         run: |
+          make clean >/dev/null 2>&1 || true
           make chaptermakefiles
           make chapters/introduction_ch.pdf
-
-      - name: Log bewaren
-        if: always()
-        shell: bash
-        run: cp thesis.log "thesis-linux-${{ matrix.variant }}.log" || true
+          mkdir -p out && cp chapters/introduction_ch.pdf out/
 
       - name: Artifacts uploaden
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: texlive-linux-${{ matrix.variant }}
-          path: |
-            thesis.pdf
-            chapters/introduction_ch.pdf
-            thesis-linux-${{ matrix.variant }}.log
+          name: texlive-linux
+          path: out/
           if-no-files-found: warn
           retention-days: 14
 
   windows:
-    name: texlive / ${{ matrix.variant }} / windows
+    name: texlive / windows
     runs-on: windows-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     if: github.event_name != 'push' || github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
-
-    strategy:
-      fail-fast: false
-      matrix:
-        variant: [final, tothejury, print]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.pr && format('refs/pull/{0}/merge', inputs.pr) || github.ref }}
 
       - name: Python opzetten
         uses: actions/setup-python@v5
@@ -117,107 +120,129 @@ jobs:
           packages: scheme-full
 
       - name: Versies tonen
-        id: toolchain
         shell: bash
         run: |
           python --version
           latexmk --version
           pdflatex --version
 
-      - name: Variant activeren
+      - name: Alle varianten bouwen, met run.py en met latexmk
         shell: bash
         run: |
-          case "${{ matrix.variant }}" in
-            final)     OPTS="final,faculty=firw,department=cws,phddegree=cws" ;;
-            tothejury) OPTS="tothejury,faculty=firw,department=cws,phddegree=cws" ;;
-            print)     OPTS="print,bleed,cropmarks,faculty=firw,department=cws,phddegree=cws" ;;
-            *) echo "Onbekende variant: ${{ matrix.variant }}"; exit 1 ;;
-          esac
-          sed -i "s#^\\\\documentclass.*#\\\\documentclass[$OPTS]{adsphd}#" thesis.tex
-          echo "Actieve regel:"
-          grep -n '^\\documentclass' thesis.tex
+          mkdir -p out
+          cp thesis.tex thesis.tex.orig
+          fail=0
+          for v in final tothejury print; do
+            case "$v" in
+              final)     OPTS="final,faculty=firw,department=cws,phddegree=cws" ;;
+              tothejury) OPTS="tothejury,faculty=firw,department=cws,phddegree=cws" ;;
+              print)     OPTS="print,bleed,cropmarks,faculty=firw,department=cws,phddegree=cws" ;;
+            esac
+            cp thesis.tex.orig thesis.tex
+            sed -i "s#^\\\\documentclass.*#\\\\documentclass[$OPTS]{adsphd}#" thesis.tex
+            grep -n '^\\documentclass' thesis.tex
 
-      - name: Bouwen met run.py
-        shell: bash
-        run: python run.py
+            echo "::group::$v via run.py"
+            python run.py clean >/dev/null 2>&1 || true
+            if python run.py; then
+              cp thesis.pdf "out/thesis-$v-runpy.pdf"
+              echo "$v runpy: ok"
+            else
+              fail=1
+              echo "$v runpy: MISLUKT"
+            fi
+            cp thesis.log "out/thesis-$v-runpy.log" 2>/dev/null || true
+            echo "::endgroup::"
 
-      - name: Bouwen met latexmk
-        if: always() && steps.toolchain.outcome == 'success'
-        shell: bash
-        run: latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error thesis.tex
-
-      - name: Log bewaren
-        if: always()
-        shell: bash
-        run: cp thesis.log "thesis-windows-${{ matrix.variant }}.log" || true
+            echo "::group::$v via latexmk"
+            latexmk -C >/dev/null 2>&1 || true
+            if latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error thesis.tex; then
+              cp thesis.pdf "out/thesis-$v-latexmk.pdf"
+              echo "$v latexmk: ok"
+            else
+              fail=1
+              echo "$v latexmk: MISLUKT"
+            fi
+            cp thesis.log "out/thesis-$v-latexmk.log" 2>/dev/null || true
+            echo "::endgroup::"
+          done
+          cp thesis.tex.orig thesis.tex
+          exit $fail
 
       - name: Artifacts uploaden
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: texlive-windows-${{ matrix.variant }}
-          path: |
-            thesis.pdf
-            thesis-windows-${{ matrix.variant }}.log
+          name: texlive-windows
+          path: out/
           if-no-files-found: warn
           retention-days: 14
 
   miktex:
-    name: miktex / ${{ matrix.variant }} / linux
+    name: miktex / linux
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
+    continue-on-error: true
     if: github.event_name != 'push' || github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
     container:
       image: miktex/miktex:latest
       options: --user root
 
-    strategy:
-      fail-fast: false
-      matrix:
-        variant: [final, tothejury, print]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Variant activeren
-        shell: bash
-        run: |
-          case "${{ matrix.variant }}" in
-            final)     OPTS="final,faculty=firw,department=cws,phddegree=cws" ;;
-            tothejury) OPTS="tothejury,faculty=firw,department=cws,phddegree=cws" ;;
-            print)     OPTS="print,bleed,cropmarks,faculty=firw,department=cws,phddegree=cws" ;;
-            *) echo "Onbekende variant: ${{ matrix.variant }}"; exit 1 ;;
-          esac
-          sed -i "s#^\\\\documentclass.*#\\\\documentclass[$OPTS]{adsphd}#" thesis.tex
-          echo "Actieve regel:"
-          grep -n '^\\documentclass' thesis.tex
+        with:
+          ref: ${{ inputs.pr && format('refs/pull/{0}/merge', inputs.pr) || github.ref }}
 
       - name: MiKTeX voorbereiden
         shell: bash
         run: |
           chown -R miktex:miktex "$GITHUB_WORKSPACE"
           gosu miktex initexmf --set-config-value=[MPM]AutoInstall=1
-          gosu miktex miktex packages update-package-database
+          for i in 1 2 3; do
+            gosu miktex miktex packages update-package-database && break
+            echo "poging $i mislukt, opnieuw over 15s"
+            sleep 15
+          done
           gosu miktex miktex packages update || true
           gosu miktex miktex packages install xkeyval || true
 
-      - name: Bouwen met latexmk
+      - name: Alle varianten bouwen
         shell: bash
-        run: gosu miktex latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error thesis.tex
-
-      - name: Log bewaren
-        if: always()
-        shell: bash
-        run: cp thesis.log "thesis-miktex-${{ matrix.variant }}.log" || true
+        run: |
+          mkdir -p out
+          cp thesis.tex thesis.tex.orig
+          fail=0
+          for v in final tothejury print; do
+            case "$v" in
+              final)     OPTS="final,faculty=firw,department=cws,phddegree=cws" ;;
+              tothejury) OPTS="tothejury,faculty=firw,department=cws,phddegree=cws" ;;
+              print)     OPTS="print,bleed,cropmarks,faculty=firw,department=cws,phddegree=cws" ;;
+            esac
+            echo "::group::$v"
+            gosu miktex latexmk -C >/dev/null 2>&1 || true
+            cp thesis.tex.orig thesis.tex
+            sed -i "s#^\\\\documentclass.*#\\\\documentclass[$OPTS]{adsphd}#" thesis.tex
+            chown -R miktex:miktex "$GITHUB_WORKSPACE"
+            grep -n '^\\documentclass' thesis.tex
+            if gosu miktex latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error thesis.tex; then
+              cp thesis.pdf "out/thesis-$v.pdf"
+              echo "$v: ok"
+            else
+              fail=1
+              echo "$v: MISLUKT"
+            fi
+            cp thesis.log "out/thesis-$v.log" 2>/dev/null || true
+            echo "::endgroup::"
+          done
+          cp thesis.tex.orig thesis.tex
+          exit $fail
 
       - name: Artifacts uploaden
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: miktex-linux-${{ matrix.variant }}
-          path: |
-            thesis.pdf
-            thesis-miktex-${{ matrix.variant }}.log
+          name: miktex-linux
+          path: out/
           if-no-files-found: warn
           retention-days: 14
