@@ -181,8 +181,8 @@ def realclean():
 	"""Remove all files created by Latex."""
 	clean()
 	cleanfiles = [
-		Path('thesis.pdf'), Path('thesis.dvi'), Path('thesis.ps'),
-		Path('cover.pdf'), Path('cover.dvi'), Path('cover.ps')
+		Path('thesis.pdf'),
+		Path('cover.pdf')
 	]
 	rm(cleanfiles, 'Removing pdf files failed')
 
