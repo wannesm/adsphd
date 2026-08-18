@@ -34,7 +34,6 @@ echo "% Keep the following \cleardoublepage at the end of this file, " >> $f
 echo "% otherwise \includeonly includes empty pages." >> $f
 echo "\\cleardoublepage" >> $f
 echo "" >> $f
-echo "% vim: tw=70 nocindent expandtab foldmethod=marker foldmarker={{{}{,}{}}}" >> $f
 
 echo "Trying to create chapter Makefile ..."
 MAINDIR='..'

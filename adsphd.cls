@@ -2037,5 +2037,4 @@ without written permission from the publisher.
 \endinput
 %%
 %% End of file `adsphd.cls'.
-%% vim: tw=70 expandtab
 
