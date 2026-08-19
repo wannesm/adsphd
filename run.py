@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 #
-# Copyright (C), 2012-2025 by Wannes Meert, KU Leuven
+# Copyright (C), 2012-2026 by Wannes Meert, KU Leuven
 #
-# Very naive compilation script for the ADSPHD class.
-#
-# No file dependency checks are performed (use TeXnicCenter, Texmaker, latexmk,
-# rubber, SCons, or make if you want such a feature).
+# Cross-platform helper script for the ADSPHD class. Compilation is delegated
+# to latexmk, which reads .latexmkrc; this script adds the project chores.
 #
 
+import os
 import re
 import shlex
+import shutil
 import sys
 import argparse
-from collections import namedtuple
 from pathlib import Path
 
 from subprocess import *
@@ -23,14 +22,6 @@ from subprocess import *
 given_settings = {
   'mainfile':    'thesis.tex',
   'chaptersdir': 'chapters',
-
-  'makebibliography': True,
-  'makeindex':        True,
-  'makeglossary':     True,
-  'makenomenclature': True,
-
-  'usebiblatex':      False,
-  'biblatexbackend':  'biber', # alternative: bibtex
 
   'cleanext':         ['.tdo','.fls','.toc','.aux','.log','.bbl','.blg','.log',
                        '.lof','.lot','.ilg','.out','.glo','.gls','.nlo','.nls',
@@ -45,6 +36,13 @@ derived_settings = ['basename', 'chapters', 'cleanfiles', 'pdffile']
 verbose          = 0
 dry              = False
 
+# Stripped from the temporary main file for a chapter build.
+# Kept in sync with IGNOREINCHAPTERMODE in the Makefile.
+CHAPTER_ONLY_IGNORE = ['makefrontcover', 'makebackcover', 'tableofcontents',
+                       'includebibliography', 'maketitle', 'listoffigures',
+                       'listoftables', 'printnomenclature', 'printglossary',
+                       'includeonly', 'instructionschapters']
+
 
 ### INITIALISATION ###
 
@@ -52,25 +50,17 @@ def initapplications(use_lualatex=False):
 	"""Initialize the application commands and arguments for the different
 	   platforms."""
 	global apps
-	# Unix and linux are the default setup
-	## *NIX ##
-	apps.pdflatex     = App('pdflatex',  '-interaction=nonstopmode -synctex=1 -shell-escape {basename}', verbose)
-	apps.bibtex       = App('bibtex',    '-min-crossrefs=100 {basename}', verbose)
-	apps.biber        = App('biber',     '{basename}', verbose)
-	apps.glossary     = App('makeindex', '{basename}.glo -s {basename}.ist -o {basename}.gls', verbose)
-	apps.nomenclature = App('makeindex', '{basename}.nlo -s nomencl.ist -o {basename}.nls', verbose)
-	apps.pdfviewer    = App('acroread',  '{pdffile}', verbose)
+	engineflag = '-pdflua' if use_lualatex else '-pdf'
+	apps.latexmk = App('latexmk',
+	                   engineflag + ' -interaction=nonstopmode -halt-on-error'
+	                   ' -file-line-error -shell-escape {basename}', verbose)
 
 	if sys.platform == 'darwin':
-		## Mac OS X ##
-		apps.pdfviewer   = App('open',      '{pdffile}', verbose)
-
-	elif sys.platform == 'win32' or sys.platform == 'cygwin':
-		## Windows ##
-		pass
-
-	if use_lualatex:
-		apps.pdflatex = App('lualatex',  '-interaction=nonstopmode -synctex=1 -shell-escape {basename}', verbose)
+		apps.pdfviewer = App('open',      '{pdffile}', verbose)
+	elif sys.platform in ('win32', 'cygwin'):
+		apps.pdfviewer = None          # handled by os.startfile in view()
+	else:
+		apps.pdfviewer = App('xdg-open', '{pdffile}', verbose)
 
 
 ## DERIVED SETTINGS ##
@@ -96,7 +86,7 @@ settings.chapters = [chap.with_suffix('') for chap in Path(settings.chaptersdir)
 settings.cleanfiles = [base.with_name(base.stem + ext) for ext in settings.cleanext for base in [settings.basename, Path('cover')]+settings.chapters]
 settings.pdffile = settings.basename.with_suffix('.pdf')
 
-apps = create('pdflatex', 'bibtex', 'biber', 'glossary', 'nomenclature', 'pdfviewer', 'remove')
+apps = create('latexmk', 'pdfviewer')
 
 ## COMPILE ##
 
@@ -115,60 +105,109 @@ def target(targetname = None):
 
 @target()
 def test():
-    """Verify the settings in run.py"""
-    allok = testSettings()
-    if allok:
-        print("Your settings appear to be consistent")
-    if verbose > 0:
-        for k,v in settings:
-            if verbose > 1 or k not in ['cleanfiles']:
-                print("{}: {}".format(k, v))
-    else:
-        print("(use -v to inspect).")
+	"""Check that the toolchain and the project files are in place."""
+	allok = True
+	if shutil.which('latexmk') is None:
+		print("ERROR: latexmk was not found on your PATH. It is part of both "
+		      "TeX Live and MiKTeX.")
+		allok = False
+	if not Path(settings.mainfile).is_file():
+		print(f"ERROR: main file {settings.mainfile} not found.")
+		allok = False
+	if not Path('.latexmkrc').is_file():
+		print("WARNING: no .latexmkrc found; latexmk will use its defaults, "
+		      "which do not know about glossaries and nomencl.")
+	if not Path(settings.chaptersdir).is_dir():
+		print(f"WARNING: no {settings.chaptersdir}/ directory found.")
+	if allok:
+		print("Your setup appears to be complete")
+	if verbose > 0:
+		for k, v in settings:
+			if verbose > 1 or k not in ['cleanfiles']:
+				print("{}: {}".format(k, v))
+	else:
+		print("(use -v to inspect).")
+	return allok
+
 
 @target()
 def pdf():
-    """Alias for compile"""
-    return compile()
+	"""Alias for compile"""
+	return compile()
+
 
 @target()
 def compile():
-	"""Build thesis.pdf"""
-	testSettings()
-	latex()
+	"""Build the full thesis pdf"""
+	print('#### LATEXMK ####')
+	apps.latexmk.run(settings, 'Latexmk failed')
 
 
-def latex():
-	global apps
-	rerun = False
-	print('#### LATEX ####')
-	apps.pdflatex.run(settings, 'Latex failed')
-	if settings.makebibliography:
-		rerun = True
-		if settings.usebiblatex and settings.biblatexbackend == 'biber':
-			print('#### BIBER ####')
-			apps.biber.run(settings, 'Biber failed')
-		else:
-			print('#### BIBTEX ####')
-			apps.bibtex.run(settings, 'Bibtex failed')
-	if settings.makeindex:
-		rerun = True
-		print('#### INDEX ####')
-	if settings.makeglossary:
-		# List of abbreviations
-		rerun = True
-		print('#### GLOSSARY ####')
-		apps.glossary.run(settings, 'Creating glossary failed')
-	if settings.makenomenclature:
-		# List of symbols
-		rerun = True
-		print('#### NOMENCLATURE ####')
-		apps.nomenclature.run(settings, 'Creating glossary failed')
-	if rerun:
-		print('#### LATEX ####')
-		apps.pdflatex.run(settings, 'Rerunning (1) Latex failed')
-		print('#### LATEX ####')
-		apps.pdflatex.run(settings, 'Rerunning (2) Latex failed')
+@target()
+def chapter():
+	"""Build a single chapter (use --chapter NAME)"""
+	name = settings.chapter
+	if name is None:
+		print("No chapter given. Use --chapter NAME, where NAME is one of:")
+		for d in sorted(Path(settings.chaptersdir).iterdir()):
+			if d.is_dir():
+				print("  " + d.name)
+		return 1
+
+	chapterdir = Path(settings.chaptersdir, name)
+	if not chapterdir.is_dir():
+		print(f"ERROR: no such chapter directory: {chapterdir}")
+		return 1
+
+	jobname = f"{settings.basename}_{name}_ch"
+	tmpmain = Path(f"{settings.basename}_ch.tex")
+	includeonly = (Path(settings.chaptersdir) / name / name).as_posix()
+
+	# Substring match like the Makefile's grep: \makefrontcoverXXIV must
+	# match \makefrontcover, so no word boundary here.
+	ignore_re = re.compile(r'\\(' + '|'.join(CHAPTER_ONLY_IGNORE) + r')')
+	lines = []
+	with open(settings.mainfile, 'r') as f:
+		for line in f:
+			if ignore_re.search(line):
+				continue
+			if '\\begin{document}' in line:
+				line = line.replace('\\begin{document}',
+				                    '\\includeonly{' + includeonly + '}\n\\begin{document}')
+			lines.append(line)
+
+	print(f"Writing temporary main file {tmpmain}")
+	if not dry:
+		with open(tmpmain, 'w') as f:
+			f.writelines(lines)
+
+	# Reuse the full document's aux files so cross-references resolve.
+	for ext in ['.aux', '.bbl', '.nls', '.gls']:
+		src = Path(f"{settings.basename}{ext}")
+		if src.is_file():
+			print(f"Reusing {src}")
+			if not dry:
+				shutil.copyfile(src, Path(f"{jobname}{ext}"))
+
+	print('#### LATEXMK ####')
+	newsettings = settings.copy()
+	newsettings.basename = str(tmpmain.with_suffix(''))
+	chapterapp = App(apps.latexmk.binary,
+	                 apps.latexmk.options.replace('{basename}',
+	                                              f'-jobname={jobname} {{basename}}'),
+	                 verbose)
+	chapterapp.run(newsettings, 'Latexmk failed')
+
+	result = Path(f"{jobname}.pdf")
+	target_pdf = chapterdir / f"{name}.pdf"
+	if result.is_file() or dry:
+		print(f"Moving {result} to {target_pdf}")
+		if not dry:
+			shutil.move(str(result), str(target_pdf))
+	if not dry:
+		tmpmain.unlink(missing_ok=True)
+		rm([Path(f"{jobname}{ext}") for ext in settings.cleanext], 'Cleaning up failed')
+	return 0
 
 
 @target()
@@ -181,11 +220,14 @@ def clean():
 def realclean():
 	"""Remove all files created by Latex."""
 	clean()
-	cleanfiles = [
-		Path('thesis.pdf'), Path('thesis.dvi'), Path('thesis.ps'),
-		Path('cover.pdf'), Path('cover.dvi'), Path('cover.ps')
-	]
+	cleanfiles = [settings.basename.with_suffix('.pdf'),
+	              Path('cover.pdf'), Path('cover.tex')]
+	chaptersdir = Path(settings.chaptersdir)
+	if chaptersdir.is_dir():
+		cleanfiles += [chaptersdir / d.name / (d.name + '.pdf')
+		               for d in chaptersdir.iterdir() if d.is_dir()]
 	rm(cleanfiles, 'Removing pdf files failed')
+
 
 @target()
 def cover():
@@ -293,7 +335,7 @@ def cover():
     print("Written cover to cover.tex")
     newsettings = settings.copy()
     newsettings.basename = 'cover'
-    apps.pdflatex.run(newsettings, 'Running Latex failed')
+    apps.latexmk.run(newsettings, 'Running latexmk on the cover failed')
 
 
 @target()
@@ -317,11 +359,22 @@ def newchapter():
 % otherwise \\includeonly includes empty pages.\n\
 \\cleardoublepage\n")
 
+
 @target()
 def view():
 	"""Open the generated pdf file in a pdf viewer."""
-	print("Opening "+settings.pdffile)
-	apps.pdfviewer.run(settings, 'Opening pdf failed.')
+	if not Path(settings.pdffile).is_file():
+		print(f"No {settings.pdffile} found. Build it first with: python run.py")
+		return 1
+	print("Opening " + str(settings.pdffile))
+	if apps.pdfviewer is None:
+		if not dry:
+			os.startfile(str(settings.pdffile))  # noqa: S606
+		else:
+			print(f"Running: start {settings.pdffile}")
+	else:
+		apps.pdfviewer.run(settings, 'Opening pdf failed.')
+
 
 @target()
 def targets():
@@ -336,91 +389,22 @@ def targets():
 			doc = ''
 		print(s.format(target,doc))
 
+
 ## AUXILIARY ##
-
-def testSettings():
-	"""Verify whether run.py is using the expected settings based on
-	   thesis.tex.
-	"""
-	allok = True
-	allok = allok and testBiblatex()
-	allok = allok and testNomenclature()
-	allok = allok and testGlossary()
-	return allok
-
-
-def testBiblatex():
-	"""Test whether the main tex file includes biblatex and if this is
-	   consistent with the settings in run.py
-	"""
-	global usebiblatex
-	allok = True
-	isusingbiblatex = False
-	# pattern = re.compile(r'^\\documentclass.*biblatex*.*$')
-	pattern = re.compile(r'^\s*[^%].*{biblatex}')
-	with open(settings.mainfile, 'r') as f:
-		for line in f:
-			if pattern.search(line) != None:
-				isusingbiblatex = True
-				if not settings.usebiblatex:
-					print("WARNING: It appears you are using biblatex while this setting in run.py is set to false.\n")
-					allok = False
-					# settings.usebiblatex = True
-					return allok
-	if not isusingbiblatex and settings.usebiblatex:
-		print("WARNING: It appears you are not using biblatex while this setting in run.py is set to true.\n")
-		# settings.usebiblatex = False
-		allok = False
-	return allok
-
-
-def testNomenclature():
-	"""Check whether the nomenclature settings are consistent."""
-	allok = True
-	pattern = re.compile(r'^\s*\\usepackage.*{nomencl}.*')
-	found = False
-	with open(settings.mainfile, 'r') as texfile:
-		for line in texfile:
-			if pattern.search(line) != None:
-				found = True
-	if not found and settings.makenomenclature:
-		print("\nWARNING: Trying to build the nomenclature but you have not include the nomencl Latex package.\n")
-		allok = False
-	if found and not settings.makenomenclature:
-		print("\nWARNING: You have included the nomencl Latex package but in the run.py script this step is not activated.\n")
-		allok = False
-	return allok
-
-
-def testGlossary():
-	"""Check whether the glossaries settings are consistent."""
-	allok = True
-	pattern = re.compile(r'^\s*\\usepackage.*{glossaries.*')
-	found = False
-	with open(settings.mainfile, 'r') as texfile:
-		for line in texfile:
-			if pattern.search(line) != None:
-				found = True
-	if not found and settings.makeglossary:
-		print("\nWARNING: Trying to build the glossary but you have not include the glossaries Latex package.\n")
-		allok = False
-	if found and not settings.makeglossary:
-		print("\nWARNING: You have included the glossary Latex package but in the run.py script this step is not activated.\n")
-		allok = False
-	return allok
-
 
 def rm(files, errmsg):
 	# Cross-platform "rm -f [files]"
 	for file in files:
+		if dry:
+			print(f"Removing: {file}")
+			continue
 		try:
-			# file.unlink(missing_ok=True)  # Python >= 3.8
 			file.unlink()
 		except FileNotFoundError:
 			pass
 		except OSError as err:
 			print(err)
-			print(sys.argv[0].split("/")[-1] + ": "+errmsg+" (exitcode "+str(err.returncode)+")", file=sys.stderr)
+			print(sys.argv[0].split("/")[-1] + ": "+errmsg, file=sys.stderr)
 			sys.exit(1)
 
 
@@ -433,13 +417,7 @@ class App:
 		self.verbose = v
 
 	def run(self, settings, errmsg):
-		""" Run the command for the given settings.
-			Required settings:
-				- basename
-				- pdffile
-		
-			:returns: Return code
-		"""
+		"""Run the command, formatted with the given settings."""
 		returncode = 1
 		try:
 			cmd = self.options.format(**settings.items())
@@ -458,11 +436,8 @@ class App:
 				sys.exit(1)
 		return returncode
 
-## COMMAND LINE INTERFACE ##
 
-class Usage(Exception):
-	def __init__(self, msg):
-		self.msg = msg
+## COMMAND LINE INTERFACE ##
 
 def main(argv=None):
 	global verbose
@@ -470,11 +445,11 @@ def main(argv=None):
 
 	parser = argparse.ArgumentParser(
 		    description='''
-Naive compilation script for the ADSPhD class. No file dependency checks
-are performed. Use TeXnicCenter, Texmaker, latexmk, rubber, SCons or
-make for such a feature.''',
+Helper script for the ADSPhD class. Compilation is delegated to latexmk,
+which reads .latexmkrc and handles reruns, bibtex/biber, glossaries and
+nomencl by itself.''',
 		    epilog='''
-Settings: Open run.py with a text editor and change values in the settings 
+Settings: Open run.py with a text editor and change values in the settings
 definition
 		    ''')
 	parser.add_argument('--verbose', '-v', action='count',      help='Verbose output')
@@ -482,6 +457,7 @@ definition
 	parser.add_argument('--dry', '-d',     action='store_true', help='Dry run to see commands without executing them')
 	parser.add_argument('--lua',           action='store_true', help='Use LuaLaTeX instead of pdflatex')
 	parser.add_argument('--ignore-errors', action='store_true', help='Keep running the script when errors are encountered')
+	parser.add_argument('--chapter',       metavar='NAME',      help='Chapter to build with the chapter target')
 	parser.add_argument('target',          nargs='*',           help='Targets')
 
 	args = parser.parse_args(argv)
@@ -491,16 +467,21 @@ definition
 	if args.verbose is not None:
 		verbose = args.verbose
 	dry = args.dry
+	settings.chapter = args.chapter
 
 	if args.targets:
 		targets()
 		return
 
 	initapplications(use_lualatex=args.lua)
-	
+
 	if len(args.target) == 0:
-		print("No targets given, using default target: compile")
-		compile()
+		if args.chapter is not None:
+			print("No targets given, using default target: chapter")
+			chapter()
+		else:
+			print("No targets given, using default target: compile")
+			compile()
 
 	for target in args.target:
 		print("Target: "+target)
@@ -508,9 +489,7 @@ definition
 			knowntargets[target]()
 		else:
 			print("Unknown target")
-	
 
 
 if __name__ == "__main__":
 	sys.exit(main())
-
