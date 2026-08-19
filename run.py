@@ -36,7 +36,8 @@ given_settings = {
                        '.lof','.lot','.ilg','.out','.glo','.gls','.nlo','.nls',
                        '.brf','.ist','.glg','.synctexgz','.tgz','.idx','.ind',
                        '-blx.bib','.fdb_latexmk','.synctex.gz','.run.xml',
-                       '.bcf','.glsdefs','.xdy']
+                       '.bcf','.glsdefs','.xdy'],
+  'ignore_errors':     False,
 }
 
 derived_settings = ['basename', 'chapters', 'cleanfiles', 'pdffile']
@@ -453,7 +454,8 @@ class App:
 		except CalledProcessError as err:
 			print(err)
 			print(sys.argv[0].split("/")[-1] + ": "+errmsg+" (exitcode "+str(err.returncode)+")", file=sys.stderr)
-			sys.exit(1)
+			if not settings.ignore_errors:
+				sys.exit(1)
 		return returncode
 
 ## COMMAND LINE INTERFACE ##
@@ -479,10 +481,13 @@ definition
 	parser.add_argument('--targets', '-T', action='store_true', help='Print available targets')
 	parser.add_argument('--dry', '-d',     action='store_true', help='Dry run to see commands without executing them')
 	parser.add_argument('--lua',           action='store_true', help='Use LuaLaTeX instead of pdflatex')
+	parser.add_argument('--ignore-errors', action='store_true', help='Keep running the script when errors are encountered')
 	parser.add_argument('target',          nargs='*',           help='Targets')
 
 	args = parser.parse_args(argv)
 
+	if args.ignore_errors:
+		settings.ignore_errors = True
 	if args.verbose is not None:
 		verbose = args.verbose
 	dry = args.dry
