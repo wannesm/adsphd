@@ -1,0 +1,16 @@
+# Line endings are normalised to LF in the repository.k0
+* text=auto eol=lf
+
+# Read by tools that need LF, also when checked out on Windows.
+*.sh              text eol=lf
+Makefile          text eol=lf
+Makefile.settings text eol=lf
+
+
+
+*.eps -text
+
+# Never line-end-convert or diff these.
+*.pdf binary
+*.png binary
+*.tgz binary

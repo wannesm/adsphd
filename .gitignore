@@ -39,3 +39,5 @@ VERSION
 thesis_diff.*
 diffchapters
 adsphd_diff.cls
+chapters/*/*.pdf
+thesis_diff_*
