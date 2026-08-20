@@ -655,6 +655,17 @@
 \usepackage[titles]{tocloft}
 \renewcommand{\cftchapfont}{\sffamily\bfseries\selectfont}
 \renewcommand{\cftchappagefont}{\sffamily\bfseries\selectfont}
+%% Patch `tocloft' per https://tex.stackexchange.com/questions/172785/how-can-i-make-the-dots-in-a-toc-end-at-the-same-place
+\newcommand\cftdefaultafterpnum{\kern-1sp\kern1sp}
+\renewcommand\cftpartafterpnum{\cftdefaultafterpnum}
+\renewcommand\cftchapafterpnum{\cftdefaultafterpnum}
+\renewcommand\cftsecafterpnum{\cftdefaultafterpnum}
+\renewcommand\cftsubsecafterpnum{\cftdefaultafterpnum}
+\renewcommand\cftsubsubsecafterpnum{\cftdefaultafterpnum}
+\renewcommand\cftparaafterpnum{\cftdefaultafterpnum}
+\renewcommand\cftsubparaafterpnum{\cftdefaultafterpnum}
+\renewcommand\cftfigafterpnum{\cftdefaultafterpnum}
+\renewcommand\cfttabafterpnum{\cftdefaultafterpnum}
 
 % PAGE LAYOUT
 %\setlength{\textwidth}{12.5truecm}
@@ -975,9 +986,7 @@ LuaLaTeX or XeTeX}
   \cleardoublepage
   \phantomsection
   \addcontentsline{toc}{chapter}{\tocname}
-  \microtypesetup{protrusion=false}
   \tableofcontentsorig
-  \microtypesetup{protrusion=true}
 }
 
 \let\lstlistoflistingsorig\lstlistoflistings
