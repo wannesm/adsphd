@@ -74,21 +74,16 @@ MYCOVERPAGENAME = mycoverpage.tex # If changing this (e.g., to mycover.tex),
 								  # \setcustomcoverpage{mycover.tex}
 
 CLEANEXTENSIONS = .toc .aux .log .bbl .blg .log .lof .lot .ilg .out .glo .gls .nlo .nls .brf .ist .glg .synctex.gz .tgz .idx .ind -blx.bib .fdb_latexmk .run.xml .bcf
-REALCLEANEXTENSIONS = .dvi .pdf .ps .glsdefs
+REALCLEANEXTENSIONS = .pdf .glsdefs
 
 FORCE_REBUILD = .force_rebuild
 
-USEPDFTEX ?= 0 # can be externally set
 
 USEBIBLATEX = 0
 BIBLATEXBACKEND = biber
 
 # Binaries
-TEX = latex
 PDFTEX = pdflatex
-DVIPS = dvips
-PS2PDF = ps2pdf -dMaxSubsetPct=100 -dSubsetFonts=true -dEmbedAllFonts=true \
-		  -dPDFSETTINGS=/printer -dCompatibilityLevel=1.4
 BIBTEX = bibtex
 MAKEINDEX = makeindex
 DETEX = detex
@@ -138,8 +133,6 @@ CHAPTERTEXS = $(foreach chaptername,$(CHAPTERNAMES),$(shell test -f $(CHAPTERSDI
 CHAPTERAUX = $(CHAPTERTEXS:.tex=.aux)
 CHAPTERMAKEFILES = $(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/Makefile)
 
-DVIFILE     = $(MAINTEX:.tex=.dvi)
-PSFILE      = $(MAINTEX:.tex=.ps)
 PDFFILE     = $(MAINTEX:.tex=.pdf)
 BBLFILE     = $(MAINTEX:.tex=.bbl)
 NOMENCLFILE = $(MAINTEX:.tex=.nls)
@@ -183,7 +176,7 @@ default: $(PDFFILE)
 ##############################################################################
 ### BUILD PDF/PS (with relaxed dependencies on bibtex, nomenclature, glossary)
 
-# Function to build dvi/pdf (using latex/pdflatex) if we want to include only
+# Function to build the pdf (using pdflatex) if we want to include only
 # parts of the full document (i.e., we need to create a temporary file that
 # should be compiled)
 # 
@@ -203,9 +196,7 @@ define run-tex
 	$(RM) $4{,.bak}
 endef
 
-# Make distinction between latex and pdflatex compilation
-ifeq ($(USEPDFTEX), 1)
-
+# All compilation goes through pdflatex
 TEX = $(PDFTEX)
 
 ##################################################
@@ -250,74 +241,6 @@ $(CHAPTERSDIR)/%_bare.pdf: $(DEPENDENCIES)
 
 ##################################################
 
-else
-
-##################################################
-# BUILD THESIS
-$(DVIFILE): MYMAINTEX = $(if $(CHAPTERINCLUDEONLYSTRING),$(MAINTEX:.tex=_sel.tex),$(MAINTEX))
-$(DVIFILE): $(DEPENDENCIES)
-	[ "$(MAINTEX)" = "$(MYMAINTEX)" ] || sed -e 's|\\begin{document}|\\includeonly{$(CHAPTERINCLUDEONLYSTRING)}\\begin{document}|' $(MAINTEX) > $(MYMAINTEX)
-	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
-	$(TEX) -jobname $(@:.dvi=) $(MYMAINTEX)
-	[ "$(MAINTEX)" = "$(MYMAINTEX)" ] || $(RM) $(MYMAINTEX)
-
-# Do NOT remove the following line:
-$(DVIFILE:.dvi=_bare.dvi): MYCHAPTERINCLUDEONLYSTRING = $(subst $(space),$(comma),$(foreach chaptername,$(CHAPTERNAMES),$(CHAPTERSDIR)/$(chaptername)/$(chaptername)))
-$(DVIFILE:.dvi=_bare.dvi): MYMAINTEX = $(MAINTEX:.tex=_bare.tex)
-$(DVIFILE:.dvi=_bare.dvi): $(DEPENDENCIES)
-	@for i in $(CHAPTERNAMES); do echo "  + $$i"; done
-	$(call run-tex,$(TEX),$(@:.dvi=),$(MYCHAPTERINCLUDEONLYSTRING),$(MYMAINTEX),$(IGNOREINCHAPTERMODEBARE),1)
-
-# Clear the default rule dvi <-- tex (otherwise it gets preference over the
-# rule that generates $(CHAPTERSDIR)/%_ch.dvi below!!)
-%.dvi: %.tex
-
-%.ps: %.dvi
-	$(DVIPS) -P pdf -o $@ $<
-
-%.pdf: %.ps
-	$(PS2PDF) $< $@
-
-##################################################
-# BUILD CHAPTERS
-# If no CHAPTERS environment variable given, only include the requested
-# chapter:
-$(CHAPTERSDIR)/%_ch.dvi: MYCHAPTERINCLUDEONLYSTRING = $(if $(CHAPTERS),$(CHAPTERINCLUDEONLYSTRING),$(CHAPTERSDIR)/$*)
-$(CHAPTERSDIR)/%_ch.dvi: MYMAINTEX = $(MAINTEX:.tex=_ch.tex)
-$(CHAPTERSDIR)/%_ch.dvi: $(DEPENDENCIES)
-	$(call run-tex,$(TEX),$(@:.dvi=),$(MYCHAPTERINCLUDEONLYSTRING),$(MYMAINTEX),$(IGNOREINCHAPTERMODE),0)
-
-# The following rule creates e.g. chapters/introduction/introduction.pdf
-# containing only the chapter 'introduction'. The difficulty in doing this, is
-# that there also exists a file chapters/introduction/introduction.tex, which
-# means the 'standard' rules already match but 
-#  (1) do not do what we want; and
-#  (2) do not have the correct dependencies. 
-# To get around this, I want to generate first
-# chapters/introduction/introduction_ch.pdf as follows
-#    _ch.pdf <-- ps <-- dvi: all dependencies
-# The dvi file is generated with the correct dependencies by the previous
-# rule. 
-#
-# Pitfall: to force the pdf/ps/dvi chain to be followed, it must have the
-# preference over recursively matching this one. 
-# --> include %_ch.ps (which is the same prereq. as the rule that generates
-#  the chain (the one after this one).
-$(CHAPTERSDIR)/%.pdf: $(DEPENDENCIES) $(CHAPTERSDIR)/%_ch.ps
-	$(MAKE) $(@:.pdf=_ch.pdf)
-	mv $(@:.pdf=_ch.pdf) $@
-
-# The following rules ensures that the pdf/ps/dvi chain has preference over
-# recursively using the previous one!
-$(CHAPTERSDIR)/%_ch.pdf: $(CHAPTERSDIR)/%_ch.ps
-
-# The following rules provide 'bare' compilation of individual chapters
-$(CHAPTERSDIR)/%_bare.dvi: MYCHAPTERINCLUDEONLYSTRING = $(if $(CHAPTERS),$(CHAPTERINCLUDEONLYSTRING),$(CHAPTERSDIR)/$*)
-$(CHAPTERSDIR)/%_bare.dvi: MYMAINTEX = $(MAINTEX:.tex=_bare_ch.tex)
-$(CHAPTERSDIR)/%_bare.dvi: $(DEPENDENCIES)
-	$(call run-tex,$(TEX),$(@:.dvi=),$(MYCHAPTERINCLUDEONLYSTRING),$(MYMAINTEX),$(IGNOREINCHAPTERMODEBARE),1)
-
-endif
 
 ##############################################################################
 ### PUT 2 LOGICAL PAGES ON SINGLE PHYSICAL PAGE  #############################
@@ -347,7 +270,7 @@ thesisfinal: $(MAINTEX) $(FORCE_REBUILD)
 	$(TEX) $<
 	@echo "Running latex a third time..."
 	$(TEX) $<
-	@echo "Converting dvi -> ps -> pdf..."
+	@echo "Building the pdf..."
 	make $(PDFFILE)
 	@echo "Done."
 
@@ -435,7 +358,6 @@ $(MAINTEX:.tex=).nls: $(MAINTEX)
 	@make $(<:.tex=.aux)
 	@echo "Creating nomenclature..."
 	$(MAKEINDEX) $(<:.tex=.nlo) -s nomencl.ist -o $(<:.tex=.nls)
-	$(RM) $(DVIFILE)
 
 ##############################################################################
 ### GLOSSARY: LIST OF ABBREVIATIONS  #########################################
@@ -448,7 +370,6 @@ glossary:
 	@make $(<:.tex=.aux)
 	@echo "Creating glossary..."
 	$(MAKEINDEX) $(<:.tex=.glo) -s $(<:.tex=.ist) -t $(<:.tex=.glg) -o $(<:.tex=.gls)
-	$(RM) $(DVIFILE)
 
 ##############################################################################
 ### FORCE REBUILD ############################################################
@@ -672,9 +593,9 @@ clean:
 
 .PHONY: realclean 
 realclean: clean
-	# Remove main dvi/ps/pdf
+	# Remove main pdf
 	$(RM) $(MAINTEX:%.tex=%){$(subst $(empty) $(empty),$(comma),$(REALCLEANEXTENSIONS))}
-	# Remove cover related dvi/ps/pdf
+	# Remove cover related pdf
 	$(RM) $(COVERTEX:.tex=){$(subst $(empty) $(empty),$(comma),$(REALCLEANEXTENSIONS))}
 	$(RM) $(COVERTEX)
 	# Remove autogenerated chapter Makefiles
