@@ -112,7 +112,7 @@ Some convenient Makefile targets:
     make                       # create the full booklet thesis.pdf
     make clean
     make realclean             # cleanup all mess, including leftover
-                               # {dvi,pdf,ps} files of main file or the
+                               # pdf files of main file or the
                                # chapters
     make damnthatsreallyclean  # brutally remove all possible temporary
                                # files

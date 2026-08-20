@@ -6,7 +6,6 @@ q.tex
 thesis.aux
 thesis.bbl
 thesis.blg
-thesis.dvi
 thesis.xdv
 thesis.lof
 thesis.log
@@ -28,7 +27,6 @@ thesis.idx
 thesis.ind
 thesis.run.xml
 thesis.synctex.gz
-thesis.ps
 thesis.fdb_latexmk
 *.fls
 cover.*
