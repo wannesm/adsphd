@@ -955,7 +955,8 @@ LuaLaTeX or XeTeX}
 
 \newcommand{\includeabbreviations}[1]{%
   % Use this command when making the abbreviation manually. Using the
-  \IncludeUnnumberedChapterIfExists{#1}{Abbreviations}{\instructionslistofsymbols}{}
+  \IncludeUnnumberedChapterIfExists{#1}{Abbreviations}{\instructionslistofsymbols}
+        {\phantomsection}
 }
 
 \newcommand{\includenomenclature}[1]{%
