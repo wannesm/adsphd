@@ -205,7 +205,7 @@ jobs:
             sleep 15
           done
           gosu miktex miktex packages update || true
-          gosu miktex miktex packages install xkeyval || true
+          gosu miktex miktex packages install xkeyval 
 
       - name: Alle varianten bouwen
         shell: bash
@@ -225,7 +225,9 @@ jobs:
             sed -i "s#^\\\\documentclass.*#\\\\documentclass[$OPTS]{adsphd}#" thesis.tex
             chown -R miktex:miktex "$GITHUB_WORKSPACE"
             grep -n '^\\documentclass' thesis.tex
-            if gosu miktex latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error thesis.tex; then
+                        if gosu miktex latexmk -pdf \
+                 -pdflatex="pdflatex --enable-installer --interaction=nonstopmode --halt-on-error --file-line-error %O %S" \
+                 thesis.tex; then
               cp thesis.pdf "out/thesis-$v.pdf"
               echo "$v: ok"
             else
