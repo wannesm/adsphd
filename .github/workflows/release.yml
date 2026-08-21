@@ -1,0 +1,153 @@
+# Release-pipeline voor de ADS PhD template (adsphd)
+#
+# Op een tag `vX.Y[.Z]` bouwt deze workflow de template, verpakt de bestanden
+# die een doctoraatsstudent nodig heeft in een zip, en hangt die samen met een
+# voorbeeld-PDF aan een GitHub Release. Vervangt distribute.sh.
+#
+# Handmatig starten (Actions -> release -> Run workflow) bouwt en verpakt
+# alles, maar maakt standaard geen release aan. Zo kan je de job testen zonder
+# te taggen.
+#
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      publiceren:
+        description: "Ook echt een release aanmaken (alleen zinvol op een tag)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: bouwen en verpakken
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    container:
+      image: texlive/texlive:latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # git describe heeft de volledige historiek en alle tags nodig
+          fetch-depth: 0
+
+      - name: git vertrouwen in de container
+        shell: bash
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: make aanwezig maken
+        shell: bash
+        run: command -v make >/dev/null || (apt-get update -qq && apt-get install -y -qq make zip)
+
+      - name: zip aanwezig maken
+        shell: bash
+        run: command -v zip >/dev/null || (apt-get update -qq && apt-get install -y -qq zip)
+
+      - name: VERSION genereren
+        shell: bash
+        run: |
+          # Hetzelfde bestand dat distribute.sh maakte. adsphd.cls leest het uit
+          # (\IfFileExists{VERSION}) om git-informatie op de cover te zetten.
+          git describe --tags --long > VERSION
+          git show -s --format="%H %ci" >> VERSION
+          echo "--- VERSION ---"
+          cat VERSION
+
+      - name: Voorbeeld-PDF bouwen
+        shell: bash
+        run: |
+          make
+          test -s thesis.pdf || { echo "FOUT - geen thesis.pdf gebouwd"; exit 1; }
+          mkdir -p dist
+          cp thesis.pdf "dist/adsphd-voorbeeld.pdf"
+          ls -lh dist/
+
+      - name: Archief samenstellen
+        shell: bash
+        run: |
+          set -e
+          VER="${GITHUB_REF_NAME}"
+          case "$GITHUB_REF_TYPE" in
+            tag) : ;;
+            *)   VER="dev-$(git rev-parse --short HEAD)" ;;
+          esac
+          echo "versie voor de bestandsnaam : $VER"
+
+          # Buildresten weg voor we verpakken; de PDF staat al in dist/.
+          make realclean >/dev/null 2>&1 || make clean >/dev/null 2>&1 || true
+
+          STAGE="stage/adsphd"
+          mkdir -p "$STAGE"
+
+          # Dezelfde inhoud als de MANIFEST van distribute.sh, plus .latexmkrc
+          # en README.md. Niet mee: .github/, distribute.sh, make_diff.sh,
+          # diff_text -- gereedschap voor wie de repo onderhoudt, niet voor wie
+          # een thesis schrijft.
+          cp -r chapters image "$STAGE"/
+          cp Makefile Makefile.settings run.py .latexmkrc README.md VERSION "$STAGE"/
+          cp adsphd.cls adsphd.cfg biblatex.cfg "$STAGE"/
+          cp thesis.tex mycoverpage.tex allpapers.bib "$STAGE"/
+
+          # Restjes die in chapters/ kunnen achterblijven
+          find "$STAGE" -type f \( -name '*.aux' -o -name '*.log' -o -name '*.out' \
+               -o -name '*.toc' -o -name '*.pdf' -o -name '*.synctex.gz' \
+               -o -name '*.fdb_latexmk' -o -name '*.fls' \) -delete
+          find "$STAGE" -type d -name '.git' -prune -exec rm -rf {} + 2>/dev/null || true
+
+          (cd stage && zip -qr "$GITHUB_WORKSPACE/dist/adsphd-$VER.zip" adsphd)
+
+          echo "--- inhoud van het archief ---"
+          unzip -l "dist/adsphd-$VER.zip" | tail -5
+          test -s "dist/adsphd-$VER.zip"
+
+          # Het archief moet bruikbaar zijn: deze vier bestanden zijn het
+          # minimum om te kunnen compileren.
+          for f in adsphd/adsphd.cls adsphd/thesis.tex adsphd/Makefile adsphd/VERSION; do
+            unzip -l "dist/adsphd-$VER.zip" | grep -q " $f\$" || {
+              echo "FOUT - $f ontbreekt in het archief"; exit 1; }
+          done
+          echo "OK - archief compleet"
+
+      - name: Artifacts bewaren
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: release-bestanden
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    name: release aanmaken
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref_type == 'tag' && (github.event_name == 'push' || inputs.publiceren)
+
+    steps:
+      - name: Artifacts ophalen
+        uses: actions/download-artifact@v4
+        with:
+          name: release-bestanden
+          path: dist
+
+      - name: Release aanmaken
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ls -lh dist/
+          gh release create "$GITHUB_REF_NAME" dist/* \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "adsphd $GITHUB_REF_NAME" \
+            --generate-notes
