@@ -56,6 +56,15 @@ jobs:
           mkdir -p out
           cp thesis.tex thesis.tex.orig
           fail=0
+          # LaTeX loopt in nonstopmode over fouten heen en kan alsnog met
+          # exitcode 0 eindigen. Het log is het tweede net. 
+          scan_log() {   # $1 = logbestand, $2 = label
+            [ -f "$1" ] || return 0
+            grep -qE '^!|^\./.*:[0-9]+:' "$1" || return 0
+            echo "--- LaTeX-fouten in $1 ($2) ---"
+            grep -nE -A3 '^!|^\./.*:[0-9]+:' "$1"
+            return 1
+          }
           for v in final tothejury print; do
             case "$v" in
               final)     OPTS="final,faculty=firw,department=cws,phddegree=cws" ;;
@@ -69,7 +78,7 @@ jobs:
             grep -n '^\\documentclass' thesis.tex
             if make; then
               cp thesis.pdf "out/thesis-$v.pdf"
-              echo "$v: ok"
+              scan_log thesis.log "$v" && echo "$v: ok" || fail=1
             else
               fail=1
               echo "$v: MISLUKT"
@@ -132,6 +141,14 @@ jobs:
           mkdir -p out
           cp thesis.tex thesis.tex.orig
           fail=0
+          # Analoge log testen als bij linux
+          scan_log() {   # $1 = logbestand, $2 = label
+            [ -f "$1" ] || return 0
+            grep -qE '^!|^\./.*:[0-9]+:' "$1" || return 0
+            echo "--- LaTeX-fouten in $1 ($2) ---"
+            grep -nE -A3 '^!|^\./.*:[0-9]+:' "$1"
+            return 1
+          }
           for v in final tothejury print; do
             case "$v" in
               final)     OPTS="final,faculty=firw,department=cws,phddegree=cws" ;;
@@ -146,7 +163,7 @@ jobs:
             python run.py clean >/dev/null 2>&1 || true
             if python run.py; then
               cp thesis.pdf "out/thesis-$v-runpy.pdf"
-              echo "$v runpy: ok"
+              scan_log thesis.log "$v runpy" && echo "$v runpy: ok" || fail=1
             else
               fail=1
               echo "$v runpy: MISLUKT"
@@ -158,7 +175,7 @@ jobs:
             latexmk -C >/dev/null 2>&1 || true
             if latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error thesis.tex; then
               cp thesis.pdf "out/thesis-$v-latexmk.pdf"
-              echo "$v latexmk: ok"
+              scan_log thesis.log "$v latexmk" && echo "$v latexmk: ok" || fail=1
             else
               fail=1
               echo "$v latexmk: MISLUKT"
@@ -213,6 +230,14 @@ jobs:
           mkdir -p out
           cp thesis.tex thesis.tex.orig
           fail=0
+          # Analoge testen als bij linux & windows
+          scan_log() {   # $1 = logbestand, $2 = label
+            [ -f "$1" ] || return 0
+            grep -qE '^!|^\./.*:[0-9]+:' "$1" || return 0
+            echo "--- LaTeX-fouten in $1 ($2) ---"
+            grep -nE -A3 '^!|^\./.*:[0-9]+:' "$1"
+            return 1
+          }
           for v in final tothejury print; do
             case "$v" in
               final)     OPTS="final,faculty=firw,department=cws,phddegree=cws" ;;
@@ -225,11 +250,11 @@ jobs:
             sed -i "s#^\\\\documentclass.*#\\\\documentclass[$OPTS]{adsphd}#" thesis.tex
             chown -R miktex:miktex "$GITHUB_WORKSPACE"
             grep -n '^\\documentclass' thesis.tex
-                        if gosu miktex latexmk -pdf \
+            if gosu miktex latexmk -pdf \
                  -pdflatex="pdflatex --enable-installer --interaction=nonstopmode --halt-on-error --file-line-error %O %S" \
                  thesis.tex; then
               cp thesis.pdf "out/thesis-$v.pdf"
-              echo "$v: ok"
+              scan_log thesis.log "$v" && echo "$v: ok" || fail=1
             else
               fail=1
               echo "$v: MISLUKT"
