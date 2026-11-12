@@ -102,6 +102,7 @@
 \DeclareBoolOption{bleed}
 \DeclareBoolOption{nohyperref}
 \DeclareBoolOption{epub}
+\DeclareBoolOption{chapteronly}
 
 % font and style
 \DeclareVoidOption{10pt}{
@@ -178,6 +179,7 @@
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{epub}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{helveticaneue}
   \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{joint}
+  \DisableKeyvalOption[action=warning,package=adsphd]{adsphd}{chapteronly}
 
   \ifadsphd@nohyperref\else
     \hypersetup{%
@@ -2039,6 +2041,58 @@ without written permission from the publisher.
   \typeout{adsphd.cls: Setting new custom cover page (#1)}
   \useCustomCoverpageIfExists
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter-only mode: only typeset the chapters (and appendices and
+% bibliography). Covers, title page, front matter (preface, abstracts,
+% lists) and back matter (GenAI statement, CV, publications) are
+% suppressed.
+
+\ifadsphd@chapteronly
+  \typeout{adsphd.cls: [chapteronly] Only chapters will be generated}
+  % Covers and title page
+  \renewcommand{\makefrontcoverXXIV}{}
+  \renewcommand{\makebackcoverXXIV}{}
+  \let\makefrontcover\makefrontcoverXXIV
+  \let\makebackcover\makebackcoverXXIV
+  \renewcommand{\makespine}[2]{}
+  \renewcommand{\maketitle}{}
+  % Front matter
+  \renewcommand{\includepreface}[1]{}
+  \renewcommand{\includeprefacenl}[1]{}
+  \renewcommand{\includepopabstract}[1]{}
+  \renewcommand{\includepopabstractnl}[1]{}
+  \renewcommand{\includeabstract}[1]{}
+  \renewcommand{\includeabstractnl}[1]{}
+  \renewcommand{\includeabbreviations}[1]{}
+  \renewcommand{\includenomenclature}[1]{}
+  \renewcommand{\tableofcontents}{}
+  \renewcommand{\listoffigures}{}
+  \renewcommand{\listoftables}{}
+  \def\lstlistoflistings{}
+  % Back matter
+  \renewcommand{\includegenai}{}
+  \renewcommand{\includecv}[1]{}
+  \renewcommand{\includepublications}[1]{}
+  % Suppressed front matter (e.g. \myprintglossary in thesis.tex) may
+  % still call \chaptermark; ignore it until \mainmatter
+  \let\adsphd@origchaptermark\chaptermark
+  \renewcommand{\chaptermark}[1]{}
+  \renewcommand{\mainmatter}{%
+    \cleardoublepage\pagenumbering{arabic}%
+    \let\chaptermark\adsphd@origchaptermark}
+  % Automatically generated lists (packages are loaded after the class)
+  \AtBeginDocument{%
+    \@ifpackageloaded{glossaries}{%
+      \renewcommand{\printglossary}[1][]{}%
+      \renewcommand{\printglossaries}{}%
+      \let\printacronyms\printglossary%
+    }{}%
+    \@ifpackageloaded{nomencl}{%
+      \renewcommand{\printnomenclature}[1][]{}%
+    }{}%
+  }
+\fi
 
 % Use own version of the cover page
 \useCustomCoverpageIfExists
