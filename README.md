@@ -258,6 +258,11 @@ Options for the adsphd class
                             requires LuaLaTeX or XeLaTex instead of pdflatex.
     joint                 : Change the cover to the cover for a joint
                             PhD dissertation.
+    chapteronly           : Only generate the chapters (and appendices and
+                            bibliography). Covers, title page, preface,
+                            abstracts, lists (contents, figures, tables,
+                            abbreviations, symbols), GenAI statement, CV
+                            and publications are left out.
 
 
 Most of the useful commands provided by this class can be found in the provided
@@ -399,5 +404,6 @@ Pieter Maene,
 Gianluca Scopelliti,
 Brent De Blaere,
 Stan Kestens,
-Roel Van Beeumen.
+Roel Van Beeumen, 
+Wouter Legiest.
 
